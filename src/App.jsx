@@ -1,8 +1,10 @@
-function App() {
+import Navbar from "./Components/Navbar/Navbar"
 
+function App() {
   return (
-    <div className="text-2xl text-purple-500">Saif Sultan Mizan</div>
+    <div>
+      <Navbar/>
+    </div>
   )
 }
-
 export default App
