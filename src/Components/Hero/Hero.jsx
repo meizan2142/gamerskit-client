@@ -1,11 +1,11 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 
 const Hero = () => {
     return (
-        <section className="w-full bg-gray-100 py-12 lg:py-20">
+        <section className="w-full bg-[#FBEBB5] min-h-screen py-12 lg:py-72">
             <div className="container mx-auto flex flex-col lg:flex-row items-center gap-12 px-6">
                 {/* Left Text Section */}
                 <div className="lg:w-1/2 text-center lg:text-left">
@@ -25,20 +25,26 @@ const Hero = () => {
                 {/* Right Slider Section */}
                 <div className="lg:w-1/2 w-full">
                     <Swiper
-                        modules={[Autoplay, Pagination]}
-                        autoplay={{ delay: 3000, disableOnInteraction: false }}
+                        modules={[Autoplay]}
+                        autoplay={{ delay: 7000, disableOnInteraction: false }}
                         pagination={{ clickable: true }}
                         loop={true}
-                        className="rounded-lg shadow-lg"
+                        className="rounded-lg"
                     >
                         <SwiperSlide>
-                            <img src="/src/assets/SEN Masters Bangkok Pro Jersey.webp" alt="Slide 1" className="w-full h-72 object-cover  rounded-lg" />
+                            <div className="overflow-hidden h-72 rounded-lg">
+                                <img src="/src/assets/loud.png" alt="Slide 1" className="w-full h-full object-contain animated-slide" />
+                            </div>
                         </SwiperSlide>
                         <SwiperSlide>
-                            <img src="https://source.unsplash.com/600x400/?technology" alt="Slide 2" className="w-full h-72 object-cover rounded-lg" />
+                            <div className="overflow-hidden h-72 rounded-lg">
+                                <img src="/src/assets/loud.png" alt="Slide 2" className="w-full h-full object-contain animated-slide" />
+                            </div>
                         </SwiperSlide>
                         <SwiperSlide>
-                            <img src="https://source.unsplash.com/600x400/?teamwork" alt="Slide 3" className="w-full h-72 object-cover rounded-lg" />
+                            <div className="overflow-hidden h-72 rounded-lg">
+                                <img src="/src/assets/loud.png" alt="Slide 3" className="w-full h-full object-contain animated-slide" />
+                            </div>
                         </SwiperSlide>
                     </Swiper>
                 </div>
