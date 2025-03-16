@@ -5,19 +5,19 @@ import { Autoplay } from "swiper/modules";
 
 const Hero = () => {
     return (
-        <section className="w-full bg-[#FBEBB5] min-h-screen py-12 lg:py-72">
+        <section className="w-full bg-gradient-to-t from-green-500 to-teal-500 min-h-screen py-12 lg:py-72">
             <div className="container mx-auto flex flex-col lg:flex-row items-center gap-12 px-6">
                 {/* Left Text Section */}
                 <div className="lg:w-1/2 text-center lg:text-left">
-                    <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
-                        Elevate Your Business with <span className="text-violet-600">Modern Solutions</span>
+                    <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight">
+                        Elevate Your Business with <span className="text-black">Modern Solutions</span>
                     </h1>
-                    <p className="mt-4 text-gray-600 text-lg">
+                    <p className="mt-4 text-black text-lg">
                         We provide cutting-edge solutions to help your business grow and succeed in the digital era.
                     </p>
                     <div className="mt-6">
                         <button className="px-6 py-3 bg-violet-600 text-white font-medium rounded-lg shadow-md hover:bg-violet-700 transition">
-                            Get Started
+                            Shop now
                         </button>
                     </div>
                 </div>
