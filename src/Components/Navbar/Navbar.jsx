@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { navLinks } from "./navData";
-import { AlignJustify, MailIcon, ShoppingCart, X } from "lucide-react";
+import { AlignJustify, Heart, MailIcon, ShoppingCart, X } from "lucide-react";
 import { Badge } from "@mui/material";
 
 const Navbar = () => {
@@ -25,7 +25,7 @@ const Navbar = () => {
                             <li key={link.path}>
                                 <NavLink
                                     to={link.path}
-                                    className={({ isActive }) => isActive ? "font-bold text-black" : "text-black hover:font-bold transition"}
+                                    className={({ isActive }) => isActive ? "font-bold text-black text-base" : "text-black hover:font-bold transition text-base"}
                                 >
                                     {link.pathName}
                                 </NavLink>
@@ -37,7 +37,7 @@ const Navbar = () => {
                 {/* Sign In & Sign Up Buttons */}
                 <div className="hidden lg:flex space-x-6 items-center">
                     <Badge badgeContent={4} color="secondary">
-                        <ShoppingCart />
+                        <Heart />
                     </Badge>
                     <Badge badgeContent={4} color="primary">
                         <ShoppingCart />
