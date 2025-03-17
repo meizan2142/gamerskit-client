@@ -9,7 +9,7 @@ const Navbar = () => {
     const links = navLinks();
 
     return (
-        <header className="p-4 bg-blue-500 shadow-none fixed w-full z-50">
+        <header className="p-4 shadow-none fixed w-full z-50">
             <div className="container mx-auto flex justify-between items-center">
                 {/* Logo */}
                 <a href="#" className="flex items-center">
