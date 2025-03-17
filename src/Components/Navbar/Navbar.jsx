@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { navLinks } from "./navData";
-import { AlignJustify, X } from "lucide-react";
+import { AlignJustify, MailIcon, ShoppingCart, X } from "lucide-react";
+import { Badge } from "@mui/material";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const links = navLinks();
 
     return (
-        <header className="p-4 bg-[#FBEBB5] fixed w-full z-50">
+        <header className="p-4 bg-blue-500 shadow-none fixed w-full z-50">
             <div className="container mx-auto flex justify-between items-center">
                 {/* Logo */}
                 <a href="#" className="flex items-center">
@@ -34,7 +35,13 @@ const Navbar = () => {
                 </nav>
 
                 {/* Sign In & Sign Up Buttons */}
-                <div className="hidden lg:flex space-x-4 items-center">
+                <div className="hidden lg:flex space-x-6 items-center">
+                    <Badge badgeContent={4} color="secondary">
+                        <ShoppingCart />
+                    </Badge>
+                    <Badge badgeContent={4} color="primary">
+                        <ShoppingCart />
+                    </Badge>
                     <button className="px-4 py-2 border rounded hover:bg-gray-100">Sign in</button>
                     <button className="px-4 py-2 bg-violet-600 text-white rounded hover:bg-violet-700 transition">Sign up</button>
                 </div>

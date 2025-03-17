@@ -5,7 +5,7 @@ import { Autoplay } from "swiper/modules";
 
 const Hero = () => {
     return (
-        <section className="w-full bg-gradient-to-t from-green-500 to-teal-500 min-h-screen py-12 lg:py-72">
+        <section className="w-full bg-gradient-to-t from-gray-500 to-blue-500 min-h-screen py-12 lg:py-72">
             <div className="container mx-auto flex flex-col lg:flex-row items-center gap-12 px-6">
                 {/* Left Text Section */}
                 <div className="lg:w-1/2 text-center lg:text-left">
