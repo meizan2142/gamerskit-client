@@ -14,9 +14,10 @@ const Hero = () => {
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
             }}
+            // bg-gradient-to-r from-[#FAE82A] to-[#FF6F61]
         >
             {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-500/80 to-blue-500/80"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#FAE82A]/80 to-[#FF6F61]/80"></div>
 
             {/* Content */}
             <div className="container mx-auto flex flex-col lg:flex-row items-center gap-12 px-6 relative z-10">
