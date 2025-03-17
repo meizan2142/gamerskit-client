@@ -5,6 +5,7 @@ import { Autoplay } from "swiper/modules";
 import loudImage from '/src/assets/loud.png';
 import TeamLiquidImage from '/src/assets/Team Liquid.png';
 import PRXIMAGE from '/src/assets/PRX.png';
+// import NissanImage from '/src/assets/Nissan.png';
 
 const Hero = () => {
     return (
@@ -57,6 +58,11 @@ const Hero = () => {
                         <SwiperSlide>
                             <div className="overflow-hidden h-72 rounded-lg">
                                 <img src={PRXIMAGE} alt="Slide 3" className="w-full h-full object-contain animated-slide" />
+                            </div>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <div className="overflow-hidden h-72 rounded-lg">
+                                <img src={TeamLiquidImage} alt="Slide 4" className="w-full h-full object-contain animated-slide" />
                             </div>
                         </SwiperSlide>
                     </Swiper>
