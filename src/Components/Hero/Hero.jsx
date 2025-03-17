@@ -2,19 +2,20 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay } from "swiper/modules";
+import loudImage from '/src/assets/loud.png';
+import TeamLiquidImage from '/src/assets/Team Liquid.png';
+import PRXIMAGE from '/src/assets/PRX.png';
 
 const Hero = () => {
-    //  bg-gradient-to-t from-gray-500 to-blue-500
     return (
         <section
-            className="w-full min-h-screen py-12 lg:py-72 relative"
+            className="w-full min-h-screen py-12 lg:py-72 relative pt-32"
             style={{
                 backgroundImage: "url('/hero-bg.jpg')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
             }}
-            // bg-gradient-to-r from-[#FAE82A] to-[#FF6F61]
         >
             {/* Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#FAE82A]/80 to-[#FF6F61]/80"></div>
@@ -30,9 +31,7 @@ const Hero = () => {
                         We provide cutting-edge solutions to help your business grow and succeed in the digital era.
                     </p>
                     <div className="mt-6">
-                        <button className="px-6 py-3 bg-violet-600 text-white font-medium rounded-lg shadow-md hover:bg-violet-700 transition">
-                            Shop now
-                        </button>
+                        <button className="px-4 py-2 rounded-xl text-base hover:bg-[#FF6F61] transition-all ease-in bg-black text-white outline-none">Shop now</button>
                     </div>
                 </div>
 
@@ -47,17 +46,17 @@ const Hero = () => {
                     >
                         <SwiperSlide>
                             <div className="overflow-hidden h-72 rounded-lg">
-                                <img src="/src/assets/loud.png" alt="Slide 1" className="w-full h-full object-contain animated-slide" />
+                                <img src={loudImage} alt="Slide 1" className="w-full h-full object-contain animated-slide" />
                             </div>
                         </SwiperSlide>
                         <SwiperSlide>
                             <div className="overflow-hidden h-72 rounded-lg">
-                                <img src="/src/assets/Team Liquid.png" alt="Slide 2" className="w-full h-full object-contain animated-slide" />
+                                <img src={TeamLiquidImage} alt="Slide 2" className="w-full h-full object-contain animated-slide" />
                             </div>
                         </SwiperSlide>
                         <SwiperSlide>
                             <div className="overflow-hidden h-72 rounded-lg">
-                                <img src="/src/assets/PRX.png" alt="Slide 3" className="w-full h-full object-contain animated-slide" />
+                                <img src={PRXIMAGE} alt="Slide 3" className="w-full h-full object-contain animated-slide" />
                             </div>
                         </SwiperSlide>
                     </Swiper>
