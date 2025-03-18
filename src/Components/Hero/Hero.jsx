@@ -28,7 +28,7 @@ const Hero = () => {
                     <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight">
                         Elevate Your Business with <span className="text-black">Modern Solutions</span>
                     </h1>
-                    <p className="mt-4 text-black text-lg">
+                    <p className="mt-4 text-black @3xl:text-red-600 text-lg">
                         We provide cutting-edge solutions to help your business grow and succeed in the digital era.
                     </p>
                     <div className="mt-6">
