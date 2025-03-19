@@ -7,7 +7,7 @@
     }
 
     50% {
-        transform: translateY(10%);
+        transform: translateY(5%);
         /* Move down by 10% */
     }
 

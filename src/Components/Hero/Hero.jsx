@@ -2,11 +2,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay } from "swiper/modules";
-import loudImage from '/src/assets/loud.png';
-import TeamLiquidImage from '/src/assets/Team Liquid.png';
-import PRXIMAGE from '/src/assets/PRX.png';
 import NissanImage from '/src/assets/Nissan.png';
 import Porsche from '/src/assets/Porsche.png';
+import Sentinels from '/src/assets/Sentinels.png';
+import Custom from '/src/assets/Custom.png';
 const Hero = () => {
     return (
         <section
@@ -28,7 +27,7 @@ const Hero = () => {
                     <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight">
                         Elevate Your Business with <span className="text-black">Modern Solutions</span>
                     </h1>
-                    <p className="mt-4 text-black text-lg">
+                    <p className="mt-4 text-lg">
                         We provide cutting-edge solutions to help your business grow and succeed in the digital era.
                     </p>
                     <div className="mt-6">
@@ -47,17 +46,12 @@ const Hero = () => {
                     >
                         <SwiperSlide>
                             <div className="overflow-hidden h-72 rounded-lg">
-                                <img src={loudImage} alt="Slide 1" className="w-full h-full object-contain animated-slide" />
+                                <img src={Sentinels} alt="Slide 3" className="w-full h-full object-contain animated-slide" />
                             </div>
                         </SwiperSlide>
                         <SwiperSlide>
                             <div className="overflow-hidden h-72 rounded-lg">
-                                <img src={TeamLiquidImage} alt="Slide 2" className="w-full h-full object-contain animated-slide" />
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <div className="overflow-hidden h-72 rounded-lg">
-                                <img src={PRXIMAGE} alt="Slide 3" className="w-full h-full object-contain animated-slide" />
+                                <img src={Custom} alt="Slide 3" className="w-full h-full object-contain animated-slide" />
                             </div>
                         </SwiperSlide>
                         <SwiperSlide>

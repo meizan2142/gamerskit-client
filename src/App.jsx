@@ -6,6 +6,7 @@ function App() {
     <div>
       <div><Navbar/></div>
       <div><Hero/></div>
+      <div className="mt-32">New Arrivals</div>
     </div>
   )
 }

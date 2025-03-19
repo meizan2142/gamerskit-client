@@ -12,7 +12,7 @@ const Navbar = () => {
         <header className="p-4 shadow-none fixed w-full z-50">
             <div className="container mx-auto flex justify-between items-center">
                 {/* Logo */}
-                <a href="#" className="flex items-center @7xl:text-4xl xs:text-3xl md:text-4xl font-bold">
+                <a href="#" className="flex items-center @7xl:text-4xl xs:text-3xl md:text-4xl @2xs:text-4xl font-bold">
                     Gamers<span className="text-[#FAE82A]">Kit</span>  
                 </a>
 
