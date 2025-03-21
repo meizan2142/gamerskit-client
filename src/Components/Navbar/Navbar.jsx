@@ -10,10 +10,10 @@ const Navbar = () => {
     const links = navLinks();
 
     return (
-        <header className="p-4 shadow-none fixed w-full z-50">
+        <header className="p-4 lg:px-20 shadow-none fixed w-full z-50">
             <div className="container mx-auto flex justify-between items-center">
                 {/* Logo */}
-                <a href="#" className="flex items-center @7xl:text-4xl xs:text-3xl md:text-4xl @2xs:text-4xl font-bold">
+                <a href="#" className="flex items-center text-3xl font-bold">
                     Gamers<span className="text-[#FAE82A]">Kit</span>
                 </a>
 
@@ -45,7 +45,7 @@ const Navbar = () => {
                 </div>
 
                 {/* Mobile Menu Button */}
-                <button className="p-4 lg:hidden" onClick={() => setIsOpen(!isOpen)}>
+                <button className="p-4 lg:hidden " onClick={() => setIsOpen(!isOpen)}>
                     {isOpen ? <X size={24} className="text-gray-800" /> : <AlignJustify size={24} className="text-gray-800" />}
                 </button>
             </div>
