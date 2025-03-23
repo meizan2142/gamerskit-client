@@ -19,23 +19,22 @@ export default function Dialog() {
                         {/* Close Button */}
                         <X onClick={() => setOpenModal(false)} className="w-6 cursor-pointer ml-auto hover:text-gray-700 fill-black dark:fill-white"/>
 
-                        <h1 className="text-2xl font-semibold mb-4">Login</h1>
+                        <h1 className="text-2xl font-semibold mb-4">Signin</h1>
 
                         {/* Login Form */}
                         <form>
                             <div className="mb-4">
                                 <label htmlFor="email" className="block text-sm font-medium">Email</label>
-                                <input id="email" type="email" className="mt-1 block w-full p-2 border rounded-md " placeholder="example@gmail.com" />
+                                <input id="email" type="email" className="mt-1 block w-full p-2 border rounded-md " placeholder="Email" />
                             </div>
 
                             <div className="mb-4">
                                 <label htmlFor="password" className="block text-sm font-medium">Password</label>
-                                <input id="password" type="password" className="mt-1 block w-full p-2 border rounded-md" placeholder="********" />
+                                <input id="password" type="password" className="mt-1 block w-full p-2 border rounded-md" placeholder="Password" />
                             </div>
-
-                            <button type="button" className="w-full py-2">
-                                Submit
-                            </button>
+                            <div className="">
+                            <button className="px-4 py-2 w-full block rounded-xl text-base hover:bg-[#FF6F61] transition-all ease-in bg-black text-white outline-none">SignIn</button>
+                            </div>
                         </form>
                     </div>
                 </div>
