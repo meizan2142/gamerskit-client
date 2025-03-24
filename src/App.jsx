@@ -7,7 +7,7 @@ function App() {
     <div>
       <div><Navbar/></div>
       <div><Hero/></div>
-      <div className="mt-32">
+      <div className="mt-20">
         <NewArrivals/>
       </div>
     </div>
