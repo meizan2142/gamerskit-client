@@ -1,6 +1,6 @@
 const NewArrivals = () => {
     return (
-        <div className="space-y-10 px-4 sm:px-6 lg:px-8">
+        <div className="space-y-10 mt-24 px-4 sm:px-6 lg:px-8">
             {/* Heading */}
             <div className="text-center space-y-5">
                 <h1 className="text-black font-bold text-3xl sm:text-4xl md:text-5xl">
@@ -123,7 +123,7 @@ const NewArrivals = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default NewArrivals;
+export default NewArrivals

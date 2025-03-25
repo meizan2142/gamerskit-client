@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const NewsLetter = () => {
+const Newsletter = () => {
     const [email, setEmail] = useState('');
 
     const handleSubmit = (e) => {
@@ -9,9 +9,8 @@ const NewsLetter = () => {
         console.log('Submitted email:', email);
         setEmail('');
     };
-
     return (
-        <div className="bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 mt-24">
             <div className="max-w-7xl mx-auto">
                 {/* Newsletter Section */}
                 <div className="py-8 px-4 sm:px-6 lg:px-8">
@@ -60,4 +59,4 @@ const NewsLetter = () => {
     )
 }
 
-export default NewsLetter
+export default Newsletter
