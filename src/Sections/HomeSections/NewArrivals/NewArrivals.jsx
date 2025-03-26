@@ -1,15 +1,16 @@
 import NissanImage from '/src/assets/Nissan.png';
 import Custom from '/src/assets/Custom.png';
-const NewArrivals = () => {
+const NewArrivals = ({heading, description}) => {
     return (
         <div className="space-y-10 mt-24 px-4 sm:px-6 lg:px-8">
             {/* Heading */}
             <div className="text-center space-y-5">
                 <h1 className="text-black font-bold text-3xl sm:text-4xl md:text-5xl">
-                    New Arrivals
+                    {heading}
                 </h1>
                 <p className="text-sm sm:text-base text-gray-500 max-w-2xl mx-auto px-4">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, ducimus. Repudiandae molestias eaque qui? Voluptatem nisi commodi libero, molestiae dolores deleniti, obcaecati aliquid ab aperiam illum cumque laboriosam, ipsum veniam.
+                    {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, ducimus. Repudiandae molestias eaque qui? Voluptatem nisi commodi libero, molestiae dolores deleniti, obcaecati aliquid ab aperiam illum cumque laboriosam, ipsum veniam. */}
+                    {description}
                 </p>
             </div>
 
