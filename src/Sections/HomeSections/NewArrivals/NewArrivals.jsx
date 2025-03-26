@@ -1,3 +1,5 @@
+import NissanImage from '/src/assets/Nissan.png';
+import Custom from '/src/assets/Custom.png';
 const NewArrivals = () => {
     return (
         <div className="space-y-10 mt-24 px-4 sm:px-6 lg:px-8">
@@ -22,8 +24,8 @@ const NewArrivals = () => {
                             <img
                                 width={400}
                                 height={400}
-                                className="h-[275px] w-full rounded-lg object-cover transition-transform duration-300 ease-in-out hover:scale-110"
-                                src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                className="h-[275px] w-full rounded-lg object-cover bg-[#F4F4F5] transition-transform duration-300 ease-in-out hover:scale-110"
+                                src={NissanImage}
                                 alt="jersey image"
                             />
                         </div>
@@ -55,8 +57,8 @@ const NewArrivals = () => {
                             <img
                                 width={400}
                                 height={400}
-                                className="h-[275px] w-full rounded-lg object-cover transition-transform duration-300 ease-in-out hover:scale-110"
-                                src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                className="h-[275px] w-full rounded-lg object-cover bg-[#F4F4F5] transition-transform duration-300 ease-in-out hover:scale-110"
+                                src={Custom}
                                 alt="jersey image"
                             />
                         </div>
