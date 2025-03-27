@@ -10,16 +10,16 @@ const Navbar = () => {
     const links = navLinks();
 
     return (
-        <header className="p-4 lg:px-8 xl:px-20 shadow-none fixed w-full z-50 ">
+        <header className="p-4 lg:px-8 xl:px-20 shadow-none fixed w-full z-50 bg-white dark:bg-[#1A1A1A]">
             <div className="container mx-auto flex justify-between items-center">
-                {/* Logo */}
-                <a href="#" className="flex items-center text-2xl sm:text-3xl font-bold">
-                    Gamers<span className="text-[#FAE82A]">Kit</span>
+                {/* Logo - Yellow accent */}
+                <a href="#" className="flex items-center text-2xl sm:text-3xl font-bold text-black dark:text-white">
+                    Gamers<span className="text-[#FFD700]">Kit</span>
                 </a>
 
                 {/* Navigation Links */}
                 <nav
-                    className={`lg:flex ${isOpen ? "block" : "hidden"} lg:block absolute lg:relative top-16 lg:top-0 left-0 w-full lg:w-auto bg-white lg:bg-transparent shadow-md lg:shadow-none transition-all`}
+                    className={`lg:flex ${isOpen ? "block" : "hidden"} lg:block absolute lg:relative top-16 lg:top-0 left-0 w-full lg:w-auto bg-white dark:bg-[#1A1A1A] lg:bg-transparent shadow-md lg:shadow-none transition-all`}
                 >
                     <ul className="flex flex-col lg:flex-row items-center space-y-4 lg:space-y-0 lg:space-x-8 xl:space-x-12 text-center p-4 lg:p-0">
                         {links.map((link) => (
@@ -28,8 +28,8 @@ const Navbar = () => {
                                     to={link.path}
                                     className={({ isActive }) =>
                                         isActive
-                                            ? "font-bold text-black text-sm sm:text-base"
-                                            : "text-black hover:font-bold transition text-sm sm:text-base"
+                                            ? "font-bold text-black dark:text-white text-sm sm:text-base border-b-2 border-[#FFD700]"
+                                            : "text-black dark:text-gray-300 hover:text-[#FFB300] dark:hover:text-[#FFD700] transition text-sm sm:text-base"
                                     }
                                 >
                                     {link.pathName}
@@ -41,24 +41,24 @@ const Navbar = () => {
 
                 {/* Icons and Buttons */}
                 <div className="hidden lg:flex space-x-4 xl:space-x-6 items-center">
-                    <Badge badgeContent={4} color="primary">
-                        <Heart className="w-5 h-5 sm:w-6 sm:h-6" />
+                    <Badge badgeContent={4} className="text-yellow-400 font-bold hover:text-[#FFB300]">
+                        <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-black dark:text-white hover:text-[#FFB300] dark:hover:text-[#FFD700]" />
                     </Badge>
-                    <Badge badgeContent={4} color="primary">
-                        <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6" />
+                    <Badge badgeContent={4} className="text-green-700 font-bold">
+                        <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-white  hover:text-[#FFB300]" />
                     </Badge>
                     <Dialog />
                 </div>
 
                 {/* Mobile Menu Button */}
                 <button
-                    className="p-2 lg:hidden"
+                    className="p-2 lg:hidden text-black dark:text-white"
                     onClick={() => setIsOpen(!isOpen)}
                 >
                     {isOpen ? (
-                        <X size={24} className="text-gray-800" />
+                        <X size={24} className="hover:text-[#FFB300] dark:hover:text-[#FFD700]" />
                     ) : (
-                        <AlignJustify size={24} className="text-gray-800" />
+                        <AlignJustify size={24} className="hover:text-[#FFB300] dark:hover:text-[#FFD700]" />
                     )}
                 </button>
             </div>

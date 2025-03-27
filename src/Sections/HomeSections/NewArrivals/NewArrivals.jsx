@@ -9,7 +9,6 @@ const NewArrivals = ({heading, description}) => {
                     {heading}
                 </h1>
                 <p className="text-sm sm:text-base text-gray-500 max-w-2xl mx-auto px-4">
-                    {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, ducimus. Repudiandae molestias eaque qui? Voluptatem nisi commodi libero, molestiae dolores deleniti, obcaecati aliquid ab aperiam illum cumque laboriosam, ipsum veniam. */}
                     {description}
                 </p>
             </div>
@@ -49,32 +48,6 @@ const NewArrivals = ({heading, description}) => {
 
                             {/* Secondary Button (Outline) */}
                             <button className="rounded-md border border-black px-4 py-2 text-xs sm:text-sm font-semibold text-black duration-300 hover:bg-black hover:text-white dark:border-[#FFD700] dark:text-[#FFD700] dark:hover:bg-[#FFD700] dark:hover:text-black">
-                                View Details
-                            </button>
-                        </div>
-                    </div>
-                    <div className="w-full space-y-4 rounded-lg bg-white p-6 shadow-lg dark:bg-[#18181B]">
-                        <div className="overflow-hidden rounded-lg">
-                            <img
-                                width={400}
-                                height={400}
-                                className="h-[275px] w-full rounded-lg object-cover bg-[#F4F4F5] transition-transform duration-300 ease-in-out hover:scale-110"
-                                src={Custom}
-                                alt="jersey image"
-                            />
-                        </div>
-                        <div className="grid gap-2">
-                            <h1 className="text-lg font-semibold">Product Name</h1>
-                            <p className="text-sm text-gray-500 dark:text-white/60">
-                                This is a brief description of the product. It highlights the key features and benefits.
-                            </p>
-                            <div className="text-lg font-semibold">$99.99</div>
-                        </div>
-                        <div className="flex gap-4">
-                            <button className="rounded-lg bg-slate-800 px-4 py-2 text-xs sm:text-sm font-semibold text-white duration-300 hover:bg-slate-950">
-                                Add to Cart
-                            </button>
-                            <button className="rounded-md border border-black px-4 py-2 text-xs sm:text-sm dark:border-white dark:hover:text-slate-800 dark:hover:bg-white duration-300 hover:bg-gray-200">
                                 View Details
                             </button>
                         </div>

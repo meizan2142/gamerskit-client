@@ -6,7 +6,7 @@ export default function Dialog() {
 
     return (
         <div className="mx-auto flex items-center justify-center">
-            <User onClick={() => setOpenModal(true)} className="cursor-pointer text-black hover:text-gray-700" />
+            <User onClick={() => setOpenModal(true)} className="cursor-pointer text-white hover:text-[#FFB300]" />
 
 
             {/* Modal */}
