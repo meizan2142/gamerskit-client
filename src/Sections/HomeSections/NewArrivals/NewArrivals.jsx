@@ -1,6 +1,5 @@
 import NissanImage from '/src/assets/Nissan.png';
-import Custom from '/src/assets/Custom.png';
-import { ShoppingCart } from 'lucide-react';
+import { Eye, ShoppingCart } from 'lucide-react';
 const NewArrivals = ({ heading, description }) => {
     return (
         <div className="space-y-10 mt-24 px-4 sm:px-6 lg:px-8">
@@ -56,8 +55,9 @@ const NewArrivals = ({ heading, description }) => {
                                 <ShoppingCart className="w-4 h-4" />
                                 <span>Add to Cart</span>
                             </button>
-                            <button className="flex-1 border-2 border-black hover:bg-black hover:text-white dark:border-[#FFD700] dark:hover:bg-[#FFD700] dark:hover:text-black font-semibold px-4 py-3 rounded-lg transition-all">
-                                Quick View
+                            <button className="flex-1  flex items-center justify-center gap-2 border-2  hover:text-black text-white dark:border-[#FFD700] dark:hover:bg-[#FFD700]   font-semibold px-4 py-3 rounded-lg transition-all">
+                                <Eye className="w-4 h-4 " />
+                                <span>Quick View</span>
                             </button>
                         </div>
                     </div>
