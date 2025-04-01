@@ -1,6 +1,6 @@
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import NissanImage from '/src/assets/Nissan.png';
-import { Eye, ShoppingCart } from 'lucide-react';
+import { Car, Eye, Shirt, ShoppingCart } from 'lucide-react';
 const NewArrivals = ({ heading, description }) => {
     return (
         <div className="space-y-10 mt-24 px-4 sm:px-6 lg:px-8">
@@ -17,9 +17,19 @@ const NewArrivals = ({ heading, description }) => {
             {/* All Tabs */}
             <div className='text-center'>
                 <Tabs>
-                    <TabList>
-                        <Tab>Title 1</Tab>
-                        <Tab>Title 2</Tab>
+                    <TabList className='flex items-center justify-center gap-10'>
+                        <Tab>
+                            <div className='grid justify-center items-center text-center'>
+                                <h1>Jersey</h1>
+                                <Shirt />
+                            </div>
+                        </Tab>
+                        <Tab>
+                            <div>
+                                <h1>Car</h1>
+                                <Car />
+                            </div>
+                        </Tab>
                     </TabList>
 
                     <TabPanel>
