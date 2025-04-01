@@ -1,8 +1,7 @@
 import Footer from "./Components/Footer/Footer"
 import Hero from "./Components/Hero/Hero"
 import Navbar from "./Components/Navbar/Navbar"
-// import NewArrivals from "./Pages/Home/HomeSections/NewArrivals/NewArrivals"
-// import NewsLetter from "./Pages/Home/HomeSections/NewsLetter/NewsLetter"
+
 
 function App() {
   return (

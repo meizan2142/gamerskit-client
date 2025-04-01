@@ -1,3 +1,4 @@
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import NissanImage from '/src/assets/Nissan.png';
 import { Eye, ShoppingCart } from 'lucide-react';
 const NewArrivals = ({ heading, description }) => {
@@ -11,6 +12,23 @@ const NewArrivals = ({ heading, description }) => {
                 <p className="text-sm sm:text-base text-gray-500 max-w-2xl mx-auto px-4">
                     {description}
                 </p>
+            </div>
+
+            {/* All Tabs */}
+            <div className='text-center'>
+                <Tabs>
+                    <TabList>
+                        <Tab>Title 1</Tab>
+                        <Tab>Title 2</Tab>
+                    </TabList>
+
+                    <TabPanel>
+                        <h2>Any content 1</h2>
+                    </TabPanel>
+                    <TabPanel>
+                        <h2>Any content 2</h2>
+                    </TabPanel>
+                </Tabs>
             </div>
 
             {/* Cards */}
