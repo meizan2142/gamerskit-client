@@ -1,10 +1,21 @@
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
-import NissanImage from '/src/assets/Nissan.png';
 import { Car, Eye, Shirt, ShoppingCart } from 'lucide-react';
 import { allProducts } from './allProducts';
-const NewArrivals = ({ heading, description }) => {
 
-    const products = allProducts()
+const NewArrivals = ({ heading, description }) => {
+    const products = allProducts();
+
+    // Categorize products
+    const jerseyProducts = products.filter(product =>
+        product.title.toLowerCase().includes('jersey') ||
+        product.title.toLowerCase().includes('kit')
+    );
+
+    const carProducts = products.filter(product =>
+        product.title.toLowerCase().includes('car') ||
+        product.title.toLowerCase().includes('gtr') ||
+        product.title.toLowerCase().includes('porsche')
+    );
 
     return (
         <div className="space-y-10 mt-24 px-4 sm:px-6 lg:px-8">
@@ -21,84 +32,95 @@ const NewArrivals = ({ heading, description }) => {
             {/* All Tabs */}
             <div className='text-center'>
                 <Tabs>
-                    <TabList className='flex items-center justify-center gap-10'>
-                        <Tab>
-                            <div className='grid justify-center items-center text-center'>
-                                <h1>Jersey</h1>
-                                <Shirt />
+                    <TabList className='flex items-center justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 flex-wrap'>
+                        <Tab className="cursor-pointer px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                            <div className='grid justify-center items-center text-center gap-1'>
+                                <Shirt className="w-5 h-5 sm:w-6 sm:h-6 mx-auto" />
+                                <h1 className="text-sm sm:text-base">Jersey</h1>
                             </div>
                         </Tab>
-                        <Tab>
-                            <div>
-                                <h1>Car</h1>
-                                <Car />
+                        <Tab className="cursor-pointer px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                            <div className='grid justify-center items-center text-center gap-1'>
+                                <Car className="w-5 h-5 sm:w-6 sm:h-6 mx-auto" />
+                                <h1 className="text-sm sm:text-base">Car</h1>
                             </div>
                         </Tab>
                     </TabList>
 
                     <TabPanel>
-                        <h2>Any content 1</h2>
+                        <div className="2xl:container 2xl:mx-auto mt-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-8">
+                                {jerseyProducts.map((product, index) => (
+                                    <ProductCard key={index} product={product} />
+                                ))}
+                            </div>
+                        </div>
                     </TabPanel>
                     <TabPanel>
-                        <h2>Any content 2</h2>
+                        <div className="2xl:container 2xl:mx-auto mt-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-8">
+                                {carProducts.map((product, index) => (
+                                    <ProductCard key={index} product={product} />
+                                ))}
+                            </div>
+                        </div>
                     </TabPanel>
                 </Tabs>
             </div>
+        </div>
+    );
+};
 
-            {/* Cards */}
-            <div className="2xl:container 2xl:mx-auto">
-                {/* Parent Div of cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-8">
-                    {/* Single Card */}
-                    {
-                        products.map((product, index) => <div key={index} className="group w-full space-y-4 rounded-lg bg-white p-6 shadow-lg dark:bg-[#1A1A1A] relative overflow-hidden border border-black/10 dark:border-white/10">
-                            {/* Floating Accent */}
-                            <div className="absolute -top-4 -right-4 w-20 h-20 bg-[#FFD700] rounded-full opacity-10 -z-0" />
+// Extracted ProductCard component for reusability
+const ProductCard = ({ product }) => {
+    return (
+        <div className="group w-full flex flex-col h-full rounded-lg bg-white p-6 shadow-lg dark:bg-[#1A1A1A] relative overflow-hidden border border-black/10 dark:border-white/10">
+            {/* Floating Accent */}
+            <div className="absolute -top-4 -right-4 w-20 h-20 bg-[#FFD700] rounded-full opacity-10 -z-0" />
 
-                            {/* Image with Gradient */}
-                            <div className="relative overflow-hidden rounded-lg">
-                                <img
-                                    width={400}
-                                    height={400}
-                                    className="h-[275px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                    src={product.img}
-                                    alt="Product"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                                {/* "New" Badge */}
-                                <div className="absolute top-4 left-4 bg-[#0F172A] text-[#FFD700] px-3 py-1 rounded-full text-xs font-bold">
-                                    NEW
-                                </div>
-                            </div>
-
-                            {/* Details */}
-                            <div className="grid gap-2 relative z-10">
-                                <h1 className="text-xl font-bold text-black dark:text-white">{product.title}</h1>
-                                <p className="text-sm text-gray-600 dark:text-gray-300 h-0 group-hover:h-16 overflow-hidden transition-all duration-300">
-                                    {product.description}
-                                </p>
-                                <div className="text-lg font-mono font-semibold text-[#FFB300] bg-[#0F172A]/80 px-2 py-1 rounded-md inline-block">
-                                    {product.price} BDT
-                                </div>
-                            </div>
-
-                            {/* Buttons */}
-                            <div className="flex gap-4">
-                                <button className="flex-1 flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-semibold px-4 py-3 rounded-lg transition-all hover:shadow-lg">
-                                    <ShoppingCart className="w-4 h-4" />
-                                    <span>Add to Cart</span>
-                                </button>
-                                <button className="flex-1  flex items-center justify-center gap-2 border-2  hover:text-black text-white dark:border-[#FFD700] dark:hover:bg-[#FFD700]   font-semibold px-4 py-3 rounded-lg transition-all">
-                                    <Eye className="w-4 h-4 " />
-                                    <span>Quick View</span>
-                                </button>
-                            </div>
-                        </div>)
-                    }
+            {/* Image with Gradient */}
+            <div className="relative overflow-hidden rounded-lg flex-grow-0">
+                <img
+                    width={400}
+                    height={400}
+                    className="h-[275px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    src={product.img}
+                    alt="Product"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                {/* "New" Badge */}
+                <div className="absolute top-4 left-4 bg-[#0F172A] text-[#FFD700] px-3 py-1 rounded-full text-xs font-bold">
+                    NEW
                 </div>
             </div>
-        </div>
-    )
-}
 
-export default NewArrivals
+            {/* Details */}
+            <div className="grid gap-2 relative z-10 mt-4 flex-grow">
+                <h1 className="text-xl font-bold text-black dark:text-white">{product.title}</h1>
+                <p className="text-sm text-gray-600 dark:text-gray-300 h-0 group-hover:h-16 overflow-hidden transition-all duration-300">
+                    {product.description}
+                </p>
+                <div className="text-lg font-mono font-semibold text-[#FFB300] bg-[#0F172A]/80 px-2 py-1 rounded-md inline-block mt-2">
+                    {product.price} BDT
+                </div>
+            </div>
+
+            {/* Buttons - Now properly aligned at the bottom */}
+            <div className="flex gap-2 sm:gap-3 lg:gap-4 mt-3 sm:mt-4 lg:mt-4">
+                {/* Add to Cart Button */}
+                <button className="flex-1 flex items-center justify-center gap-1 sm:gap-2 lg:gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-semibold px-2 sm:px-3 lg:px-4 py-2 sm:py-3 lg:py-3 rounded-lg transition-all hover:shadow-lg text-xs sm:text-sm lg:text-base">
+                    <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
+                    <span>Add to Cart</span>
+                </button>
+
+                {/* Quick View Button */}
+                <button className="flex-1 flex items-center justify-center gap-1 sm:gap-2 lg:gap-2 border-2 hover:text-black text-white dark:border-[#FFD700] dark:hover:bg-[#FFD700] font-semibold px-2 sm:px-3 lg:px-4 py-2 sm:py-3 lg:py-3 rounded-lg transition-all text-xs sm:text-sm lg:text-base">
+                    <Eye className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
+                    <span>Quick View</span>
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export default NewArrivals;
