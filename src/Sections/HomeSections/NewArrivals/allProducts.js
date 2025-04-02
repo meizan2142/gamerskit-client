@@ -1,0 +1,40 @@
+import Nissan from '/src/assets/Nissan.png';
+import G2 from '/src/assets/G2.png';
+import Porsche from '/src/assets/Porsche.png';
+import Sentinels from '/src/assets/Sentinels.png';
+import Custom from '/src/assets/Custom.png';
+
+export const allProducts = () => {
+    return [
+        {
+            "title": "Nissan GTR Skyline 4WD",
+            "price": 3500,
+            "description": "Premium noise-canceling headphones with 30-hour battery life and deep bass.",
+            "img": Nissan
+        },
+        {
+            "title": "Porsche 911 Drift Car 4WD",
+            "price": 3500,
+            "description": "Insulated 32oz bottle, keeps drinks cold for 24 hours or hot for 12 hours.",
+            "img": Porsche
+        },
+        {
+            "title": "Limited Edition SEN Masters Bangkok Pro Jersey",
+            "price": 620,
+            "description": "Eco-friendly unisex tee, made from 100% organic cotton for all-day comfort.",
+            "img": Sentinels
+        },
+        {
+            "title": "Grab the premium F1 kit of Gamerskit!",
+            "price": 620,
+            "description": "Adjustable brightness and color temperature with touch controls and USB charging.",
+            "img": Custom
+        },
+        {
+            "title": "G2 Esports Prestige 2025 kit",
+            "price": 650,
+            "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
+            "img": G2   
+        }
+    ];
+};
