@@ -41,9 +41,13 @@ const Navbar = () => {
 
                 {/* Icons and Buttons */}
                 <div className="hidden lg:flex space-x-4 xl:space-x-6 items-center">
+                    {/* Wishlist */}
                     <Badge badgeContent={4} className="text-yellow-400 font-bold hover:text-[#FFB300]">
-                        <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-black dark:text-white hover:text-[#FFB300] dark:hover:text-[#FFD700]" />
+                        <NavLink to='/wishlist'>
+                            <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-black dark:text-white hover:text-[#FFB300] dark:hover:text-[#FFD700]" />
+                        </NavLink>
                     </Badge>
+                    {/* Cart */}
                     <Badge badgeContent={4} className="text-green-700 font-bold">
                         <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-white  hover:text-[#FFB300]" />
                     </Badge>

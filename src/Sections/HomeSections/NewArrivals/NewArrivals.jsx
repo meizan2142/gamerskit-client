@@ -1,6 +1,7 @@
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
-import { Car, Eye, Shirt, ShoppingCart } from 'lucide-react';
+import { Car, Eye, Heart, Shirt, ShoppingCart } from 'lucide-react';
 import { allProducts } from './allProducts';
+// import { FaHeart } from 'react-icons/fa';
 
 const NewArrivals = ({ heading, description }) => {
     const products = allProducts();
@@ -89,8 +90,13 @@ const ProductCard = ({ product }) => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                 {/* "New" Badge */}
-                <div className="absolute top-4 left-4 bg-[#0F172A] text-[#FFD700] px-3 py-1 rounded-full text-xs font-bold">
-                    NEW
+                <div className="absolute top-4 left-4 text-white px-3 py-1 rounded-full w-8 h-8 font-bold">
+                    <div>
+                        {/* <FaHeart /> */}
+                    </div>
+                    <div>
+                        <Heart />
+                    </div>
                 </div>
             </div>
 
