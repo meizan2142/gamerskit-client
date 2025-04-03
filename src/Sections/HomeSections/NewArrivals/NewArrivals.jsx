@@ -116,7 +116,7 @@ const ProductCard = ({ product }) => {
                 {/* Quick View Button */}
                 <button className="flex-1 flex items-center justify-center gap-1 sm:gap-2 lg:gap-2 border-2 hover:text-black text-white dark:border-[#FFD700] dark:hover:bg-[#FFD700] font-semibold px-2 sm:px-3 lg:px-4 py-2 sm:py-3 lg:py-3 rounded-lg transition-all text-xs sm:text-sm lg:text-[10px] xl:text-base">
                     <Eye className="w-3 h-3 sm:w-4 sm:h-4 lg:w-4 lg:h-4" />
-                    <span>Quick View</span>
+                    <span>View Details</span>
                 </button>
             </div>
         </div>
