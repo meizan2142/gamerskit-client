@@ -1,7 +1,6 @@
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { Car, Eye, Heart, Shirt, ShoppingCart } from 'lucide-react';
 import { allProducts } from './allProducts';
-// import { FaHeart } from 'react-icons/fa';
 
 const NewArrivals = ({ heading, description }) => {
     const products = allProducts();

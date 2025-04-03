@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { navLinks } from "./navData";
-import { AlignJustify, Heart, MailIcon, ShoppingCart, User, X } from "lucide-react";
+import { AlignJustify, Heart, ShoppingCart, X } from "lucide-react";
 import { Badge } from "@mui/material";
 import Dialog from "../user-dialog/Dialog";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import Custom from '/src/assets/Custom.png';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -87,13 +89,50 @@ const Navbar = () => {
 
                     {/* Cart items will go here */}
                     <div className="flex-1 overflow-y-auto">
-                        {/* Example cart item */}
+                        {/* Cart items list */}
                         <div className="border-b border-gray-200 dark:border-gray-700 py-4">
-                            <p className="text-black dark:text-white">Product Name</p>
-                            <p className="text-[#FFD700]">$99.99</p>
+                            <div className="flex gap-4">
+                                {/* Product image */}
+                                <div className="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden">
+                                    <img
+                                        src={Custom}
+                                        alt="Product"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+
+                                {/* Product details */}
+                                <div className="flex-1">
+                                    <div className="flex justify-between items-start">
+                                        <p className="text-black dark:text-white font-medium">Product Name</p>
+                                        <button className="text-gray-500 hover:text-red-500">
+                                            <RiDeleteBin5Line size={18} className="text-white hover:text-red-600"/>
+                                        </button>
+                                    </div>
+
+                                    <p className="text-[#FFD700] font-semibold my-1">$99.99</p>
+
+                                    {/* Quantity controls */}
+                                    <div className="flex items-center mt-2">
+                                        <button
+                                            className="w-8 h-8 flex items-center justify-center border text-white border-gray-300 rounded-l-md"
+                                            aria-label="Decrease quantity"
+                                        >
+                                            -
+                                        </button>
+                                        <span className="w-10 h-8 flex items-center justify-center text-white border-t border-b border-gray-300">
+                                            1
+                                        </span>
+                                        <button
+                                            className="w-8 h-8 flex items-center justify-center border text-white border-gray-300 rounded-r-md"
+                                            aria-label="Increase quantity"
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        {/* If cart is empty */}
-                        <p className="text-white font-normal text-base">Your cart is currently empty.</p>
                     </div>
 
                     {/* Cart summary and checkout */}
