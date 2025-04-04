@@ -73,6 +73,10 @@ const NewArrivals = ({ heading, description }) => {
 
 // Extracted ProductCard component for reusability
 const ProductCard = ({ product }) => {
+    const handleSubmit = () =>{
+        console.log(product);
+        
+    }
     return (
         <div className="group w-full flex flex-col h-full rounded-lg p-6 shadow-lg bg-[#1A1A1A] relative overflow-hidden border border-white/10">
             {/* Floating Accent */}
@@ -110,7 +114,7 @@ const ProductCard = ({ product }) => {
             {/* Buttons - Now properly aligned at the bottom */}
             <div className="flex gap-2 sm:gap-3 lg:gap-4 mt-3 sm:mt-4 lg:mt-5">
                 {/* Add to Cart Button */}
-                <button className="flex-1 flex items-center justify-center gap-1 sm:gap-2 lg:gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-semibold px-2 sm:px-3 lg:px-4 py-2 sm:py-3 lg:py-3 rounded-lg transition-all hover:shadow-lg text-xs sm:text-sm lg:text-[10px] xl:text-[12px]">
+                <button onClick={handleSubmit} className="flex-1 flex items-center justify-center gap-1 sm:gap-2 lg:gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-semibold px-2 sm:px-3 lg:px-4 py-2 sm:py-3 lg:py-3 rounded-lg transition-all hover:shadow-lg text-xs sm:text-sm lg:text-[10px] xl:text-[12px]">
                     <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4 lg:w-4 lg:h-4" />
                     <span>Add to Cart</span>
                 </button>
