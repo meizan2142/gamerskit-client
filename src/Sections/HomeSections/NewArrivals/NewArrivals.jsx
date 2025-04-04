@@ -17,6 +17,7 @@ const NewArrivals = ({ heading, description }) => {
         product.title.toLowerCase().includes('gtr') ||
         product.title.toLowerCase().includes('porsche')
     );
+    
 
     return (
         <div className="space-y-10 mt-24 px-4 sm:px-6 lg:px-8">
