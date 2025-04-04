@@ -1,6 +1,7 @@
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { Car, Eye, Heart, Shirt, ShoppingCart } from 'lucide-react';
 import { allProducts } from './allProducts';
+import toast, { Toaster } from 'react-hot-toast';
 
 const NewArrivals = ({ heading, description }) => {
     const products = allProducts();
@@ -73,9 +74,23 @@ const NewArrivals = ({ heading, description }) => {
 
 // Extracted ProductCard component for reusability
 const ProductCard = ({ product }) => {
-    const handleSubmit = () =>{
+    const handleSubmit = () => {
         console.log(product);
-        
+        fetch(`http://localhost:5000/cartList`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(product)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    toast.success('Added to Cart')
+                    console.log('added');
+
+                }
+            })
     }
     return (
         <div className="group w-full flex flex-col h-full rounded-lg p-6 shadow-lg bg-[#1A1A1A] relative overflow-hidden border border-white/10">
@@ -124,6 +139,9 @@ const ProductCard = ({ product }) => {
                     <Eye className="w-3 h-3 sm:w-4 sm:h-4 lg:w-4 lg:h-4" />
                     <span>View Details</span>
                 </button>
+            </div>
+            <div>
+                <Toaster />
             </div>
         </div>
     );
