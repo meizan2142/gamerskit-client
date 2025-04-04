@@ -77,7 +77,7 @@ const NewArrivals = ({ heading, description }) => {
 const ProductCard = ({ product }) => {
     const handleSubmit = () => {
         console.log(product);
-        fetch(`http://localhost:5000/cartList`, {
+        fetch(`${import.meta.env.VITE_API_URL}/cartList`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
