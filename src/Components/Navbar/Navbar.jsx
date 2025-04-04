@@ -44,7 +44,7 @@ const Navbar = () => {
                     </nav>
 
                     {/* Icons and Buttons */}
-                    <div className="hidden lg:flex space-x-4 xl:space-x-6 items-center">
+                    <div className="flex space-x-4 xl:space-x-6 items-center">
                         {/* Wishlist */}
                         <Badge badgeContent={4} className="text-yellow-400 font-bold hover:text-[#FFB300]">
                             <NavLink to='/wishlist'>
