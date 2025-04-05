@@ -14,16 +14,32 @@ const Navbar = () => {
 
     return (
         <>
-            <header className="p-4 lg:px-8 xl:px-20 shadow-none fixed w-full z-50 bg-white dark:bg-[#1A1A1A]">
+            <header className="p-4 lg:px-8 xl:px-20 shadow-none fixed w-full z-50 bg-[#1A1A1A]">
                 <div className="container mx-auto flex justify-between items-center">
-                    {/* Logo - Yellow accent */}
-                    <a href="#" className="flex items-center text-2xl sm:text-3xl font-bold text-black dark:text-white">
-                        Gamers<span className="text-[#FFD700]">Kit</span>
+                    {/* Mobile Menu Button - First on small screens */}
+                    <button
+                        className="p-2 lg:hidden text-black dark:text-white order-1 lg:order-none"
+                        onClick={() => setIsOpen(!isOpen)}
+                    >
+                        {isOpen ? (
+                            <X size={24} className="hover:text-[#FFB300] dark:hover:text-[#FFD700]" />
+                        ) : (
+                            <AlignJustify size={24} className="hover:text-[#FFB300] dark:hover:text-[#FFD700]" />
+                        )}
+                    </button>
+
+                    {/* Logo - Second on small screens */}
+                    <a href="#" className="order-2 lg:order-none mx-auto lg:mx-0">
+                        <img
+                            src="heading logo.png"
+                            alt="GamersKit Logo"
+                            className="h-8 sm:h-10 w-auto dark:hidden"
+                        />
                     </a>
 
                     {/* Navigation Links */}
                     <nav
-                        className={`lg:flex ${isOpen ? "block" : "hidden"} lg:block absolute lg:relative top-16 lg:top-0 left-0 w-full lg:w-auto bg-white dark:bg-[#1A1A1A] lg:bg-transparent shadow-md lg:shadow-none transition-all`}
+                        className={`lg:flex ${isOpen ? "block" : "hidden"} lg:block absolute lg:relative top-16 lg:top-0 left-0 w-full lg:w-auto bg-white dark:bg-[#1A1A1A] lg:bg-transparent shadow-md lg:shadow-none transition-all order-4 lg:order-none`}
                     >
                         <ul className="flex flex-col lg:flex-row items-center space-y-4 lg:space-y-0 lg:space-x-8 xl:space-x-12 text-center p-4 lg:p-0">
                             {links.map((link) => (
@@ -43,14 +59,8 @@ const Navbar = () => {
                         </ul>
                     </nav>
 
-                    {/* Icons and Buttons */}
-                    <div className="flex space-x-4 xl:space-x-6 items-center">
-                        {/* Wishlist */}
-                        <Badge badgeContent={4} className="text-yellow-400 font-bold hover:text-[#FFB300]">
-                            <NavLink to='/wishlist'>
-                                <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-black dark:text-white hover:text-[#FFB300] dark:hover:text-[#FFD700]" />
-                            </NavLink>
-                        </Badge>
+                    {/* Icons and Buttons - Third on small screens */}
+                    <div className="flex space-x-4 xl:space-x-6 items-center order-3 lg:order-none">
                         {/* Cart */}
                         <Badge badgeContent={4} className="text-green-700 font-bold">
                             <button onClick={() => setIsCartOpen(true)}>
@@ -59,21 +69,9 @@ const Navbar = () => {
                         </Badge>
                         <Dialog />
                     </div>
-
-                    {/* Mobile Menu Button */}
-                    <button
-                        className="p-2 lg:hidden text-black dark:text-white"
-                        onClick={() => setIsOpen(!isOpen)}
-                    >
-                        {isOpen ? (
-                            <X size={24} className="hover:text-[#FFB300] dark:hover:text-[#FFD700]" />
-                        ) : (
-                            <AlignJustify size={24} className="hover:text-[#FFB300] dark:hover:text-[#FFD700]" />
-                        )}
-                    </button>
                 </div>
             </header>
-            <ProductCart isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen}/>
+            <ProductCart isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen} />
         </>
     );
 };

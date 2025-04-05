@@ -118,12 +118,9 @@ const ProductCard = ({ product }) => {
 
             {/* Details */}
             <div className="grid gap-2 relative z-10 mt-4 flex-grow">
-                <h1 className="text-xl font-bold text-white">{product.title}</h1>
-                <p className="text-sm  text-gray-300 h-0 group-hover:h-16 overflow-hidden transition-all duration-300">
-                    {product.description}
-                </p>
+                <h1 className="text-xl font-bold text-white">{product.title}</h1>   
                 <div className="text-lg font-mono font-semibold text-[#FFB300] bg-[#0F172A]/80 px-2 py-1 rounded-md inline-block mt-2">
-                    {product.price} BDT
+                    Price: {product.price}BDT
                 </div>
             </div>
 

@@ -10,7 +10,7 @@ import Custom from '/src/assets/Custom.png';
 const Hero = () => {
     return (
         <section
-            className="w-full min-h-screen py-12 lg:py-32 xl:py-48 2xl:py-72 px-4 sm:px-6 lg:px-12 xl:px-20 relative pt-24 sm:pt-32"
+            className="w-full py-12 lg:py-32 xl:py-48 2xl:py-72 px-4 sm:px-6 lg:px-12 xl:px-20 relative pt-24 sm:pt-32"
             style={{
                 backgroundImage: "url('/hero-bg.jpg')",
                 backgroundSize: "cover",
