@@ -5,7 +5,7 @@ import { Autoplay } from "swiper/modules";
 import NissanImage from '/src/assets/Nissan.png';
 import Porsche from '/src/assets/Porsche.png';
 import Sentinels from '/src/assets/Sentinels.png';
-import Custom from '/src/assets/Custom.jpg';
+import Custom from '/src/assets/Custom.png';
 import { NavLink } from "react-router";
 
 const Hero = () => {
