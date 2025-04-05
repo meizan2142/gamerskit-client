@@ -1,4 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 import { X } from 'lucide-react';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 
@@ -8,13 +9,17 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
     // Fetch cart data
     const { isLoading, error, data = [] } = useQuery({
         queryKey: ['cart'],
-        queryFn: () =>
-            fetch('http://localhost:5000/cartList')
-                .then(res => res.json())
-                .catch(error => {
-                    console.log(error, "Failed to fetch cart items");
-                    return []; // Return empty array on error
-                }),
+        queryFn: async () => {
+            try {
+                const response = await axios.get(
+                    `${import.meta.env.VITE_API_URL}/cartList`
+                );
+                return response.data; // Axios automatically parses JSON
+            } catch (err) {
+                console.error(err, "Failed to fetch cart items");
+                return []; // Fallback empty array on error
+            }
+        },
     });
 
     // Update quantity

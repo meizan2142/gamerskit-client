@@ -2,6 +2,7 @@ import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { Car, Eye, Heart, Shirt, ShoppingCart } from 'lucide-react';
 import { allProducts } from './allProducts';
 import toast, { Toaster } from 'react-hot-toast';
+import axios from 'axios';
 
 const NewArrivals = ({ heading, description }) => {
     const products = allProducts();
@@ -17,7 +18,7 @@ const NewArrivals = ({ heading, description }) => {
         product.title.toLowerCase().includes('gtr') ||
         product.title.toLowerCase().includes('porsche')
     );
-    
+
 
     return (
         <div className="space-y-10 mt-24 px-4 sm:px-6 lg:px-8">
@@ -76,22 +77,21 @@ const NewArrivals = ({ heading, description }) => {
 // Extracted ProductCard component for reusability
 const ProductCard = ({ product }) => {
     const handleSubmit = () => {
-        console.log(product);
-        fetch(`${import.meta.env.VITE_API_URL}/cartList`, {
-            method: "POST",
+        axios.post(`${import.meta.env.VITE_API_URL}/cartList`, product, {
             headers: {
-                "content-type": "application/json",
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(product)
         })
-            .then(res => res.json())
-            .then(data => {
-                if (data.insertedId) {
-                    toast.success('Added to Cart')
+            .then(response => {
+                if (response.data.insertedId) {
+                    toast.success('Added to Cart');
                     console.log('added');
-
                 }
             })
+            .catch(error => {
+                console.error('Error:', error);
+                toast.error('Failed to add to cart');
+            });
     }
     return (
         <div className="group w-full flex flex-col h-full rounded-lg p-6 shadow-lg bg-[#1A1A1A] relative overflow-hidden border border-white/10">
