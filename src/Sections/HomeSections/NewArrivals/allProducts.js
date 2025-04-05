@@ -1,8 +1,8 @@
 import Nissan from '/src/assets/Nissan.png';
-import G2 from '/src/assets/G2.png';
+import G2 from '/src/assets/Prestige.jpg';
 import Porsche from '/src/assets/Porsche.png';
-import Sentinels from '/src/assets/Sentinels.png';
-import Custom from '/src/assets/Custom.png';
+import Sentinels from '/src/assets/Bangkok.jpg';
+import RedBull from '/src/assets/Red Bull.jpg';
 
 export const allProducts = () => {
     return [
@@ -25,16 +25,16 @@ export const allProducts = () => {
             "img": Sentinels
         },
         {
-            "title": "Grab the premium F1 kit of Gamerskit!",
+            "title": "F1 RED BULL Jersey",
             "price": 620,
             "description": "Adjustable brightness and color temperature with touch controls and USB charging.",
-            "img": Custom
+            "img": RedBull
         },
         {
             "title": "G2 Esports Prestige 2025 kit",
             "price": 650,
             "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
             "img": G2   
-        }
+        },
     ];
 };

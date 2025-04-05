@@ -2,6 +2,7 @@ import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { Car, Eye, Heart, Shirt, ShoppingCart } from 'lucide-react';
 import { allProducts } from './allProducts';
 import toast, { Toaster } from 'react-hot-toast';
+import { FaMaskFace } from "react-icons/fa6";
 import axios from 'axios';
 
 const NewArrivals = ({ heading, description }) => {
@@ -21,7 +22,7 @@ const NewArrivals = ({ heading, description }) => {
 
 
     return (
-        <div className="space-y-10 mt-24 px-4 sm:px-6 lg:px-8">
+        <div className="space-y-3 mt-10 px-4 sm:px-6 lg:px-8">
             {/* Heading */}
             <div className="text-center space-y-5">
                 <h1 className="text-black font-bold text-3xl sm:text-4xl md:text-5xl">
@@ -38,18 +39,78 @@ const NewArrivals = ({ heading, description }) => {
                     <TabList className='flex items-center justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 flex-wrap'>
                         <Tab className="cursor-pointer px-3 py-2 rounded-lg hover:bg-gray-hover:bg-gray-800 transition-colors">
                             <div className='grid justify-center items-center text-center gap-1'>
-                                <Shirt className="w-5 h-5 sm:w-6 sm:h-6 mx-auto" />
-                                <h1 className="text-sm sm:text-base">Jersey</h1>
+                                <Car className="w-5 h-5 sm:w-6 sm:h-6 mx-auto" />
+                                <h1 className="text-sm sm:text-base font-bold">Car</h1>
                             </div>
                         </Tab>
                         <Tab className="cursor-pointer px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                             <div className='grid justify-center items-center text-center gap-1'>
-                                <Car className="w-5 h-5 sm:w-6 sm:h-6 mx-auto" />
-                                <h1 className="text-sm sm:text-base">Car</h1>
+                                <Shirt className="w-5 h-5 sm:w-6 sm:h-6 mx-auto" />
+                                <h1 className="text-sm sm:text-base font-bold">E-Sports Jersey</h1>
+                            </div>
+                        </Tab>
+                        <Tab className="cursor-pointer px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                            <div className='grid justify-center items-center text-center gap-1'>
+                                <Shirt className="w-5 h-5 sm:w-6 sm:h-6 mx-auto" />
+                                <h1 className="text-sm sm:text-base font-bold">F1 Jersey</h1>
+                            </div>
+                        </Tab>
+                        <Tab className="cursor-pointer px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                            <div className='grid justify-center items-center text-center gap-1'>
+                                <Shirt className="w-5 h-5 sm:w-6 sm:h-6 mx-auto" />
+                                <h1 className="text-sm sm:text-base font-bold">Cotton Tshirts</h1>
+                            </div>
+                        </Tab>
+                        <Tab className="cursor-pointer px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                            <div className='grid justify-center items-center text-center gap-1'>
+                                <Shirt className="w-5 h-5 sm:w-6 sm:h-6 mx-auto" />
+                                <h1 className="text-sm sm:text-base font-bold">Hand Sleeves</h1>
+                            </div>
+                        </Tab>
+                        <Tab className="cursor-pointer px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                            <div className='grid justify-center items-center text-center gap-1'>
+                                <FaMaskFace className="w-5 h-5 sm:w-6 sm:h-6 mx-auto" />
+                                <h1 className="text-sm sm:text-base font-bold">Mask</h1>
                             </div>
                         </Tab>
                     </TabList>
 
+                    <TabPanel>
+                        <div className="2xl:container 2xl:mx-auto mt-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-8">
+                                {jerseyProducts.map((product, index) => (
+                                    <ProductCard key={index} product={product} />
+                                ))}
+                            </div>
+                        </div>
+                    </TabPanel>
+                    <TabPanel>
+                        <div className="2xl:container 2xl:mx-auto mt-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-8">
+                                {jerseyProducts.map((product, index) => (
+                                    <ProductCard key={index} product={product} />
+                                ))}
+                            </div>
+                        </div>
+                    </TabPanel>
+                    <TabPanel>
+                        <div className="2xl:container 2xl:mx-auto mt-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-8">
+                                {jerseyProducts.map((product, index) => (
+                                    <ProductCard key={index} product={product} />
+                                ))}
+                            </div>
+                        </div>
+                    </TabPanel>
+                    <TabPanel>
+                        <div className="2xl:container 2xl:mx-auto mt-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-8">
+                                {jerseyProducts.map((product, index) => (
+                                    <ProductCard key={index} product={product} />
+                                ))}
+                            </div>
+                        </div>
+                    </TabPanel>
                     <TabPanel>
                         <div className="2xl:container 2xl:mx-auto mt-8">
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-8">
@@ -108,19 +169,13 @@ const ProductCard = ({ product }) => {
                     alt="Product"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                {/* "New" Badge */}
-                <div className="absolute top-4 left-4 text-white px-3 py-1 font-bold">
-                    <div className=' w-8 h-8'>
-                        <Heart />
-                    </div>
-                </div>
             </div>
 
             {/* Details */}
             <div className="grid gap-2 relative z-10 mt-4 flex-grow">
-                <h1 className="text-xl font-bold text-white">{product.title}</h1>   
+                <h1 className="text-xl font-bold text-white">{product.title}</h1>
                 <div className="text-lg font-mono font-semibold text-[#FFB300] bg-[#0F172A]/80 px-2 py-1 rounded-md inline-block mt-2">
-                    Price: {product.price}BDT
+                    Price: {product.price}৳
                 </div>
             </div>
 
@@ -142,6 +197,7 @@ const ProductCard = ({ product }) => {
                 <Toaster />
             </div>
         </div>
+
     );
 };
 

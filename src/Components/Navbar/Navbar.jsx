@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { navLinks } from "./navData";
-import { AlignJustify, Heart, ShoppingCart, X } from "lucide-react";
+import { AlignJustify, ShoppingCart, X } from "lucide-react";
 import { Badge } from "@mui/material";
 import Dialog from "../user-dialog/Dialog";
 import ProductCart from "../ProductCart/ProductCart";
@@ -29,12 +29,8 @@ const Navbar = () => {
                     </button>
 
                     {/* Logo - Second on small screens */}
-                    <a href="#" className="order-2 lg:order-none mx-auto lg:mx-0">
-                        <img
-                            src="heading logo.png"
-                            alt="GamersKit Logo"
-                            className="h-8 sm:h-10 w-auto dark:hidden"
-                        />
+                    <a href="#" className="flex items-center text-2xl sm:text-3xl font-bold text-white order-2 lg:order-none mx-auto lg:mx-0">
+                        Gamers<span className="text-[#FFD700]">Kit</span>
                     </a>
 
                     {/* Navigation Links */}
