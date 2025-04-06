@@ -1,14 +1,14 @@
-import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { Car, Eye, Heart, Shirt, ShoppingCart } from 'lucide-react';
 import { allProducts } from './allProducts';
 import toast, { Toaster } from 'react-hot-toast';
 import { FaMaskFace } from "react-icons/fa6";
 import axios from 'axios';
 import { useState } from 'react';
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 
 const tabs = [
-    { id: 'all', label: 'All', icon: <Car /> },
+    { id: 'all', label: 'All', icon: <FaExternalLinkAlt /> },
     { id: 'car', label: 'Car', icon: <Car /> },
     { id: 'E-sports', label: 'E-Sports Jersey', icon: <Shirt /> },
     { id: 'F1', label: 'F1 Jersey', icon: <Shirt /> },
