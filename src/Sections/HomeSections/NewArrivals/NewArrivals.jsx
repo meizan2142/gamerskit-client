@@ -1,4 +1,4 @@
-import { Car, Eye, Heart, Shirt, ShoppingCart } from 'lucide-react';
+import { Car, Eye, Shirt, ShoppingCart } from 'lucide-react';
 import { allProducts } from './allProducts';
 import toast, { Toaster } from 'react-hot-toast';
 import { FaMaskFace } from "react-icons/fa6";
@@ -47,7 +47,7 @@ const NewArrivals = ({ heading, description }) => {
                             onClick={() => setActiveTab(tab.id)}
                             aria-label={`Filter ${tab.label} products`}
                             className={`flex-shrink-0 cursor-pointer px-3 py-2 rounded-lg transition-colors ${activeTab === tab.id
-                                ? 'bg-[#FFD700] text-black'
+                                ? 'bg-[#FFD700] text-black border-2'
                                 : 'hover:shadow-2xl'
                                 }`}
                         >

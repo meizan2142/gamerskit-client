@@ -8,7 +8,7 @@ import ProductCart from "../ProductCart/ProductCart";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [isCartOpen, setIsCartOpen] = useState(false); // New state for cart sidebar
+    const [isCartOpen, setIsCartOpen] = useState(false);
     const links = navLinks();
 
 
@@ -42,6 +42,7 @@ const Navbar = () => {
                                 <li key={link.path}>
                                     <NavLink
                                         to={link.path}
+                                        onClick={() => setIsOpen(false)}
                                         className={({ isActive }) =>
                                             isActive
                                                 ? "font-bold text-black dark:text-white text-sm sm:text-base border-b-2 border-[#FFD700]"
