@@ -3,6 +3,13 @@ import G2 from '/src/assets/Prestige.jpg';
 import Porsche from '/src/assets/Porsche.png';
 import Sentinels from '/src/assets/Bangkok.jpg';
 import RedBull from '/src/assets/Red Bull.jpg';
+import Ferrari from '/src/assets/Ferrari.jpg';
+import Mercedes from '/src/assets/Mercedes.jpg';
+import SentinelsCotton from '/src/assets/sen-cotton.jpg';
+import TeamLiquidSleeves from '/src/assets/Team Liquid-sleeves.jpg';
+import FnaticSleeves from '/src/assets/Fnatic-Sleeves.jpg';
+import SentinelsSleeves from '/src/assets/Sentinels-sleeves.jpg';
+import FnaticCotton from '/src/assets/Fnatic-cotton.jpg';
 
 export const allProducts = () => {
     return [
@@ -46,35 +53,35 @@ export const allProducts = () => {
             "title": "F1 SHELL",
             "price": 620,
             "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
-            "img": G2   
+            "img": Ferrari   
         },
         {
             "name": 'F1',
             "title": "2024 Mercedes-AMG F1",
             "price": 620,
             "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
-            "img": G2   
+            "img": Mercedes   
         },
         {
             "name": 'Sleeves',
             "title": "Sentinels Hand Sleeves",
             "price": 250,
             "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
-            "img": G2   
+            "img": SentinelsSleeves   
         },
         {
             "name": 'Sleeves',
             "title": "Fnatic Hand Sleeves",
             "price": 250,
             "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
-            "img": G2   
+            "img": FnaticSleeves   
         },
         {
             "name": 'Sleeves',
             "title": "Team Liquid Hand Sleeves",
             "price": 250,
             "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
-            "img": G2   
+            "img": TeamLiquidSleeves   
         },
         {
             "name": 'Mask',
