@@ -1,4 +1,4 @@
-import { Car, Rows4, Shirt, VenetianMask } from 'lucide-react';
+import { Car, LayoutGrid, Shirt, VenetianMask } from 'lucide-react';
 import { allProducts } from './allProducts';
 import { useState, useEffect } from 'react';
 import ProductCard from '../../../Components/ProductCard/ProductCard';
@@ -9,7 +9,7 @@ import 'swiper/css/free-mode';
 import 'swiper/css/autoplay';
 
 const tabs = [
-    { id: 'all', label: 'All', icon: <Rows4 /> },
+    { id: 'all', label: 'All', icon: <LayoutGrid /> },
     { id: 'car', label: 'Car', icon: <Car /> },
     { id: 'E-sports', label: 'E-Sports', icon: <Shirt /> },
     { id: 'F1', label: 'F1 Jersey', icon: <Shirt /> },
@@ -80,7 +80,7 @@ const NewArrivals = ({ heading }) => {
                         ))}
                     </Swiper>
                 ) : (
-                    <div className="flex items-center justify-center gap-6 md:gap-8 lg:gap-10 flex-wrap">
+                    <div className="flex items-center justify-center gap-6 md:gap-8 lg:gap-10 mt-8 flex-wrap">
                         {tabs.map((tab) => (
                             <button
                                 key={tab.id}
