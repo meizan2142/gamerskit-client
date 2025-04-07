@@ -21,10 +21,7 @@ const ProductCard = ({ product }) => {
             });
     }
     return (
-        <div className="group w-full flex flex-col h-full rounded-lg shadow-lg bg-white relative overflow-hidden">
-            {/* Floating Accent */}
-            <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 w-16 h-16 sm:w-20 sm:h-20 bg-[#FFD700] rounded-full opacity-15 -z-0" />
-
+        <div className="group w-full flex flex-col h-full rounded-lg shadow-2xl border-gray-500 bg-white relative overflow-hidden">
             {/* Image with Gradient - Removed padding and rounded corners */}
             <div className="relative overflow-hidden w-full">
                 <img
@@ -35,7 +32,7 @@ const ProductCard = ({ product }) => {
                     alt="Product"
                 />
                 {/* <div className="absolute inset-0 bg-gradient-to-t from-[#121C26]/90 via-transparent to-transparent" /> */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#121C26]/90 via-transparent to-transparent" />
+                <div className="absolute bg-[#F1EFEC]" />
             </div>
 
             {/* Details */}
