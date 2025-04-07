@@ -104,5 +104,19 @@ export const allProducts = () => {
             "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
             "img": G2   
         },
+        {
+            "name": 'Tshirt',
+            "title": "Sen Tshirt",
+            "price": 390,
+            "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
+            "img": SentinelsCotton   
+        },
+        {
+            "name": 'Tshirt',
+            "title": "Fnatic Tshirt",
+            "price": 390,
+            "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
+            "img": FnaticCotton   
+        },
     ];
 };

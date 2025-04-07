@@ -5,6 +5,7 @@ import { AlignJustify, ShoppingCart, X } from "lucide-react";
 import { Badge } from "@mui/material";
 import Dialog from "../user-dialog/Dialog";
 import ProductCart from "../ProductCart/ProductCart";
+import mainLogo from '/src/assets/heading logo.png';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -24,14 +25,19 @@ const Navbar = () => {
                         {isOpen ? (
                             <X size={24} className="hover:text-[#FFB300] dark:hover:text-[#FFD700]" />
                         ) : (
-                            <AlignJustify size={24} className="hover:text-[#FFB300] dark:hover:text-[#FFD700]" />
+                            <AlignJustify size={24} className="hover:text-[#FFD700]" />
                         )}
                     </button>
 
                     {/* Logo - Second on small screens */}
-                    <a href="#" className="flex items-center text-2xl sm:text-3xl font-bold text-white order-2 lg:order-none mx-auto lg:mx-0">
-                        Gamers<span className="text-[#FFD700]">Kit</span>
-                    </a>
+                    <NavLink to='/' className="order-2 lg:order-none mx-auto lg:mx-0">
+                        {/* Light mode logo */}
+                        <img
+                            src={mainLogo}
+                            alt="GamersKit Logo"
+                            className="h-12 w-auto"
+                        />
+                    </NavLink>
 
                     {/* Navigation Links */}
                     <nav
