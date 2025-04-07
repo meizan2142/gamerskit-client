@@ -19,11 +19,11 @@ const Navbar = () => {
                 <div className="container mx-auto flex justify-between items-center">
                     {/* Mobile Menu Button - First on small screens */}
                     <button
-                        className="p-2 lg:hidden text-black dark:text-white order-1 lg:order-none"
+                        className="p-2 lg:hidden text-white order-1 lg:order-none"
                         onClick={() => setIsOpen(!isOpen)}
                     >
                         {isOpen ? (
-                            <X size={24} className="hover:text-[#FFB300] dark:hover:text-[#FFD700]" />
+                            <X size={24} className="hover:text-[#FFD700]" />
                         ) : (
                             <AlignJustify size={24} className="hover:text-[#FFD700]" />
                         )}

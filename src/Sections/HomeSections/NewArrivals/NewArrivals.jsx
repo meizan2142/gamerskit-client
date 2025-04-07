@@ -1,8 +1,6 @@
-import { Car, Shirt } from 'lucide-react';
+import { Car, Rows4, Shirt, VenetianMask } from 'lucide-react';
 import { allProducts } from './allProducts';
-import { FaMaskFace } from "react-icons/fa6";
 import { useState, useEffect } from 'react';
-import { FaExternalLinkAlt } from "react-icons/fa";
 import ProductCard from '../../../Components/ProductCard/ProductCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
@@ -11,12 +9,12 @@ import 'swiper/css/free-mode';
 import 'swiper/css/autoplay';
 
 const tabs = [
-    { id: 'all', label: 'All', icon: <FaExternalLinkAlt /> },
+    { id: 'all', label: 'All', icon: <Rows4 /> },
     { id: 'car', label: 'Car', icon: <Car /> },
     { id: 'E-sports', label: 'E-Sports', icon: <Shirt /> },
     { id: 'F1', label: 'F1 Jersey', icon: <Shirt /> },
     { id: 'Sleeves', label: 'Sleeves', icon: <Shirt /> },
-    { id: 'Mask', label: 'Mask', icon: <FaMaskFace /> },
+    { id: 'Mask', label: 'Mask', icon: <VenetianMask /> },
     { id: 'Tshirt', label: 'Tshirts', icon: <Shirt /> },
 ];
 
@@ -55,22 +53,22 @@ const NewArrivals = ({ heading }) => {
                         slidesPerView="auto"
                         spaceBetween={10}
                         freeMode={true}
-                        loop={true} // Enables infinite looping
+                        loop={true}
                         autoplay={{
-                            delay: 2000, // Auto-slide every 2 seconds
-                            disableOnInteraction: false, // Keeps autoplay running even after user interacts
+                            delay: 2000,
+                            disableOnInteraction: false,
                         }}
                         modules={[Autoplay]}
                         className="pb-2 mb-6"
                     >
                         {tabs.map((tab) => (
-                            <SwiperSlide key={tab.id} className="!w-auto flex items-center justify-center">
+                            <SwiperSlide key={tab.id} className="!w-[120px] flex items-center justify-center"> {/* Fixed width */}
                                 <button
                                     onClick={() => setActiveTab(tab.id)}
                                     aria-label={`Filter ${tab.label} products`}
-                                    className={`px-3 py-2 rounded-lg transition-colors flex-shrink-0 ${activeTab === tab.id
+                                    className={`w-full px-3 py-2 rounded-lg transition-colors flex-shrink-0 ${activeTab === tab.id
                                         ? 'bg-[#FFD700] text-black border-2'
-                                        : 'hover:shadow-2xl  border-2'
+                                        : 'hover:shadow-2xl border-2'
                                         }`}
                                 >
                                     <div className="flex flex-col justify-center items-center text-center gap-1">
@@ -82,13 +80,13 @@ const NewArrivals = ({ heading }) => {
                         ))}
                     </Swiper>
                 ) : (
-                    <div className="flex items-center justify-center gap-6 md:gap-8 lg:gap-10 flex-wrap ">
+                    <div className="flex items-center justify-center gap-6 md:gap-8 lg:gap-10 flex-wrap">
                         {tabs.map((tab) => (
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
                                 aria-label={`Filter ${tab.label} products`}
-                                className={`px-3 py-2 rounded-lg transition-colors ${activeTab === tab.id
+                                className={`w-[120px] px-3 py-2 rounded-lg transition-colors ${activeTab === tab.id
                                     ? 'bg-[#FFD700] text-black border-2'
                                     : 'hover:shadow-2xl border-2'
                                     }`}

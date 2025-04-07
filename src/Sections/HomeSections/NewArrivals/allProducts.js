@@ -36,28 +36,28 @@ export const allProducts = () => {
         },
         {
             "name": 'F1',
-            "title": "F1 RED BULL Jersey",
+            "title": "F1 RED BULL 2024",
             "price": 620,
             "description": "Adjustable brightness and color temperature with touch controls and USB charging.",
             "img": RedBull
         },
         {
             "name": 'E-sports',
-            "title": "G2 Esports Prestige 2025 kit",
+            "title": "G2 Prestige 2025",
             "price": 650,
             "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
             "img": G2   
         },
         {
             "name": 'F1',
-            "title": "F1 SHELL",
+            "title": "F1 SHELL 2024",
             "price": 620,
             "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
             "img": Ferrari   
         },
         {
             "name": 'F1',
-            "title": "2024 Mercedes-AMG F1",
+            "title": "F1 Mercedes 2024",
             "price": 620,
             "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
             "img": Mercedes   
