@@ -6,7 +6,7 @@ const Home = () => {
     return (
         <>
             <Hero />
-            <NewArrivals heading={'New Arrivals'} />
+            <NewArrivals heading={'Categories'} />
             <Newsletter />
         </>
     )

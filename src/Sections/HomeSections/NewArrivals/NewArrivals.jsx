@@ -16,7 +16,7 @@ const tabs = [
     { id: 'Tshirt', label: 'Cotton-Tshirts', icon: <Shirt /> },
 ];
 
-const NewArrivals = ({ heading, description }) => {
+const NewArrivals = ({ heading }) => {
     const products = allProducts();
     const [isAddingToCart, setIsAddingToCart] = useState(false);
     const [activeTab, setActiveTab] = useState('all');
@@ -33,9 +33,6 @@ const NewArrivals = ({ heading, description }) => {
                 <h1 className="text-black font-bold text-3xl sm:text-4xl md:text-5xl">
                     {heading}
                 </h1>
-                <p className="text-sm sm:text-base text-gray-500 max-w-2xl mx-auto px-4">
-                    {description}
-                </p>
             </div>
 
             {/* Tabs */}
@@ -62,7 +59,7 @@ const NewArrivals = ({ heading, description }) => {
                 {/* Products Grid */}
                 <div className="2xl:container 2xl:mx-auto">
                     {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-6"> */}
-                    <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-3">
                         {filteredProducts.map((product) => (
                             <ProductCard
                                 key={`${product.name}-${product.title}`}

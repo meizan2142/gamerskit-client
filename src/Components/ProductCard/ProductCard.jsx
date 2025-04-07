@@ -21,7 +21,7 @@ const ProductCard = ({ product }) => {
             });
     }
     return (
-        <div className="group w-full flex flex-col h-full rounded-lg shadow-lg bg-[#1E2B3A] relative overflow-hidden border border-[#2D3E50]">
+        <div className="group w-full flex flex-col h-full rounded-lg shadow-lg bg-white relative overflow-hidden">
             {/* Floating Accent */}
             <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 w-16 h-16 sm:w-20 sm:h-20 bg-[#FFD700] rounded-full opacity-15 -z-0" />
 
@@ -34,12 +34,13 @@ const ProductCard = ({ product }) => {
                     src={product.img}
                     alt="Product"
                 />
+                {/* <div className="absolute inset-0 bg-gradient-to-t from-[#121C26]/90 via-transparent to-transparent" /> */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#121C26]/90 via-transparent to-transparent" />
             </div>
 
             {/* Details */}
             <div className="grid gap-1 sm:gap-2 relative z-10 mt-2 sm:mt-4 flex-grow px-4 sm:px-6">
-                <h1 className="text-sm sm:text-xl font-bold text-[#F0F4F8] line-clamp-2">{product.title}</h1>
+                <h1 className="text-sm sm:text-xl font-bold text-black line-clamp-2">{product.title}</h1>
                 <div className="text-sm sm:text-lg font-mono font-semibold text-[#FFD700] bg-[#253141] px-2 py-1 rounded-md inline-block mt-1 sm:mt-2">
                     Price: {product.price}৳
                 </div>
@@ -52,7 +53,7 @@ const ProductCard = ({ product }) => {
                     <span>Add to Cart</span>
                 </button>
 
-                <button className="flex items-center justify-center gap-1 sm:gap-2 border-2 hover:text-[#1E2B3A] text-[#F0F4F8] border-[#FFD700] hover:bg-[#FFD700] font-semibold px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg transition-all text-xs sm:text-sm">
+                <button className="flex items-center justify-center gap-1 sm:gap-2 border-2 hover:text-[#1E2B3A] text-black border-[#FFD700] hover:bg-[#FFD700] font-semibold px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg transition-all text-xs sm:text-sm">
                     <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
                     <span>View Details</span>
                 </button>
