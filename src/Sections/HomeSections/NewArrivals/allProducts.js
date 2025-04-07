@@ -29,7 +29,7 @@ export const allProducts = () => {
         },
         {
             "name": 'E-sports',
-            "title": "Limited Edition SEN Masters Bangkok Pro Jersey",
+            "title": "Sentinels Jersey",
             "price": 620,
             "description": "Eco-friendly unisex tee, made from 100% organic cotton for all-day comfort.",
             "img": Sentinels
