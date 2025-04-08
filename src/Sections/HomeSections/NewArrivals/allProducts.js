@@ -18,7 +18,7 @@ export const allProducts = () => {
             "title": "Nissan GTR Skyline 4WD",
             "price": 3500,
             "description": "Premium noise-canceling headphones with 30-hour battery life and deep bass.",
-            "img": Nissan
+            "img": "https://res.cloudinary.com/dyqjzfdwi/image/upload/v1744086544/tjeukk1hx1ob0e7dozpi.jpg"
         },
         {
             "name": 'car',

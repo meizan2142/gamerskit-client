@@ -1,6 +1,6 @@
 const SingleProduct = () => {
     return (
-        <div>SingleProduct</div>
+        <div className="min-h-screen pt-24">SingleProduct</div>
     )
 }
 

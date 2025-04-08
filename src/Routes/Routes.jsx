@@ -2,6 +2,8 @@ import MainLayout from "../MainLayout/MainLayout";
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../Pages/Home/Home";
 import Shop from "../Pages/Shop/Shop";
+import SingleProduct from "../Pages/SingleProductPage/SingleProduct";
+import ImageHosting from "../Pages/ImageHosting/ImageHosting";
 
 export const router = createBrowserRouter([
     {
@@ -15,6 +17,14 @@ export const router = createBrowserRouter([
             {
                 path: "/shop",
                 element: <Shop />,
+            },
+            {
+                path: "/singleproduct",
+                element: <SingleProduct />,
+            },
+            {
+                path: "/imagehosting",
+                element: <ImageHosting />,
             },
         ],
     },
