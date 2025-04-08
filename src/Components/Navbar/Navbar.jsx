@@ -41,7 +41,7 @@ const Navbar = () => {
 
                     {/* Navigation Links */}
                     <nav
-                        className={`lg:flex ${isOpen ? "block" : "hidden"} lg:block absolute lg:relative top-16 lg:top-0 left-0 w-full lg:w-auto bg-white dark:bg-[#1A1A1A] lg:bg-transparent shadow-md lg:shadow-none transition-all order-4 lg:order-none`}
+                        className={`lg:flex ${isOpen ? "block" : "hidden"} lg:block absolute lg:relative top-16 lg:top-0 left-0 w-full lg:w-auto bg-[#1A1A1A] lg:bg-transparent shadow-md lg:shadow-none transition-all order-4 lg:order-none`}
                     >
                         <ul className="flex flex-col lg:flex-row items-center space-y-4 lg:space-y-0 lg:space-x-8 xl:space-x-12 text-center p-4 lg:p-0">
                             {links.map((link) => (
@@ -51,8 +51,8 @@ const Navbar = () => {
                                         onClick={() => setIsOpen(false)}
                                         className={({ isActive }) =>
                                             isActive
-                                                ? "font-bold text-black dark:text-white text-sm sm:text-base border-b-2 border-[#FFD700]"
-                                                : "text-black dark:text-gray-300 hover:text-[#FFB300] dark:hover:text-[#FFD700] transition text-sm sm:text-base"
+                                                ? "font-bold text-white text-sm sm:text-base border-b-2 border-[#FFD700]"
+                                                : "text-gray-300 hover:text-[#FFD700] transition text-sm sm:text-base"
                                         }
                                     >
                                         {link.pathName}
@@ -67,7 +67,7 @@ const Navbar = () => {
                         {/* Cart */}
                         <Badge badgeContent={4} className="text-green-700 font-bold">
                             <button onClick={() => setIsCartOpen(true)}>
-                                <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-black dark:text-white hover:text-[#FFB300] dark:hover:text-[#FFD700]" />
+                                <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-white hover:text-[#FFD700]" />
                             </button>
                         </Badge>
                         <Dialog />

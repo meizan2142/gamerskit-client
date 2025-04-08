@@ -4,7 +4,7 @@ import { FiInstagram } from "react-icons/fi";
 
 const Footer = () => {
     return (
-        <footer className="bg-white dark:bg-[#1A1A1A] mt-10">
+        <footer className="bg-[#1A1A1A] mt-10">
             <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
                 {/* Main Content */}
                 <div className="lg:flex lg:items-start lg:gap-8">
@@ -12,10 +12,10 @@ const Footer = () => {
                         {/* Newsletter Section - Full width on mobile, 2 cols on md+ */}
                         <div className="col-span-2">
                             <div>
-                                <h2 className="text-2xl font-bold text-black dark:text-white">
+                                <h2 className="text-2xl font-bold text-white">
                                     Get the latest news!
                                 </h2>
-                                <p className="mt-4 text-gray-600 dark:text-gray-300">
+                                <p className="mt-4 text-gray-300">
                                     Stay updated with our newest products and exclusive offers.
                                 </p>
                             </div>
@@ -25,7 +25,7 @@ const Footer = () => {
                         <div className="col-span-2 lg:col-span-3 lg:flex lg:items-end">
                             <form className="w-full">
                                 <label htmlFor="UserEmail" className="sr-only">Email</label>
-                                <div className="border rounded-md border-gray-300 p-2 focus-within:ring-2 focus-within:ring-[#FFD700] sm:flex sm:items-center sm:gap-4 dark:border-gray-700">
+                                <div className="border rounded-md p-2 focus-within:ring-2 focus-within:ring-[#FFD700] sm:flex sm:items-center sm:gap-4 border-gray-700">
                                     <input
                                         type="email"
                                         id="UserEmail"
@@ -33,7 +33,7 @@ const Footer = () => {
                                         className="w-full border-none bg-transparent outline-none text-white"
                                     />
                                     <button
-                                        className="mt-1 w-full bg-black px-6 py-3 text-sm font-bold uppercase tracking-wide transition sm:mt-0 sm:w-auto sm:shrink-0 dark:bg-[#FFD700] text-black hover:bg-[#FFB300] rounded-md"
+                                        className="mt-1 w-full px-6 py-3 text-sm font-bold uppercase tracking-wide transition sm:mt-0 sm:w-auto sm:shrink-0 bg-[#FFD700] text-black hover:bg-[#FFB300] rounded-md"
                                     >
                                         Sign Up
                                     </button>
@@ -47,11 +47,11 @@ const Footer = () => {
                             { title: "Legal", items: ['Terms', 'Privacy Policy'] }
                         ].map((section, index) => (
                             <div key={index} className="col-span-1">
-                                <p className="font-medium text-black dark:text-white">{section.title}</p>
+                                <p className="font-medium text-white">{section.title}</p>
                                 <ul className="mt-6 space-y-4 text-sm">
                                     {section.items.map((item) => (
                                         <li key={item}>
-                                            <a href="#" className="text-gray-600 transition hover:text-[#FFB300] dark:text-gray-300 dark:hover:text-[#FFD700]">
+                                            <a href="#" className="transition text-gray-300 hover:text-[#FFD700]">
                                                 {item}
                                             </a>
                                         </li>
@@ -93,16 +93,16 @@ const Footer = () => {
                 </div>
 
                 {/* Copyright Section */}
-                <div className="mt-8 border-t border-gray-200 pt-8 dark:border-gray-800">
+                <div className="mt-8 border-t  pt-8 border-gray-800">
                     <div className="sm:flex sm:justify-between">
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                        <p className="text-xs text-gray-400">
                             &copy; {new Date().getFullYear()} Your Company. All rights reserved.
                         </p>
 
                         <ul className="mt-4 flex flex-wrap justify-start gap-4 text-xs sm:mt-0 lg:justify-end">
                             {['Terms', 'Privacy', 'Cookies'].map((item) => (
                                 <li key={item}>
-                                    <a href="#" className="text-gray-500 transition hover:text-[#FFD700] dark:hover:text-[#FFD700]">
+                                    <a href="#" className="text-white transition hover:text-[#FFD700]">
                                         {item}
                                     </a>
                                 </li>

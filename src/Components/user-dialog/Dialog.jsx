@@ -17,7 +17,7 @@ export default function Dialog() {
                         className="bg-white  rounded-lg w-full max-w-sm p-6 shadow-lg transition-transform transform scale-100"
                     >
                         {/* Close Button */}
-                        <X onClick={() => setOpenModal(false)} className="w-6 cursor-pointer ml-auto hover:text-gray-700 fill-black dark:fill-white"/>
+                        <X onClick={() => setOpenModal(false)} className="w-6 cursor-pointer ml-auto hover:text-gray-700 fill-white"/>
 
                         <h1 className="text-2xl font-semibold mb-4">Signin</h1>
 
