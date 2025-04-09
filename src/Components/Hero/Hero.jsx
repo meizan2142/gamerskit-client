@@ -17,8 +17,8 @@ const Hero = () => {
             <div className="container mx-auto h-full flex flex-col lg:flex-row items-center gap-8 lg:gap-12 relative z-10">
                 {/* Left Text Section */}
                 <div className="lg:w-1/2 text-center lg:text-left">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight">
-                        Get your favourite team <span className="text-[#FFD700]">Jersey and toys</span>
+                    <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-5xl leading-12 xl:text-6xl font-bold text-white">
+                        Get your <br /> favourite team <br /> <span className="text-[#FFD700]">Jersey and toys</span>
                     </h1>
                     <p className="mt-4 text-sm sm:text-base lg:text-lg text-gray-200">
                         We provide cutting-edge solutions to help your business grow and succeed in the digital era.
