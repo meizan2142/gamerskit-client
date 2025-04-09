@@ -7,35 +7,27 @@ import Porsche from '/src/assets/Porsche.png';
 import Sentinels from '/src/assets/Sentinels.png';
 import Custom from '/src/assets/Custom.png';
 import { NavLink } from "react-router";
+import { ArrowRight } from "lucide-react";
 
 const Hero = () => {
     return (
         <section
-            className="w-full h-[650px] px-4 sm:px-6 lg:px-12 xl:px-20 relative pt-20" // Fixed height here
-            style={{
-                backgroundImage: "url('/hero-bg.jpg')",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-            }}
-        >
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-[#FFD700]/30"></div>
-
+            className="w-full h-[650px] px-4 sm:px-6 lg:px-12 xl:px-20 relative pt-20 bg-black">
             {/* Content */}
             <div className="container mx-auto h-full flex flex-col lg:flex-row items-center gap-8 lg:gap-12 relative z-10">
                 {/* Left Text Section */}
                 <div className="lg:w-1/2 text-center lg:text-left">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight">
-                        Elevate Your Business with <span className="text-[#FFD700]">Modern Solutions</span>
+                        Get your favourite team <span className="text-[#FFD700]">Jersey and toys</span>
                     </h1>
                     <p className="mt-4 text-sm sm:text-base lg:text-lg text-gray-200">
                         We provide cutting-edge solutions to help your business grow and succeed in the digital era.
                     </p>
                     <div className="mt-6">
                         <NavLink to='/shop'>
-                            <button className="px-6 py-3 rounded-xl text-sm sm:text-base font-medium bg-[#FFD700] text-black hover:bg-[#FFB300] transition-all">
-                                Shop now
+                            <button className="px-4 gap-2 py-3 rounded-full flex items-center justify-center mx-auto text-sm sm:text-base font-medium bg-[#FFD700] text-black hover:bg-[#FFB300] transition-all">
+                                Order now
+                                <ArrowRight />
                             </button>
                         </NavLink>
                     </div>

@@ -22,7 +22,7 @@ const ProductCard = ({ product }) => {
             });
     }
     return (
-        <div className="group w-full flex flex-col h-full rounded-lg shadow-xl bg-white relative overflow-hidden items-center text-center">
+        <div className="group w-full flex flex-col h-full rounded-lg shadow-md bg-white relative overflow-hidden items-center text-center">
             {/* Image with Gradient */}
             <div className="relative overflow-hidden w-full">
                 <img
