@@ -93,7 +93,7 @@ export const allProducts = () => {
         },
         {
             "name": 'Tshirt',
-            "title": "Sen Tshirt",
+            "title": "Sentinels Tshirt",
             "price": 390,
             "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
             "img": "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090442/knggbatcvwxtrgluvkak.jpg"   
