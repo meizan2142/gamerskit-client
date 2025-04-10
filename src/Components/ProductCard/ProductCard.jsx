@@ -38,7 +38,7 @@ const ProductCard = ({ product }) => {
             {/* Details - Centered */}
             <div className="grid gap-1 sm:gap-2 relative z-10 mt-2 sm:mt-4 flex-grow px-4 sm:px-6 items-center text-center justify-center flex-col">
                 <h1 className="text-sm sm:text-xl font-bold text-black line-clamp-2">{product.title}</h1>
-                <div className="text-sm sm:text-lg font-mono font-semibold text-[#FFD700] bg-[#253141] px-20 py-1 rounded-md inline-block mt-1 sm:mt-2">
+                <div className="text-sm sm:text-lg font-mono font-semibold text-[#FFD700] bg-[#253141] sm:px-7 lg:px-16 py-1 rounded-md inline-block mt-1 sm:mt-2">
                     Price: {product.price}৳
                 </div>
             </div>

@@ -1,52 +1,78 @@
-import { useState } from "react";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+
+import { Autoplay, Pagination } from "swiper/modules";
+
 
 const SingleProduct = () => {
-    const [mainImage, setMainImage] = useState(
-        "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090188/xyonqh4ycoq1nuqr2lz6.png"
-    );
-
-    const thumbnails = [
-        "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090158/dchrtpia95xdom4koczu.png",
-        "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090226/swywuhatuli1ycrfpmxo.jpg",
-        "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090188/xyonqh4ycoq1nuqr2lz6.png"
-    ];
     return (
-        <div className="min-h-screen pt-24">
-            <div className="flex flex-col md:flex-row gap-8 p-6">
-                {/* Left Side - Image Gallery */}
-                <div className="flex flex-col gap-4">
-                    <img
-                        src={mainImage}
-                        alt="G2 Esports Jersey"
-                        className="w-96 rounded-lg shadow-lg"
-                    />
-                    <div className="flex gap-2">
-                        {thumbnails.map((thumbnail, index) => (
+        <div className="min-h-screen pt-12 md:pt-24">
+            {/* Flex container for large screens */}
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-8 py-6">
+                {/* Slider - takes more space on large screens */}
+                <div className="w-full lg:w-[60%] xl:w-[50%]">
+                    <Swiper
+                        spaceBetween={30}
+                        centeredSlides={true}
+                        autoplay={{
+                            delay: 2500,
+                            disableOnInteraction: false,
+                        }}
+                        pagination={{
+                            clickable: true,
+                        }}
+                        navigation={true}
+                        modules={[Autoplay, Pagination]}
+                        className="mySwiper"
+                    >
+                        <SwiperSlide>
                             <img
-                                key={index}
-                                src={thumbnail}
-                                alt={`Thumb${index + 1}`}
-                                className="w-20 rounded-md cursor-pointer"
-                                onClick={() => setMainImage(thumbnail)}
+                                src="http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090244/hykzbjr1yfst9rdpfov8.jpg"
+                                alt=""
+                                className="w-full h-auto max-h-[80vh] object-contain"
                             />
-                        ))}
-                    </div>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <img
+                                src="http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090261/vwz7hvuuyftui9hklwid.jpg"
+                                alt=""
+                                className="w-full h-auto max-h-[80vh] object-contain"
+                            />
+                        </SwiperSlide>
+                    </Swiper>
                 </div>
 
-                {/* Right Side - Product Details (unchanged) */}
-                {/* ... rest of your product details code ... */}
-            </div>
-            <div className="p-6">
-                <h1 className="text-3xl font-bold">A Five Items Grid Layout</h1>
-                <p className="mt-2">Direct child elements of the grid container automatically become grid items.</p>
-                <p className="mb-4">Item 1, 2, and 5 are set to span multiple columns or rows.</p>
+                {/* Product Info - takes less space on large screens */}
+                <div className="w-full lg:w-[40%] xl:w-[30%]">
+                    {/* Heading & Price */}
+                    <div className="mb-6">
+                        <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[40px]">
+                            G2 Prestige 2025
+                        </h1>
+                        <p className="text-lg sm:text-xl mt-2">€85,00 EUR</p>
+                    </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 bg-white p-4">
-                    <img src="http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090188/xyonqh4ycoq1nuqr2lz6.png" alt="Item 1" className="lg:col-span-2 w-full h-auto" />
-                    <img src="http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090188/xyonqh4ycoq1nuqr2lz6.png" alt="Item 2" className="lg:row-span-2 w-full h-auto" />
-                    <img src="http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090188/xyonqh4ycoq1nuqr2lz6.png" alt="Item 3" className="w-full h-auto" />
-                    <img src="http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090188/xyonqh4ycoq1nuqr2lz6.png" alt="Item 4" className="w-full h-auto" />
-                    <img src="http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090188/xyonqh4ycoq1nuqr2lz6.png" alt="Item 5" className="lg:col-span-3 w-full h-auto" />
+                    {/* Available Sizes */}
+                    <div className="flex flex-wrap gap-3 sm:gap-4">
+                        <button
+                            className={`w-full sm:w-[120px] px-3 py-2 rounded-lg transition-colors hover:shadow-2xl border-2`}
+                        >
+                            <div className="flex flex-col justify-center items-center text-center gap-1">
+                                <h1 className="text-sm sm:text-base font-bold">L</h1>
+                            </div>
+                        </button>
+                        <button
+                            className={`w-full sm:w-[120px] px-3 py-2 rounded-lg transition-colors hover:shadow-2xl border-2`}
+                        >
+                            <div className="flex flex-col justify-center items-center text-center gap-1">
+                                <h1 className="text-sm sm:text-base font-bold">XL</h1>
+                            </div>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

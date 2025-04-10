@@ -1,5 +1,5 @@
 import { Car, LayoutGrid, Shirt, VenetianMask } from 'lucide-react';
-import { FaHandBackFist } from "react-icons/fa6";
+import { RxHand } from "react-icons/rx";
 import { allProducts } from './allProducts';
 import { useState, useEffect } from 'react';
 import ProductCard from '../../../Components/ProductCard/ProductCard';
@@ -14,7 +14,7 @@ const tabs = [
     { id: 'car', label: 'Car', icon: <Car /> },
     { id: 'E-sports', label: 'E-Sports', icon: <Shirt /> },
     { id: 'F1', label: 'F1 Jersey', icon: <Shirt /> },
-    { id: 'Sleeves', label: 'Sleeves', icon: <FaHandBackFist /> },
+    { id: 'Sleeves', label: 'Sleeves', icon: <RxHand /> },
     { id: 'Mask', label: 'Mask', icon: <VenetianMask /> },
     { id: 'Tshirt', label: 'Tshirts', icon: <Shirt /> },
 ];
