@@ -1,12 +1,4 @@
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
-
+import SingleProductSwiper from "../../Components/SingleProductSwiper/SingleProductSwiper"
 
 const SingleProduct = () => {
     return (
@@ -14,53 +6,7 @@ const SingleProduct = () => {
             {/* Flex container for large screens */}
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-8 py-6">
                 {/* Slider - takes more space on large screens */}
-                <div className="w-full lg:w-[60%] xl:w-[50%]">
-                    <Swiper
-                        spaceBetween={30}
-                        centeredSlides={true}
-                        slidesPerView={1}  // Important for loop to work properly
-                        loop={true}        // You already had this
-                        autoplay={{
-                            delay: 2500,
-                            disableOnInteraction: false,
-                        }}
-                        pagination={{
-                            clickable: true,
-                        }}
-                        modules={[Autoplay, Pagination, Navigation]} // Added Navigation module
-                        className="mySwiper"
-                    >
-                        <SwiperSlide>
-                            <img
-                                src="http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090244/hykzbjr1yfst9rdpfov8.jpg"
-                                alt=""
-                                className="w-full h-auto max-h-[80vh] object-contain"
-                            />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <img
-                                src="http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090261/vwz7hvuuyftui9hklwid.jpg"
-                                alt=""
-                                className="w-full h-auto max-h-[80vh] object-contain"
-                            />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <img
-                                src="http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090261/vwz7hvuuyftui9hklwid.jpg"
-                                alt=""
-                                className="w-full h-auto max-h-[80vh] object-contain"
-                            />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <img
-                                src="http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090261/vwz7hvuuyftui9hklwid.jpg"
-                                alt=""
-                                className="w-full h-auto max-h-[80vh] object-contain"
-                            />
-                        </SwiperSlide>
-                    </Swiper>
-                </div>
-
+                <SingleProductSwiper />
                 {/* Product Info - takes less space on large screens */}
                 <div className="w-full lg:w-[40%] xl:w-[30%]">
                     {/* Heading & Price */}
@@ -123,6 +69,7 @@ const SingleProduct = () => {
                             </div>
                         </button>
                     </div>
+                    {/* Size Customization */}
                 </div>
             </div>
         </div>
