@@ -68,8 +68,8 @@ const NewArrivals = ({ heading }) => {
                                     onClick={() => setActiveTab(tab.id)}
                                     aria-label={`Filter ${tab.label} products`}
                                     className={`w-full px-3 py-2 rounded-lg transition-colors flex-shrink-0 ${activeTab === tab.id
-                                        ? 'bg-[#FFD700] text-black border-2'
-                                        : 'hover:shadow-2xl border-2'
+                                        ? 'bg-[#FFD700] text-black '
+                                        : 'hover:shadow-2xl '
                                         }`}
                                 >
                                     <div className="flex flex-col justify-center items-center text-center gap-1">
@@ -88,8 +88,8 @@ const NewArrivals = ({ heading }) => {
                                 onClick={() => setActiveTab(tab.id)}
                                 aria-label={`Filter ${tab.label} products`}
                                 className={`w-[120px] px-3 py-2 rounded-lg transition-colors ${activeTab === tab.id
-                                    ? 'bg-[#FFD700] text-black border-2'
-                                    : 'hover:shadow-2xl border-2'
+                                    ? 'bg-[#FFD700] text-black'
+                                    : 'hover:shadow-2xl'
                                     }`}
                             >
                                 <div className="flex flex-col justify-center items-center text-center gap-1">
