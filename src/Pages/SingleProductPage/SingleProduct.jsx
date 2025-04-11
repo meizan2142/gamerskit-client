@@ -16,7 +16,7 @@ const SingleProduct = () => {
                         <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[40px]">
                             G2 Prestige 2025
                         </h1>
-                        <p className="text-lg sm:text-xl mt-2">650৳</p>
+                        <p className="text-lg sm:text-xl mt-2">Price: 650৳</p>
                     </div>
 
                     {/* Available Sizes */}

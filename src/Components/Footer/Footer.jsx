@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaFacebookF, FaWhatsapp } from "react-icons/fa";
 import { FiInstagram } from "react-icons/fi";
+import { NavLink } from 'react-router';
 
 const Footer = () => {
     return (
@@ -64,28 +65,28 @@ const Footer = () => {
                         <div className="col-span-2 lg:col-span-5">
                             <ul className="flex flex-wrap justify-start gap-6 lg:justify-end">
                                 <li>
-                                    <a
-                                        href="#"
+                                    <NavLink
                                         className="text-gray-600 transition hover:text-[#FFD700] "
+                                        to='https://www.facebook.com/gamerskit.gg'
                                     >
-                                        <FaFacebookF color='white' className='w-6 h-6'/>
-                                    </a>
+                                        <FaFacebookF color='white' className='w-6 h-6' target='blank'/>
+                                    </NavLink>
                                 </li>
                                 <li>
-                                    <a
-                                        href="#"
+                                    <NavLink
                                         className="text-gray-600 transition hover:text-[#FFD700] "
+                                        to=''
                                     >
                                         <FiInstagram color='white' className='w-6 h-6'/>
-                                    </a>
+                                    </NavLink>
                                 </li>
                                 <li>
-                                    <a
-                                        href="#"
+                                    <NavLink
                                         className="text-gray-600 transition hover:text-[#FFD700] "
+                                        to=''
                                     >
                                         <FaWhatsapp color='white' className='w-6 h-6'/>
-                                    </a>
+                                    </NavLink>
                                 </li>
                             </ul>
                         </div>

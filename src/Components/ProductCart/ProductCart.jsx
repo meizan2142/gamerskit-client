@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { X } from 'lucide-react';
 import { RiDeleteBin5Line } from 'react-icons/ri';
+import { NavLink } from 'react-router';
 
 const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
     const queryClient = useQueryClient();
@@ -122,9 +123,11 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                             <span className="text-white">Total:</span>
                             <span className="text-[#FFD700] font-bold">${total.toFixed(2)}</span>
                         </div>
-                        <button className="w-full bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
-                            Checkout
-                        </button>
+                        <NavLink to='/place-orders'>
+                            <button className="w-full bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
+                                Checkout
+                            </button>
+                        </NavLink>
                     </div>
                 </div>
             </div>

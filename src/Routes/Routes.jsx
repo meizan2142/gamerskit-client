@@ -4,6 +4,7 @@ import Home from "../Pages/Home/Home";
 import Shop from "../Pages/Shop/Shop";
 import SingleProduct from "../Pages/SingleProductPage/SingleProduct";
 import ImageHosting from "../Pages/ImageHosting/ImageHosting";
+import OrderForm from "../Pages/OrderForm/OrderForm";
 
 export const router = createBrowserRouter([
     {
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
             {
                 path: "/imagehosting",
                 element: <ImageHosting />,
+            },
+            {
+                path: "/place-orders",
+                element: <OrderForm />,
             },
         ],
     },
