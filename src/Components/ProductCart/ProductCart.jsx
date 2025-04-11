@@ -124,7 +124,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                             <span className="text-[#FFD700] font-bold">${total.toFixed(2)}</span>
                         </div>
                         <NavLink to='/place-orders'>
-                            <button className="w-full bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
+                            <button onClick={() => setIsCartOpen(false)} className="w-full bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
                                 Checkout
                             </button>
                         </NavLink>
