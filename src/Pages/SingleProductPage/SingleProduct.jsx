@@ -1,3 +1,4 @@
+import Accordion from "../../Components/Accordion/Accordion"
 import SingleProductSwiper from "../../Components/SingleProductSwiper/SingleProductSwiper"
 
 const SingleProduct = () => {
@@ -69,7 +70,11 @@ const SingleProduct = () => {
                             </div>
                         </button>
                     </div>
-                    {/* Size Customization */}
+                    {/* Accordian*/}
+                    <div>
+                        <Accordion title={`Details`} description={`Product Details`}/>
+                    </div>
+                    {/* Add to cart button*/}
                 </div>
             </div>
         </div>
