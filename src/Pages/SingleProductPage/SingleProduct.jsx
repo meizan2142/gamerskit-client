@@ -1,3 +1,4 @@
+import { ShoppingCart } from "lucide-react"
 import Accordion from "../../Components/Accordion/Accordion"
 import SingleProductSwiper from "../../Components/SingleProductSwiper/SingleProductSwiper"
 
@@ -9,9 +10,9 @@ const SingleProduct = () => {
                 {/* Slider - takes more space on large screens */}
                 <SingleProductSwiper />
                 {/* Product Info - takes less space on large screens */}
-                <div className="w-full lg:w-[40%] xl:w-[30%]">
+                <div className="w-full lg:w-[40%] xl:w-[30%] space-y-8 sm:space-y-10 md:space-y-8 lg:space-y-8 xl:space-y-8 2xl:space-y-8">
                     {/* Heading & Price */}
-                    <div className="mb-6">
+                    <div className="mb-6 space-y-3">
                         <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[40px]">
                             G2 Prestige 2025
                         </h1>
@@ -72,9 +73,13 @@ const SingleProduct = () => {
                     </div>
                     {/* Accordian*/}
                     <div>
-                        <Accordion title={`Details`} description={`Product Details`}/>
+                        <Accordion />
                     </div>
                     {/* Add to cart button*/}
+                    <button className="flex w-full sm:w-full md:w-2/3 mx-0 sm:mx-0 md:mx-auto lg:w-full items-center justify-center gap-1 sm:gap-2 bg-[#FFD700] hover:bg-[#E5C100] text-[#1A1A1A] font-semibold px-2 py-4 outline-0 sm:px-3 sm:py-2 rounded-lg transition-all hover:shadow-lg text-xs sm:text-sm">
+                        <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span>Add to Cart</span>
+                    </button>
                 </div>
             </div>
         </div>
