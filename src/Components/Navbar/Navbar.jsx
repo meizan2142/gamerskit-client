@@ -15,7 +15,7 @@ const Navbar = () => {
 
     return (
         <>
-            <header className="p-4 lg:px-8 xl:px-20 shadow-none fixed w-full z-50 bg-[#1A1A1A]">
+            <header className="p-4 lg:px-8 xl:px-20 shadow-none fi w-full z-5 bg-[#1A1A1A]">
                 <div className="container mx-auto flex justify-between items-center">
                     {/* Mobile Menu Button - First on small screens */}
                     <button

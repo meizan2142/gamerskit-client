@@ -3,7 +3,7 @@ import { ShopHero } from "../../Sections/ShopSections/ShopHero/ShopHero"
 
 const Shop = () => {
     return (
-        <div className="pt-24 lg:pt-28 xl:pt-32 2xl:pt-36 min-h-screen">
+        <div className="pt-6 sm:pt-20 md:pt-10 lg:pt-10 xl:pt-12 2xl:pt-12  min-h-screen">
             <div>
                 <ShopHero />
             </div>
