@@ -12,12 +12,12 @@ import { ArrowRight } from "lucide-react";
 const Hero = () => {
     return (
         <section
-            className="w-full h-[650px] px-4 sm:px-6 lg:px-12 xl:px-20 relative pt-20 bg-black">
+            className="w-full h-[650px] px-4 sm:px-6 md:px-6 lg:px-12 xl:px-20 relative pt-20 bg-black">
             {/* Content */}
             <div className="container mx-auto h-full flex flex-col lg:flex-row items-center gap-2 lg:gap-12 relative z-10">
                 {/* Left Text Section */}
                 <div className="lg:w-1/2 text-center lg:text-left space-y-4">
-                    <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-5xl lg:leading-14 xl:leading-16 leading-10 xl:text-6xl font-bold text-white">
+                    <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-5xl lg:leading-14 md:leading-12 xl:leading-16 leading-10 xl:text-6xl font-bold text-white">
                         Get your <br /> favourite team <br /> <span className="text-[#FFD700]">Jersey and toys!</span>
                     </h1>
                     <p className="mt-4 text-sm sm:text-base leading-5 lg:leading-6 lg:text-lg text-[#F0F0F0]">

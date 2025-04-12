@@ -125,7 +125,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                         </div>
                         <NavLink to='/place-orders'>
                             <button onClick={() => setIsCartOpen(false)} className="w-full bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
-                                Checkout
+                                PROCEED TO CHECKOUT
                             </button>
                         </NavLink>
                     </div>
