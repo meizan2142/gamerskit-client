@@ -5,7 +5,7 @@ import { AlignJustify, ShoppingCart, X } from "lucide-react";
 import { Badge } from "@mui/material";
 import Dialog from "../user-dialog/Dialog";
 import ProductCart from "../ProductCart/ProductCart";
-import mainLogo from '/src/assets/heading logo.png';
+import mainLogo from '/src/assets/logo-icon.png';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +35,7 @@ const Navbar = () => {
                         <img
                             src={mainLogo}
                             alt="GamersKit Logo"
-                            className="h-12 w-auto"
+                            className="h-9 w-auto"
                         />
                     </NavLink>
 
