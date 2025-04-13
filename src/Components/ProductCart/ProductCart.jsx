@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import { X } from 'lucide-react';
+import { ArrowRight, X } from 'lucide-react';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { NavLink } from 'react-router';
 
@@ -124,8 +124,9 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                             <span className="text-[#FFD700] font-bold">${total.toFixed(2)}</span>
                         </div>
                         <NavLink to='/place-orders'>
-                            <button onClick={() => setIsCartOpen(false)} className="w-full bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
+                            <button onClick={() => setIsCartOpen(false)} className="w-full flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
                                 PROCEED TO CHECKOUT
+                                <ArrowRight />
                             </button>
                         </NavLink>
                     </div>
