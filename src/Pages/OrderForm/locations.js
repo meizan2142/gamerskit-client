@@ -10,5 +10,10 @@ export const allLocation = () => {
             "district": 'Dhaka',
             "thana": ["Mirpur", "Uttara", "Pallabi", "Gulshan",],
         },
+        {
+            "name": "dhaka sub-urban",
+            "district": 'Dhaka Sub-Urban',
+            "thana": ["Ashulia", "Dhamrai", "Dohar", "Hemayetpur", "Keraniganj Model", "Nawabganj", "Savar", "South Keraniganj"],
+        },
     ];
 };
