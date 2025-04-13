@@ -1,6 +1,11 @@
 export const allLocation = () => {
     return [
         {
+            "name": "bagerhat",
+            "district": 'Bagerhat',
+            "thana": ["Bagerhat Sadar", "Chitalmari", "Fakirhat", "Kachu Updazilla", ""],
+        },
+        {
             "name": "chattogram",
             "district": 'Chattogram',
             "thana": ["Bandar", "Panchlaish", "Khulshi", "Halishahar",],

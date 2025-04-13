@@ -76,9 +76,9 @@ const SingleProduct = () => {
                         <Accordion />
                     </div>
                     {/* Add to cart button*/}
-                    <button className="flex w-full sm:w-full md:w-2/3 mx-0 sm:mx-0 md:mx-auto lg:w-full items-center justify-center gap-1 sm:gap-2 bg-[#FFD700] hover:bg-[#E5C100] text-[#1A1A1A] font-semibold px-2 py-4 outline-0 sm:px-3 sm:py-2 rounded-lg transition-all hover:shadow-lg text-xs sm:text-sm">
+                    <button className="w-full flex items-center justify-center gap-3 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
                         <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4" />
-                        <span>Add to Cart</span>
+                        Add to cart
                     </button>
                 </div>
             </div>

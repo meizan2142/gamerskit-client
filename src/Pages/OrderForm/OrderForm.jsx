@@ -181,7 +181,8 @@ const OrderForm = () => {
                         </div>
                         <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
                             <h1>Delivery Charge</h1>
-                            <p>৳130</p>
+                            {/* <p>৳130</p> */}
+                            <p>Included with price</p>
                         </div>
                     </div>
 
