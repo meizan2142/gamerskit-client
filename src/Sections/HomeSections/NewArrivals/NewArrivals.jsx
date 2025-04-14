@@ -1,6 +1,5 @@
 import { Car, LayoutGrid, Shirt, VenetianMask } from 'lucide-react';
 import { RxHand } from "react-icons/rx";
-import { allProducts } from './allProducts';
 import { useState, useEffect } from 'react';
 import ProductCard from '../../../Components/ProductCard/ProductCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -8,6 +7,8 @@ import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/autoplay';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 const tabs = [
     { id: 'all', label: 'All', icon: <LayoutGrid /> },
@@ -20,10 +21,10 @@ const tabs = [
 ];
 
 const NewArrivals = ({ heading }) => {
-    const products = allProducts();
     const [isAddingToCart, setIsAddingToCart] = useState(false);
     const [activeTab, setActiveTab] = useState('all');
     const [isSmallScreen, setIsSmallScreen] = useState(false);
+
 
     useEffect(() => {
         const handleResize = () => {
@@ -34,14 +35,37 @@ const NewArrivals = ({ heading }) => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+
+    // Fetch cart data
+    const { isLoading, error, data = [] } = useQuery({
+        queryKey: ['allProduct'],
+        queryFn: async () => {
+            try {
+                const response = await axios.get(
+                    `${import.meta.env.VITE_API_URL}/allProducts`
+                );
+                return response.data; // Axios automatically parses JSON
+            } catch (err) {
+                console.error(err, "Failed to fetch cart items");
+                return []; // Fallback empty array on error
+            }
+        },
+    });
+
+    
+
+
+    if (isLoading) return <div className="p-6 text-white">Loading cart...</div>;
+    if (error) return <div className="p-6 text-red-500">Error: {error.message}</div>;
+
     const filteredProducts = activeTab === 'all'
-        ? products
-        : products.filter(product => product.name === activeTab);
+        ? data
+        : data.filter(product => product.name === activeTab);
 
     return (
         <div className="space-y-3 mt-10 px-4 sm:px-6 lg:px-8">
             {/* Heading */}
-            <div className="text-center space-y-5"> 
+            <div className="text-center space-y-5">
                 <h1 className="text-black font-bold text-3xl sm:text-4xl md:text-5xl">
                     {heading}
                 </h1>
