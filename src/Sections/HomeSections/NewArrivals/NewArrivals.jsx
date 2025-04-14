@@ -55,8 +55,8 @@ const NewArrivals = ({ heading }) => {
     
 
 
-    if (isLoading) return <div className="p-6 text-white">Loading cart...</div>;
-    if (error) return <div className="p-6 text-red-500">Error: {error.message}</div>;
+    if (isLoading) return <div className="min-h-screen pt-24 flex justify-center">Loading...</div>;
+    if (error) return <div className="min-h-screen pt-24 flex justify-center">Error: {error.message}</div>;
 
     const filteredProducts = activeTab === 'all'
         ? data

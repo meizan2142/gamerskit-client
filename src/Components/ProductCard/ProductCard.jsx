@@ -84,8 +84,8 @@ const ProductCard = ({ product }) => {
                     <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4" />
                     <span>Add to Cart</span>
                 </button>
-                <NavLink to='/singleproduct'>
-                    <button className="flex items-center justify-center gap-1 sm:gap-2 border-2 hover:text-[#1E2B3A] text-black border-[#FFD700] hover:bg-[#FFD700] font-semibold px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg transition-all text-xs sm:text-sm">
+                <NavLink to={`/singleproduct/${product._id}`}>
+                    <button  className="flex items-center justify-center gap-1 sm:gap-2 border-2 hover:text-[#1E2B3A] text-black border-[#FFD700] hover:bg-[#FFD700] font-semibold px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg transition-all text-xs sm:text-sm">
                         <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
                         <span>View Details</span>
                     </button>

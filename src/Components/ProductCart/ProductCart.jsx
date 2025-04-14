@@ -83,6 +83,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                                 <p className="text-white font-medium">
                                                     {item.title || 'Product Name'}
                                                 </p>
+                                                {/* Should delete instantly */}
                                                 <button
                                                     className="text-gray-500 hover:text-red-500"
                                                 >

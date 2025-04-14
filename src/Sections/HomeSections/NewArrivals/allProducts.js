@@ -20,7 +20,7 @@ export const allProducts = () => {
             "price": 620,
             "description": "Eco-friendly unisex tee, made from 100% organic cotton for all-day comfort.",
             "img": "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090226/swywuhatuli1ycrfpmxo.jpg",
-            "available-sizes": ["M", "L", "XL", "XXL", "4XL"]
+            "sizes": ["M", "L", "XL", "XXL", "4XL"]
         },
         {
             "name": "F1",
@@ -28,7 +28,7 @@ export const allProducts = () => {
             "price": 620,
             "description": "Adjustable brightness and color temperature with touch controls and USB charging.",
             "img": "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090244/hykzbjr1yfst9rdpfov8.jpg",
-            "available-sizes": ["M", "L", "XL", "XXL", "4XL"]
+            "sizes": ["M", "L", "XL", "XXL", "4XL"]
         },
         {
             "name": "E-sports",
@@ -36,7 +36,7 @@ export const allProducts = () => {
             "price": 650,
             "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
             "img": "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090261/vwz7hvuuyftui9hklwid.jpg",
-            "available-sizes": ["M", "L", "XL", "XXL", "4XL"] 
+            "sizes": ["M", "L", "XL", "XXL", "4XL"] 
         },
         {
             "name": "F1",
@@ -44,7 +44,7 @@ export const allProducts = () => {
             "price": 620,
             "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
             "img": "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090295/dxg7pnt0mkvok3krt7au.jpg",
-            "available-sizes": ["S", "M", "XXL", "3XL", "4XL"]   
+            "sizes": ["S", "M", "XXL", "3XL", "4XL"]   
         },
         {
             "name": "F1",
@@ -52,7 +52,7 @@ export const allProducts = () => {
             "price": 620,
             "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
             "img": "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090324/yvy2fizopqvmrvqgtfxm.jpg",
-            "available-sizes": ["S", "M", "3XL", "4XL"]   
+            "sizes": ["S", "M", "3XL", "4XL"]   
         },
         {
             "name": "Sleeves",
@@ -102,7 +102,7 @@ export const allProducts = () => {
             "price": 390,
             "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
             "img": "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090442/knggbatcvwxtrgluvkak.jpg",
-            "available-sizes": ["M"]   
+            "sizes": ["M"]   
         },
         {
             "name": "Tshirt",
@@ -110,7 +110,7 @@ export const allProducts = () => {
             "price": 390,
             "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
             "img": "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090452/yed9ixavoturdlmftm8q.jpg",
-            "available-sizes": ["M", "L", "XL", "XXL"]   
+            "sizes": ["M", "L", "XL", "XXL"]   
         }
     ];
 };
