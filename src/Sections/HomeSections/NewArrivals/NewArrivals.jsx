@@ -41,7 +41,7 @@ const NewArrivals = ({ heading }) => {
     return (
         <div className="space-y-3 mt-10 px-4 sm:px-6 lg:px-8">
             {/* Heading */}
-            <div className="text-center space-y-5">
+            <div className="text-center space-y-5"> 
                 <h1 className="text-black font-bold text-3xl sm:text-4xl md:text-5xl">
                     {heading}
                 </h1>
