@@ -6,11 +6,35 @@ import { Badge } from "@mui/material";
 import Dialog from "../user-dialog/Dialog";
 import ProductCart from "../ProductCart/ProductCart";
 import mainLogo from '/src/assets/logo-icon.png';
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isCartOpen, setIsCartOpen] = useState(false);
     const links = navLinks();
+
+
+    // Fetch cart data
+    const { isLoading, error, data = [] } = useQuery({
+        queryKey: ['cart'],
+        queryFn: async () => {
+            try {
+                const response = await axios.get(
+                    `${import.meta.env.VITE_API_URL}/cartList`
+                );
+                return response.data; // Axios automatically parses JSON
+            } catch (err) {
+                console.error(err, "Failed to fetch cart items");
+                return []; // Fallback empty array on error
+            }
+        },
+    });
+
+
+    if (isLoading) return <div className="p-6 text-white">Loading cart...</div>;
+    if (error) return <div className="p-6 text-red-500">Error: {error.message}</div>;
+
 
 
     return (
@@ -65,7 +89,7 @@ const Navbar = () => {
                     {/* Icons and Buttons - Third on small screens */}
                     <div className="flex space-x-4 xl:space-x-6 items-center order-3 lg:order-none">
                         {/* Cart */}
-                        <Badge badgeContent={4} className="text-green-700 font-bold">
+                        <Badge badgeContent={data.length} className="text-[#FAE82A] font-bold">
                             <button onClick={() => setIsCartOpen(true)}>
                                 <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-white hover:text-[#FFD700]" />
                             </button>

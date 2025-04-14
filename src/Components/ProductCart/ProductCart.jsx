@@ -47,6 +47,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
     if (isLoading) return <div className="p-6 text-white">Loading cart...</div>;
     if (error) return <div className="p-6 text-red-500">Error: {error.message}</div>;
 
+
     return (
         <>
             {/* Cart Sidebar */}
@@ -118,18 +119,27 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                     </div>
 
                     {/* Cart summary */}
-                    <div className="border-t border-gray-700 pt-4">
-                        <div className="flex justify-between mb-4">
-                            <span className="text-white">Total:</span>
-                            <span className="text-[#FFD700] font-bold">${total.toFixed(2)}</span>
-                        </div>
-                        <NavLink to='/place-orders'>
-                            <button onClick={() => setIsCartOpen(false)} className="w-full flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
-                                PROCEED TO CHECKOUT
-                                <ArrowRight />
-                            </button>
-                        </NavLink>
-                    </div>
+                    {
+                        data.length > 0 ?
+                            <>
+                                <div className="border-t border-gray-700 pt-4">
+                                    <div className="flex justify-between mb-4">
+                                        <span className="text-white">Total:</span>
+                                        <span className="text-[#FFD700] font-bold">${total.toFixed(2)}</span>
+                                    </div>
+                                    <NavLink to='/place-orders'>
+                                        <button onClick={() => setIsCartOpen(false)} className="w-full flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
+                                            PROCEED TO CHECKOUT
+                                            <ArrowRight />
+                                        </button>
+                                    </NavLink>
+                                </div>
+                            </>
+                            :
+                            <>
+                            You Cart is empty
+                            </>
+                    }
                 </div>
             </div>
 
