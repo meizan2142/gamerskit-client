@@ -1,26 +1,55 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from "axios";
 import { Eye, ShoppingCart } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
-import { NavLink } from "react-router";
+import { NavLink } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
-    const handleSubmit = () => {
-        axios.post(`${import.meta.env.VITE_API_URL}/cartList`, product, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(response => {
-                if (response.data.insertedId) {
-                    toast.success('Added to Cart');
-                    console.log('added');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                toast.error('Failed to add to cart');
+    const queryClient = useQueryClient();
+
+    // Define the mutation
+    const { mutate } = useMutation({
+        mutationFn: (product) =>
+            axios.post(`${import.meta.env.VITE_API_URL}/cartList`, product, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }),
+        onMutate: async (newProduct) => {
+            // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
+            await queryClient.cancelQueries({ queryKey: ['cart'] });
+
+            // Snapshot the previous value
+            const previousCart = queryClient.getQueryData(['cart']);
+
+            // Optimistically update to the new value
+            queryClient.setQueryData(['cart'], (old) => {
+                return [...(old || []), { ...newProduct, _id: Date.now().toString() }];
             });
-    }
+
+            return { previousCart };
+        },
+        onSuccess: (response) => {
+            if (response.data.insertedId) {
+                toast.success('Added to Cart');
+                // Invalidate and refetch to ensure our data is fresh
+                queryClient.invalidateQueries({ queryKey: ['cart'] });
+            }
+        },
+        onError: (error, _, context) => {
+            console.error('Error:', error);
+            toast.error('Failed to add to cart');
+            // Roll back to the previous value on error
+            if (context?.previousCart) {
+                queryClient.setQueryData(['cart'], context.previousCart);
+            }
+        }
+    });
+
+    const handleSubmit = () => {
+        mutate(product);
+    };
+
     return (
         <div className="group w-full flex flex-col h-full rounded-lg shadow-md bg-white relative overflow-hidden items-center text-center">
             {/* Image with Gradient */}
@@ -47,7 +76,10 @@ const ProductCard = ({ product }) => {
 
             {/* Buttons - Centered */}
             <div className="grid lg:flex xl:flex 2xl:flex gap-2 sm:gap-3 lg:gap-4 mt-2 sm:mt-4 px-4 sm:px-6 pb-4 sm:pb-6 items-center justify-center">
-                <button onClick={handleSubmit} className="flex items-center justify-center gap-1 sm:gap-2 bg-[#FFD700] hover:bg-[#E5C100] text-[#1A1A1A] font-semibold px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg transition-all hover:shadow-lg text-xs sm:text-sm">
+                <button
+                    onClick={handleSubmit}
+                    className="flex items-center justify-center gap-1 sm:gap-2 bg-[#FFD700] hover:bg-[#E5C100] text-[#1A1A1A] font-semibold px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg transition-all hover:shadow-lg text-xs sm:text-sm"
+                >
                     <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4" />
                     <span>Add to Cart</span>
                 </button>
@@ -63,8 +95,7 @@ const ProductCard = ({ product }) => {
                 <Toaster />
             </div>
         </div>
-
     )
 }
 
-export default ProductCard
+export default ProductCard;
