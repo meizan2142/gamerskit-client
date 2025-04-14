@@ -7,55 +7,49 @@ import 'swiper/css/pagination';
 
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
-const SingleProductSwiper = () => {
+const SingleProductSwiper = ({ images }) => {
+    // Check if there are multiple images to decide whether to use Swiper
+    const hasMultipleImages = images && images.length > 1;
+
     return (
         <div className="w-full lg:w-[60%] xl:w-[50%]">
-            <Swiper
-                spaceBetween={30}
-                centeredSlides={true}
-                slidesPerView={1}  // Important for loop to work properly
-                loop={true}        // You already had this
-                autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                }}
-                pagination={{
-                    clickable: true,
-                }}
-                modules={[Autoplay, Pagination, Navigation]} // Added Navigation module
-                className="mySwiper"
-            >
-                <SwiperSlide>
+            {hasMultipleImages ? (
+                <Swiper
+                    spaceBetween={30}
+                    centeredSlides={true}
+                    slidesPerView={1}
+                    loop={true}
+                    autoplay={{
+                        delay: 2500,
+                        disableOnInteraction: false,
+                    }}
+                    pagination={{
+                        clickable: true,
+                    }}
+                    modules={[Autoplay, Pagination, Navigation]}
+                    className="mySwiper"
+                >
+                    {images.map((image, index) => (
+                        <SwiperSlide key={index}>
+                            <img
+                                src={image}
+                                alt=""
+                                className="w-full h-auto max-h-[80vh] object-contain"
+                            />
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            ) : (
+                <div className="w-full">
                     <img
-                        src="http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090244/hykzbjr1yfst9rdpfov8.jpg"
+                        src={images?.[0] || ''}
                         alt=""
                         className="w-full h-auto max-h-[80vh] object-contain"
                     />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img
-                        src="http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090261/vwz7hvuuyftui9hklwid.jpg"
-                        alt=""
-                        className="w-full h-auto max-h-[80vh] object-contain"
-                    />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img
-                        src="http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090261/vwz7hvuuyftui9hklwid.jpg"
-                        alt=""
-                        className="w-full h-auto max-h-[80vh] object-contain"
-                    />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img
-                        src="http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090261/vwz7hvuuyftui9hklwid.jpg"
-                        alt=""
-                        className="w-full h-auto max-h-[80vh] object-contain"
-                    />
-                </SwiperSlide>
-            </Swiper>
+                </div>
+            )}
         </div>
-    )
-}
+    );
+};
 
-export default SingleProductSwiper
+export default SingleProductSwiper;

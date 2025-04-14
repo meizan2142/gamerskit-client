@@ -53,7 +53,7 @@ const ProductCard = ({ product }) => {
     return (
         <div className="group w-full flex flex-col h-full rounded-lg shadow-md bg-white relative overflow-hidden items-center text-center">
             {/* Image with Gradient */}
-            <NavLink to='/singleproduct'>
+            <NavLink to={`/singleproduct/${product._id}`}>
                 <div className="relative overflow-hidden w-full">
                     <img
                         width={400}

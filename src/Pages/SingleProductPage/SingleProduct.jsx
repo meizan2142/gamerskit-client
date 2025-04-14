@@ -7,7 +7,7 @@ import axios from "axios";
 
 const SingleProduct = () => {
     const { id } = useParams();
-    
+
     const { isLoading, error, data } = useQuery({
         queryKey: ['product', id],
         queryFn: async () => {
@@ -25,16 +25,15 @@ const SingleProduct = () => {
     return (
         <div className="min-h-screen pt-12 md:pt-24">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-8 py-6">
-                <SingleProductSwiper images={[data.img]} />
-                
+                <SingleProductSwiper images={data.subImages ? [data.img, ...data.subImages] : [data.img]} />
+
                 <div className="w-full lg:w-[40%] xl:w-[30%] space-y-8">
                     <div className="mb-6 space-y-3">
                         <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[40px]">
                             {data.title}
                         </h1>
-                        <p className="text-lg sm:text-xl mt-2">Price: {data.price}৳</p>
+                        <p className="text-lg sm:text-xl mt-2">Price: ৳{data.price}</p>
                     </div>
-
                     {/* Size Selection - Only show if sizes exist */}
                     {data.sizes && data.sizes.length > 0 ? (
                         <div className="space-y-3">
