@@ -44,7 +44,9 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
     // Calculate total
     const total = data.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
 
-    if (isLoading) return <div className="p-6 text-white">Loading cart...</div>;
+    if (isLoading) return <div className="p-6 text-white">
+        <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
+    </div>;
     if (error) return <div className="p-6 text-red-500">Error: {error.message}</div>;
 
 
@@ -91,9 +93,14 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                                 </button>
                                             </div>
 
-                                            <p className="text-[#FFD700] font-semibold my-1">
-                                                ${(item.price || 0).toFixed(2)}
-                                            </p>
+                                            <div className='flex justify-between items-center'>
+                                                <p className="text-[#FFD700] text-sm font-semibold my-1">
+                                                    ${(item.price || 0).toFixed(2)}
+                                                </p>
+                                                <p className="text-[#FFB300] text-sm font-medium my-1">
+                                                    Size: {item.size}
+                                                </p>
+                                            </div>
 
                                             <div className="flex items-center mt-2">
                                                 <button
@@ -138,7 +145,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                             </>
                             :
                             <>
-                            You Cart is empty
+                                You Cart is empty
                             </>
                     }
                 </div>
