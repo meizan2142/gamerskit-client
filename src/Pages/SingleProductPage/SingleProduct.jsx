@@ -76,7 +76,16 @@ const SingleProduct = () => {
             ...(data.sizes && { size: selectedSize })
         };
 
-        mutate(cartProduct);
+        mutate(cartProduct, {
+            onSuccess: () => {
+                setSelectedSize(null); // Reset selected size after successful addition
+            },
+            onError: (error) => {
+                toast.error('Failed to add to cart');
+                console.log(error);
+                
+            }
+        });
     };
 
     if (isLoading) return <div className="min-h-screen pt-24 flex justify-center">
@@ -107,8 +116,8 @@ const SingleProduct = () => {
                                         key={size}
                                         onClick={() => setSelectedSize(size)}
                                         className={`w-full px-3 py-2 rounded-lg border-2 ${selectedSize === size
-                                                ? 'border-[#FFD700] bg-amber-50'
-                                                : 'border-gray-300 hover:border-[#FFD700]'
+                                            ? 'border-[#FFD700] bg-amber-50'
+                                            : 'border-gray-300 hover:border-[#FFD700]'
                                             } hover:shadow-md transition-colors`}
                                     >
                                         <div className="flex flex-col justify-center items-center">

@@ -97,9 +97,14 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                                 <p className="text-[#FFD700] text-sm font-semibold my-1">
                                                     ${(item.price || 0).toFixed(2)}
                                                 </p>
-                                                <p className="text-[#FFB300] text-sm font-medium my-1">
-                                                    Size: {item.size}
-                                                </p>
+                                                {
+                                                    item.size ?
+                                                        <p className="text-[#FFB300] text-sm font-medium my-1">
+                                                            Size: {item.size}
+                                                        </p>
+                                                        :
+                                                        <></>
+                                                }
                                             </div>
 
                                             <div className="flex items-center mt-2">

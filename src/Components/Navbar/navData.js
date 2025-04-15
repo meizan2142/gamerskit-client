@@ -8,9 +8,5 @@ export const navLinks = () => {
             path: '/shop',
             pathName: 'Shop',
         },
-        {
-            path: '/implement',
-            pathName: 'Implement',
-        },
     ];
 };
