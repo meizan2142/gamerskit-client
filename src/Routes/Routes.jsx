@@ -5,6 +5,7 @@ import Shop from "../Pages/Shop/Shop";
 import SingleProduct from "../Pages/SingleProductPage/SingleProduct";
 import ImageHosting from "../Pages/ImageHosting/ImageHosting";
 import OrderForm from "../Pages/OrderForm/OrderForm";
+import Implement from "../Pages/Implement/Implement";
 
 export const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
             {
                 path: "/place-orders",
                 element: <OrderForm />,
+            },
+            {
+                path: "/implement",
+                element: <Implement />,
             },
         ],
     },

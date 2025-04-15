@@ -1,59 +1,40 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from "axios";
-import { Eye, ShoppingCart } from "lucide-react";
-import toast, { Toaster } from "react-hot-toast";
 import { NavLink } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
-    const queryClient = useQueryClient();
-
-    // Define the mutation
-    const { mutate } = useMutation({
-        mutationFn: (product) =>
-            axios.post(`${import.meta.env.VITE_API_URL}/cartList`, product, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }),
-        onMutate: async (newProduct) => {
-            // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
-            await queryClient.cancelQueries({ queryKey: ['cart'] });
-
-            // Snapshot the previous value
-            const previousCart = queryClient.getQueryData(['cart']);
-
-            // Optimistically update to the new value
-            queryClient.setQueryData(['cart'], (old) => {
-                return [...(old || []), { ...newProduct, _id: Date.now().toString() }];
-            });
-
-            return { previousCart };
-        },
-        onSuccess: (response) => {
-            if (response.data.insertedId) {
-                toast.success('Added to Cart');
-                // Invalidate and refetch to ensure our data is fresh
-                queryClient.invalidateQueries({ queryKey: ['cart'] });
-            }
-        },
-        onError: (error, _, context) => {
-            console.error('Error:', error);
-            toast.error('Failed to add to cart');
-            // Roll back to the previous value on error
-            if (context?.previousCart) {
-                queryClient.setQueryData(['cart'], context.previousCart);
-            }
-        }
-    });
-
-    const handleSubmit = () => {
-        mutate(product);
-    };
 
     return (
-        <div className="group w-full flex flex-col h-full rounded-lg shadow-md bg-white relative overflow-hidden items-center text-center">
-            {/* Image with Gradient */}
-            <NavLink to={`/singleproduct/${product._id}`}>
+        <div className="group w-full flex flex-col h-full rounded-lg relative overflow-hidden items-center">
+            <NavLink
+                to={`/singleproduct/${product._id}`}
+                className="block w-full h-full max-w-[350px] mx-auto" // Added h-full here
+            >
+                <div className="w-full h-full flex flex-col space-y-4 rounded-lg p-4 sm:p-6 shadow-lg bg-white hover:shadow-xl transition-shadow duration-300">
+                    <div className="relative pb-[75%] overflow-hidden rounded-lg flex-shrink-0">
+                        <img
+                            className="absolute h-full w-full object-cover"
+                            src={product.img}
+                            alt={product.title}
+                        />
+                    </div>
+                    <div className="flex flex-col flex-grow space-y-2">
+                        <h1 className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl 2xl:text-[23] font-semibold text-black line-clamp-2">
+                            {product.title}
+                        </h1>
+                        <div className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-lg 2xl:text-xl font-normal text-[#F8B01A] mt-auto">
+                            Price: {product.price}৳
+                        </div>
+                    </div>
+                </div>
+            </NavLink>
+        </div>
+    )
+}
+
+export default ProductCard;
+
+
+{/* Image with Gradient */ }
+{/* <NavLink to={`/singleproduct/${product._id}`}>
                 <div className="relative overflow-hidden w-full">
                     <img
                         width={400}
@@ -64,19 +45,19 @@ const ProductCard = ({ product }) => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#121C26]/90 via-transparent to-transparent" />
                 </div>
-            </NavLink>
-            
+            </NavLink> */}
 
-            {/* Details - Centered */}
-            <div className="grid gap-1 sm:gap-2 relative z-10 mt-2 sm:mt-4 flex-grow px-4 sm:px-6 items-center text-center justify-center flex-col">
+
+{/* Details - Centered */ }
+{/* <div className="grid gap-1 sm:gap-2 relative z-10 mt-2 sm:mt-4 flex-grow px-4 sm:px-6 items-center text-center justify-center flex-col">
                 <h1 className="text-sm sm:text-xl font-bold text-black line-clamp-2">{product.title}</h1>
                 <div className="text-sm sm:text-lg font-mono font-semibold text-[#FFD700] bg-[#253141] sm:px-7 lg:px-16 py-1 rounded-md inline-block mt-1 sm:mt-2">
                     Price: {product.price}৳
                 </div>
-            </div>
+            </div> */}
 
-            {/* Buttons - Centered */}
-            <div className="grid lg:flex xl:flex 2xl:flex gap-2 sm:gap-3 lg:gap-4 mt-2 sm:mt-4 px-4 sm:px-6 pb-4 sm:pb-6 items-center justify-center">
+{/* Buttons - Centered */ }
+{/* <div className="grid lg:flex xl:flex 2xl:flex gap-2 sm:gap-3 lg:gap-4 mt-2 sm:mt-4 px-4 sm:px-6 pb-4 sm:pb-6 items-center justify-center">
                 <button
                     onClick={handleSubmit}
                     className="flex items-center justify-center gap-1 sm:gap-2 bg-[#FFD700] hover:bg-[#E5C100] text-[#1A1A1A] font-semibold px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg transition-all hover:shadow-lg text-xs sm:text-sm"
@@ -90,13 +71,4 @@ const ProductCard = ({ product }) => {
                         <span>View Details</span>
                     </button>
                 </NavLink>
-            </div>
-
-            <div>
-                <Toaster />
-            </div>
-        </div>
-    )
-}
-
-export default ProductCard;
+            </div> */}
