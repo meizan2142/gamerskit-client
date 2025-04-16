@@ -1,16 +1,48 @@
 import { useState } from 'react';
 import { allLocation } from "./locations";
 import { NavLink } from 'react-router';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 const OrderForm = () => {
     const locations = allLocation();
     const [selectedDistrict, setSelectedDistrict] = useState('');
+    const [advanceAmount, setAdvanceAmount] = useState(0)
+
+    // Fetch cart data
+    const { isLoading, error, data = [] } = useQuery({
+        queryKey: ['cart'],
+        queryFn: async () => {
+            try {
+                const response = await axios.get(
+                    `${import.meta.env.VITE_API_URL}/cartList`
+                );
+                return response.data; // Axios automatically parses JSON
+            } catch (err) {
+                console.error(err, "Failed to fetch cart items");
+                return []; // Fallback empty array on error
+            }
+        },
+    });
 
     // Get the selected location object based on the selected district name
     const selectedLocation = locations.find(loc => loc.name === selectedDistrict);
 
     // Get thanas for the selected district or empty array if none selected
     const thanas = selectedLocation ? selectedLocation.thana : [];
+
+    // Calculate total
+    const totalPrice = data.reduce((sum, item) => {
+        return sum + (item.price * item.quantity);
+    }, 0);
+
+    if (isLoading) return <div className="p-6 text-white">
+        <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
+    </div>;
+    if (error) return <div className="p-6 text-red-500">Error: {error.message}</div>;
+
+    console.log(data);
+
 
     return (
         <div className="pt-20 md:pt-20 lg:pt-24 px-4 sm:px-6 md:px-10 text-center space-y-6 md:space-y-10">
@@ -104,7 +136,7 @@ const OrderForm = () => {
 
                                 {/* Payment details - full width on mobile, half on larger */}
                                 <div className="col-span-full grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    {/* Email */}
+                                    {/* Bkash / Nagad last 4 digits  */}
                                     <div className="w-full">
                                         <label htmlFor="digits" className="text-sm sm:text-base font-bold">Bkash / Nagad last 4 digits</label>
                                         <input
@@ -115,7 +147,7 @@ const OrderForm = () => {
                                         />
                                     </div>
 
-                                    {/* Name */}
+                                    {/* Advance amount */}
                                     <div className="w-full">
                                         <label htmlFor="amount" className="text-sm sm:text-base font-bold">Advance Amount</label>
                                         <input
@@ -123,6 +155,8 @@ const OrderForm = () => {
                                             type="number"
                                             placeholder="Type Advance Amount"
                                             className="w-full rounded-md border border-black text-black p-2 sm:p-3 outline-none"
+                                            value={advanceAmount}
+                                            onChange={(e) => setAdvanceAmount(Number(e.target.value))}
                                         />
                                     </div>
                                 </div>
@@ -146,43 +180,57 @@ const OrderForm = () => {
                 {/* Price view - full width on mobile, fixed on larger */}
                 <div className="w-full lg:w-1/2 xl:w-1/3 space-y-4 sm:space-y-6 md:space-y-8">
                     {/* Product List */}
-                    <div className="flex gap-3 sm:gap-4">
-                        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-800 rounded-md overflow-hidden">
-                            <img
-                                src={'http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090158/dchrtpia95xdom4koczu.png'}
-                                alt={'Product'}
-                                className="w-full h-full object-cover"
-                            />
-                        </div>
+                    <div className='grid space-y-3'>
+                        {/* single item */}
+                        {
+                            data.map((item) => <div key={item._id} className="flex gap-3 sm:gap-4">
+                                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-800 rounded-md overflow-hidden">
+                                    <img
+                                        src={item.img}
+                                        alt={'Product'}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
 
-                        <div className="flex-1 space-y-2 sm:space-y-4 justify-start">
-                            <div className="flex justify-between gap-3 sm:gap-5">
-                                <p className="text-black font-bold text-xs sm:text-sm">
-                                    Nissan GTR Skyline 4WD
-                                </p>
-                                <p className='text-black font-normal text-xs sm:text-sm'>
-                                    ৳3500
-                                </p>
-                            </div>
-                            <div className='flex justify-start'>
-                                <p className="text-black font-normal text-xs sm:text-sm">
-                                    <span className='font-bold'>Size:</span> 3xl
-                                </p>
-                            </div>
+                                <div className="flex-1 space-y-2 sm:space-y-4 justify-start">
+                                    <div className="flex justify-between gap-3 sm:gap-5">
+                                        <p className="text-black font-bold text-xs sm:text-sm">
+                                            {item.title}
+                                        </p>
+                                        <p className='text-black font-normal text-xs sm:text-sm'>
+                                            ৳{item.price}
+                                        </p>
+                                    </div>
+                                    <div className='flex justify-start'>
+                                        {
+                                            item.size ?
+                                                <p className="text-black font-normal text-xs sm:text-sm">
+                                                    <span className='font-bold'>Size:</span> {item.size}
+                                                </p>
+                                                :
+                                                <></>
+                                        }
+                                    </div>
 
-                        </div>
+                                </div>
+                            </div>)
+                        }
                     </div>
 
                     {/* Order Summary */}
                     <div className='space-y-1 sm:space-y-2'>
                         <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
-                            <h1>Subtotal - 3 items</h1>
-                            <p>৳45,900.00</p>
+                            <h1>Subtotal - {data.length} items</h1>
+                            <p>৳{totalPrice.toFixed(2)}</p>
                         </div>
                         <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
                             <h1>Delivery Charge</h1>
                             {/* <p>৳130</p> */}
                             <p>Included with price</p>
+                        </div>
+                        <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
+                            <h1>Advance Amount</h1>
+                            <p>৳{advanceAmount.toFixed(2)}</p>
                         </div>
                     </div>
 
@@ -191,7 +239,7 @@ const OrderForm = () => {
                         <h1 className='font-bold text-base sm:text-[18px]'>Total</h1>
                         <p className='flex items-center gap-1 sm:gap-2 font-bold text-base sm:text-lg'>
                             <span className='text-[8px] sm:text-[10px] font-normal'>BDT</span>
-                            ৳45,900.00
+                            ৳{(totalPrice - advanceAmount).toFixed(2)} {/* Subtract advance from total */}
                         </p>
                     </div>
 

@@ -46,7 +46,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
             // Return a context object with the snapshotted value
             return { previousCart };
         },
-        onError: (err, itemId, context) => {
+        onError: (context) => {
             // Rollback to the previous value if mutation fails
             queryClient.setQueryData(['cart'], context.previousCart);
         },
@@ -56,23 +56,13 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
         }
     });
 
-    // // Update quantity
-    // const handleQuantityChange = async (itemId, newQuantity) => {
-    //     if (newQuantity < 1) return;
-
-    //     try {
-    //         await axios.patch(
-    //             `${import.meta.env.VITE_API_URL}/cartList/${itemId}`,
-    //             { quantity: newQuantity }
-    //         );
-    //         queryClient.invalidateQueries(['cart']);
-    //     } catch (error) {
-    //         console.error('Error updating quantity:', error);
-    //     }
-    // };
 
     // Calculate total
-    const total = data.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+    const totalPrice = data.reduce((sum, item) => {
+        return sum + (item.price * item.quantity);
+    }, 0);
+
+
 
     if (isLoading) return <div className="p-6 text-white">
         <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
@@ -115,7 +105,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                                 <p className="text-white font-medium">
                                                     {item.title || 'Product Name'}
                                                 </p>
-                                                {/* Should delete instantly */}
+                                                {/* Delete button */}
                                                 <button
                                                     onClick={() => deleteItem(itemKey)}
                                                     className="text-gray-500 hover:text-red-500"
@@ -126,7 +116,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
 
                                             <div className='flex justify-between items-center'>
                                                 <p className="text-[#FFD700] text-sm font-semibold my-1">
-                                                    ${(item.price || 0).toFixed(2)}
+                                                    ৳{(item.price || 0).toFixed(2)}
                                                 </p>
                                                 {
                                                     item.size ?
@@ -138,7 +128,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                                 }
                                             </div>
 
-                                            <div className="flex items-center mt-2">
+                                            {/* <div className="flex items-center mt-2">
                                                 <button
                                                     className="w-8 h-8 flex items-center justify-center border text-white border-gray-600 rounded-l-md hover:bg-gray-700 transition"
                                                 >
@@ -152,7 +142,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                                 >
                                                     +
                                                 </button>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 );
@@ -167,7 +157,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                 <div className="border-t border-gray-700 pt-4">
                                     <div className="flex justify-between mb-4">
                                         <span className="text-white">Total:</span>
-                                        <span className="text-[#FFD700] font-bold">${total.toFixed(2)}</span>
+                                        <span className="text-[#FFD700] font-bold">৳{totalPrice.toFixed(2)}</span>
                                     </div>
                                     <NavLink to='/place-orders'>
                                         <button onClick={() => setIsCartOpen(false)} className="w-full flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
@@ -178,9 +168,9 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                 </div>
                             </>
                             :
-                            <>
-                                You Cart is empty
-                            </>
+                            <div className='text-white grid items-center justify-center'>
+                                Your Cart is empty
+                            </div>
                     }
                 </div>
             </div>
