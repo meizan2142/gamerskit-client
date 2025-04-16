@@ -1,13 +1,25 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { allLocation } from "./locations";
-import { NavLink } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
 
 const OrderForm = () => {
     const locations = allLocation();
     const [selectedDistrict, setSelectedDistrict] = useState('');
     const [advanceAmount, setAdvanceAmount] = useState(0)
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm()
+
+    const hiddenSubmitRef = useRef(null);
+
+    const handlePlaceOrderClick = () => {
+        // Trigger the hidden submit button click
+        hiddenSubmitRef.current.click();
+    };
+
+    const onSubmit = (data) => {
+        console.log(data);
+    }
 
     // Fetch cart data
     const { isLoading, error, data = [] } = useQuery({
@@ -41,7 +53,6 @@ const OrderForm = () => {
     </div>;
     if (error) return <div className="p-6 text-red-500">Error: {error.message}</div>;
 
-    console.log(data);
 
 
     return (
@@ -54,10 +65,10 @@ const OrderForm = () => {
             <div className="flex flex-col lg:flex-row justify-center w-full mx-auto gap-4 sm:gap-6 md:gap-8">
                 {/* Order Form - full width on mobile, then fixed width on larger screens */}
                 <div className="w-full lg:w-1/2 xl:w-2/3">
-                    <form noValidate="" action="" className="container flex flex-col mx-auto space-y-8 md:space-y-12">
+                    <form onSubmit={handleSubmit(onSubmit)} className="container flex flex-col mx-auto space-y-8 md:space-y-12">
                         <fieldset className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 p-4 sm:p-6 rounded-md shadow-sm">
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 col-span-full">
-                                {/* Email and Name in one row taking full width */}
+                                {/* Email and Name */}
                                 <div className="col-span-full grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     {/* Email */}
                                     <div className="w-full">
@@ -67,38 +78,71 @@ const OrderForm = () => {
                                             type="email"
                                             placeholder="Email"
                                             className="w-full rounded-md border border-black text-black p-2 sm:p-3 outline-none"
+                                            {...register("email", {
+                                                required: "Email is required",
+                                                pattern: {
+                                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                                    message: "Invalid email address"
+                                                }
+                                            })}
                                         />
+                                        {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                                     </div>
 
                                     {/* Name */}
                                     <div className="w-full">
-                                        <label htmlFor="firstname" className="text-sm sm:text-base font-bold">Name</label>
+                                        <label htmlFor="name" className="text-sm sm:text-base font-bold">Name</label>
                                         <input
-                                            id="firstname"
+                                            id="name"
                                             type="text"
                                             placeholder="Recipient Name"
                                             className="w-full rounded-md border border-black text-black p-2 sm:p-3 outline-none"
+                                            {...register("name", {
+                                                required: "Name is required",
+                                                minLength: {
+                                                    value: 3,
+                                                    message: "Name must be at least 3 characters"
+                                                }
+                                            })}
                                         />
+                                        {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
                                     </div>
                                 </div>
 
-                                {/* Mobile Number - full width on mobile, half on larger */}
+                                {/* Mobile Number */}
                                 <div className="col-span-full sm:col-span-3">
-                                    <label htmlFor="address" className="text-sm sm:text-base font-bold">Mobile Number</label>
-                                    <input id="address" type="number" placeholder="Your mobile number" className="w-full rounded-md border-black text-black p-2 sm:p-3 outline" />
+                                    <label htmlFor="mobile" className="text-sm sm:text-base font-bold">Mobile Number</label>
+                                    <input
+                                        id="mobile"
+                                        type="tel"
+                                        placeholder="Your mobile number"
+                                        className="w-full rounded-md border-black text-black p-2 sm:p-3 outline"
+                                        {...register("mobile", {
+                                            required: "Mobile number is required",
+                                            pattern: {
+                                                value: /^[0-9]{11}$/,
+                                                message: "Please enter a valid phone number with 11 Digit!"
+                                            }
+                                        })}
+                                    />
+                                    {errors.mobile && <p className="text-red-500 text-xs mt-1">{errors.mobile.message}</p>}
                                 </div>
 
-                                {/* District and Thana in one row taking full width */}
+                                {/* District and Thana */}
                                 <div className="col-span-full grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     {/* District */}
                                     <div className="w-full">
                                         <label htmlFor="district" className="text-sm sm:text-base font-bold">District</label>
                                         <select
                                             id="district"
-                                            name="district"
                                             className="w-full rounded-md border border-black text-black p-2 sm:p-3 outline-none"
+                                            {...register("district", { required: "District is required" })}
                                             value={selectedDistrict}
-                                            onChange={(e) => setSelectedDistrict(e.target.value)}
+                                            onChange={(e) => {
+                                                setSelectedDistrict(e.target.value);
+                                                setValue("district", e.target.value);
+                                                setValue("thana", ""); // Reset thana when district changes
+                                            }}
                                         >
                                             <option value="">Select a district</option>
                                             {locations.map((location) => (
@@ -107,6 +151,7 @@ const OrderForm = () => {
                                                 </option>
                                             ))}
                                         </select>
+                                        {errors.district && <p className="text-red-500 text-xs mt-1">{errors.district.message}</p>}
                                     </div>
 
                                     {/* Thana */}
@@ -114,9 +159,9 @@ const OrderForm = () => {
                                         <label htmlFor="thana" className="text-sm sm:text-base font-bold">Thana</label>
                                         <select
                                             id="thana"
-                                            name="thana"
                                             className="w-full rounded-md border border-black text-black p-2 sm:p-3 outline-none disabled:opacity-70 disabled:cursor-not-allowed"
                                             disabled={!selectedDistrict}
+                                            {...register("thana", { required: "Thana is required" })}
                                         >
                                             <option value="">Select a thana</option>
                                             {thanas.map((thana, index) => (
@@ -125,49 +170,94 @@ const OrderForm = () => {
                                                 </option>
                                             ))}
                                         </select>
+                                        {errors.thana && <p className="text-red-500 text-xs mt-1">{errors.thana.message}</p>}
                                     </div>
                                 </div>
 
-                                {/* Address - full width */}
+                                {/* Address */}
                                 <div className="col-span-full">
-                                    <label htmlFor="zip" className="text-sm sm:text-base font-bold">Address</label>
-                                    <input id="zip" type="text" placeholder="Type Address" className="w-full rounded-md border-black text-black p-2 sm:p-3 outline" />
+                                    <label htmlFor="address" className="text-sm sm:text-base font-bold">Address</label>
+                                    <input
+                                        id="address"
+                                        type="text"
+                                        placeholder="Type Address"
+                                        className="w-full rounded-md border-black text-black p-2 sm:p-3 outline"
+                                        {...register("address", {
+                                            required: "Address is required",
+                                            minLength: {
+                                                value: 10,
+                                                message: "Address must be at least 10 characters"
+                                            }
+                                        })}
+                                    />
+                                    {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address.message}</p>}
                                 </div>
 
-                                {/* Payment details - full width on mobile, half on larger */}
+                                {/* Payment details */}
                                 <div className="col-span-full grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    {/* Bkash / Nagad last 4 digits  */}
+                                    {/* Bkash/Nagad digits */}
                                     <div className="w-full">
-                                        <label htmlFor="digits" className="text-sm sm:text-base font-bold">Bkash / Nagad last 4 digits</label>
+                                        <label htmlFor="paymentDigits" className="text-sm sm:text-base font-bold">Bkash/Nagad last 4 digits</label>
                                         <input
-                                            id="digits"
-                                            type="digits"
+                                            id="paymentDigits"
+                                            type="text"
                                             placeholder="Type last 4 digits"
                                             className="w-full rounded-md border border-black text-black p-2 sm:p-3 outline-none"
+                                            {...register("paymentDigits", {
+                                                required: "Payment digits are required",
+                                                pattern: {
+                                                    value: /^[0-9]{4}$/,
+                                                    message: "Please enter exactly 4 digits"
+                                                }
+                                            })}
                                         />
+                                        {errors.paymentDigits && <p className="text-red-500 text-xs mt-1">{errors.paymentDigits.message}</p>}
                                     </div>
 
                                     {/* Advance amount */}
                                     <div className="w-full">
-                                        <label htmlFor="amount" className="text-sm sm:text-base font-bold">Advance Amount</label>
+                                        <label htmlFor="advanceAmount" className="text-sm sm:text-base font-bold">Advance Amount</label>
                                         <input
-                                            id="amount"
+                                            id="advanceAmount"
                                             type="number"
                                             placeholder="Type Advance Amount"
                                             className="w-full rounded-md border border-black text-black p-2 sm:p-3 outline-none"
+                                            {...register("advanceAmount", {
+                                                min: 0,
+                                                max: {
+                                                    value: totalPrice,
+                                                    message: "Advance can't exceed total price"
+                                                }
+                                            })}
                                             value={advanceAmount}
-                                            onChange={(e) => setAdvanceAmount(Number(e.target.value))}
+                                            onChange={(e) => {
+                                                const value = Number(e.target.value);
+                                                setAdvanceAmount(value);
+                                                setValue("advanceAmount", value);
+                                            }}
                                         />
+                                        {errors.advanceAmount && <p className="text-red-500 text-xs mt-1">{errors.advanceAmount.message}</p>}
                                     </div>
                                 </div>
 
-                                {/* Note - full width */}
+                                {/* Note */}
                                 <div className="col-span-full">
                                     <label htmlFor="note" className="text-sm sm:text-base font-bold">Note</label>
-                                    <input id="note" type="text" placeholder="Type Note" className="w-full rounded-md border-black text-black p-2 sm:p-3 outline" />
+                                    <input
+                                        id="note"
+                                        type="text"
+                                        placeholder="Type Note"
+                                        className="w-full rounded-md border-black text-black p-2 sm:p-3 outline"
+                                        {...register("note")}
+                                    />
                                 </div>
                             </div>
                         </fieldset>
+
+                        {/* Hidden submit button for the price summary section to trigger */}
+                        <button type="submit" ref={hiddenSubmitRef} className="hidden">
+                            Submit
+                        </button>
                     </form>
                 </div>
 
@@ -244,11 +334,13 @@ const OrderForm = () => {
                     </div>
 
                     <div>
-                        <NavLink to='/place-orders'>
-                            <button className="w-full flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
-                                Place Order
-                            </button>
-                        </NavLink>
+                        <button
+                            onClick={handlePlaceOrderClick}
+                            className="w-full flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition"
+                            type="button"
+                        >
+                            Place Order
+                        </button>
                     </div>
                 </div>
             </div>
