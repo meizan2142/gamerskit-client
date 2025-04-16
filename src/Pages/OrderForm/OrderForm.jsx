@@ -48,12 +48,29 @@ const OrderForm = () => {
         return sum + (item.price * item.quantity);
     }, 0);
 
+    // Calculate delivery charge based on selected district
+    const calculateDeliveryCharge = (districtName) => {
+        if (!districtName) return 0; // No charge if no district selected
+        
+        if (districtName === "dhaka") {
+            return 70;
+        } else if (districtName === "dhaka sub-urban") {
+            return 100;
+        } else {
+            return 130; // For all other districts
+        }
+    };
+
+    // Calculate totals
+    const deliveryCharge = calculateDeliveryCharge(selectedDistrict);
+    const subtotal = cartData.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const totalAmount = subtotal + deliveryCharge; // Correct: subtotal + delivery charge
+    const remainingAmount = totalAmount - advanceAmount; // Correct: total minus advance
+
 
     const onSubmit = async (data) => {
         try {
             setIsSubmitting(true);
-
-            const remainingAmount = totalPrice - advanceAmount;
 
             const cartItems = cartData.map(item => ({
                 title: item.title,
@@ -75,8 +92,6 @@ const OrderForm = () => {
                 orderDate: formattedDate,
                 status: 'pending' // Add default status
             };
-
-            console.log("Submitting order:", orderDetails);
 
             const response = await axios.post(
                 `${import.meta.env.VITE_API_URL}/orderdetails`,
@@ -389,8 +404,7 @@ const OrderForm = () => {
                         </div>
                         <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
                             <h1>Delivery Charge</h1>
-                            {/* <p>৳130</p> */}
-                            <p>Included with price</p>
+                            <p>৳{deliveryCharge}</p>
                         </div>
                         <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
                             <h1>Advance Amount</h1>
@@ -403,7 +417,7 @@ const OrderForm = () => {
                         <h1 className='font-bold text-base sm:text-[18px]'>Remaining Amount</h1>
                         <p className='flex items-center gap-1 sm:gap-2 font-bold text-base sm:text-lg'>
                             <span className='text-[8px] sm:text-[10px] font-normal'>BDT</span>
-                            ৳{(totalPrice - advanceAmount)} {/* Subtract advance from total */}
+                            ৳{(totalAmount - advanceAmount)} 
                         </p>
                     </div>
 
