@@ -9,7 +9,7 @@ const OrderForm = () => {
     const [selectedDistrict, setSelectedDistrict] = useState('');
     const [advanceAmount, setAdvanceAmount] = useState(0)
     const { register, handleSubmit, formState: { errors }, setValue } = useForm()
-
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const hiddenSubmitRef = useRef(null);
 
     const handlePlaceOrderClick = () => {
@@ -47,63 +47,73 @@ const OrderForm = () => {
 
 
     const onSubmit = async (data) => {
-        const remainingAmount = totalPrice - advanceAmount;
-
-        // Format cart items as strings for the sheet
-        const productNames = cartData.map(item => item.title).join(', ');
-        const sizes = cartData.map(item => item.size || 'N/A').join(', ');
-
-        // Get current date
-        const now = new Date();
-        const formattedDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
-
-        // Prepare data for Google Sheets
-        const sheetData = {
-            Date: formattedDate,
-            Email: data.email,
-            Name: data.name,
-            MobileNumber: data.mobile,
-            ProductName: productNames,
-            Size: sizes,
-            District: data.district,
-            Thana: data.thana,
-            Address: data.address,
-            Advance: advanceAmount.toFixed(2),
-            RemainingAmount: remainingAmount.toFixed(2),
-            Note: data.note || 'N/A'
-        };
-
         try {
-            // Using a proxy URL to handle CORS
-            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycbz_J1biKjd7Kw9a2ROS9ZgAeM9oPdiyRbDTiRrAgpcxuD1JF_oYoLS0vQxNrhcDgXMufg/exec';
+            setIsSubmitting(true);
 
-            const response = await fetch(proxyUrl + scriptUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest' // Needed for CORS Anywhere
-                },
-                body: JSON.stringify(sheetData)
-            });
+            const remainingAmount = totalPrice - advanceAmount;
 
-            const result = await response.json();
+            const cartItems = cartData.map(item => ({
+                title: item.title,
+                size: item.size || 'N/A',
+                quantity: item.quantity,
+                price: item.price,
+                productId: item._id // Include product ID if needed
+            }));
 
-            if (result.success) {
-                console.log('Data saved successfully:', result);
-                // Show success message to user
-                alert('Order submitted successfully!');
-                // Optionally clear form or redirect
-            } else {
-                console.error('Failed to save data:', result.error);
-                alert('Submission failed: ' + (result.error || 'Unknown error'));
-            }
+            const now = new Date();
+            const formattedDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+
+            const orderDetails = {
+                ...data,
+                totalPrice,
+                advanceAmount,
+                remainingAmount,
+                cartItems,
+                orderDate: formattedDate,
+                status: 'pending' // Add default status
+            };
+
+            console.log("Submitting order:", orderDetails);
+
+            const response = await axios.post(
+                `${import.meta.env.VITE_API_URL}/orderdetails`,
+                orderDetails,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+
+                    },
+                    withCredentials: true
+                }
+            );
+
+            console.log("Order placed successfully:", response.data);
+
+            // Handle success - redirect or show message
+            // window.location.href = '/order-success';
 
         } catch (error) {
-            console.error('Network error:', error);
-            alert('Network error. Please check your connection and try again.');
+            console.error("Order submission failed:", error);
+
+            // Detailed error handling
+            if (error.response) {
+                // Server responded with error status
+                console.error("Response data:", error.response.data);
+                console.error("Status code:", error.response.status);
+                alert(`Order failed: ${error.response.data.message || 'Server error'}`);
+            } else if (error.request) {
+                // No response received
+                console.error("No response received");
+                alert("Network error - please check your connection");
+            } else {
+                // Request setup error
+                console.error("Request error:", error.message);
+                alert("Failed to submit order - please try again");
+            }
+        } finally {
+            setIsSubmitting(false);
         }
-    };
+    }
 
     if (isLoading) return <div className="p-6 text-white">
         <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
@@ -393,10 +403,19 @@ const OrderForm = () => {
                     <div>
                         <button
                             onClick={handlePlaceOrderClick}
-                            className="w-full flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition"
+                            className={`w-full flex items-center justify-center gap-2 ${isSubmitting ? 'bg-gray-400' : 'bg-[#FFD700] hover:bg-[#FFB300]'} text-black font-bold py-2 px-4 rounded transition`}
                             type="button"
+                            disabled={isSubmitting}
                         >
-                            Place Order
+                            {isSubmitting ? (
+                                <>
+                                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Processing...
+                                </>
+                            ) : 'Place Order'}
                         </button>
                     </div>
                 </div>
