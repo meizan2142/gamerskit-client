@@ -36,6 +36,31 @@ export const allLocation = () => {
             "thana": ["Akhaura", "Ashuganj", "Bancharampur", "Brahmanbaria Sadar", "Kasba", "Nabinagar", "Nabinagar Bazar", "Nasirnagar", "Sarail"],
         },
         {
+            "name": "chandpur",
+            "district": 'Chandpur',
+            "thana": ["Chandpur Sadar", "Dhakirgaon", "Faridganj", "Haimchar", "Hajiganj", "Kachua", "Matlab North", "Matlab Dokkhin", "Shahrasti"],
+        },
+        {
+            "name": "chapainawabganj",
+            "district": 'Chapainawabganj',
+            "thana": ["Bholahat", "Chapainawabganj Sadar", "Gamastapur", "Nachole", "Shibganj Sadar"],
+        },
+        {
+            "name": "chattogram",
+            "district": 'Chattogram',
+            "thana": ["Akbar Shah", "Anwara", "Bakolia", "Bandar CTG", "Banshkhali", "Bayazid Bostami", "Baolkhali", "CEPZ", "Chandanaish", "Chandgaon", "Chawk Bazar", "Chattogram Sadar", "Doublemooring", "Fatikchari", "Halishahar", "Hathazari", "Karnaphuli", "KeraniHat", "Khulshi", "Kotwali - CTG", "Lohagara", "Mirsharai", "Pahartali", "Panchlaish", "Potenga", "Patiya", "Rangunia", "Raozan", "Sadarghat - CTG", "Sandwip", "Satkania", "Shantirhat (Patiya)", "Shantirhat (Patiya) - CTG", "Sitakunda", "Sitakunda (Citygat)", "Keranihat"],
+        },
+        {
+            "name": "cumilla",
+            "district": 'Cumilla',
+            "thana": ["Bangora Bazar", "Barura", "Brahmanpara", "Burichang", "Chandina", "Chauddagram", "Cumilla Sadar South Model", "Daudkandi", "Debidwar", "Hamna", "Kandirpar", "Kotwali Model", "Laksam", "Lalmai", "Meghna", "Monoharganj", "Muradnagar", "Nangalkot", "Titas"],
+        },
+        {
+            "name": "cox's Bazar",
+            "district": "Cox's Bazar",
+            "thana": ["Chakaria", "Cox's Bazar Sadar", "Eidgaon", "Kutubdia", "Moheskhali", "Pekua", "Ramu", "Teknaf", "Ukhiya"],
+        },
+        {
             "name": "dhaka",
             "district": 'Dhaka',
             "thana": ["Mirpur", "Uttara", "Pallabi", "Gulshan",],
