@@ -1,7 +1,7 @@
 import { ShoppingBasket, ShoppingCart } from "lucide-react";
 import Accordion from "../../Components/Accordion/Accordion";
 import SingleProductSwiper from "../../Components/SingleProductSwiper/SingleProductSwiper";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
@@ -83,7 +83,7 @@ const SingleProduct = () => {
             onError: (error) => {
                 toast.error('Failed to add to cart');
                 console.log(error);
-                
+
             }
         });
     };
@@ -141,10 +141,12 @@ const SingleProduct = () => {
                         <ShoppingCart className="w-4 h-4" />
                         Add to cart
                     </button>
-                    <button className="w-full flex items-center justify-center gap-3 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
-                        <ShoppingBasket className="w-4 h-4" />
-                        Buy Now
-                    </button>
+                    <NavLink to='/place-orders'>
+                        <button className="w-full flex items-center justify-center gap-3 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
+                            <ShoppingBasket className="w-4 h-4" />
+                            Buy Now
+                        </button>
+                    </NavLink>
                 </div>
             </div>
             <div>

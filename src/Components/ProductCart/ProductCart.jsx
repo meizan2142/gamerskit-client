@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { ArrowRight, X } from 'lucide-react';
 import { RiDeleteBin5Line } from 'react-icons/ri';
@@ -23,23 +23,53 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
         },
     });
 
-    // Update quantity
-    const handleQuantityChange = async (itemId, newQuantity) => {
-        if (newQuantity < 1) return;
+    // Delete item mutation
+    const { mutate: deleteItem } = useMutation({
+        mutationFn: async (itemId) => {
+            await axios.delete(`${import.meta.env.VITE_API_URL}/cartList/${itemId}`);
+        },
+        onMutate: async (itemId) => {
+            // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
+            await queryClient.cancelQueries(['cart']);
 
-        try {
-            await fetch(`http://localhost:5000/cartList/${itemId}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ quantity: newQuantity }),
-            });
+            // Snapshot the previous value
+            const previousCart = queryClient.getQueryData(['cart']);
+
+            // Optimistically update to the new value
+            queryClient.setQueryData(['cart'], old =>
+                old.filter(item => {
+                    const currentItemId = item?.id || item?._id || item?.productId;
+                    return currentItemId !== itemId;
+                })
+            );
+
+            // Return a context object with the snapshotted value
+            return { previousCart };
+        },
+        onError: (err, itemId, context) => {
+            // Rollback to the previous value if mutation fails
+            queryClient.setQueryData(['cart'], context.previousCart);
+        },
+        onSettled: () => {
+            // Always refetch after error or success
             queryClient.invalidateQueries(['cart']);
-        } catch (error) {
-            console.error('Error updating quantity:', error);
         }
-    };
+    });
+
+    // // Update quantity
+    // const handleQuantityChange = async (itemId, newQuantity) => {
+    //     if (newQuantity < 1) return;
+
+    //     try {
+    //         await axios.patch(
+    //             `${import.meta.env.VITE_API_URL}/cartList/${itemId}`,
+    //             { quantity: newQuantity }
+    //         );
+    //         queryClient.invalidateQueries(['cart']);
+    //     } catch (error) {
+    //         console.error('Error updating quantity:', error);
+    //     }
+    // };
 
     // Calculate total
     const total = data.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
@@ -87,6 +117,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                                 </p>
                                                 {/* Should delete instantly */}
                                                 <button
+                                                    onClick={() => deleteItem(itemKey)}
                                                     className="text-gray-500 hover:text-red-500"
                                                 >
                                                     <RiDeleteBin5Line size={18} />
@@ -109,7 +140,6 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
 
                                             <div className="flex items-center mt-2">
                                                 <button
-                                                    onClick={() => handleQuantityChange(itemKey, (item.quantity || 1) - 1)}
                                                     className="w-8 h-8 flex items-center justify-center border text-white border-gray-600 rounded-l-md hover:bg-gray-700 transition"
                                                 >
                                                     -
@@ -118,7 +148,6 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                                     {item.quantity || 1}
                                                 </span>
                                                 <button
-                                                    onClick={() => handleQuantityChange(itemKey, (item.quantity || 1) + 1)}
                                                     className="w-8 h-8 flex items-center justify-center border text-white border-gray-600 rounded-r-md hover:bg-gray-700 transition"
                                                 >
                                                     +
