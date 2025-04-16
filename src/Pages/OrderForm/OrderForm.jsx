@@ -17,12 +17,9 @@ const OrderForm = () => {
         hiddenSubmitRef.current.click();
     };
 
-    const onSubmit = (data) => {
-        console.log(data);
-    }
 
     // Fetch cart data
-    const { isLoading, error, data = [] } = useQuery({
+    const { isLoading, error, data: cartData = [] } = useQuery({
         queryKey: ['cart'],
         queryFn: async () => {
             try {
@@ -44,9 +41,32 @@ const OrderForm = () => {
     const thanas = selectedLocation ? selectedLocation.thana : [];
 
     // Calculate total
-    const totalPrice = data.reduce((sum, item) => {
+    const totalPrice = cartData.reduce((sum, item) => {
         return sum + (item.price * item.quantity);
     }, 0);
+
+
+    const onSubmit = (data) => {
+        const remainingAmount = totalPrice - advanceAmount;
+        
+        const cartItems = cartData.map(item => ({
+            title: item.title,
+            size: item.size || 'N/A',
+            quantity: item.quantity,
+            price: item.price
+        }));
+    
+        // Get current date in M/D/YYYY H:mm:ss format
+        const now = new Date();
+        const formattedDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+    
+        console.log({
+            ...data,
+            remainingAmount: remainingAmount.toFixed(2),
+            cartItems,
+            orderDate: formattedDate
+        });
+    }
 
     if (isLoading) return <div className="p-6 text-white">
         <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
@@ -273,7 +293,7 @@ const OrderForm = () => {
                     <div className='grid space-y-3'>
                         {/* single item */}
                         {
-                            data.map((item) => <div key={item._id} className="flex gap-3 sm:gap-4">
+                            cartData.map((item) => <div key={item._id} className="flex gap-3 sm:gap-4">
                                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-800 rounded-md overflow-hidden">
                                     <img
                                         src={item.img}
@@ -310,7 +330,7 @@ const OrderForm = () => {
                     {/* Order Summary */}
                     <div className='space-y-1 sm:space-y-2'>
                         <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
-                            <h1>Subtotal - {data.length} items</h1>
+                            <h1>Subtotal - {cartData.length} items</h1>
                             <p>৳{totalPrice.toFixed(2)}</p>
                         </div>
                         <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
@@ -326,7 +346,7 @@ const OrderForm = () => {
 
                     {/* Total */}
                     <div className='flex font-normal text-sm sm:text-base justify-between items-center'>
-                        <h1 className='font-bold text-base sm:text-[18px]'>Total</h1>
+                        <h1 className='font-bold text-base sm:text-[18px]'>Remaining Amount</h1>
                         <p className='flex items-center gap-1 sm:gap-2 font-bold text-base sm:text-lg'>
                             <span className='text-[8px] sm:text-[10px] font-normal'>BDT</span>
                             ৳{(totalPrice - advanceAmount).toFixed(2)} {/* Subtract advance from total */}
