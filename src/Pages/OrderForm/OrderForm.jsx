@@ -3,6 +3,8 @@ import { allLocation } from "./locations";
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
+import toast, { Toaster } from 'react-hot-toast';
 
 const OrderForm = () => {
     const locations = allLocation();
@@ -11,6 +13,7 @@ const OrderForm = () => {
     const { register, handleSubmit, formState: { errors }, setValue } = useForm()
     const [isSubmitting, setIsSubmitting] = useState(false);
     const hiddenSubmitRef = useRef(null);
+    const navigate = useNavigate()
 
     const handlePlaceOrderClick = () => {
         // Trigger the hidden submit button click
@@ -86,6 +89,8 @@ const OrderForm = () => {
                     withCredentials: true
                 }
             );
+            navigate('/my-orders');
+            toast.success("Order placed successfully!");
 
             console.log("Order placed successfully:", response.data);
 
@@ -130,6 +135,9 @@ const OrderForm = () => {
 
             {/* Main Container - changes layout based on screen size */}
             <div className="flex flex-col lg:flex-row justify-center w-full mx-auto gap-4 sm:gap-6 md:gap-8">
+                <div>
+                    <Toaster />
+                </div>
                 {/* Order Form - full width on mobile, then fixed width on larger screens */}
                 <div className="w-full lg:w-1/2 xl:w-2/3">
                     <form onSubmit={handleSubmit(onSubmit)} className="container flex flex-col mx-auto space-y-8 md:space-y-12">

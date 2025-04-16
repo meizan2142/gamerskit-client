@@ -8,5 +8,9 @@ export const navLinks = () => {
             path: '/shop',
             pathName: 'Shop',
         },
+        {
+            path: '/my-orders',
+            pathName: 'My Orders',
+        },
     ];
 };
