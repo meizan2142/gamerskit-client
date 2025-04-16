@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import { ArrowRight, X } from 'lucide-react';
+import { ArrowRight, ShoppingBasket, X } from 'lucide-react';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { NavLink } from 'react-router';
 
@@ -168,8 +168,14 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                 </div>
                             </>
                             :
-                            <div className='text-white grid items-center justify-center'>
-                                Your Cart is empty
+                            <div className='text-white flex flex-col space-y-5 items-center h-screen justify-center'>
+                                <p className='font-bold text-xl'>Your Cart is empty</p>
+                                <NavLink to='/shop'>
+                                    <button onClick={() => setIsCartOpen(false)} className="w-full flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
+                                        <ShoppingBasket className="w-4 h-4" />
+                                        Continue Shopping
+                                    </button>
+                                </NavLink>
                             </div>
                     }
                 </div>

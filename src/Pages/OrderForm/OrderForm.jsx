@@ -89,13 +89,12 @@ const OrderForm = () => {
                     withCredentials: true
                 }
             );
-            navigate('/my-orders');
             toast.success("Order placed successfully!");
+            setTimeout(() => {
+                navigate('/my-orders');
+            }, 1000);
 
             console.log("Order placed successfully:", response.data);
-
-            // Handle success - redirect or show message
-            // window.location.href = '/order-success';
 
         } catch (error) {
             console.error("Order submission failed:", error);
@@ -386,7 +385,7 @@ const OrderForm = () => {
                     <div className='space-y-1 sm:space-y-2'>
                         <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
                             <h1>Subtotal - {cartData.length} items</h1>
-                            <p>৳{totalPrice.toFixed(2)}</p>
+                            <p>৳{totalPrice}</p>
                         </div>
                         <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
                             <h1>Delivery Charge</h1>
@@ -395,7 +394,7 @@ const OrderForm = () => {
                         </div>
                         <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
                             <h1>Advance Amount</h1>
-                            <p>৳{advanceAmount.toFixed(2)}</p>
+                            <p>৳{advanceAmount}</p>
                         </div>
                     </div>
 
@@ -404,7 +403,7 @@ const OrderForm = () => {
                         <h1 className='font-bold text-base sm:text-[18px]'>Remaining Amount</h1>
                         <p className='flex items-center gap-1 sm:gap-2 font-bold text-base sm:text-lg'>
                             <span className='text-[8px] sm:text-[10px] font-normal'>BDT</span>
-                            ৳{(totalPrice - advanceAmount).toFixed(2)} {/* Subtract advance from total */}
+                            ৳{(totalPrice - advanceAmount)} {/* Subtract advance from total */}
                         </p>
                     </div>
 

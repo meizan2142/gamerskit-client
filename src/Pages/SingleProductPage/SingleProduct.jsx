@@ -1,7 +1,7 @@
 import { ShoppingBasket, ShoppingCart } from "lucide-react";
 import Accordion from "../../Components/Accordion/Accordion";
 import SingleProductSwiper from "../../Components/SingleProductSwiper/SingleProductSwiper";
-import { NavLink, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
@@ -9,8 +9,19 @@ import { useState } from "react";
 
 const SingleProduct = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const queryClient = useQueryClient();
     const [selectedSize, setSelectedSize] = useState('');
+    const [isBuyNowClicked, setIsBuyNowClicked] = useState(false);
+
+    // Get cart data to check if there are items
+    const { data: cartData } = useQuery({
+        queryKey: ['cart'],
+        queryFn: async () => {
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/cartList`);
+            return response.data;
+        }
+    });
 
     const { isLoading, error, data } = useQuery({
         queryKey: ['product', id],
@@ -22,8 +33,6 @@ const SingleProduct = () => {
         }
     });
 
-
-    // Define the mutation
     const { mutate } = useMutation({
         mutationFn: (product) =>
             axios.post(`${import.meta.env.VITE_API_URL}/cartList`, product, {
@@ -32,37 +41,37 @@ const SingleProduct = () => {
                 },
             }),
         onMutate: async (newProduct) => {
-            // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
             await queryClient.cancelQueries({ queryKey: ['cart'] });
-
-            // Snapshot the previous value
             const previousCart = queryClient.getQueryData(['cart']);
-
-            // Optimistically update to the new value
             queryClient.setQueryData(['cart'], (old) => {
                 return [...(old || []), { ...newProduct, _id: Date.now().toString() }];
             });
-
             return { previousCart };
         },
         onSuccess: (response) => {
             if (response.data.insertedId) {
                 toast.success('Added to Cart');
-                // Invalidate and refetch to ensure our data is fresh
                 queryClient.invalidateQueries({ queryKey: ['cart'] });
+                
+                // If Buy Now was clicked, navigate after adding to cart
+                if (isBuyNowClicked) {
+                    navigate('/place-orders');
+                    setIsBuyNowClicked(false);
+                }
             }
         },
         onError: (error, _, context) => {
             console.error('Error:', error);
             toast.error('Failed to add to cart');
-            // Roll back to the previous value on error
             if (context?.previousCart) {
                 queryClient.setQueryData(['cart'], context.previousCart);
             }
+            setIsBuyNowClicked(false);
         }
     });
 
     const handleSubmit = () => {
+        // Only validate size if the product has sizes defined
         if (data.sizes && data.sizes.length > 0 && !selectedSize) {
             return toast.error('Please select a size');
         }
@@ -73,19 +82,40 @@ const SingleProduct = () => {
             price: data.price,
             img: data.img,
             quantity: 1,
-            ...(data.sizes && { size: selectedSize })
+            ...(data.sizes && data.sizes.length > 0 && { size: selectedSize }) // Only include size if product has sizes
         };
 
         mutate(cartProduct, {
-            onSuccess: () => {
-                setSelectedSize(null); // Reset selected size after successful addition
-            },
             onError: (error) => {
                 toast.error('Failed to add to cart');
                 console.log(error);
-
             }
         });
+    };
+
+    const handleBuyNow = () => {
+        // Only validate size if the product has sizes defined
+        if (data.sizes && data.sizes.length > 0 && !selectedSize) {
+            return toast.error('Please select a size');
+        }
+
+        const cartProduct = {
+            productId: data._id,
+            title: data.title,
+            price: data.price,
+            img: data.img,
+            quantity: 1,
+            ...(data.sizes && data.sizes.length > 0 && { size: selectedSize }) // Only include size if product has sizes
+        };
+
+        // Check if cart has items
+        if (cartData && cartData.length > 0) {
+            navigate('/place-orders');
+        } else {
+            // If cart is empty, add the product first then navigate
+            setIsBuyNowClicked(true);
+            mutate(cartProduct);
+        }
     };
 
     if (isLoading) return <div className="min-h-screen pt-24 flex justify-center">
@@ -106,8 +136,8 @@ const SingleProduct = () => {
                         </h1>
                         <p className="text-lg sm:text-xl mt-2">Price: ৳{data.price}</p>
                     </div>
-                    {/* Size Selection - Only show if sizes exist */}
-                    {data.sizes && data.sizes.length > 0 ? (
+                    {/* Only show size selection if product has sizes */}
+                    {data.sizes && data.sizes.length > 0 && (
                         <div className="space-y-3">
                             <h3 className="font-semibold text-lg">Available Sizes:</h3>
                             <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-3 gap-3 sm:gap-4">
@@ -127,8 +157,6 @@ const SingleProduct = () => {
                                 ))}
                             </div>
                         </div>
-                    ) : (
-                        <></>
                     )}
 
                     <div>
@@ -141,12 +169,22 @@ const SingleProduct = () => {
                         <ShoppingCart className="w-4 h-4" />
                         Add to cart
                     </button>
-                    <NavLink to='/place-orders'>
-                        <button className="w-full flex items-center justify-center gap-3 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
-                            <ShoppingBasket className="w-4 h-4" />
-                            Buy Now
-                        </button>
-                    </NavLink>
+                    
+                    <button
+                        onClick={handleBuyNow}
+                        className={`w-full flex items-center justify-center gap-3 ${
+                            (data.sizes && data.sizes.length > 0 && !selectedSize) || 
+                            (!cartData || cartData.length === 0)
+                                ? 'bg-gray-300 cursor-not-allowed'
+                                : 'bg-[#FFD700] hover:bg-[#FFB300]'
+                        } text-black font-bold py-2 px-4 rounded transition`}
+                        disabled={
+                            (data.sizes && data.sizes.length > 0 && !selectedSize) || 
+                            (!cartData || cartData.length === 0)
+                        }>
+                        <ShoppingBasket className="w-4 h-4" />
+                        Buy Now
+                    </button>
                 </div>
             </div>
             <div>
