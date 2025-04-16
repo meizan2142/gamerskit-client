@@ -46,27 +46,64 @@ const OrderForm = () => {
     }, 0);
 
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         const remainingAmount = totalPrice - advanceAmount;
-        
-        const cartItems = cartData.map(item => ({
-            title: item.title,
-            size: item.size || 'N/A',
-            quantity: item.quantity,
-            price: item.price
-        }));
-    
-        // Get current date in M/D/YYYY H:mm:ss format
+
+        // Format cart items as strings for the sheet
+        const productNames = cartData.map(item => item.title).join(', ');
+        const sizes = cartData.map(item => item.size || 'N/A').join(', ');
+
+        // Get current date
         const now = new Date();
         const formattedDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
-    
-        console.log({
-            ...data,
-            remainingAmount: remainingAmount.toFixed(2),
-            cartItems,
-            orderDate: formattedDate
-        });
-    }
+
+        // Prepare data for Google Sheets
+        const sheetData = {
+            Date: formattedDate,
+            Email: data.email,
+            Name: data.name,
+            MobileNumber: data.mobile,
+            ProductName: productNames,
+            Size: sizes,
+            District: data.district,
+            Thana: data.thana,
+            Address: data.address,
+            Advance: advanceAmount.toFixed(2),
+            RemainingAmount: remainingAmount.toFixed(2),
+            Note: data.note || 'N/A'
+        };
+
+        try {
+            // Using a proxy URL to handle CORS
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbz_J1biKjd7Kw9a2ROS9ZgAeM9oPdiyRbDTiRrAgpcxuD1JF_oYoLS0vQxNrhcDgXMufg/exec';
+
+            const response = await fetch(proxyUrl + scriptUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest' // Needed for CORS Anywhere
+                },
+                body: JSON.stringify(sheetData)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                console.log('Data saved successfully:', result);
+                // Show success message to user
+                alert('Order submitted successfully!');
+                // Optionally clear form or redirect
+            } else {
+                console.error('Failed to save data:', result.error);
+                alert('Submission failed: ' + (result.error || 'Unknown error'));
+            }
+
+        } catch (error) {
+            console.error('Network error:', error);
+            alert('Network error. Please check your connection and try again.');
+        }
+    };
 
     if (isLoading) return <div className="p-6 text-white">
         <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
