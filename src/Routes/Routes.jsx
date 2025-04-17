@@ -6,6 +6,7 @@ import SingleProduct from "../Pages/SingleProductPage/SingleProduct";
 import ImageHosting from "../Pages/ImageHosting/ImageHosting";
 import OrderForm from "../Pages/OrderForm/OrderForm";
 import MyOrders from "../Pages/MyOrders/MyOrders";
+import SingleOrderDetails from "../Pages/SingleOrderDetails/SingleOrderDetails";
 
 export const router = createBrowserRouter([
     {
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
             {
                 path: "/my-orders",
                 element: <MyOrders />,
+            },
+            {
+                path: "/single-order-details/:id",
+                element: <SingleOrderDetails />,
             },
         ],
     },
