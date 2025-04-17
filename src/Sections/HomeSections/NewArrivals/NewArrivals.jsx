@@ -52,7 +52,7 @@ const NewArrivals = ({ heading }) => {
         },
     });
 
-    
+
 
 
     if (isLoading) return <div className="min-h-screen pt-24 flex justify-center">
@@ -130,7 +130,9 @@ const NewArrivals = ({ heading }) => {
 
 
             {/* Products Grid */}
-            <div className="2xl:container 2xl:mx-auto 2xl:mt-10">
+            <div 
+            data-aos="fade-zoom-in" data-aos-offset="200" data-aos-easing="ease-in-sine" data-aos-duration="1000"
+            className="2xl:container 2xl:mx-auto 2xl:mt-10">
                 <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-3">
                     {filteredProducts.map((product) => (
                         <ProductCard

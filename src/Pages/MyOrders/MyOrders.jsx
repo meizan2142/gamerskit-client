@@ -1,10 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { ShoppingBasket } from "lucide-react";
-import { NavLink, useNavigate } from "react-router";
+import { ArrowRight, ShoppingBasket } from "lucide-react";
+import { NavLink } from "react-router";
 
 const MyOrders = () => {
-    const navigate = useNavigate()
     // Fetch placed orders
     const { isLoading, error, data = [] } = useQuery({
         queryKey: ['details'],
@@ -40,36 +39,36 @@ const MyOrders = () => {
                                         <th className="py-3 px-6 text-left border-b">Serial</th>
                                         <th className="py-3 px-6 text-left border-b">Date</th>
                                         <th className="py-3 px-6 text-left border-b">Name</th>
-                                        <th className="py-3 px-6 text-left border-b">Product Name</th>
                                         <th className="py-3 px-6 border-b text-end">Quantity</th>
                                         <th className="py-3 px-6 border-b text-end">Advance Amount</th>
                                         <th className="py-3 px-6 border-b text-end">Remaining Amount</th>
+                                        <th className="py-3 px-6 text-left border-b">Check Details</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {data.map((item, index) => (
                                         <tr
                                             key={item._id}
-                                            onClick={() => navigate(`/single-order-details/${item._id}`)}
-                                            className="hover:bg-yellow-50 transition duration-300 cursor-pointer"
-                                        >
+                                        >   
                                             <td className="py-4 px-6 border-b">{index + 1}</td>
                                             <td className="py-4 px-6 border-b">
                                                 {new Date(item.orderDate).toLocaleDateString()}
                                             </td>
                                             <td className="py-4 px-6 border-b">{item.name}</td>
-                                            <td className="py-4 px-6 border-b space-y-1">
-                                                {item.cartItems.map(cartItem => (
-                                                    <div key={cartItem.productId}>
-                                                        {cartItem.title} {cartItem.size !== "N/A" ? `(${cartItem.size})` : ''}
-                                                    </div>
-                                                ))}
-                                            </td>
                                             <td className="py-4 px-6 border-b text-end">
                                                 {item.cartItems.reduce((total, item) => total + item.quantity, 0)}
                                             </td>
                                             <td className="py-4 px-6 border-b text-end">৳{item.advanceAmount}</td>
                                             <td className="py-4 px-6 border-b text-end">৳{item.remainingAmount}</td>
+                                            <td className="py-4 px-6 border-b space-y-1">
+                                                <NavLink to={`/single-order-details/${item._id}`}>
+                                                    <button
+                                                        className="px-5 gap-2 py-3 rounded-full flex items-center justify-center mx-auto lg:mx-0 xl:mx-0 2xl:mx-0 text-sm sm:text-base font-bold hover:bg-[#FFD700] text-white bg-[#FFB300] transition-all">
+                                                        Check Details
+                                                        <ArrowRight />
+                                                    </button>
+                                                </NavLink>
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
