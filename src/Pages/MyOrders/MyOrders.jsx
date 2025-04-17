@@ -34,28 +34,34 @@ const MyOrders = () => {
                     <thead>
                         <tr className="bg-[#333333] text-white">
                             <th className="py-3 px-6 text-left border-b">Serial</th>
+                            <th className="py-3 px-6 text-left border-b">Date</th>
                             <th className="py-3 px-6 text-left border-b">Name</th>
                             <th className="py-3 px-6 text-left border-b">Product Name</th>
-                            <th className="py-3 px-6 text-left border-b">Quantity</th>
-                            <th className="py-3 px-6 border-b text-end">Advance</th>
+                            <th className="py-3 px-6 border-b text-end">Quantity</th>
+                            <th className="py-3 px-6 border-b text-end">Advance Amount</th>
                             <th className="py-3 px-6 border-b text-end">Remaining Amount</th>
                         </tr>
                     </thead>
                     <tbody>
                         {data.map((item, index) => (
-                            <tr key={item._id} 
-                            onClick={() => navigate(`/single-order-details/${item._id}`)}
-                            className="hover:bg-yellow-50 transition duration-300">
+                            <tr
+                                key={item._id}
+                                onClick={() => navigate(`/single-order-details/${item._id}`)}
+                                className="hover:bg-yellow-50 transition duration-300 cursor-pointer"
+                            >
                                 <td className="py-4 px-6 border-b">{index + 1}</td>
+                                <td className="py-4 px-6 border-b">
+                                    {new Date(item.orderDate).toLocaleDateString()}
+                                </td>
                                 <td className="py-4 px-6 border-b">{item.name}</td>
                                 <td className="py-4 px-6 border-b space-y-1">
                                     {item.cartItems.map(cartItem => (
                                         <div key={cartItem.productId}>
-                                            {cartItem.title} (৳{cartItem.price})
+                                            {cartItem.title} {cartItem.size !== "N/A" ? `(${cartItem.size})` : ''}
                                         </div>
                                     ))}
                                 </td>
-                                <td className="py-4 px-6 border-b">
+                                <td className="py-4 px-6 border-b text-end">
                                     {item.cartItems.reduce((total, item) => total + item.quantity, 0)}
                                 </td>
                                 <td className="py-4 px-6 border-b text-end">৳{item.advanceAmount}</td>
