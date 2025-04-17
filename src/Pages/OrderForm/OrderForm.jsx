@@ -51,17 +51,26 @@ const OrderForm = () => {
     }, 0);
 
     // Calculate delivery charge based on selected district
-    const calculateDeliveryCharge = (districtName) => {
-        if (!districtName) return 0; // No charge if no district selected
+    const calculateDeliveryCharge = (districtName, cartItems) => {
+        if (!districtName || hasOnlyCars(cartItems)) return 0;
 
-        if (districtName === "dhaka") {
-            return 70;
-        } else if (districtName === "dhaka sub-urban") {
-            return 100;
-        } else {
-            return 130; // For all other districts
-        }
+        if (districtName === "dhaka") return 70;
+        if (districtName === "dhaka sub-urban") return 100;
+        return 130;
     };
+    const hasOnlyCars = (cartItems) => {
+        if (!cartItems || cartItems.length === 0) return false;
+
+        // Filter out non-car items
+        const nonCarItems = cartItems.filter(item =>
+            !item.title.toLowerCase().includes('car') &&
+            !item.title.toLowerCase().includes('porsche') // Add other car keywords as needed
+        );
+
+        // If no non-car items were found, then only cars exist
+        return nonCarItems.length === 0;
+    };
+
 
     // Calculate totals
     const deliveryCharge = calculateDeliveryCharge(selectedDistrict);
@@ -69,72 +78,6 @@ const OrderForm = () => {
     const totalAmount = subtotal + deliveryCharge;
     const remainingAmount = totalAmount - advanceAmount;
 
-
-    // const onSubmit = async (data) => {
-    //     try {
-    //         setIsSubmitting(true);
-
-    //         // Prepare order data
-    //         const cartItems = cartData.map(item => ({
-    //             title: item.title,
-    //             size: item.size || 'N/A',
-    //             quantity: item.quantity,
-    //             price: item.price,
-    //             productId: item._id
-    //         }));
-
-    //         const orderDetails = {
-    //             ...data,
-    //             totalPrice,
-    //             advanceAmount,
-    //             remainingAmount,
-    //             cartItems,
-    //             orderDate: new Date().toISOString(),
-    //             status: 'pending'
-    //         };
-
-    //         // 1. Place the order
-    //         const orderResponse = await axios.post(
-    //             `${import.meta.env.VITE_API_URL}/orderdetails`,
-    //             orderDetails,
-    //             {
-    //                 headers: { 'Content-Type': 'application/json' },
-    //                 withCredentials: true
-    //             }
-    //         );
-
-    //         console.log("Order placed successfully:", orderResponse.data);
-
-    //         // 2. Clear the cart
-    //         await axios.delete(
-    //             `${import.meta.env.VITE_API_URL}/clearCart`,
-    //             {
-    //                 headers: { 'Content-Type': 'application/json' },
-    //                 withCredentials: true
-    //             }
-    //         );
-
-    //         // 3. Immediate UI update (if using React Query)
-    //         // Make sure queryClient is available in your component (either via useContext or props)
-    //         if (window.queryClient) { // or however you access your queryClient
-    //             window.queryClient.setQueryData(['cart'], []);
-    //         }
-
-    //         // 4. Show success and redirect
-    //         toast.success("Order placed successfully!");
-    //         setTimeout(() => navigate('/my-orders'), 1000);
-
-    //     } catch (error) {
-    //         console.error("Order error:", error);
-    //         if (error.response) {
-    //             toast.error(error.response.data.message || 'Order failed');
-    //         } else {
-    //             toast.error("Network error - please try again");
-    //         }
-    //     } finally {
-    //         setIsSubmitting(false);
-    //     }
-    // }
 
     const onSubmit = async (data) => {
         try {
@@ -471,7 +414,11 @@ const OrderForm = () => {
                         </div>
                         <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
                             <h1>Delivery Charge</h1>
-                            <p>৳{deliveryCharge}</p>
+                            {hasOnlyCars(cartData) ? (
+                                <p className="text-green-600">Included with price</p>
+                            ) : (
+                                <p>৳{deliveryCharge}</p>
+                            )}
                         </div>
                         <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
                             <h1>Advance Amount</h1>

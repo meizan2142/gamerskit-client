@@ -62,7 +62,7 @@ export const allLocation = () => {
         },
         {
             "name": "dhaka",
-            "district": 'Dhaka',
+            "district": 'Dhaka City',
             "thana": ["Adabor", "Airport", "Ati Bazar (Keraniganj)", "Azompur", "Badda", "Banani", "Bangshal", "Bashundhara R/A", "Bhashantek", "Cantonment", "Chawkbazar", "Dakshin Khan", "Darus Salam", "Demra", "Dhanmondi", "Gandaria", "Gulistan", "Gulshan", "Hatirjheel", "Hazaribag", "Jattrabari", "Kadamtali", "Kafrul", "Kalabagan", "Kamrangirchar", "Khilgaon", "Khilkhet", "Kotwali", "Lalbagh", "Mirpur", "Mohammadpur", "Motijheel", "Mugda", "New Market", "Pallabi", "Paltan", "Panthapath", "Purbachal", "Ramna", "Rampura", "Rupnagar", "Sabujbag", "Shah Ali", "Shah Ali Market", "Shahbag", "Shahjahanpur", "Sher-e-Bangla Nagar", "Shyampur", "Sutrapur", "Tejgaon", "Tejgaon Industrial Area", "Turag", "Uttara", "Uttarkhan", "Vasantek", "Vatara", "Wari"],
         },
         {
