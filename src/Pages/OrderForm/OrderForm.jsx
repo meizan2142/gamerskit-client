@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { allLocation } from "./locations";
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
@@ -14,6 +14,8 @@ const OrderForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const hiddenSubmitRef = useRef(null);
     const navigate = useNavigate()
+    const queryClient = useQueryClient();
+
 
     const handlePlaceOrderClick = () => {
         // Trigger the hidden submit button click
@@ -51,7 +53,7 @@ const OrderForm = () => {
     // Calculate delivery charge based on selected district
     const calculateDeliveryCharge = (districtName) => {
         if (!districtName) return 0; // No charge if no district selected
-        
+
         if (districtName === "dhaka") {
             return 70;
         } else if (districtName === "dhaka sub-urban") {
@@ -64,24 +66,88 @@ const OrderForm = () => {
     // Calculate totals
     const deliveryCharge = calculateDeliveryCharge(selectedDistrict);
     const subtotal = cartData.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const totalAmount = subtotal + deliveryCharge; // Correct: subtotal + delivery charge
-    const remainingAmount = totalAmount - advanceAmount; // Correct: total minus advance
+    const totalAmount = subtotal + deliveryCharge;
+    const remainingAmount = totalAmount - advanceAmount;
 
+
+    // const onSubmit = async (data) => {
+    //     try {
+    //         setIsSubmitting(true);
+
+    //         // Prepare order data
+    //         const cartItems = cartData.map(item => ({
+    //             title: item.title,
+    //             size: item.size || 'N/A',
+    //             quantity: item.quantity,
+    //             price: item.price,
+    //             productId: item._id
+    //         }));
+
+    //         const orderDetails = {
+    //             ...data,
+    //             totalPrice,
+    //             advanceAmount,
+    //             remainingAmount,
+    //             cartItems,
+    //             orderDate: new Date().toISOString(),
+    //             status: 'pending'
+    //         };
+
+    //         // 1. Place the order
+    //         const orderResponse = await axios.post(
+    //             `${import.meta.env.VITE_API_URL}/orderdetails`,
+    //             orderDetails,
+    //             {
+    //                 headers: { 'Content-Type': 'application/json' },
+    //                 withCredentials: true
+    //             }
+    //         );
+
+    //         console.log("Order placed successfully:", orderResponse.data);
+
+    //         // 2. Clear the cart
+    //         await axios.delete(
+    //             `${import.meta.env.VITE_API_URL}/clearCart`,
+    //             {
+    //                 headers: { 'Content-Type': 'application/json' },
+    //                 withCredentials: true
+    //             }
+    //         );
+
+    //         // 3. Immediate UI update (if using React Query)
+    //         // Make sure queryClient is available in your component (either via useContext or props)
+    //         if (window.queryClient) { // or however you access your queryClient
+    //             window.queryClient.setQueryData(['cart'], []);
+    //         }
+
+    //         // 4. Show success and redirect
+    //         toast.success("Order placed successfully!");
+    //         setTimeout(() => navigate('/my-orders'), 1000);
+
+    //     } catch (error) {
+    //         console.error("Order error:", error);
+    //         if (error.response) {
+    //             toast.error(error.response.data.message || 'Order failed');
+    //         } else {
+    //             toast.error("Network error - please try again");
+    //         }
+    //     } finally {
+    //         setIsSubmitting(false);
+    //     }
+    // }
 
     const onSubmit = async (data) => {
         try {
             setIsSubmitting(true);
 
+            // Prepare order data
             const cartItems = cartData.map(item => ({
                 title: item.title,
                 size: item.size || 'N/A',
                 quantity: item.quantity,
                 price: item.price,
-                productId: item._id // Include product ID if needed
+                productId: item._id
             }));
-
-            const now = new Date();
-            const formattedDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
 
             const orderDetails = {
                 ...data,
@@ -89,50 +155,51 @@ const OrderForm = () => {
                 advanceAmount,
                 remainingAmount,
                 cartItems,
-                orderDate: formattedDate,
-                status: 'pending' // Add default status
+                orderDate: new Date().toISOString(),
+                status: 'pending'
             };
 
-            const response = await axios.post(
+            // 1. Place the order
+            const orderResponse = await axios.post(
                 `${import.meta.env.VITE_API_URL}/orderdetails`,
                 orderDetails,
                 {
-                    headers: {
-                        'Content-Type': 'application/json',
-
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
                 }
             );
-            toast.success("Order placed successfully!");
-            setTimeout(() => {
-                navigate('/my-orders');
-            }, 1000);
 
-            console.log("Order placed successfully:", response.data);
+            console.log("Order placed successfully:", orderResponse.data);
+
+            // 2. Clear the cart
+            await axios.delete(
+                `${import.meta.env.VITE_API_URL}/clearCart`,
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
+                }
+            );
+
+            // 3. Invalidate and reset cart queries for instant UI update
+            await queryClient.invalidateQueries(['cart']); // This will refetch the cart
+            queryClient.setQueryData(['cart'], []); // This will instantly set cart to empty
+
+            // 4. Show success and redirect
+            toast.success("Order placed successfully!");
+            setTimeout(() => navigate('/my-orders'), 1000);
 
         } catch (error) {
-            console.error("Order submission failed:", error);
-
-            // Detailed error handling
+            console.error("Order error:", error);
             if (error.response) {
-                // Server responded with error status
-                console.error("Response data:", error.response.data);
-                console.error("Status code:", error.response.status);
-                alert(`Order failed: ${error.response.data.message || 'Server error'}`);
-            } else if (error.request) {
-                // No response received
-                console.error("No response received");
-                alert("Network error - please check your connection");
+                toast.error(error.response.data.message || 'Order failed');
             } else {
-                // Request setup error
-                console.error("Request error:", error.message);
-                alert("Failed to submit order - please try again");
+                toast.error("Network error - please try again");
             }
         } finally {
             setIsSubmitting(false);
         }
     }
+
 
     if (isLoading) return <div className="p-6 text-white">
         <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
@@ -147,7 +214,7 @@ const OrderForm = () => {
                 <h1 className="font-bold text-2xl sm:text-3xl">Delivery Details</h1>
             </div>
 
-            {/* Main Container - changes layout based on screen size */}
+            {/* Main Container - changes layout based on screen size  */}
             <div className="flex flex-col lg:flex-row justify-center w-full mx-auto gap-4 sm:gap-6 md:gap-8">
                 <div>
                     <Toaster />
@@ -417,7 +484,7 @@ const OrderForm = () => {
                         <h1 className='font-bold text-base sm:text-[18px]'>Remaining Amount</h1>
                         <p className='flex items-center gap-1 sm:gap-2 font-bold text-base sm:text-lg'>
                             <span className='text-[8px] sm:text-[10px] font-normal'>BDT</span>
-                            ৳{(totalAmount - advanceAmount)} 
+                            ৳{(totalAmount - advanceAmount)}
                         </p>
                     </div>
 

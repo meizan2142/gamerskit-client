@@ -116,7 +116,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
 
                                             <div className='flex justify-between items-center'>
                                                 <p className="text-[#FFD700] text-sm font-semibold my-1">
-                                                    ৳{(item.price || 0).toFixed(2)}
+                                                    ৳{(item.price || 0)}
                                                 </p>
                                                 {
                                                     item.size ?
@@ -157,7 +157,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                 <div className="border-t border-gray-700 pt-4">
                                     <div className="flex justify-between mb-4">
                                         <span className="text-white">Total:</span>
-                                        <span className="text-[#FFD700] font-bold">৳{totalPrice.toFixed(2)}</span>
+                                        <span className="text-[#FFD700] font-bold">৳{totalPrice}</span>
                                     </div>
                                     <NavLink to='/place-orders'>
                                         <button onClick={() => setIsCartOpen(false)} className="w-full flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
