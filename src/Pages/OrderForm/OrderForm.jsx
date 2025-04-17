@@ -89,7 +89,8 @@ const OrderForm = () => {
                 size: item.size || 'N/A',
                 quantity: item.quantity,
                 price: item.price,
-                productId: item._id
+                productId: item._id,
+                productImg: item.img
             }));
 
             const orderDetails = {
@@ -99,9 +100,10 @@ const OrderForm = () => {
                 remainingAmount,
                 cartItems,
                 orderDate: new Date().toISOString(),
-                status: 'pending'
+                status: 'pending',
+                deliveryCharge
             };
-
+            
             // 1. Place the order
             const orderResponse = await axios.post(
                 `${import.meta.env.VITE_API_URL}/orderdetails`,
