@@ -51,29 +51,53 @@ const OrderForm = () => {
     }, 0);
 
     // Calculate delivery charge based on selected district
-    const calculateDeliveryCharge = (districtName, cartItems) => {
-        if (!districtName || hasOnlyCars(cartItems)) return 0;
+    // Constants for car identification
+    const SPECIAL_CAR_MODELS = [
+        'porsche 911 drift car 4wd',
+        'nissan gtr skyline 4wd'
+    ];
 
+    // Check if cart contains only cars
+    const hasOnlyCars = (cartItems) => {
+        if (!cartItems || cartItems.length === 0) return false;
+
+        return cartItems.every(item =>
+            item.title.toLowerCase().includes('car') || // Basic car check
+            SPECIAL_CAR_MODELS.some(model =>
+                item.title.toLowerCase().includes(model)
+            )
+        );
+    };
+
+    // Check if cart contains special car models
+    const hasSpecialCarModels = (cartItems) => {
+        if (!cartItems || cartItems.length === 0) return false;
+
+        return cartItems.some(item =>
+            SPECIAL_CAR_MODELS.some(model =>
+                item.title.toLowerCase().includes(model)
+            )
+        );
+    };
+
+    // Updated delivery charge calculation
+    const calculateDeliveryCharge = (districtName, cartItems) => {
+        // Special cars always have free delivery
+        if (hasSpecialCarModels(cartItems)) return 0;
+
+        // Regular cars have free delivery when they're the only items
+        if (hasOnlyCars(cartItems)) return 0;
+
+        // Normal delivery charges
+        if (!districtName) return 0;
         if (districtName === "dhaka") return 70;
         if (districtName === "dhaka sub-urban") return 100;
         return 130;
     };
-    const hasOnlyCars = (cartItems) => {
-        if (!cartItems || cartItems.length === 0) return false;
-
-        // Filter out non-car items
-        const nonCarItems = cartItems.filter(item =>
-            !item.title.toLowerCase().includes('car') &&
-            !item.title.toLowerCase().includes('porsche') // Add other car keywords as needed
-        );
-
-        // If no non-car items were found, then only cars exist
-        return nonCarItems.length === 0;
-    };
 
 
-    // Calculate totals
-    const deliveryCharge = calculateDeliveryCharge(selectedDistrict);
+    // Calculate all values
+    const deliveryCharge = calculateDeliveryCharge(selectedDistrict, cartData);
     const subtotal = cartData.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const totalAmount = subtotal + deliveryCharge;
     const remainingAmount = totalAmount - advanceAmount;
@@ -103,7 +127,7 @@ const OrderForm = () => {
                 status: 'pending',
                 deliveryCharge
             };
-            
+
             // 1. Place the order
             const orderResponse = await axios.post(
                 `${import.meta.env.VITE_API_URL}/orderdetails`,
@@ -417,7 +441,11 @@ const OrderForm = () => {
                         <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
                             <h1>Delivery Charge</h1>
                             {hasOnlyCars(cartData) ? (
-                                <p className="text-green-600">Included with price</p>
+                                hasSpecialCarModels(cartData) ? (
+                                    <p className="text-green-600">Included with price</p>
+                                ) : (
+                                    <p className="text-green-600">Included with price</p>
+                                )
                             ) : (
                                 <p>৳{deliveryCharge}</p>
                             )}

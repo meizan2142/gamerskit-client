@@ -77,7 +77,7 @@ const MyOrders = () => {
                     </>
                     :
                     <div className="text-center min-h-screen space-y-5">
-                        <p className='font-bold text-xl'>You didn't purchase anything yet.</p>
+                        <p className='font-bold text-xl'>You haven't purchased anything yet.</p>
                         <NavLink to='/shop' className='flex flex-col items-center'>
                             <button className="flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
                                 <ShoppingBasket className="w-4 h-4" />
