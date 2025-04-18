@@ -52,7 +52,7 @@ const SingleProduct = () => {
             if (response.data.insertedId) {
                 toast.success('Added to Cart');
                 queryClient.invalidateQueries({ queryKey: ['cart'] });
-                
+
                 // If Buy Now was clicked, navigate after adding to cart
                 if (isBuyNowClicked) {
                     navigate('/place-orders');
@@ -163,28 +163,30 @@ const SingleProduct = () => {
                         <Accordion description={data.description} />
                     </div>
 
-                    <button
-                        onClick={handleSubmit}
-                        className="w-full flex items-center justify-center gap-3 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
-                        <ShoppingCart className="w-4 h-4" />
-                        Add to cart
-                    </button>
-                    
-                    <button
-                        onClick={handleBuyNow}
-                        className={`w-full flex items-center justify-center gap-3 ${
-                            (data.sizes && data.sizes.length > 0 && !selectedSize) || 
-                            (!cartData || cartData.length === 0)
+                    {/* Buttons */}
+                    <div className="space-y-4">
+                        <button
+                            onClick={handleSubmit}
+                            className="w-full flex items-center justify-center gap-3 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
+                            <ShoppingCart className="w-4 h-4" />
+                            Add to cart
+                        </button>
+
+                        <button
+                            onClick={handleBuyNow}
+                            className={`w-full flex items-center justify-center gap-3 ${(data.sizes && data.sizes.length > 0 && !selectedSize) ||
+                                (!cartData || cartData.length === 0)
                                 ? 'bg-gray-300 cursor-not-allowed'
                                 : 'bg-[#FFD700] hover:bg-[#FFB300]'
-                        } text-black font-bold py-2 px-4 rounded transition`}
-                        disabled={
-                            (data.sizes && data.sizes.length > 0 && !selectedSize) || 
-                            (!cartData || cartData.length === 0)
-                        }>
-                        <ShoppingBasket className="w-4 h-4" />
-                        Buy Now
-                    </button>
+                                } text-black font-bold py-2 px-4 rounded transition`}
+                            disabled={
+                                (data.sizes && data.sizes.length > 0 && !selectedSize) ||
+                                (!cartData || cartData.length === 0)
+                            }>
+                            <ShoppingBasket className="w-4 h-4" />
+                            Buy Now
+                        </button>
+                    </div>
                 </div>
             </div>
             <div>
