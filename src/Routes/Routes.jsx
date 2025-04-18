@@ -7,6 +7,7 @@ import ImageHosting from "../Pages/ImageHosting/ImageHosting";
 import OrderForm from "../Pages/OrderForm/OrderForm";
 import MyOrders from "../Pages/MyOrders/MyOrders";
 import SingleOrderDetails from "../Pages/SingleOrderDetails/SingleOrderDetails";
+import DashBoard from "../Pages/DashBoard/DashBoard";
 
 export const router = createBrowserRouter([
     {
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
             {
                 path: "/single-order-details/:id",
                 element: <SingleOrderDetails />,
+            },
+            {
+                path: "/admin-dashboard",
+                element: <DashBoard />,
             },
         ],
     },

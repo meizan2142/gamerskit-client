@@ -12,5 +12,9 @@ export const navLinks = () => {
             path: '/my-orders',
             pathName: 'My Orders',
         },
+        {
+            path: '/admin-dashboard',
+            pathName: 'Dashboard',
+        },
     ];
 };

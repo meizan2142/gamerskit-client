@@ -76,15 +76,20 @@ const SingleOrderDetails = () => {
                             {data?.cartItems?.length > 0 ? (
                                 data.cartItems.map((item, index) => (
                                     <div key={index} className="flex justify-between items-center border-b pb-4">
-                                        <div className="flex items-center space-x-4">
+                                        <div className="flex items-center space-x-4 spy">
                                             <img
                                                 src={item.productImg}
                                                 alt={item.title}
                                                 className="w-16 h-16 object-cover rounded"
                                             />
-                                            <div>
+                                            <div className="space-y-2">
                                                 <h3 className="font-medium">{item.title}</h3>
-                                                <p className="text-gray-500 text-sm">Size: {item.size}</p>
+                                                {
+                                                    item?.size === "N/A"?
+                                                    <></>
+                                                    :
+                                                    <p className="text-gray-500 text-sm">Size: {item.size}</p>
+                                                }
                                                 <p className="text-gray-500 text-sm">Qty: {item.quantity}</p>
                                             </div>
                                         </div>
