@@ -77,31 +77,6 @@ const SingleProduct = () => {
         });
     };
 
-    // const handleBuyNow = () => {
-    //     // Only validate size if the product has sizes defined
-    //     if (data.sizes && data.sizes.length > 0 && !selectedSize) {
-    //         return toast.error('Please select a size');
-    //     }
-
-    //     const cartProduct = {
-    //         productId: data._id,
-    //         title: data.title,
-    //         price: data.price,
-    //         img: data.img,
-    //         quantity: 1,
-    //         ...(data.sizes && data.sizes.length > 0 && { size: selectedSize }) // Only include size if product has sizes
-    //     };
-
-    //     // Check if cart has items
-    //     if (cartData && cartData.length > 0) {
-    //         navigate('/place-orders');
-    //     } else {
-    //         // If cart is empty, add the product first then navigate
-    //         setIsBuyNowClicked(true);
-    //         mutate(cartProduct);
-    //     }
-    // };
-
     if (isLoading) return <div className="min-h-screen pt-24 flex justify-center">
         <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
     </div>;
@@ -133,7 +108,7 @@ const SingleProduct = () => {
                                         key={size}
                                         onClick={() => setSelectedSize(size)}
                                         className={`w-full px-3 py-2 rounded-lg border-2 ${selectedSize === size
-                                            ? 'border-[#FFD700] bg-amber-50'
+                                            ? 'bg-[#FFD700] border-[#FFD700]'
                                             : 'border-gray-300 hover:border-[#FFD700]'
                                             } hover:shadow-md transition-colors`}
                                     >

@@ -8,6 +8,7 @@ import OrderForm from "../Pages/OrderForm/OrderForm";
 import MyOrders from "../Pages/MyOrders/MyOrders";
 import SingleOrderDetails from "../Pages/SingleOrderDetails/SingleOrderDetails";
 import DashBoard from "../Pages/DashBoard/DashBoard";
+import SignIn from "../Pages/SignIn/SignIn";
 
 export const router = createBrowserRouter([
     {
@@ -46,6 +47,11 @@ export const router = createBrowserRouter([
                 path: "/admin-dashboard",
                 element: <DashBoard />,
             },
+            {
+                path: "/signin",
+                element: <SignIn />,
+            },
         ],
+
     },
 ]);
