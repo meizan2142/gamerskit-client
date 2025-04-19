@@ -1,18 +1,21 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { navLinks } from "./navData";
+import { useNavLinks } from "./navData";
 import { AlignJustify, ShoppingCart, User, X } from "lucide-react";
 import { Badge } from "@mui/material";
-// import Dialog from "../user-dialog/Dialog";
 import ProductCart from "../ProductCart/ProductCart";
 import mainLogo from '/src/assets/logo-icon.png';
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useAuth } from "../../useAuth/useAuth";
+
+
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isCartOpen, setIsCartOpen] = useState(false);
-    const links = navLinks();
+    const links = useNavLinks();
+    const { user, logOut } = useAuth()
 
 
     // Fetch cart data
@@ -89,14 +92,33 @@ const Navbar = () => {
                     {/* Icons and Buttons - Third on small screens */}
                     <div className="flex space-x-4 xl:space-x-6 items-center order-3 lg:order-none">
                         {/* Cart */}
-                        <Badge badgeContent={data.length} className="text-[#FAE82A] font-bold">
-                            <button onClick={() => setIsCartOpen(true)}>
-                                <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-white hover:text-[#FFD700]" />
-                            </button>
-                        </Badge>
-                        <NavLink to='/signin'>
-                            <User className="cursor-pointer text-white hover:text-[#FFB300]" />
-                        </NavLink>
+                        {
+                            user ?
+                                <>
+                                    <Badge badgeContent={data.length} className="text-[#FAE82A] font-bold">
+                                        <button onClick={() => setIsCartOpen(true)}>
+                                            <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-white hover:text-[#FFD700]" />
+                                        </button>
+                                    </Badge>
+                                    <button
+                                        onClick={logOut}
+                                        className="w-full px-3 py-2 text-sm font-bold tracking-wide transition sm:mt-0 sm:w-auto sm:shrink-0 bg-[#FFD700] text-black hover:bg-[#FFB300] rounded-md"
+                                    >
+                                        Signout
+                                    </button>
+                                </>
+                                :
+                                <>
+                                    <Badge badgeContent={data.length} className="text-[#FAE82A] font-bold">
+                                        <button onClick={() => setIsCartOpen(true)}>
+                                            <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-white hover:text-[#FFD700]" />
+                                        </button>
+                                    </Badge>
+                                    <NavLink to='/signin'>
+                                        <User className="cursor-pointer text-white hover:text-[#FFB300]" />
+                                    </NavLink>
+                                </>
+                        }
                     </div>
                 </div>
             </header>

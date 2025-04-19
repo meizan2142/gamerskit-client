@@ -1,9 +1,49 @@
 import { ArrowLeft, X } from "lucide-react"
-import { NavLink } from "react-router"
+import { NavLink, useLocation, useNavigate } from "react-router"
+import { useAuth } from "../../useAuth/useAuth"
+import { useEffect } from "react"
+import toast, { Toaster } from "react-hot-toast"
 
 const SignIn = () => {
+    const { signIn, user } = useAuth()
+    const navigate = useNavigate()
+    const location = useLocation()
+    const handleLogin = e => {
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+
+        signIn(email, password)
+            .then(res => {
+                console.log(res.user);
+                toast.success('Logged in successfully!');
+                setTimeout(() => {
+                    navigate(location?.state ? location?.state : '/');
+                }, 1000);
+            })
+            .catch(err => {
+                // Show toast error based on error type
+                if (err.code === 'auth/user-not-found') {
+                    toast.error('No account found. Please sign up first.');
+                } else if (err.code === 'auth/wrong-password') {
+                    toast.error('Incorrect password. Please try again.');
+                } else {
+                    toast.error('No account found. Please sign up first.');
+                }
+            });
+    }
+    useEffect(() => {
+        if (user) {
+            navigate(location.state)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
     return (
         <div className="flex items-center justify-center min-h-screen pt-0 sm:pt-12 md:pt-24">
+            <div>
+                <Toaster />
+            </div>
             <div
                 onClick={(e) => e.stopPropagation()}
                 className="bg-white  rounded-lg w-full max-w-sm p-6 shadow-lg"
@@ -16,7 +56,7 @@ const SignIn = () => {
                 <h1 className="text-2xl font-semibold mb-4">SignIn</h1>
 
                 {/* Login Form */}
-                <form>
+                <form onSubmit={handleLogin}>
                     <div className="mb-4">
                         <label htmlFor="email" className="block text-sm font-medium">Email</label>
                         <input id="email" type="email" className="mt-1 block w-full p-2 border rounded-md " placeholder="Email" />
