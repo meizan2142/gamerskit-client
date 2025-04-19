@@ -9,6 +9,7 @@ import MyOrders from "../Pages/MyOrders/MyOrders";
 import SingleOrderDetails from "../Pages/SingleOrderDetails/SingleOrderDetails";
 import DashBoard from "../Pages/DashBoard/DashBoard";
 import SignIn from "../Pages/SignIn/SignIn";
+import Signup from "../Pages/Signup/Signup";
 
 export const router = createBrowserRouter([
     {
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
             {
                 path: "/signin",
                 element: <SignIn />,
+            },
+            {
+                path: "/signup",
+                element: <Signup />,
             },
         ],
 

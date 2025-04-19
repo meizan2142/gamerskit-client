@@ -81,7 +81,7 @@ const MyOrders = () => {
                                         <td className="py-4 px-6 border-b text-end">৳{item.remainingAmount}</td>
                                         <td className="py-4 px-6 border-b space-y-1">
                                             <NavLink to={`/single-order-details/${item._id}`}>
-                                                <button className="px-5 gap-2 py-3 rounded-full flex items-center justify-center mx-auto lg:mx-0 xl:mx-0 2xl:mx-0 text-sm sm:text-base font-bold hover:bg-[#FFD700] text-white bg-[#FFB300] transition-all">
+                                                <button className="px-5 gap-2 py-3 rounded-full flex items-center justify-center mx-auto lg:mx-0 xl:mx-0 2xl:mx-0 text-[10px] sm:text-base font-bold hover:bg-[#FFD700] text-white bg-[#FFB300] transition-all">
                                                     Check Details
                                                     <ArrowRight />
                                                 </button>
