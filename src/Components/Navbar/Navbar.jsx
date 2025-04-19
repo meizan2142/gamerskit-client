@@ -88,12 +88,17 @@ const Navbar = () => {
                                     </NavLink>
                                 </li>
                             ))}
-                            <button
-                                onClick={logOut}
-                                className="w-full sm:flex md:flex lg:hidden xl:hidden 2xl:hidden px-3 py-2 text-sm font-bold tracking-wide transition sm:mt-0 sm:w-auto sm:shrink-0 bg-[#FFD700] text-black hover:bg-[#FFB300] rounded-md"
-                            >
-                                Signout
-                            </button>
+                            {
+                                user ?
+                                    <button
+                                        onClick={logOut}
+                                        className="w-full sm:flex md:flex lg:hidden xl:hidden 2xl:hidden px-3 py-2 text-sm font-bold tracking-wide transition sm:mt-0 sm:w-auto sm:shrink-0 bg-[#FFD700] text-black hover:bg-[#FFB300] rounded-md"
+                                    >
+                                        Signout
+                                    </button>
+                                    :
+                                    <></>
+                            }
                         </ul>
                     </nav>
 
