@@ -35,7 +35,7 @@ const Navbar = () => {
     });
 
 
-    if (isLoading) return <div className="p-6 text-white">
+    if (isLoading) return <div className="p-6 text-white bg-[#1A1A1A]">
         {/* <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>K */}
     </div>;
     if (error) return <div className="p-6 text-red-500">Error: {error.message}</div>;
@@ -115,7 +115,7 @@ const Navbar = () => {
                                     </Badge>
                                     <button
                                         onClick={logOut}
-                                        className="w-full hidden lg:flex xl:flex 2xl:hidden px-3 py-2 text-sm font-bold tracking-wide transition sm:mt-0 sm:w-auto sm:shrink-0 bg-[#FFD700] text-black hover:bg-[#FFB300] rounded-md"
+                                        className="w-full hidden lg:flex xl:flex 2xl:flex px-3 py-2 text-sm font-bold tracking-wide transition sm:mt-0 sm:w-auto sm:shrink-0 bg-[#FFD700] text-black hover:bg-[#FFB300] rounded-md"
                                     >
                                         Signout
                                     </button>

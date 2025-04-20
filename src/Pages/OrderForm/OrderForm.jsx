@@ -16,7 +16,6 @@ const OrderForm = () => {
     const navigate = useNavigate()
     const queryClient = useQueryClient();
 
-
     const handlePlaceOrderClick = () => {
         // Trigger the hidden submit button click
         hiddenSubmitRef.current.click();
@@ -214,7 +213,6 @@ const OrderForm = () => {
                                         {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                                     </div>
 
-                                    {/* Name */}
                                     <div className="w-full">
                                         <label htmlFor="name" className="text-sm sm:text-base font-bold">Name</label>
                                         <input

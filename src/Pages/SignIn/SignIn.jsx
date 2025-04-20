@@ -1,13 +1,20 @@
-import { ArrowLeft, X } from "lucide-react"
+import { ArrowLeft, Eye, EyeOff, X } from "lucide-react"
 import { NavLink, useLocation, useNavigate } from "react-router"
 import { useAuth } from "../../useAuth/useAuth"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import toast, { Toaster } from "react-hot-toast"
 
 const SignIn = () => {
     const { signIn, user } = useAuth()
     const navigate = useNavigate()
     const location = useLocation()
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword)
+    }
+
+
     const handleLogin = e => {
         e.preventDefault();
         const form = e.target;
@@ -63,11 +70,33 @@ const SignIn = () => {
                     </div>
 
                     <div className="mb-4 space-y-2">
-                        <label htmlFor="password" className="block text-sm font-medium">Password</label>
-                        <input id="password" type="password" className="mt-1 block w-full p-2 border rounded-md" placeholder="Password" />
-                        <NavLink className='hover:underline' to='/'>
-                            <p>Forget Password</p>
-                        </NavLink>
+                        <label htmlFor="password" className="block text-sm font-medium">
+                            Password
+                        </label>
+                        <div className="relative">
+                            <input
+                                id="password"
+                                type={showPassword ? "text" : "password"}
+                                className="mt-1 block w-full p-2 border rounded-md pr-10"
+                                placeholder="Password"
+                            />
+                            <button
+                                type="button"
+                                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                                onClick={togglePasswordVisibility}
+                            >
+                                {showPassword ? (
+                                    <EyeOff className="h-5 w-5 text-black" />
+                                ) : (
+                                    <Eye className="h-5 w-5 text-black" />
+                                )}
+                            </button>
+                        </div>
+                        <div className="flex justify-end">
+                            <NavLink className="hover:underline text-sm" to="/forgot-password">
+                                Forgot Password?
+                            </NavLink>
+                        </div>
                     </div>
                     <div className="">
                         <button className="px-4 py-2 w-full block rounded-xl text-base hover:bg-[#FF6F61] transition-all ease-in bg-black text-white outline-none">SignIn</button>

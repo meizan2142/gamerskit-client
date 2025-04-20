@@ -4,7 +4,7 @@ import { ArrowRight, ShoppingBasket } from "lucide-react";
 import { NavLink } from "react-router";
 import { CSVLink } from "react-csv";
 
-const MyOrders = () => {
+const MyOrders = () => {    
     // Fetch placed orders
     const { isLoading, error, data = [] } = useQuery({
         queryKey: ['details'],

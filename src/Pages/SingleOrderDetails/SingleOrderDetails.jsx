@@ -66,9 +66,7 @@ const SingleOrderDetails = () => {
                     </div>
                 </div>
 
-                {/* Order Items */}
                 <div className="p-6">
-                    <h2 className="text-lg font-semibold mb-4">Order Items</h2>
                     {/* Order Items */}
                     <div className="p-6">
                         <h2 className="text-lg font-semibold mb-4">Order Items</h2>

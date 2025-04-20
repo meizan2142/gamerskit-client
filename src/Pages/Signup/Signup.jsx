@@ -1,14 +1,20 @@
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Eye, EyeOff } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { NavLink, useLocation, useNavigate } from "react-router"
 import toast, { Toaster } from "react-hot-toast";
 import { useAuth } from "../../useAuth/useAuth";
+import { useState } from "react";
 
 const Signup = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { createUser, setLoading, updateUserProfile } = useAuth()
     const navigate = useNavigate()
     const location = useLocation()
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     // OnSubmit function
     const onSubmit = async (data) => {
@@ -117,19 +123,32 @@ const Signup = () => {
                         <label htmlFor="password" className="block text-sm font-medium">
                             Password
                         </label>
-                        <input
-                            id="password"
-                            type="password"
-                            className="mt-1 block w-full p-2 border rounded-md"
-                            placeholder="Password"
-                            {...register('password', {
-                                required: 'Password is required',
-                                minLength: {
-                                    value: 6,
-                                    message: 'Password must be at least 6 characters',
-                                },
-                            })}
-                        />
+                        <div className="relative">
+                            <input
+                                id="password"
+                                type={showPassword ? "text" : "password"}
+                                className="mt-1 block w-full p-2 border rounded-md pr-10"
+                                placeholder="Password"
+                                {...register('password', {
+                                    required: 'Password is required',
+                                    minLength: {
+                                        value: 6,
+                                        message: 'Password must be at least 6 characters',
+                                    },
+                                })}
+                            />
+                            <button
+                                type="button"
+                                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                                onClick={togglePasswordVisibility}
+                            >
+                                {showPassword ? (
+                                    <EyeOff className="h-5 w-5 text-black" />
+                                ) : (
+                                    <Eye className="h-5 w-5 text-black" />
+                                )}
+                            </button>
+                        </div>
                         {errors.password && (
                             <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
                         )}
@@ -140,7 +159,7 @@ const Signup = () => {
                             type="submit"
                             className="px-4 py-2 w-full block rounded-xl text-base hover:bg-[#FF6F61] transition-all ease-in bg-black text-white outline-none"
                         >
-                            Sign Up
+                            SignUp
                         </button>
                     </div>
 
