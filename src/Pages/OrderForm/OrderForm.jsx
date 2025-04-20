@@ -5,9 +5,11 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import toast, { Toaster } from 'react-hot-toast';
+import { useAuth } from '../../useAuth/useAuth';
 
 const OrderForm = () => {
     const locations = allLocation();
+    const {user} = useAuth()
     const [selectedDistrict, setSelectedDistrict] = useState('');
     const [advanceAmount, setAdvanceAmount] = useState(0)
     const { register, handleSubmit, formState: { errors }, setValue } = useForm()
@@ -198,6 +200,7 @@ const OrderForm = () => {
                                     <div className="w-full">
                                         <label htmlFor="email" className="text-sm sm:text-base font-bold">Email</label>
                                         <input
+                                            defaultValue={user?.email}
                                             id="email"
                                             type="email"
                                             placeholder="Email"
@@ -216,6 +219,7 @@ const OrderForm = () => {
                                     <div className="w-full">
                                         <label htmlFor="name" className="text-sm sm:text-base font-bold">Name</label>
                                         <input
+                                            defaultValue={user?.displayName}
                                             id="name"
                                             type="text"
                                             placeholder="Recipient Name"

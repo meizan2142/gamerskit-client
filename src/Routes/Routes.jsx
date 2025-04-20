@@ -10,6 +10,7 @@ import SingleOrderDetails from "../Pages/SingleOrderDetails/SingleOrderDetails";
 import DashBoard from "../Pages/DashBoard/DashBoard";
 import SignIn from "../Pages/SignIn/SignIn";
 import Signup from "../Pages/Signup/Signup";
+import PrivateRoute from "../Pages/PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -34,7 +35,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/place-orders",
-                element: <OrderForm />,
+                element: <PrivateRoute><OrderForm /></PrivateRoute>,
             },
             {
                 path: "/my-orders",
@@ -46,7 +47,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/admin-dashboard",
-                element: <DashBoard />,
+                element: <PrivateRoute><DashBoard /></PrivateRoute>,
             },
             {
                 path: "/signin",
