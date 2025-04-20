@@ -58,6 +58,16 @@ export const router = createBrowserRouter([
                 element: <Signup />,
             },
         ],
-
+    },
+    {
+        path: 'dashboard',
+        element: <PrivateRoute><DashBoard></DashBoard></PrivateRoute>,
+        children: [
+            // Worker's Routes
+            {
+                path: 'workerhome',
+                // element: <PrivateRoute><WorkerHome></WorkerHome></PrivateRoute>
+            },
+        ]
     },
 ]);

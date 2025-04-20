@@ -14,7 +14,6 @@ const SingleProduct = () => {
     const [selectedSize, setSelectedSize] = useState('');
     const [isBuyNowClicked, setIsBuyNowClicked] = useState(false);
 
-
     const { isLoading, error, data } = useQuery({
         queryKey: ['product', id],
         queryFn: async () => {
@@ -37,7 +36,7 @@ const SingleProduct = () => {
                 toast.success('Added to Cart');
                 queryClient.invalidateQueries({ queryKey: ['cart'] });
 
-                // Only redirect if Buy Now was clicked (for no-size products)
+                // Redirect if Buy Now was clicked
                 if (isBuyNowClicked) {
                     navigate('/place-orders');
                     setIsBuyNowClicked(false);
@@ -54,8 +53,7 @@ const SingleProduct = () => {
         }
     });
 
-    const handleSubmit = () => {
-        // Only validate size if the product has sizes defined
+    const handleAddToCart = () => {
         if (data.sizes && data.sizes.length > 0 && !selectedSize) {
             return toast.error('Please select a size');
         }
@@ -66,15 +64,28 @@ const SingleProduct = () => {
             price: data.price,
             img: data.img,
             quantity: 1,
-            ...(data.sizes && data.sizes.length > 0 && { size: selectedSize }) // Only include size if product has sizes
+            ...(data.sizes && data.sizes.length > 0 && { size: selectedSize })
         };
 
-        mutate(cartProduct, {
-            onError: (error) => {
-                toast.error('Failed to add to cart');
-                console.log(error);
-            }
-        });
+        mutate(cartProduct);
+    };
+
+    const handleBuyNow = () => {
+        if (data.sizes && data.sizes.length > 0 && !selectedSize) {
+            return toast.error('Please select a size');
+        }
+
+        const cartProduct = {
+            productId: data._id,
+            title: data.title,
+            price: data.price,
+            img: data.img,
+            quantity: 1,
+            ...(data.sizes && data.sizes.length > 0 && { size: selectedSize })
+        };
+
+        setIsBuyNowClicked(true);
+        mutate(cartProduct);
     };
 
     if (isLoading) return <div className="min-h-screen pt-24 flex justify-center">
@@ -83,7 +94,6 @@ const SingleProduct = () => {
     if (error) return <div className="min-h-screen pt-24 flex justify-center">Error: {error.message}</div>;
     if (!data) return <div className="min-h-screen pt-24 flex justify-center">Product not found</div>;
 
-    // Check if product has sizes
     const hasSizes = data.sizes && data.sizes.length > 0;
 
     return (
@@ -98,7 +108,7 @@ const SingleProduct = () => {
                         </h1>
                         <p className="text-lg sm:text-xl mt-2">Price: ৳{data.price}</p>
                     </div>
-                    {/* Only show size selection if product has sizes */}
+                    
                     {hasSizes && (
                         <div className="space-y-3">
                             <h3 className="font-semibold text-lg">Available Sizes:</h3>
@@ -126,10 +136,9 @@ const SingleProduct = () => {
                     </div>
 
                     <div className="space-y-4">
-                        {/* Show Add to Cart only if product has sizes */}
                         {hasSizes && (
                             <button
-                                onClick={handleSubmit}
+                                onClick={handleAddToCart}
                                 className="w-full flex items-center justify-center gap-3 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition"
                             >
                                 <ShoppingCart className="w-4 h-4" />
@@ -137,25 +146,8 @@ const SingleProduct = () => {
                             </button>
                         )}
 
-                        {/* Buy Now button */}
                         <button
-                            onClick={() => {
-                                if (!hasSizes) {
-                                    // For products without sizes: add to cart then redirect
-                                    const cartProduct = {
-                                        productId: data._id,
-                                        title: data.title,
-                                        price: data.price,
-                                        img: data.img,
-                                        quantity: 1,
-                                    };
-                                    setIsBuyNowClicked(true);
-                                    mutate(cartProduct);
-                                } else {
-                                    // For products with sizes: just redirect to checkout
-                                    navigate('/place-orders');
-                                }
-                            }}
+                            onClick={handleBuyNow}
                             className={`w-full flex items-center justify-center gap-3 ${(hasSizes && !selectedSize) ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#FFD700] hover:bg-[#FFB300]'
                                 } text-black font-bold py-2 px-4 rounded transition`}
                             disabled={hasSizes && !selectedSize}

@@ -1,22 +1,19 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import { Autoplay } from "swiper/modules";
-import NissanImage from '/src/assets/Nissan.png';
-import Porsche from '/src/assets/Porsche.png';
-import Sentinels from '/src/assets/Sentinels.png';
-import Custom from '/src/assets/Custom.png';
 import { NavLink } from "react-router";
 import { ArrowRight } from "lucide-react";
 
 const Hero = () => {
     return (
         <section
-            className="w-full h-[650px] px-4 sm:px-6 md:px-6 lg:px-12 xl:px-20 relative pt-20 bg-black">
+            className="w-full h-[800px] px-4 sm:px-6 md:px-6 lg:px-12 xl:px-20 relative pt-20 
+               bg-[url('http://res.cloudinary.com/dyqjzfdwi/image/upload/v1745168508/nqagnygx4btwww13iexg.jpg')] 
+               lg:bg-[url('http://res.cloudinary.com/dyqjzfdwi/image/upload/v1745168246/nmpxmhxi8yk20v4qxuf0.jpg')] 
+               md:bg-[url('http://res.cloudinary.com/dyqjzfdwi/image/upload/v1745168246/nmpxmhxi8yk20v4qxuf0.jpg')] 
+               bg-cover bg-center bg-no-repeat"
+        >
             {/* Content */}
             <div className="container mx-auto h-full flex flex-col lg:flex-row items-center gap-2 lg:gap-12 relative z-10">
                 {/* Left Text Section */}
-                <div className="lg:w-1/2 text-center lg:text-left space-y-4">
+                <div className="lg:w-1/2 text-center lg:text-left space-y-">
                     <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-5xl lg:leading-14 md:leading-12 xl:leading-16 leading-10 xl:text-6xl font-bold text-white">
                         Get your <br /> favourite team <br /> <span className="text-[#FFD700]">Jersey and toys!</span>
                     </h1>
@@ -31,48 +28,6 @@ const Hero = () => {
                             </button>
                         </NavLink>
                     </div>
-                </div>
-
-                {/* Right Slider Section */}
-                <div className="lg:w-1/2 w-full mt-8 lg:mt-0">
-                    <Swiper
-                        modules={[Autoplay]}
-                        autoplay={{ delay: 5000, disableOnInteraction: false }}
-                        pagination={{ clickable: true }}
-                        loop={true}
-                        className="rounded-lg h-full" // Make swiper fill available height
-                    >
-                        <div className="lg:w-1/2 w-full mt-8 lg:mt-0">
-                            <Swiper
-                                modules={[Autoplay]}
-                                autoplay={{ delay: 5000, disableOnInteraction: false }}
-                                pagination={{ clickable: true }}
-                                loop={true}
-                                className="rounded-lg"
-                            >
-                                <SwiperSlide>
-                                    <div className="overflow-hidden h-64 sm:h-64 md:h-72 lg:h-80 xl:h-96 rounded-lg">
-                                        <img src={Sentinels} alt="Slide 3" className="w-full h-full object-contain animated-slide" />
-                                    </div>
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <div className="overflow-hidden h-64 sm:h-64 md:h-72 lg:h-80 xl:h-96 rounded-lg">
-                                        <img src={Custom} alt="Slide 3" className="w-full h-full object-contain animated-slide" />
-                                    </div>
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <div className="overflow-hidden h-64 sm:h-64 md:h-72 lg:h-80 xl:h-96 rounded-lg">
-                                        <img src={NissanImage} alt="Slide 4" className="w-full h-full object-contain animated-slide" />
-                                    </div>
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <div className="overflow-hidden h-64 sm:h-64 md:h-72 lg:h-80 xl:h-96 rounded-lg">
-                                        <img src={Porsche} alt="Slide 4" className="w-full h-full object-contain animated-slide" />
-                                    </div>
-                                </SwiperSlide>
-                            </Swiper>
-                        </div>
-                    </Swiper>
                 </div>
             </div>
         </section>

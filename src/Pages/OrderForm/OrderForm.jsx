@@ -444,9 +444,9 @@ const OrderForm = () => {
                             <h1>Delivery Charge</h1>
                             {hasOnlyCars(cartData) ? (
                                 hasSpecialCarModels(cartData) ? (
-                                    <p className="text-green-600">Included with price</p>
+                                    <p className="text-green-600">Free Delivery</p>
                                 ) : (
-                                    <p className="text-green-600">Included with price</p>
+                                    <p className="text-green-600">Free Delivery</p>
                                 )
                             ) : (
                                 <p>৳{deliveryCharge}</p>
