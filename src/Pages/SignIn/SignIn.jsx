@@ -9,6 +9,7 @@ const SignIn = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const [showPassword, setShowPassword] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword)

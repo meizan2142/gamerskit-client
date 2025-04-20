@@ -21,7 +21,6 @@ const Signup = () => {
         console.log(data);
         try {
             setLoading(true);
-
             // User registration with Firebase
             const result = await createUser(data.email, data.password);
             console.log(result);
@@ -157,9 +156,9 @@ const Signup = () => {
                     <div className="">
                         <button
                             type="submit"
-                            className="px-4 py-2 w-full block rounded-xl text-base hover:bg-[#FF6F61] transition-all ease-in bg-black text-white outline-none"
+                            className="px-4 py-2 w-full  flex items-center flex-col justify-center  rounded-xl text-base hover:bg-[#FF6F61] transition-all ease-in bg-black text-white outline-none"
                         >
-                            SignUp
+                            SignIn
                         </button>
                     </div>
 
