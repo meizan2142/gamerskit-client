@@ -132,7 +132,7 @@ const SingleProduct = () => {
                     )}
 
                     <div>
-                        <Accordion description={data.description} />
+                        <Accordion data = {data} />
                     </div>
 
                     <div className="space-y-4">

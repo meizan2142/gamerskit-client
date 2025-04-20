@@ -1,5 +1,3 @@
-import { Car, LayoutGrid, Shirt, VenetianMask } from 'lucide-react';
-import { RxHand } from "react-icons/rx";
 import { useState, useEffect } from 'react';
 import ProductCard from '../../../Components/ProductCard/ProductCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -9,15 +7,50 @@ import 'swiper/css/free-mode';
 import 'swiper/css/autoplay';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import Sleeves from '/src/assets/sleeves.svg';
+import Mask from '/src/assets/mask.svg';
+import Tshirt from '/src/assets/tshirt.svg';
+import Car from '/src/assets/sedan.png';
+import F1 from '/src/assets/soccer-jersey.png';
+import Esports from '/src/assets/jersey.png';
+import All from '/src/assets/all.png';
 
 const tabs = [
-    { id: 'all', label: 'All', icon: <LayoutGrid /> },
-    { id: 'car', label: 'Car', icon: <Car /> },
-    { id: 'E-sports', label: 'E-Sports', icon: <Shirt /> },
-    { id: 'F1', label: 'F1 Jersey', icon: <Shirt /> },
-    { id: 'Sleeves', label: 'Sleeves', icon: <RxHand /> },
-    { id: 'Mask', label: 'Mask', icon: <VenetianMask /> },
-    { id: 'Tshirt', label: 'Tshirts', icon: <Shirt /> },
+    { 
+        id: 'all', 
+        label: 'All', 
+        icon: <img src={All} alt="All products" className="w-6 h-6" /> 
+    },
+    { 
+        id: 'car', 
+        label: 'RC Car', 
+        icon: <img src={Car} alt="Car products" className="w-6 h-6" /> 
+    },
+    { 
+        id: 'E-sports', 
+        label: 'E-Sports', 
+        icon: <img src={Esports} alt="E-Sports jerseys" className="w-6 h-6" /> 
+    },
+    { 
+        id: 'F1', 
+        label: "F1 Jersey", 
+        icon: <img src={F1} alt="F1 jerseys" className="w-6 h-6" /> 
+    },
+    { 
+        id: 'Sleeves', 
+        label: 'Sleeves', 
+        icon: <img src={Sleeves} alt="Sleeves" className="w-6 h-6" /> 
+    },
+    { 
+        id: 'Mask', 
+        label: 'Mask', 
+        icon: <img src={Mask} alt="Masks" className="w-6 h-6" /> 
+    },
+    { 
+        id: 'Tshirt', 
+        label: 'Tshirts', 
+        icon: <img src={Tshirt} alt="T-shirts" className="w-6 h-6" /> 
+    },
 ];
 
 const NewArrivals = ({ heading }) => {
