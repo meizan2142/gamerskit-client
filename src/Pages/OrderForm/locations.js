@@ -140,5 +140,70 @@ export const allLocation = () => {
             "district": 'Khagrachori',
             "thana": ["Dighinala", "Guimara", "Laxmichari", "Khagrachori Sadar", "Mahalchari", "Manikchari", "Matiranga", "Panchari", "Ramgarh"],
         },
+        {
+            "name": "Khulna",
+            "district": 'Khulna',
+            "thana": ["Batiaghata", "Dacop", "Dighalia", "Khulna Sadar", "Dumuria", "Koyra", "Paikgacha", "Pultala", "Rupsha", "Terokhada"],
+        },
+        {
+            "name": "Kishoreganj",
+            "district": 'Kishoreganj',
+            "thana": ["Austagram", "Bajitpur", "Bhairab", "Hossainpur", "Itna", "Karimganj", "Katiadi", "Kishoreganj Sadar", "Kuliarchar", "Mithamain", "Nikli", "Pakundia", "Tarail"],
+        },
+        {
+            "name": "Kurigram",
+            "district": 'Kurigram',
+            "thana": ["Bhurungamri", "Char Rajibpur", "Chilmari", "Fulbari", "Nageshwari", "Rajarhat", "Raomari", "Kurigram Sadar", "Ulipur"]
+        },
+        {
+            "name": "Kushtia",
+            "district": 'Kushtia',
+            "thana": ["Bheramara", "Kushtia Sadar", "Daulatpur", "Khoksa", "Kumarkhali", "Mirpur Upazila"],
+        },
+        {
+            "name": "Lalmonirhat",
+            "district": 'Lalmonirhat',
+            "thana": ["Aditmari", "Lalmonirhat Sadar", "Hatibanda", "Kaliganj Sadar", "Patgram"],
+        },
+        {
+            "name": "Laxmipur",
+            "district": 'Laxmipur',
+            "thana": ["Chandraganj", "Laxmipur Sadar", "Kamalnagar", "Raipur", "Ramganj", "Ramgati"],
+        },
+        {
+            "name": "Madaripur",
+            "district": 'Madaripur',
+            "thana": ["Dasar", "Madaripur Sadar", "Kalkini", "Rajoir", "Shibchar"],
+        },
+        {
+            "name": "Magura",
+            "district": 'Magura',
+            "thana": ["Mohammadpur Upazila", "Magura Sadar", "Shalikha", "Sreepur Upazila"],
+        },
+        {
+            "name": "Manikganj",
+            "district": 'Manikganj',
+            "thana": ["Daulatpur Upazila", "Manikganj Sadar", "Ghior", "Harirampur", "Saturia", "Shivalaya", "Singair"],
+        },
+        {
+            "name": "Meherpur",
+            "district": 'Meherpur',
+            "thana": ["Gangni", "Meherpur Sadar", "Mujibnagar"],
+        },
+        {
+            "name": "Moulivibazar",
+            "district": 'Moulivibazar',
+            "thana": ["Barlekha", "Moulivibazar Sadar", "Barlekha (Moulivibazar)", "Juri", "Kamalganj", "Kulaura", "Rajnagar", "Sherpur (Moulivibazar), Sreemangal"],
+        },
+        {
+            "name": "Munshiganj",
+            "district": 'Munshiganj',
+            "thana": ["Gazaria", "Munshiganj Sadar", "Louhaganj", "Sirajdikhan", "Sreenagar", "Tongibari"],
+        },
+        {
+            "name": "Mymensingh",
+            "district": 'Mymensingh',
+            "thana": ["Bhaluka", "Mymensingh Sadar", "Dhobaura", "Fulbaria", "Gafargaon", "Gauripur", "Haluaghat", "Ishwarganj", "Muktagacha", "Nandail", "Pagla", "Phulpur", "Tarakanda", "Trishal"],
+        },
     ];
 };
