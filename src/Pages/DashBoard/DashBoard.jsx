@@ -12,7 +12,7 @@ const DashBoard = () => {
         }
     }, [navigate]);
     return (
-        <div className="pt-20 md:pt-20 lg:pt-24 px-4 sm:px-6 md:px-10 text-center space-y-6 md:space-y-10 relative">
+        <div className="pt-8 md:pt-8 lg:pt-8 px-4 sm:px-6 md:px-10 text-center space-y-6 md:space-y-10 relative">
             <div className="w-full mx-auto flex flex-col lg:flex-row lg:justify-between lg:min-h-screen gap-6">
 
                 {/* Desktop Sidebar */}
