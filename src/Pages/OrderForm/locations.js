@@ -48,7 +48,7 @@ export const allLocation = () => {
         {
             "name": "chattogram",
             "district": 'Chattogram',
-            "thana": ["Akbar Shah", "Anwara", "Bakolia", "Bandar CTG", "Banshkhali", "Bayazid Bostami", "Baolkhali", "CEPZ", "Chandanaish", "Chandgaon", "Chawk Bazar", "Chattogram Sadar", "Doublemooring", "Fatikchari", "Halishahar", "Hathazari", "Karnaphuli", "KeraniHat", "Khulshi", "Kotwali - CTG", "Lohagara", "Mirsharai", "Pahartali", "Panchlaish", "Potenga", "Patiya", "Rangunia", "Raozan", "Sadarghat - CTG", "Sandwip", "Satkania", "Shantirhat (Patiya)", "Shantirhat (Patiya) - CTG", "Sitakunda", "Sitakunda (Citygat)", "Keranihat"],
+            "thana": ["Akbar Shah", "Anwara", "Bakolia", "Bandar CTG", "Banshkhali", "Bayazid Bostami", "Baolkhali", "CEPZ", "Chandanaish", "Chandgaon", "Chawk Bazar", "Chattogram Sadar", "Doublemooring", "Fatikchari", "Halishahar", "Hathazari", "Karnaphuli", "KeraniHat", "Khulshi", "Kotwali - CTG", "Lohagara", "Mirsharai", "Pahartali", "Panchlaish", "Potenga", "Patiya", "Rangunia", "Raozan", "Sadarghat - CTG", "Sandwip", "Satkania", "Shantirhat (Patiya)", "Shantirhat (Patiya) - CTG", "Sitakunda", "Sitakunda (Citygat)"],
         },
         {
             "name": "cumilla",
@@ -69,6 +69,76 @@ export const allLocation = () => {
             "name": "dhaka sub-urban",
             "district": 'Dhaka Sub-Urban',
             "thana": ["Ashulia", "Dhamrai", "Dohar", "Hemayetpur", "Keraniganj Model", "Nawabganj", "Savar", "South Keraniganj"],
+        },
+        {
+            "name": "dinajpur",
+            "district": 'Dinajpur',
+            "thana": ["Biral", "Birampur", "Birganj", "Bochaganj", "Chirrirbandar", "Dinajpur Sadar", "Fulbari", "Ghoraghat", "Hakimpur", "Kaharole", "Khansama", "Nawabganj Upazila", "Parbatipur"],
+        },
+        {
+            "name": "faridpur",
+            "district": 'Faridpur',
+            "thana": ["Alfadanga", "Bhaga", "Boalmari", "Charbhadrasan", "Faridpur", "Faridpur Sadar", "Madhukhali", "Nagarkanda", "Sadarpur", "Shaltha"],
+        },
+        {
+            "name": "faridpur",
+            "district": 'Faridpur',
+            "thana": ["Alfadanga", "Bhanga", "Boalmari", "Charbhadrasan", "Faridpur", "Faridpur Sadar", "Madhukhali", "Nagarkanda", "Sadarpur", "Shaltha"],
+        },
+        {
+            "name": "feni",
+            "district": 'Feni',
+            "thana": ["Chagalnaiya", "Dagunbhuiyan", "Feni Sadar", "Fulgazi", "Parshuram", "Sonagazi"],
+        },
+        {
+            "name": "gaibandha",
+            "district": 'Gaibandha',
+            "thana": ["Fulchari", "Gabindaganj", "Gaibandha Sadar", "Palashbari", "Sadullapur", "Saghata", "Sundarganj"],
+        },
+        {
+            "name": "gazipur",
+            "district": 'Gazipur',
+            "thana": ["Gazipur Sadar", "Joydebpur", "Kaliakair Upazila", "Kaliganj Upazila", "Kapasia", "Kashimpur", "Kashimpur", "Rajendrapur", "Sreepur", "Tongi"],
+        },
+        {
+            "name": "gopalganj",
+            "district": 'Gopalganj',
+            "thana": ["Boultali", "Gopalganj", "Gopalganj Sadar", "Kasiani", "Kotalipara", "Muksudpur", "Tungipara"],
+        },
+        {
+            "name": "habiganj",
+            "district": 'Habiganj',
+            "thana": ["Ajmiriganj", "Bahubal", "Baniachong", "Chunarughat", "Habiganj Sadar", "Lakhai", "Madhobpur", "Nabiganj", "Null", "Shayestaganj"],
+        },
+        {
+            "name": "jamalpur",
+            "district": 'Jamalpur',
+            "thana": ["Baksiganj", "Dewanganj", "Islampur", "Jamalpur Sadar", "Madarganj", "Melandaha", "Nandina", "Sarishabari"],
+        },
+        {
+            "name": "jashore",
+            "district": 'Jashore',
+            "thana": ["Abhaynagar", "Bagharpara", "Chaugacha", "Jashore Sadar", "Jhikorgacha", "Keshobpur", "Manirampur", "Sharsha"],
+        },
+        {
+            "name": "jhalokati",
+            "district": 'Jhalokati',
+            "thana": ["Jhalokati Sadar", "Kathalia", "Nalchity", "Rajapur"],
+        },
+        {
+            "name": "jhenaidah",
+            "district": 'Jhenaidah',
+            "thana": ["Harinakunda", "Jhenaidah Sadar", "Kaliganj", "Kotchandpur", "Maheshpur", "Shailkupa"],
+        },
+        {
+            "name": "joypurhat",
+            "district": 'Joypurhat',
+            "thana": ["Akkelpur", "Joypurhat Sadar", "Kalai", "Khetlal", "Panchbibi"],
+        },
+        {
+            "name": "khagrachori",
+            "district": 'Khagrachori',
+            "thana": ["Dighinala", "Guimara", "Laxmichari", "Khagrachori Sadar", "Mahalchari", "Manikchari", "Matiranga", "Panchari", "Ramgarh"],
         },
     ];
 };
