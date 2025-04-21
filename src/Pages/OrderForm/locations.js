@@ -205,5 +205,125 @@ export const allLocation = () => {
             "district": 'Mymensingh',
             "thana": ["Bhaluka", "Mymensingh Sadar", "Dhobaura", "Fulbaria", "Gafargaon", "Gauripur", "Haluaghat", "Ishwarganj", "Muktagacha", "Nandail", "Pagla", "Phulpur", "Tarakanda", "Trishal"],
         },
+        {
+            "name": "Naogaon",
+            "district": 'Naogaon',
+            "thana": ["Atrai", "Naogaon Sadar", "Badolgachi", "Dhamoirhat", "Manda", "Mohadebpur", "Niamatpur", "Patnitola", "Porsha", "Raninagar", "Sapahar"],
+        },
+        {
+            "name": "Narail",
+            "district": 'Narail',
+            "thana": ["Kalia", "Narail Sadar", "Lohagara"],
+        },
+        {
+            "name": "Narayanganj",
+            "district": 'Narayanganj',
+            "thana": ["Araihajar", "Narayanganj Sadar", "Bandar", "Fatullah", "Kanchpur Highway", "Rupganj", "Shiddhirganj", "Sonargaon"],
+        },
+        {
+            "name": "Narshindi",
+            "district": 'Narshindi',
+            "thana": ["Belabo", "Narshindi Sadar", "Ghorashal", "Madhobdi", "Monohardi", "Palash", "Raipura", "Shibpur"],
+        },
+        {
+            "name": "Natore",
+            "district": 'Natore',
+            "thana": ["Bagatipara", "Natore Sadar", "Baraigram", "Gopalpur Pourosova", "Gurodaspur", "Lalpur", "Naldanga", "Singra"],
+        },
+        {
+            "name": "Netrokona",
+            "district": 'Netrokona',
+            "thana": ["Atpara", "Netrokona Sadar", "Barhatta", "Durgapur", "Kalmakanda", "Kendua", "Khaliajuri", "Madan", "Mohonganj", "Parbadhala"],
+        },
+        {
+            "name": "Nilphamari",
+            "district": 'Nilphamari',
+            "thana": ["Dimla", "Nilphamari Sadar", "Domar", "Jaldhaka", "Kishoreganj", "Saidpur"],
+        },
+        {
+            "name": "Noakhali",
+            "district": 'Noakhali',
+            "thana": ["Begamganj", "Noakhali Sadar", "Chatkhil", "Companyganj", "Hatiya", "Kabir Hat", "Senbagh", "Sonaimuri", "Subarnachar"],
+        },
+        {
+            "name": "Pabna",
+            "district": 'Pabna',
+            "thana": ["Ataikula (Pabna)", "Pabna Sadar", "Atgharia", "Bera", "Bhangura", "Chatmohar", "Ishwardi", "Santhia", "Sujanagar"],
+        },
+        {
+            "name": "Panchgarh",
+            "district": 'Panchgarh',
+            "thana": ["Atwari", "Panchgarh Sadar", "Boda", "Debiganj", "Tetulia"],
+        },
+        {
+            "name": "Patuakhali",
+            "district": 'Patuakhali',
+            "thana": ["Bauphal", "Patuakhali Sadar", "Dashmina", "Dumki", "Galachipa", "Kalapara", "Mirzaganj", "Rangabali"],
+        },
+        {
+            "name": "Pirojpur",
+            "district": 'Pirojpur',
+            "thana": ["Bhandaria", "Pirojpur Sadar", "Indurkani", "Kawkhali", "Nazirpur", "Nesarabad", "Swarupkati"],
+        },
+        {
+            "name": "Rajbari",
+            "district": 'Rajbari',
+            "thana": ["(Goalanda Mor) Rajbari Office", "Rajbari Sadar", "Baliakandi", "Goalananda", "Kalukhali", "Pangsha"],
+        },
+        {
+            "name": "Rajshahi",
+            "district": 'Rajshahi',
+            "thana": ["Airport (Rajshahi)", "Rajshahi Sadar", "Bagha", "Bagmara", "Belpukur", "Boalia", "Chandrima Thana", "Charghat", "Damkura", "Durgapur", "Godagari", "Kashiadanga", "Katakhali", "Kornohar", "Matihar Thana", "Mohanpur", "Paba", "Puthia", "Rajpara", "Shah Makdam", "Tanore"],
+        },
+        {
+            "name": "Rangamati",
+            "district": 'Rangamati',
+            "thana": ["Bagaichhari", "Rangamati Sadar", "Barkal", "Belaichhari", "Juraichhari", "Kaptai", "Kawkhali Upazila", "Langadu", "Naniarchar", "Rajasthali"],
+        },
+        {
+            "name": "Rangpur",
+            "district": 'Rangpur',
+            "thana": ["Badarganj", "Rangpur Sadar", "Gangachara", "Kaunia", "Khulahati", "Mitapukur", "Piragacha", "Pirganj", "Shatibari", "Taraganj"],
+        },
+        {
+            "name": "Shariatpur",
+            "district": 'Shariatpur',
+            "thana": ["Bhedarganj", "Shariatpur Sadar", "Damudya", "Gosairhat", "Naria", "Sakhipur Upazila", "Zajira"],
+        },
+        {
+            "name": "Shatkhira",
+            "district": 'Shatkhira',
+            "thana": ["Assasuni", "Shatkhira Sadar", "Debhata", "Kalarao", "Kaliganj", "Patkelghata", "Shatkhira Sadar", "Shyamnagar", "Tala"],
+        },
+        {
+            "name": "Sherpur",
+            "district": 'Sherpur',
+            "thana": ["Jhenaigati", "Sherpur Sadar", "Nakla", "Nalitabari", "Sreebardi"],
+        },
+        {
+            "name": "Sirajganj",
+            "district": 'Sirajganj',
+            "thana": ["Belkuchi", "Sirajganj Sadar", "Chowhali", "Kamarkhanda", "Kazipur", "Raiganj", "Shahjadpur", "Tarash", "Ullapara"],
+        },
+        {
+            "name": "Sunamganj",
+            "district": 'Sunamganj',
+            "thana": ["Bishwamvapur", "Sunamganj Sadar", "Chhatak", "Derai", "Dharmapasha", "Dowarabazar", "Jagannathpur", "Jamalganj", "Moddonagar", "Shantiganj", "Sullah", "Tahirpur"],
+        },
+        {
+            "name": "Sylhet",
+            "district": 'Sylhet',
+            "thana": ["Balaganj", "Sylhet Sadar", "Beanibazar", "Bishanath", "Companyganj Upazila", "Fenchuganj", "Gobindaganj", "Golapganj", "Gowainghat", "Jalalabad", "Jalalabad Cantonment", "Jintiapur", "Kanaighat", "Osmaninagar", "Shahporan", "South Surma", "Zakiganj"],
+        },
+        {
+            "name": "Tangail",
+            "district": 'Tangail',
+            "thana": ["Basali", "Tangail Sadar", "Bhuapur", "Delduar", "Dhanbari", "Ghatali", "Gopalpur", "Kalihati", "Madhupur", "Mirzapur", "Nagarpur", "Sakhipur"],
+        },
+        {
+            "name": "Thakurgaon",
+            "district": 'Thakurgaon',
+            "thana": ["Baliadangi", "Thakurgaon Sadar", "Haripur", "Pirganj Upazila", "Ranisankali"],
+        },
     ];
 };
