@@ -11,6 +11,8 @@ import DashBoard from "../Pages/DashBoard/DashBoard";
 import SignIn from "../Pages/SignIn/SignIn";
 import Signup from "../Pages/Signup/Signup";
 import PrivateRoute from "../Pages/PrivateRoute/PrivateRoute";
+import AllOrder from "../Pages/DashBoard/DashPages/AllOrders/AllOrder";
+import StockJerseys from "../Pages/DashBoard/DashPages/StockJerseys/StockJerseys";
 
 export const router = createBrowserRouter([
     {
@@ -65,8 +67,12 @@ export const router = createBrowserRouter([
         children: [
             // Worker's Routes
             {
-                path: 'workerhome',
-                // element: <PrivateRoute><WorkerHome></WorkerHome></PrivateRoute>
+                path: 'all-orders',
+                element: <PrivateRoute><AllOrder/></PrivateRoute>
+            },
+            {
+                path: 'stock-jerseys',
+                element: <PrivateRoute><StockJerseys/></PrivateRoute>
             },
         ]
     },

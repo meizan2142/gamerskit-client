@@ -1,24 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { ArrowRight, ShoppingBasket } from "lucide-react";
+import { ArrowRight, Menu, ShoppingBasket } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../../useAuth/useAuth";
+import { CSVLink } from "react-csv";
 
-const MyOrders = () => {
-    const { user } = useAuth();
-
+const AllOrder = () => {
     // Fetch current user data
-    const { data: currentUser } = useQuery({
-        queryKey: ['currentUser', user?.email],
-        queryFn: async () => {
-            if (!user?.email) return null;
-            const response = await axios.get(
-                `${import.meta.env.VITE_API_URL}/users/${user.email}`
-            );
-            return response.data;
-        },
-        enabled: !!user?.email,
-    });
+
 
     // Fetch all orders (no filtering yet)
     const { isLoading, error, data: allOrders = [] } = useQuery({
@@ -32,9 +20,28 @@ const MyOrders = () => {
     });
 
     // Filter orders by current user's email
-    const userOrders = allOrders.filter(order => 
-        order?.email === currentUser?.email
-    );
+
+
+    // Transform data for CSV export
+    const getCSVData = () => {
+        return allOrders.flatMap(order => {
+            return order.cartItems?.map(item => ({
+                date: new Date(order.orderDate).toLocaleDateString(),
+                email: order.email || '',
+                name: order.name,
+                mobile: order.mobile,
+                title: item.title,
+                size: item.size || '',
+                quantity: item.quantity,
+                District: order.district,
+                Thana: order.thana,
+                Address: order.address,
+                paymentDigits: order.paymentDigits || '',
+                advanceAmount: order.advanceAmount,
+                remainingAmount: order.remainingAmount
+            })) || [];
+        });
+    };
 
     if (isLoading) return (
         <div className="flex justify-center items-center min-h-[50vh]">
@@ -49,13 +56,40 @@ const MyOrders = () => {
     );
 
     return (
-        <div className="pt-20 md:pt-20 lg:pt-24 px-4 sm:px-6 md:px-10 space-y-6 md:space-y-10">
-            <h1 className="font-bold text-3xl text-center">My Orders</h1>
+        <div className="pt-2 md:pt-2 lg:pt-2 px-4 sm:px-6 md:px-10 space-y-6 md:space-y-10">
+            <div className="flex justify-between">
+                <h1 className="font-bold text-3xl text-center">All Orders</h1>
 
-            {userOrders.length > 0 ? (
+                <div className="text-center">
+                    <CSVLink
+                        data={getCSVData()}
+                        filename={`my_orders_${new Date().toISOString().slice(0, 10)}.csv`}
+                        className="inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition"
+                        headers={[
+                            { label: "Date", key: "date" },
+                            { label: "Email", key: "email" },
+                            { label: "Name", key: "name" },
+                            { label: "Mobile", key: "mobile" },
+                            { label: "Product Title", key: "title" },
+                            { label: "Size", key: "size" },
+                            { label: "Quantity", key: "quantity" },
+                            { label: "District", key: "District" },
+                            { label: "Thana", key: "Thana" },
+                            { label: "Address", key: "Address" },
+                            { label: "Payment Digits", key: "paymentDigits" },
+                            { label: "Advance Amount", key: "advanceAmount" },
+                            { label: "Remaining Amount", key: "remainingAmount" }
+                        ]}
+                    >
+                        Download CSV
+                    </CSVLink>
+                </div>
+            </div>
+
+            {allOrders.length > 0 ? (
                 <>
                     <div className="overflow-x-auto">
-                        <table className="min-w-[90%] shadow-md border mx-auto border-gray-100 my-6">
+                        <table className="min-w-[90%] shadow-md border mx-auto border-gray-100 my-2">
                             <thead>
                                 <tr className="bg-[#333333] text-white">
                                     <th className="py-3 px-6 text-left border-b">Serial</th>
@@ -68,7 +102,7 @@ const MyOrders = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {userOrders.map((item, index) => (
+                                {allOrders.map((item, index) => (
                                     <tr key={item._id}>
                                         <td className="py-4 px-6 border-b">{index + 1}</td>
                                         <td className="py-4 px-6 border-b">
@@ -96,17 +130,11 @@ const MyOrders = () => {
                 </>
             ) : (
                 <div className="text-center min-h-[50vh] flex flex-col justify-center space-y-5">
-                    <p className='font-bold text-xl'>You haven't purchased anything yet.</p>
-                    <NavLink to='/shop' className='flex justify-center'>
-                        <button className="flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
-                            <ShoppingBasket className="w-4 h-4" />
-                            Continue Shopping
-                        </button>
-                    </NavLink>
+                    <p className='font-bold text-xl'>No orders have been placed yet.</p>
                 </div>
             )}
         </div>
     );
 };
 
-export default MyOrders;
+export default AllOrder;
