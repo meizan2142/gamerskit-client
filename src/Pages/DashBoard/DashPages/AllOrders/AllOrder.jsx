@@ -1,14 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { ArrowRight, Menu, ShoppingBasket } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { CSVLink } from "react-csv";
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 const AllOrder = () => {
-    // Fetch current user data
+    const queryClient = useQueryClient();
 
-
-    // Fetch all orders (no filtering yet)
     const { isLoading, error, data: allOrders = [] } = useQuery({
         queryKey: ['orders'],
         queryFn: async () => {
@@ -19,10 +18,16 @@ const AllOrder = () => {
         },
     });
 
-    // Filter orders by current user's email
+    const deleteOrder = async (orderId) => {
+        try {
+            await axios.delete(`${import.meta.env.VITE_API_URL}/orderdetails/${orderId}`);
+            queryClient.invalidateQueries(['orders']);
+        } catch (error) {
+            console.error('Error deleting order:', error);
+            // Add error handling (e.g., show a toast notification)
+        }
+    };
 
-
-    // Transform data for CSV export
     const getCSVData = () => {
         return allOrders.flatMap(order => {
             return order.cartItems?.map(item => ({
@@ -59,31 +64,35 @@ const AllOrder = () => {
         <div className="pt-2 md:pt-2 lg:pt-2 px-4 sm:px-6 md:px-10 space-y-6 md:space-y-10">
             <div className="flex justify-between">
                 <h1 className="font-bold text-3xl text-center">All Orders</h1>
-
-                <div className="text-center">
-                    <CSVLink
-                        data={getCSVData()}
-                        filename={`my_orders_${new Date().toISOString().slice(0, 10)}.csv`}
-                        className="inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition"
-                        headers={[
-                            { label: "Date", key: "date" },
-                            { label: "Email", key: "email" },
-                            { label: "Name", key: "name" },
-                            { label: "Mobile", key: "mobile" },
-                            { label: "Product Title", key: "title" },
-                            { label: "Size", key: "size" },
-                            { label: "Quantity", key: "quantity" },
-                            { label: "District", key: "District" },
-                            { label: "Thana", key: "Thana" },
-                            { label: "Address", key: "Address" },
-                            { label: "Payment Digits", key: "paymentDigits" },
-                            { label: "Advance Amount", key: "advanceAmount" },
-                            { label: "Remaining Amount", key: "remainingAmount" }
-                        ]}
-                    >
-                        Download CSV
-                    </CSVLink>
-                </div>
+                {
+                    allOrders.length > 0 ?
+                        <div className="text-center">
+                            <CSVLink
+                                data={getCSVData()}
+                                filename={`my_orders_${new Date().toISOString().slice(0, 10)}.csv`}
+                                className="inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition"
+                                headers={[
+                                    { label: "Date", key: "date" },
+                                    { label: "Email", key: "email" },
+                                    { label: "Name", key: "name" },
+                                    { label: "Mobile", key: "mobile" },
+                                    { label: "Product Title", key: "title" },
+                                    { label: "Size", key: "size" },
+                                    { label: "Quantity", key: "quantity" },
+                                    { label: "District", key: "District" },
+                                    { label: "Thana", key: "Thana" },
+                                    { label: "Address", key: "Address" },
+                                    { label: "Payment Digits", key: "paymentDigits" },
+                                    { label: "Advance Amount", key: "advanceAmount" },
+                                    { label: "Remaining Amount", key: "remainingAmount" }
+                                ]}
+                            >
+                                Download CSV
+                            </CSVLink>
+                        </div>
+                        :
+                        <></>
+                }
             </div>
 
             {allOrders.length > 0 ? (
@@ -99,6 +108,7 @@ const AllOrder = () => {
                                     <th className="py-3 px-6 border-b text-end">Advance Amount</th>
                                     <th className="py-3 px-6 border-b text-end">Remaining Amount</th>
                                     <th className="py-3 px-6 text-left border-b">Check Details</th>
+                                    <th className="py-3 px-6 text-left border-b">Delete Order</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -121,6 +131,14 @@ const AllOrder = () => {
                                                     <ArrowRight />
                                                 </button>
                                             </NavLink>
+                                        </td>
+                                        <td className="py-4 px-6 border-b space-y-1">
+                                            <button
+                                                onClick={() => deleteOrder(item._id)}
+                                                className="text-gray-500 hover:text-red-500"
+                                            >
+                                                <RiDeleteBin5Line size={18} />
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}

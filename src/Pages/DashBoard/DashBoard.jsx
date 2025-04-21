@@ -1,8 +1,16 @@
-import { useState } from "react";
-import { NavLink, Outlet } from "react-router"
+import { useEffect, useState } from "react";
+import { NavLink, Outlet, useNavigate } from "react-router"
 
 const DashBoard = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const navigate = useNavigate();
+
+    // Redirect to all-orders when dashboard is accessed directly
+    useEffect(() => {
+        if (window.location.pathname === '/admin-dashboard') {
+            navigate('/dashboard/all-orders', { replace: true });
+        }
+    }, [navigate]);
     return (
         <div className="pt-20 md:pt-20 lg:pt-24 px-4 sm:px-6 md:px-10 text-center space-y-6 md:space-y-10 relative">
             <div className="w-full mx-auto flex flex-col lg:flex-row lg:justify-between lg:min-h-screen gap-6">
