@@ -111,7 +111,7 @@ const SingleProduct = () => {
                     
                     {hasSizes && (
                         <div className="space-y-3">
-                            <h3 className="font-semibold text-lg">Available Sizes:</h3>
+                            <h3 className="font-semibold text-lg">Available Sizes: (Choose a size to place your order)</h3>
                             <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-3 gap-3 sm:gap-4">
                                 {data.sizes.map((size) => (
                                     <button
