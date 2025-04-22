@@ -16,40 +16,40 @@ import Esports from '/src/assets/jersey.png';
 import All from '/src/assets/all.png';
 
 const tabs = [
-    { 
-        id: 'all', 
-        label: 'All', 
-        icon: <img src={All} alt="All products" className="w-6 h-6" /> 
+    {
+        id: 'all',
+        label: 'All',
+        icon: <img src={All} alt="All products" className="w-6 h-6" />
     },
-    { 
-        id: 'car', 
-        label: 'RC Car', 
-        icon: <img src={Car} alt="Car products" className="w-6 h-6" /> 
+    {
+        id: 'car',
+        label: 'RC Car',
+        icon: <img src={Car} alt="Car products" className="w-6 h-6" />
     },
-    { 
-        id: 'E-sports', 
-        label: 'E-Sports', 
-        icon: <img src={Esports} alt="E-Sports jerseys" className="w-6 h-6" /> 
+    {
+        id: 'E-sports',
+        label: 'E-Sports',
+        icon: <img src={Esports} alt="E-Sports jerseys" className="w-6 h-6" />
     },
-    { 
-        id: 'F1', 
-        label: "F1 Jersey", 
-        icon: <img src={F1} alt="F1 jerseys" className="w-6 h-6" /> 
+    {
+        id: 'F1',
+        label: "F1 Jersey",
+        icon: <img src={F1} alt="F1 jerseys" className="w-6 h-6" />
     },
-    { 
-        id: 'Sleeves', 
-        label: 'Sleeves', 
-        icon: <img src={Sleeves} alt="Sleeves" className="w-6 h-6" /> 
+    {
+        id: 'Sleeves',
+        label: 'Sleeves',
+        icon: <img src={Sleeves} alt="Sleeves" className="w-6 h-6" />
     },
-    { 
-        id: 'Mask', 
-        label: 'Mask', 
-        icon: <img src={Mask} alt="Masks" className="w-6 h-6" /> 
+    {
+        id: 'Mask',
+        label: 'Mask',
+        icon: <img src={Mask} alt="Masks" className="w-6 h-6" />
     },
-    { 
-        id: 'Tshirt', 
-        label: 'Tshirts', 
-        icon: <img src={Tshirt} alt="T-shirts" className="w-6 h-6" /> 
+    {
+        id: 'Tshirt',
+        label: 'Tshirts',
+        icon: <img src={Tshirt} alt="T-shirts" className="w-6 h-6" />
     },
 ];
 
@@ -163,9 +163,12 @@ const NewArrivals = ({ heading }) => {
 
 
             {/* Products Grid */}
-            <div 
-            className="2xl:container 2xl:mx-auto 2xl:mt-10">
-                <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-3">
+            <div
+                className="2xl:container 2xl:mx-auto 2xl:mt-10">
+                <div
+                    data-aos="fade-up"
+                    data-aos-duration="3000"
+                    className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-3">
                     {filteredProducts.map((product) => (
                         <ProductCard
                             key={`${product.name}-${product.title}`}

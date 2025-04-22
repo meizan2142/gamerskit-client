@@ -43,7 +43,8 @@ const AllOrder = () => {
                 Address: order.address,
                 paymentDigits: order.paymentDigits || '',
                 advanceAmount: order.advanceAmount,
-                remainingAmount: order.remainingAmount
+                remainingAmount: order.remainingAmount,
+                note: order.note,
             })) || [];
         });
     };
@@ -84,7 +85,8 @@ const AllOrder = () => {
                                     { label: "Address", key: "Address" },
                                     { label: "Payment Digits", key: "paymentDigits" },
                                     { label: "Advance Amount", key: "advanceAmount" },
-                                    { label: "Remaining Amount", key: "remainingAmount" }
+                                    { label: "Remaining Amount", key: "remainingAmount" },
+                                    { label: "Note", key: "note" }
                                 ]}
                             >
                                 Download CSV

@@ -24,6 +24,15 @@ const SingleProduct = () => {
         }
     });
 
+    // Add a query to check if the item is already in cart
+    const { data: cartData } = useQuery({
+        queryKey: ['cart'],
+        queryFn: async () => {
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/cartList`);
+            return response.data;
+        }
+    });
+
     const { mutate } = useMutation({
         mutationFn: (product) =>
             axios.post(`${import.meta.env.VITE_API_URL}/cartList`, product, {
@@ -75,17 +84,29 @@ const SingleProduct = () => {
             return toast.error('Please select a size');
         }
 
-        const cartProduct = {
-            productId: data._id,
-            title: data.title,
-            price: data.price,
-            img: data.img,
-            quantity: 1,
-            ...(data.sizes && data.sizes.length > 0 && { size: selectedSize })
-        };
+        // Check if item is already in cart
+        const isItemInCart = cartData?.some(item => 
+            item.productId === data._id && 
+            (!data.sizes || item.size === selectedSize)
+        );
 
-        setIsBuyNowClicked(true);
-        mutate(cartProduct);
+        if (isItemInCart) {
+            // If item is already in cart, just navigate to checkout
+            navigate('/place-orders');
+        } else {
+            // If item is not in cart, add it then navigate
+            const cartProduct = {
+                productId: data._id,
+                title: data.title,
+                price: data.price,
+                img: data.img,
+                quantity: 1,
+                ...(data.sizes && data.sizes.length > 0 && { size: selectedSize })
+            };
+
+            setIsBuyNowClicked(true);
+            mutate(cartProduct);
+        }
     };
 
     if (isLoading) return <div className="min-h-screen pt-24 flex justify-center">
