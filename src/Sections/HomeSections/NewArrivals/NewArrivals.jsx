@@ -168,7 +168,7 @@ const NewArrivals = ({ heading }) => {
                 <div
                     data-aos="fade-up"
                     data-aos-duration="3000"
-                    className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-3">
+                    className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5 gap-3">
                     {filteredProducts.map((product) => (
                         <ProductCard
                             key={`${product.name}-${product.title}`}
