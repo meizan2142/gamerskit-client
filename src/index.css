@@ -3,27 +3,7 @@
 
 
 body {
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: "Roboto Condensed";
     background-color: #F1EFEC;
 }
 
-
-@keyframes slightMove {
-    0% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(5%);
-        /* Move down by 10% */
-    }
-
-    100% {
-        transform: translateY(0);
-    }
-}
-
-.animated-slide {
-    animation: slightMove 5s ease-in-out infinite;
-    /* Smooth easing for a subtle effect */
-}
