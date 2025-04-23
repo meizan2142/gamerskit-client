@@ -81,11 +81,6 @@ export const allLocation = () => {
             "thana": ["Alfadanga", "Bhaga", "Boalmari", "Charbhadrasan", "Faridpur", "Faridpur Sadar", "Madhukhali", "Nagarkanda", "Sadarpur", "Shaltha"],
         },
         {
-            "name": "faridpur",
-            "district": 'Faridpur',
-            "thana": ["Alfadanga", "Bhanga", "Boalmari", "Charbhadrasan", "Faridpur", "Faridpur Sadar", "Madhukhali", "Nagarkanda", "Sadarpur", "Shaltha"],
-        },
-        {
             "name": "feni",
             "district": 'Feni',
             "thana": ["Chagalnaiya", "Dagunbhuiyan", "Feni Sadar", "Fulgazi", "Parshuram", "Sonagazi"],
