@@ -61,6 +61,8 @@ const Accordion = ({ data }) => {
                                 • Dhaka: 70 TK<br />
                                 • Sub-Dhaka: 100 TK<br />
                                 • Outside Dhaka: 130 TK<br /><br />
+                                <strong>Delivery Time:</strong><br />
+                                • 2-3 Days<br />
                             </p>
                         )
                     }
@@ -71,6 +73,8 @@ const Accordion = ({ data }) => {
                                 • Dhaka: 70 TK<br />
                                 • Sub-Dhaka: 100 TK<br />
                                 • Outside Dhaka: 130 TK<br /><br />
+                                <strong>Delivery Time:</strong><br />
+                                • 2-3 Days<br />
                             </p>
                         )
                     }
@@ -81,6 +85,8 @@ const Accordion = ({ data }) => {
                                 • Dhaka: 70 TK<br />
                                 • Sub-Dhaka: 100 TK<br />
                                 • Outside Dhaka: 130 TK<br /><br />
+                                <strong>Delivery Time:</strong><br />
+                                • 2-3 Days<br />
                             </p>
                         )
                     }
@@ -91,6 +97,8 @@ const Accordion = ({ data }) => {
                                 • Dhaka: 70 TK<br />
                                 • Sub-Dhaka: 100 TK<br />
                                 • Outside Dhaka: 130 TK<br /><br />
+                                <strong>Delivery Time:</strong><br />
+                                • 2-3 Days<br />
                             </p>
                         )
                     }
@@ -101,11 +109,20 @@ const Accordion = ({ data }) => {
                                 • Dhaka: 70 TK<br />
                                 • Sub-Dhaka: 100 TK<br />
                                 • Outside Dhaka: 130 TK<br /><br />
+                                <strong>Delivery Time:</strong><br />
+                                • 2-3 Days<br />
                             </p>
                         )
                     }
 
-                    {data?.name === "car" && "RC Cars: Delivery charge will be free"}
+                    {data?.name === "car" && (
+                        <p>
+                            <strong>RC Cars: Delivery charge will be free</strong><br />
+                            <br/>
+                            <strong>Delivery Time:</strong><br />
+                            • 10-12 Days<br />
+                        </p>
+                    )}
                 </p>
             ),
         }
