@@ -1,74 +1,29 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { ArrowRight, ShoppingBasket, X } from 'lucide-react';
 import { RiDeleteBin5Line } from 'react-icons/ri';
-import { NavLink } from 'react-router';
+import { NavLink } from 'react-router-dom';
+import { useCart } from '../../useCart/useCart';
 
 const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
-    const queryClient = useQueryClient();
-
-    // Fetch cart data
-    const { isLoading, error, data = [] } = useQuery({
-        queryKey: ['cart'],
-        queryFn: async () => {
-            try {
-                const response = await axios.get(
-                    `${import.meta.env.VITE_API_URL}/cartList`
-                );
-                return response.data; // Axios automatically parses JSON
-            } catch (err) {
-                console.error(err, "Failed to fetch cart items");
-                return []; // Fallback empty array on error
-            }
-        },
-    });
-
-    // Delete item mutation
-    const { mutate: deleteItem } = useMutation({
-        mutationFn: async (itemId) => {
-            await axios.delete(`${import.meta.env.VITE_API_URL}/cartList/${itemId}`);
-        },
-        onMutate: async (itemId) => {
-            // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
-            await queryClient.cancelQueries(['cart']);
-
-            // Snapshot the previous value
-            const previousCart = queryClient.getQueryData(['cart']);
-
-            // Optimistically update to the new value
-            queryClient.setQueryData(['cart'], old =>
-                old.filter(item => {
-                    const currentItemId = item?.id || item?._id || item?.productId;
-                    return currentItemId !== itemId;
-                })
-            );
-
-            // Return a context object with the snapshotted value
-            return { previousCart };
-        },
-        onError: (context) => {
-            // Rollback to the previous value if mutation fails
-            queryClient.setQueryData(['cart'], context.previousCart);
-        },
-        onSettled: () => {
-            // Always refetch after error or success
-            queryClient.invalidateQueries(['cart']);
-        }
-    });
-
+    // Use the useCart hook which handles both localStorage and DB operations
+    const {
+        cartItems,
+        removeFromCart,
+        isLoading,
+        error
+    } = useCart();
 
     // Calculate total
-    const totalPrice = data.reduce((sum, item) => {
+    const totalPrice = cartItems.reduce((sum, item) => {
         return sum + (item.price * item.quantity);
     }, 0);
 
+    if (isLoading) return (
+        <div className="p-6 text-white">
+            <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
+        </div>
+    );
 
-
-    if (isLoading) return <div className="p-6 text-white">
-        <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
-    </div>;
     if (error) return <div className="p-6 text-red-500">Error: {error.message}</div>;
-
 
     return (
         <>
@@ -88,14 +43,14 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                     {/* Cart items */}
                     <div className="flex-1 overflow-y-auto">
                         <div className="border-b border-gray-700 py-4 space-y-8">
-                            {data.map((item) => {
-                                const itemKey = item?.id || item?._id || item?.productId || `item-${Math.random().toString(36).substr(2, 9)}`;
+                            {cartItems.map((item) => {
+                                const itemKey = item?.id || item?._id || item?.productId;
                                 return (
                                     <div key={itemKey} className="flex gap-4">
                                         <div className="w-20 h-20 bg-gray-800 rounded-md overflow-hidden">
                                             <img
                                                 src={item.img || '/placeholder-product.jpg'}
-                                                alt={item.name || 'Product'}
+                                                alt={item.title || 'Product'}
                                                 className="w-full h-full object-cover"
                                             />
                                         </div>
@@ -107,7 +62,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                                 </p>
                                                 {/* Delete button */}
                                                 <button
-                                                    onClick={() => deleteItem(itemKey)}
+                                                    onClick={() => removeFromCart(itemKey)}
                                                     className="text-gray-500 hover:text-red-500"
                                                 >
                                                     <RiDeleteBin5Line size={18} />
@@ -118,31 +73,12 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                                 <p className="text-[#FFD700] text-sm font-semibold my-1">
                                                     ৳{(item.price || 0)}
                                                 </p>
-                                                {
-                                                    item.size ?
-                                                        <p className="text-[#FFB300] text-sm font-medium my-1">
-                                                            Size: {item.size}
-                                                        </p>
-                                                        :
-                                                        <></>
-                                                }
+                                                {item.size && (
+                                                    <p className="text-[#FFB300] text-sm font-medium my-1">
+                                                        Size: {item.size}
+                                                    </p>
+                                                )}
                                             </div>
-
-                                            {/* <div className="flex items-center mt-2">
-                                                <button
-                                                    className="w-8 h-8 flex items-center justify-center border text-white border-gray-600 rounded-l-md hover:bg-gray-700 transition"
-                                                >
-                                                    -
-                                                </button>
-                                                <span className="w-10 h-8 flex items-center justify-center text-white border-t border-b border-gray-600">
-                                                    {item.quantity || 1}
-                                                </span>
-                                                <button
-                                                    className="w-8 h-8 flex items-center justify-center border text-white border-gray-600 rounded-r-md hover:bg-gray-700 transition"
-                                                >
-                                                    +
-                                                </button>
-                                            </div> */}
                                         </div>
                                     </div>
                                 );
@@ -151,33 +87,38 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                     </div>
 
                     {/* Cart summary */}
-                    {
-                        data.length > 0 ?
-                            <>
-                                <div className="border-t border-gray-700 pt-4">
-                                    <div className="flex justify-between mb-4">
-                                        <span className="text-white">Total:</span>
-                                        <span className="text-[#FFD700] font-bold">৳{totalPrice}</span>
-                                    </div>
-                                    <NavLink to='/place-orders'>
-                                        <button onClick={() => setIsCartOpen(false)} className="w-full flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
-                                            PROCEED TO CHECKOUT
-                                            <ArrowRight />
-                                        </button>
-                                    </NavLink>
+                    {cartItems.length > 0 ? (
+                        <>
+                            <div className="border-t border-gray-700 pt-4">
+                                <div className="flex justify-between mb-4">
+                                    <span className="text-white">Total:</span>
+                                    <span className="text-[#FFD700] font-bold">৳{totalPrice}</span>
                                 </div>
-                            </>
-                            :
-                            <div className='text-white flex flex-col space-y-5 items-center h-screen justify-center'>
-                                <p className='font-bold text-xl'>Your Cart is empty</p>
-                                <NavLink to='/shop'>
-                                    <button onClick={() => setIsCartOpen(false)} className="w-full flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
-                                        <ShoppingBasket className="w-4 h-4" />
-                                        Continue Shopping
+                                <NavLink to='/place-orders'>
+                                    <button
+                                        onClick={() => setIsCartOpen(false)}
+                                        className="w-full flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition"
+                                    >
+                                        PROCEED TO CHECKOUT
+                                        <ArrowRight />
                                     </button>
                                 </NavLink>
                             </div>
-                    }
+                        </>
+                    ) : (
+                        <div className='text-white flex flex-col space-y-5 items-center h-screen justify-center'>
+                            <p className='font-bold text-xl'>Your Cart is empty</p>
+                            <NavLink to='/shop'>
+                                <button
+                                    onClick={() => setIsCartOpen(false)}
+                                    className="w-full flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition"
+                                >
+                                    <ShoppingBasket className="w-4 h-4" />
+                                    Continue Shopping
+                                </button>
+                            </NavLink>
+                        </div>
+                    )}
                 </div>
             </div>
 

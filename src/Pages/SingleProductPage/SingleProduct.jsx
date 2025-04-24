@@ -2,17 +2,20 @@ import { ShoppingBasket, ShoppingCart } from "lucide-react";
 import Accordion from "../../Components/Accordion/Accordion";
 import SingleProductSwiper from "../../Components/SingleProductSwiper/SingleProductSwiper";
 import { useParams, useNavigate } from "react-router-dom";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
+import { useCart } from "../../useCart/useCart";
 
 const SingleProduct = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const queryClient = useQueryClient();
     const [selectedSize, setSelectedSize] = useState('');
     const [isBuyNowClicked, setIsBuyNowClicked] = useState(false);
+
+    // Use the useCart hook
+    const { cartItems, addToCart } = useCart();
 
     const { isLoading, error, data } = useQuery({
         queryKey: ['product', id],
@@ -21,44 +24,6 @@ const SingleProduct = () => {
                 `${import.meta.env.VITE_API_URL}/allProducts/${id}`
             );
             return response.data;
-        }
-    });
-
-    // Add a query to check if the item is already in cart
-    const { data: cartData } = useQuery({
-        queryKey: ['cart'],
-        queryFn: async () => {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/cartList`);
-            return response.data;
-        }
-    });
-
-    const { mutate } = useMutation({
-        mutationFn: (product) =>
-            axios.post(`${import.meta.env.VITE_API_URL}/cartList`, product, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }),
-        onSuccess: (response) => {
-            if (response.data.insertedId) {
-                toast.success('Added to Cart');
-                queryClient.invalidateQueries({ queryKey: ['cart'] });
-
-                // Redirect if Buy Now was clicked
-                if (isBuyNowClicked) {
-                    navigate('/place-orders');
-                    setIsBuyNowClicked(false);
-                }
-            }
-        },
-        onError: (error, _, context) => {
-            console.error('Error:', error);
-            toast.error('Failed to add to cart');
-            if (context?.previousCart) {
-                queryClient.setQueryData(['cart'], context.previousCart);
-            }
-            setIsBuyNowClicked(false);
         }
     });
 
@@ -76,7 +41,8 @@ const SingleProduct = () => {
             ...(data.sizes && data.sizes.length > 0 && { size: selectedSize })
         };
 
-        mutate(cartProduct);
+        addToCart(cartProduct);
+        toast.success('Added to Cart');
     };
 
     const handleBuyNow = () => {
@@ -85,16 +51,14 @@ const SingleProduct = () => {
         }
 
         // Check if item is already in cart
-        const isItemInCart = cartData?.some(item => 
+        const isItemInCart = cartItems.some(item => 
             item.productId === data._id && 
             (!data.sizes || item.size === selectedSize)
         );
 
         if (isItemInCart) {
-            // If item is already in cart, just navigate to checkout
             navigate('/place-orders');
         } else {
-            // If item is not in cart, add it then navigate
             const cartProduct = {
                 productId: data._id,
                 title: data.title,
@@ -105,8 +69,11 @@ const SingleProduct = () => {
             };
 
             setIsBuyNowClicked(true);
-            mutate(cartProduct);
+            addToCart(cartProduct);
+            navigate('/place-orders');
         }
+        console.log(isBuyNowClicked);
+        
     };
 
     if (isLoading) return <div className="min-h-screen pt-24 flex justify-center">
@@ -153,7 +120,7 @@ const SingleProduct = () => {
                     )}
 
                     <div>
-                        <Accordion data = {data} />
+                        <Accordion data={data} />
                     </div>
 
                     <div className="space-y-4">

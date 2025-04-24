@@ -5,42 +5,20 @@ import { AlignJustify, ShoppingCart, User, X } from "lucide-react";
 import { Badge } from "@mui/material";
 import ProductCart from "../ProductCart/ProductCart";
 import mainLogo from '/src/assets/logo-icon.png';
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useAuth } from "../../useAuth/useAuth";
-
-
+import { useCart } from "../../useCart/useCart";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isCartOpen, setIsCartOpen] = useState(false);
     const links = useNavLinks();
-    const { user, logOut } = useAuth()
-
-
-    // Fetch cart data
-    const { isLoading, error, data = [] } = useQuery({
-        queryKey: ['cart'],
-        queryFn: async () => {
-            try {
-                const response = await axios.get(
-                    `${import.meta.env.VITE_API_URL}/cartList`
-                );
-                return response.data; // Axios automatically parses JSON
-            } catch (err) {
-                console.error(err, "Failed to fetch cart items");
-                return []; // Fallback empty array on error
-            }
-        },
-    });
-
-
-    if (isLoading) return <div className="p-6 text-white bg-[#1A1A1A]">
-        {/* <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>K */}
-    </div>;
-    if (error) return <div className="p-6 text-red-500">Error: {error.message}</div>;
-
-
+    const { user, logOut } = useAuth();
+    
+    // Use the useCart hook to get cart items
+    const { cartItems } = useCart();
+    // useEffect(() => {
+    //     console.log('Cart items updated:', cartItems);
+    // }, [cartItems]);
 
     return (
         <>
@@ -60,7 +38,6 @@ const Navbar = () => {
 
                     {/* Logo - Second on small screens */}
                     <NavLink to='/' className="order-2 lg:order-none mx-auto lg:mx-0">
-                        {/* Light mode logo */}
                         <img
                             src={mainLogo}
                             alt="GamersKit Logo"
@@ -89,49 +66,42 @@ const Navbar = () => {
                                 </li>
                             ))}
                             {
-                                user ?
-                                    <button
-                                        onClick={logOut}
-                                        className="w-full sm:flex md:flex lg:hidden xl:hidden 2xl:hidden px-3 py-2 text-sm font-bold tracking-wide transition sm:mt-0 sm:w-auto sm:shrink-0 bg-[#FFD700] text-black hover:bg-[#FFB300] rounded-md"
-                                    >
-                                        Signout
-                                    </button>
-                                    :
-                                    <></>
+                                user &&
+                                <button
+                                    onClick={logOut}
+                                    className="w-full sm:flex md:flex lg:hidden xl:hidden 2xl:hidden px-3 py-2 text-sm font-bold tracking-wide transition sm:mt-0 sm:w-auto sm:shrink-0 bg-[#FFD700] text-black hover:bg-[#FFB300] rounded-md"
+                                >
+                                    Signout
+                                </button>
                             }
                         </ul>
                     </nav>
 
                     {/* Icons and Buttons - Third on small screens */}
                     <div className="flex space-x-4 xl:space-x-6 items-center order-3 lg:order-none">
-                        {/* Cart */}
-                        {
-                            user ?
-                                <>
-                                    <Badge badgeContent={data.length} className="text-[#FAE82A] font-bold">
-                                        <button onClick={() => setIsCartOpen(true)}>
-                                            <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-white hover:text-[#FFD700]" />
-                                        </button>
-                                    </Badge>
-                                    <button
-                                        onClick={logOut}
-                                        className="w-full hidden lg:flex xl:flex 2xl:flex px-3 py-2 text-sm font-bold tracking-wide transition sm:mt-0 sm:w-auto sm:shrink-0 bg-[#FFD700] text-black hover:bg-[#FFB300] rounded-md"
-                                    >
-                                        Signout
-                                    </button>
-                                </>
-                                :
-                                <>
-                                    <Badge badgeContent={data.length} className="text-[#FAE82A] font-bold">
-                                        <button onClick={() => setIsCartOpen(true)}>
-                                            <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-white hover:text-[#FFD700]" />
-                                        </button>
-                                    </Badge>
-                                    <NavLink to='/signin'>
-                                        <User className="cursor-pointer text-white hover:text-[#FFB300]" />
-                                    </NavLink>
-                                </>
-                        }
+                        {/* Cart with badge showing total items */}
+                        <Badge 
+                            badgeContent={cartItems.length} 
+                            color="primary"
+                            className="text-[#FAE82A] font-bold"
+                        >
+                            <button onClick={() => setIsCartOpen(true)}>
+                                <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-white hover:text-[#FFD700]" />
+                            </button>
+                        </Badge>
+
+                        {user ? (
+                            <button
+                                onClick={logOut}
+                                className="w-full hidden lg:flex xl:flex 2xl:flex px-3 py-2 text-sm font-bold tracking-wide transition sm:mt-0 sm:w-auto sm:shrink-0 bg-[#FFD700] text-black hover:bg-[#FFB300] rounded-md"
+                            >
+                                Signout
+                            </button>
+                        ) : (
+                            <NavLink to='/signin'>
+                                <User className="cursor-pointer text-white hover:text-[#FFB300]" />
+                            </NavLink>
+                        )}
                     </div>
                 </div>
             </header>
