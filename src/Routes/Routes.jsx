@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/singleproduct/:id",
-                element: <SingleProduct />,
+                element: <PrivateRoute><SingleProduct /></PrivateRoute>,
             },
             {
                 path: "/imagehosting",
@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/place-orders",
-                element: <PrivateRoute><OrderForm /></PrivateRoute>,
+                element: <OrderForm />,
             },
             {
                 path: "/my-orders",
@@ -68,11 +68,11 @@ export const router = createBrowserRouter([
             // Worker's Routes
             {
                 path: 'all-orders',
-                element: <PrivateRoute><AllOrder/></PrivateRoute>
+                element: <PrivateRoute><AllOrder /></PrivateRoute>
             },
             {
                 path: 'stock-jerseys',
-                element: <PrivateRoute><StockJerseys/></PrivateRoute>
+                element: <PrivateRoute><StockJerseys /></PrivateRoute>
             },
         ]
     },

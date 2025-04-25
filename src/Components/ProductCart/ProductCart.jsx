@@ -44,9 +44,8 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                     <div className="flex-1 overflow-y-auto">
                         <div className="border-b border-gray-700 py-4 space-y-8">
                             {cartItems.map((item) => {
-                                const itemKey = item?.id || item?._id || item?.productId;
                                 return (
-                                    <div key={itemKey} className="flex gap-4">
+                                    <div key={item._id} className="flex gap-4">
                                         <div className="w-20 h-20 bg-gray-800 rounded-md overflow-hidden">
                                             <img
                                                 src={item.img || '/placeholder-product.jpg'}
@@ -62,7 +61,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                                 </p>
                                                 {/* Delete button */}
                                                 <button
-                                                    onClick={() => removeFromCart(itemKey)}
+                                                    onClick={() => removeFromCart(item._id)}
                                                     className="text-gray-500 hover:text-red-500"
                                                 >
                                                     <RiDeleteBin5Line size={18} />

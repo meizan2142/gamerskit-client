@@ -158,14 +158,14 @@ const Signup = () => {
                             type="submit"
                             className="px-4 py-2 w-full  flex items-center flex-col justify-center  rounded-xl text-base hover:bg-[#FF6F61] transition-all ease-in bg-black text-white outline-none"
                         >
-                            SignIn
+                            SignUp
                         </button>
                     </div>
 
                     <p className="flex justify-center items-center pt-3">
                         Already have an account?
                         <NavLink to="/signin" className="font-bold text-cyan-400 underline">
-                            Signin
+                            SignIn
                         </NavLink>
                     </p>
                 </form>

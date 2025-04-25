@@ -99,12 +99,31 @@ export const useCart = () => {
         }
     });
 
-    // ⚡ Add item to cart (optimistic updates for both cases)
     const addToCart = (item) => {
         if (!user) {
-            const updatedCart = [...localCart, item];
-            updateLocalCart(updatedCart);
+            setLocalCart(prev => {
+                const existingIndex = prev.findIndex(
+                    i => i.productId === item.productId
+                );
+                
+                if (existingIndex >= 0) {
+                    // Update quantity if item exists
+                    const updated = [...prev];
+                    updated[existingIndex] = {
+                        ...updated[existingIndex],
+                        quantity: updated[existingIndex].quantity + (item.quantity || 1)
+                    };
+                    updateLocalCart(updated);
+                    return updated;
+                } else {
+                    // Add new item
+                    const updated = [...prev, item];
+                    updateLocalCart(updated);
+                    return updated;
+                }
+            });
         } else {
+            // For logged-in users, let the server handle duplicates
             addToDB(item);
         }
     };
