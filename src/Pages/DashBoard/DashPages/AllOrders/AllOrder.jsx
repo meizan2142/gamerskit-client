@@ -114,36 +114,39 @@ const AllOrder = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {allOrders.map((item, index) => (
-                                    <tr key={item._id}>
-                                        <td className="py-4 px-6 border-b">{index + 1}</td>
-                                        <td className="py-4 px-6 border-b">
-                                            {new Date(item.orderDate).toLocaleDateString()}
-                                        </td>
-                                        <td className="py-4 px-6 border-b">{item.name}</td>
-                                        <td className="py-4 px-6 border-b text-end">
-                                            {item.cartItems.reduce((total, item) => total + item.quantity, 0)}
-                                        </td>
-                                        <td className="py-4 px-6 border-b text-end">৳{item.advanceAmount}</td>
-                                        <td className="py-4 px-6 border-b text-end">৳{item.remainingAmount}</td>
-                                        <td className="py-4 px-6 border-b space-y-1">
-                                            <NavLink to={`/single-order-details/${item._id}`}>
-                                                <button className="px-5 gap-2 py-3 rounded-full flex items-center justify-center mx-auto lg:mx-0 xl:mx-0 2xl:mx-0 text-[10px] sm:text-base font-bold hover:bg-[#FFD700] text-white bg-[#FFB300] transition-all">
-                                                    Check Details
-                                                    <ArrowRight />
+                                {allOrders
+                                    .sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate))
+                                    .map((item, index) => (
+                                        <tr key={item._id}>
+                                            <td className="py-4 px-6 border-b">{index + 1}</td>
+                                            <td className="py-4 px-6 border-b">
+                                                {new Date(item.orderDate).toLocaleDateString()}
+                                            </td>
+                                            <td className="py-4 px-6 border-b">{item.name}</td>
+                                            <td className="py-4 px-6 border-b text-end">
+                                                {item.cartItems.reduce((total, item) => total + item.quantity, 0)}
+                                            </td>
+                                            <td className="py-4 px-6 border-b text-end">৳{item.advanceAmount}</td>
+                                            <td className="py-4 px-6 border-b text-end">৳{item.remainingAmount}</td>
+                                            <td className="py-4 px-6 border-b space-y-1">
+                                                <NavLink to={`/single-order-details/${item._id}`}>
+                                                    <button className="px-5 gap-2 py-3 rounded-full flex items-center justify-center mx-auto lg:mx-0 xl:mx-0 2xl:mx-0 text-[10px] sm:text-base font-bold hover:bg-[#FFD700] text-white bg-[#FFB300] transition-all">
+                                                        Check Details
+                                                        <ArrowRight />
+                                                    </button>
+                                                </NavLink>
+                                            </td>
+                                            <td className="py-4 px-6 border-b space-y-1">
+                                                <button
+                                                    onClick={() => deleteOrder(item._id)}
+                                                    className="text-gray-500 hover:text-red-500"
+                                                >
+                                                    <RiDeleteBin5Line size={18} />
                                                 </button>
-                                            </NavLink>
-                                        </td>
-                                        <td className="py-4 px-6 border-b space-y-1">
-                                            <button
-                                                onClick={() => deleteOrder(item._id)}
-                                                className="text-gray-500 hover:text-red-500"
-                                            >
-                                                <RiDeleteBin5Line size={18} />
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
                             </tbody>
                         </table>
                     </div>
