@@ -12,7 +12,6 @@ const SingleProduct = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [selectedSize, setSelectedSize] = useState('');
-    const [isBuyNowClicked, setIsBuyNowClicked] = useState(false);
 
     // Use the useCart hook
     const { cartItems, addToCart } = useCart();
@@ -28,7 +27,8 @@ const SingleProduct = () => {
     });
 
     const handleAddToCart = () => {
-        if (data.sizes && data.sizes.length > 0 && !selectedSize) {
+        // Only check for size if the product has sizes
+        if (data?.sizes?.length > 0 && !selectedSize) {
             return toast.error('Please select a size');
         }
 
@@ -38,15 +38,16 @@ const SingleProduct = () => {
             price: data.price,
             img: data.img,
             quantity: 1,
-            ...(data.sizes && data.sizes.length > 0 && { size: selectedSize })
+            ...(data.sizes?.length > 0 && { size: selectedSize })
         };
 
         addToCart(cartProduct);
         toast.success('Added to Cart');
     };
-
+    
     const handleBuyNow = () => {
-        if (data.sizes && data.sizes.length > 0 && !selectedSize) {
+        // Only check for size if the product has sizes
+        if (data?.sizes?.length > 0 && !selectedSize) {
             return toast.error('Please select a size');
         }
 
@@ -56,33 +57,31 @@ const SingleProduct = () => {
             (!data.sizes || item.size === selectedSize)
         );
 
-        if (isItemInCart) {
-            navigate('/place-orders');
-        } else {
-            const cartProduct = {
-                productId: data._id,
-                title: data.title,
-                price: data.price,
-                img: data.img,
-                quantity: 1,
-                ...(data.sizes && data.sizes.length > 0 && { size: selectedSize })
-            };
+        const cartProduct = {
+            productId: data._id,
+            title: data.title,
+            price: data.price,
+            img: data.img,
+            quantity: 1,
+            ...(data.sizes?.length > 0 && { size: selectedSize })
+        };
 
-            setIsBuyNowClicked(true);
+        if (!isItemInCart) {
             addToCart(cartProduct);
-            navigate('/place-orders');
         }
-        console.log(isBuyNowClicked);
         
+        navigate('/place-orders');
     };
 
     if (isLoading) return <div className="min-h-screen pt-24 flex justify-center">
         <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
     </div>;
+    
     if (error) return <div className="min-h-screen pt-24 flex justify-center">Error: {error.message}</div>;
     if (!data) return <div className="min-h-screen pt-24 flex justify-center">Product not found</div>;
 
-    const hasSizes = data.sizes && data.sizes.length > 0;
+    const hasSizes = data.sizes?.length > 0;
+    const isButtonDisabled = hasSizes && !selectedSize;
 
     return (
         <div className="min-h-screen pt-12 md:pt-24">
@@ -105,10 +104,11 @@ const SingleProduct = () => {
                                     <button
                                         key={size}
                                         onClick={() => setSelectedSize(size)}
-                                        className={`w-full px-3 py-2 rounded-lg border-2 ${selectedSize === size
-                                            ? 'bg-[#FFD700] border-[#FFD700]'
-                                            : 'border-gray-300 hover:border-[#FFD700]'
-                                            } hover:shadow-md transition-colors`}
+                                        className={`w-full px-3 py-2 rounded-lg border-2 ${
+                                            selectedSize === size
+                                                ? 'bg-[#FFD700] border-[#FFD700]'
+                                                : 'border-gray-300 hover:border-[#FFD700]'
+                                        } hover:shadow-md transition-colors`}
                                     >
                                         <div className="flex flex-col justify-center items-center">
                                             <h1 className="text-sm sm:text-base font-bold">{size}</h1>
@@ -124,21 +124,27 @@ const SingleProduct = () => {
                     </div>
 
                     <div className="space-y-4">
-                        {hasSizes && (
-                            <button
-                                onClick={handleAddToCart}
-                                className="w-full flex items-center justify-center gap-3 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition"
-                            >
-                                <ShoppingCart className="w-4 h-4" />
-                                Add to cart
-                            </button>
-                        )}
+                        <button
+                            onClick={handleAddToCart}
+                            className={`w-full flex items-center justify-center gap-3 ${
+                                isButtonDisabled 
+                                    ? 'bg-gray-300 cursor-not-allowed' 
+                                    : 'bg-[#FFD700] hover:bg-[#FFB300]'
+                            } text-black font-bold py-2 px-4 rounded transition`}
+                            disabled={isButtonDisabled}
+                        >
+                            <ShoppingCart className="w-4 h-4" />
+                            Add to cart
+                        </button>
 
                         <button
                             onClick={handleBuyNow}
-                            className={`w-full flex items-center justify-center gap-3 ${(hasSizes && !selectedSize) ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#FFD700] hover:bg-[#FFB300]'
-                                } text-black font-bold py-2 px-4 rounded transition`}
-                            disabled={hasSizes && !selectedSize}
+                            className={`w-full flex items-center justify-center gap-3 ${
+                                isButtonDisabled 
+                                    ? 'bg-gray-300 cursor-not-allowed' 
+                                    : 'bg-[#FFD700] hover:bg-[#FFB300]'
+                            } text-black font-bold py-2 px-4 rounded transition`}
+                            disabled={isButtonDisabled}
                         >
                             <ShoppingBasket className="w-4 h-4" />
                             Buy Now
