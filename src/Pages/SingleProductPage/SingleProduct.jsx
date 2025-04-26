@@ -44,7 +44,7 @@ const SingleProduct = () => {
         addToCart(cartProduct);
         toast.success('Added to Cart');
     };
-    
+
     const handleBuyNow = () => {
         // Only check for size if the product has sizes
         if (data?.sizes?.length > 0 && !selectedSize) {
@@ -52,8 +52,8 @@ const SingleProduct = () => {
         }
 
         // Check if item is already in cart
-        const isItemInCart = cartItems.some(item => 
-            item.productId === data._id && 
+        const isItemInCart = cartItems.some(item =>
+            item.productId === data._id &&
             (!data.sizes || item.size === selectedSize)
         );
 
@@ -69,14 +69,14 @@ const SingleProduct = () => {
         if (!isItemInCart) {
             addToCart(cartProduct);
         }
-        
+
         navigate('/place-orders');
     };
 
     if (isLoading) return <div className="min-h-screen pt-24 flex justify-center">
         <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
     </div>;
-    
+
     if (error) return <div className="min-h-screen pt-24 flex justify-center">Error: {error.message}</div>;
     if (!data) return <div className="min-h-screen pt-24 flex justify-center">Product not found</div>;
 
@@ -94,8 +94,29 @@ const SingleProduct = () => {
                             {data.title}
                         </h1>
                         <p className="text-lg sm:text-xl mt-2">Price: ৳{data.price}</p>
+                        <p>
+                            <strong className="font-bold text-xl">Order Process:</strong><br />
+                            {data?.name === "car" && "• RC Car: 500 TK each"}
+                            {data?.name === "F1" && "• F1 Jersey: 100 TK each"}
+                            {data?.name === "E-sports" && "• E-sports Jersey: 100 TK for each"}
+                            {data?.name === "Tshirt" && "• Tshirt: 100 TK each"}
+                            {data?.name === "Sleeves" && "• Hand Sleeves: No advance needed"}
+                            {data?.name === "Mask" && "• Mask: No advance needed"}
+                            <br />
+
+                            {(data?.name === "car" ||
+                                data?.name === "F1" ||
+                                data?.name === "Tshirt" ||
+                                data?.name === "E-sports") && (
+                                    <>
+                                        Send advance via (Bkash/Nagad) to: <strong>01303775977</strong><br /><br />
+                                    </>
+                                )}
+
+                            Need help? Call us at the same number.
+                        </p>
                     </div>
-                    
+
                     {hasSizes && (
                         <div className="space-y-3">
                             <h3 className="font-semibold text-lg">Available Sizes: (Choose a size to place your order)</h3>
@@ -104,11 +125,10 @@ const SingleProduct = () => {
                                     <button
                                         key={size}
                                         onClick={() => setSelectedSize(size)}
-                                        className={`w-full px-3 py-2 rounded-lg border-2 ${
-                                            selectedSize === size
-                                                ? 'bg-[#FFD700] border-[#FFD700]'
-                                                : 'border-gray-300 hover:border-[#FFD700]'
-                                        } hover:shadow-md transition-colors`}
+                                        className={`w-full px-3 py-2 rounded-lg border-2 ${selectedSize === size
+                                            ? 'bg-[#FFD700] border-[#FFD700]'
+                                            : 'border-gray-300 hover:border-[#FFD700]'
+                                            } hover:shadow-md transition-colors`}
                                     >
                                         <div className="flex flex-col justify-center items-center">
                                             <h1 className="text-sm sm:text-base font-bold">{size}</h1>
@@ -126,11 +146,10 @@ const SingleProduct = () => {
                     <div className="space-y-4">
                         <button
                             onClick={handleAddToCart}
-                            className={`w-full flex items-center justify-center gap-3 ${
-                                isButtonDisabled 
-                                    ? 'bg-gray-300 cursor-not-allowed' 
-                                    : 'bg-[#FFD700] hover:bg-[#FFB300]'
-                            } text-black font-bold py-2 px-4 rounded transition`}
+                            className={`w-full flex items-center justify-center gap-3 ${isButtonDisabled
+                                ? 'bg-gray-300 cursor-not-allowed'
+                                : 'bg-[#FFD700] hover:bg-[#FFB300]'
+                                } text-black font-bold py-2 px-4 rounded transition`}
                             disabled={isButtonDisabled}
                         >
                             <ShoppingCart className="w-4 h-4" />
@@ -139,11 +158,10 @@ const SingleProduct = () => {
 
                         <button
                             onClick={handleBuyNow}
-                            className={`w-full flex items-center justify-center gap-3 ${
-                                isButtonDisabled 
-                                    ? 'bg-gray-300 cursor-not-allowed' 
-                                    : 'bg-[#FFD700] hover:bg-[#FFB300]'
-                            } text-black font-bold py-2 px-4 rounded transition`}
+                            className={`w-full flex items-center justify-center gap-3 ${isButtonDisabled
+                                ? 'bg-gray-300 cursor-not-allowed'
+                                : 'bg-[#FFD700] hover:bg-[#FFB300]'
+                                } text-black font-bold py-2 px-4 rounded transition`}
                             disabled={isButtonDisabled}
                         >
                             <ShoppingBasket className="w-4 h-4" />
