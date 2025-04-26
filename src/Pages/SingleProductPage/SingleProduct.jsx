@@ -87,7 +87,6 @@ const SingleProduct = () => {
         <div className="min-h-screen pt-12 md:pt-24">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-8 py-6">
                 <SingleProductSwiper images={data.subImages ? [data.img, ...data.subImages] : [data.img]} />
-
                 <div className="w-full lg:w-[40%] xl:w-[30%] space-y-8">
                     <div className="mb-6 space-y-3">
                         <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[40px]">

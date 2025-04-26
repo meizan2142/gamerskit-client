@@ -94,7 +94,7 @@ const NewArrivals = ({ heading }) => {
     if (error) return <div className="min-h-screen pt-24 flex justify-center">Error: {error.message}</div>;
 
     const filteredProducts = activeTab === 'all'
-        ? data
+        ? [...data].sort((a, b) => b.price - a.price) // Sort high to low when 'all'
         : data.filter(product => product.name === activeTab);
 
     return (
