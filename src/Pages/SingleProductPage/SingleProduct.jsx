@@ -92,7 +92,12 @@ const SingleProduct = () => {
                         <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[40px]">
                             {data.title}
                         </h1>
-                        <p className="text-lg sm:text-xl mt-2">Price: ৳{data.price}</p>
+                        {
+                            data?.name === "car" ?
+                                <p>Price: ৳{data?.price} <span className="text-green-600">(Free Home Delivery)</span></p>
+                                :
+                                <p>Price: ৳{data?.price}</p>
+                        }
                         <p>
                             <strong className="font-bold text-xl">Order Process:</strong><br />
                             {data?.name === "car" && "• RC Car: 500 TK each"}
@@ -111,8 +116,20 @@ const SingleProduct = () => {
                                         Send advance via (Bkash/Nagad) to: <strong>01303775977</strong><br /><br />
                                     </>
                                 )}
-
-                            Need help? Call us at the same number.
+                            {(data?.name === "car" ||
+                                data?.name === "F1" ||
+                                data?.name === "Tshirt" ||
+                                data?.name === "E-sports") && (
+                                    <>
+                                        Need help? Call us at the same number.
+                                    </>
+                                )}
+                            {(data?.name === "Sleeves" ||
+                                data?.name === "Mask") && (
+                                    <>
+                                        Need help? Call us 01303775977
+                                    </>
+                                )}
                         </p>
                     </div>
 

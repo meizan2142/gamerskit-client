@@ -95,7 +95,7 @@ const Accordion = ({ data }) => {
                             <strong>RC Cars: Delivery charge will be free</strong><br />
                             <br/>
                             <strong>Delivery Time:</strong><br />
-                            • 10-12 Days<br />
+                            • 2-10 Days (Depends on stock)<br />
                         </p>
                     )}
                 </p>

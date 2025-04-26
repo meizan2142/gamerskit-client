@@ -12,7 +12,7 @@ const SingleProductSwiper = ({ images }) => {
     const hasMultipleImages = images && images.length > 1;
 
     return (
-        <div className="w-full lg:w-[60%] xl:w-[50%]">
+        <div className="w-full pt-5 sm:pt-0 md:pt-0 lg:pt-0 xl:pt-0 2xl:pt-0 lg:w-[60%] xl:w-[50%]">
             {hasMultipleImages ? (
                 <Swiper
                     spaceBetween={30}
