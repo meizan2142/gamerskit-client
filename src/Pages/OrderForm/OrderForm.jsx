@@ -9,7 +9,7 @@ import { useAuth } from '../../useAuth/useAuth';
 
 const OrderForm = () => {
     const locations = allLocation();
-    const {user} = useAuth()
+    const { user } = useAuth()
     const [selectedDistrict, setSelectedDistrict] = useState('');
     const [advanceAmount, setAdvanceAmount] = useState(0)
     const { register, handleSubmit, formState: { errors }, setValue } = useForm()
@@ -17,6 +17,18 @@ const OrderForm = () => {
     const hiddenSubmitRef = useRef(null);
     const navigate = useNavigate()
     const queryClient = useQueryClient();
+    const [isCopied, setIsCopied] = useState(false);
+
+    const handleCopy = async () => {
+        try {
+            await navigator.clipboard.writeText("01303775977");
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
+        } catch (err) {
+            console.error("Failed to copy!", err);
+        }
+    };
+
 
     const handlePlaceOrderClick = () => {
         // Trigger the hidden submit button click
@@ -322,28 +334,18 @@ const OrderForm = () => {
 
                                 {/* Payment details */}
                                 <div className="col-span-full grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    {/* Bkash/Nagad digits */}
-                                    <div className="w-full">
-                                        <label htmlFor="paymentDigits" className="text-sm sm:text-base font-bold">Bkash/Nagad last 4 digits</label>
-                                        <input
-                                            id="paymentDigits"
-                                            type="text"
-                                            placeholder="Type last 4 digits"
-                                            className="w-full rounded-md border border-black text-black p-2 sm:p-3 outline-none"
-                                            {...register("paymentDigits", {
-                                                required: "Payment digits are required",
-                                                pattern: {
-                                                    value: /^[0-9]{4}$/,
-                                                    message: "Please enter exactly 4 digits"
-                                                }
-                                            })}
-                                        />
-                                        {errors.paymentDigits && <p className="text-red-500 text-xs mt-1">{errors.paymentDigits.message}</p>}
-                                    </div>
-
                                     {/* Advance amount */}
                                     <div className="w-full">
-                                        <label htmlFor="advanceAmount" className="text-sm sm:text-base font-bold">Advance Amount</label>
+                                        <label htmlFor="advanceAmount" className="text-sm sm:text-base font-bold">
+                                            Advance Amount: 100 Tk (Send via Bkash/Nagad:     <span
+                                                onClick={handleCopy}
+                                                className="font-semibold cursor-pointer hover:text-blue-600 transition-colors"
+                                                title="Click to copy"
+                                            >
+                                                01303775977
+                                                {isCopied && <span className="ml-2 text-green-600 text-sm">✓ Copied!</span>}
+                                            </span>)
+                                        </label>
                                         <input
                                             id="advanceAmount"
                                             type="number"
@@ -364,6 +366,25 @@ const OrderForm = () => {
                                             }}
                                         />
                                         {errors.advanceAmount && <p className="text-red-500 text-xs mt-1">{errors.advanceAmount.message}</p>}
+                                    </div>
+
+                                    {/* Bkash/Nagad digits */}
+                                    <div className="w-full">
+                                        <label htmlFor="paymentDigits" className="text-sm sm:text-base font-bold">Bkash/Nagad last 4 digits</label>
+                                        <input
+                                            id="paymentDigits"
+                                            type="text"
+                                            placeholder="Type last 4 digits"
+                                            className="w-full rounded-md border border-black text-black p-2 sm:p-3 outline-none"
+                                            {...register("paymentDigits", {
+                                                required: "Payment digits are required",
+                                                pattern: {
+                                                    value: /^[0-9]{4}$/,
+                                                    message: "Please enter exactly 4 digits"
+                                                }
+                                            })}
+                                        />
+                                        {errors.paymentDigits && <p className="text-red-500 text-xs mt-1">{errors.paymentDigits.message}</p>}
                                     </div>
                                 </div>
 
