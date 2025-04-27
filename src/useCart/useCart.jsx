@@ -86,7 +86,7 @@ export const useCart = () => {
         onMutate: async (id) => {
             await queryClient.cancelQueries([CART_KEY]);
             const previousCart = queryClient.getQueryData([CART_KEY]) || [];
-            queryClient.setQueryData([CART_KEY], (old) => 
+            queryClient.setQueryData([CART_KEY], (old) =>
                 old.filter(item => item.productId !== id)
             );
             return { previousCart };
@@ -105,7 +105,7 @@ export const useCart = () => {
                 const existingIndex = prev.findIndex(
                     i => i.productId === item.productId
                 );
-                
+
                 if (existingIndex >= 0) {
                     // Update quantity if item exists
                     const updated = [...prev];
@@ -130,9 +130,16 @@ export const useCart = () => {
 
     // ❌ Remove item from cart (optimistic updates for both cases)
     const removeFromCart = (productId) => {
+        console.log('Removing product with ID:', productId);
+        console.log('Current cart:', user ? dbCart : localCart);
+
         if (!user) {
-            const updatedCart = localCart.filter(item => item.productId !== productId);
-            updateLocalCart(updatedCart);
+            setLocalCart(prev => {
+                const updatedCart = prev.filter(item => item.productId !== productId);
+                console.log('Updated local cart:', updatedCart);
+                updateLocalCart(updatedCart);
+                return updatedCart;
+            });
         } else {
             removeFromDB(productId);
         }
@@ -152,7 +159,7 @@ export const useCart = () => {
             };
             syncCart();
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]); // Only run when user changes
 
     return {
