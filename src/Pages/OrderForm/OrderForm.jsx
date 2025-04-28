@@ -370,7 +370,7 @@ const OrderForm = () => {
 
                                     {/* Bkash/Nagad digits */}
                                     <div className="w-full">
-                                        <label htmlFor="paymentDigits" className="text-sm sm:text-base font-bold">Bkash/Nagad last 4 digits</label>
+                                        <label htmlFor="paymentDigits" className="text-sm sm:text-base font-bold">Last 4 digits of Bkash/Nagad</label>
                                         <input
                                             id="paymentDigits"
                                             type="text"
