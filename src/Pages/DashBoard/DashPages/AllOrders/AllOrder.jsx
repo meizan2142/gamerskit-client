@@ -2,7 +2,6 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Eye } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import { CSVLink } from "react-csv";
 import { RiDeleteBin5Line } from "react-icons/ri";
 
 const AllOrder = () => {
@@ -28,27 +27,6 @@ const AllOrder = () => {
         }
     };
 
-    const getCSVData = () => {
-        return allOrders.flatMap(order => {
-            return order.cartItems?.map(item => ({
-                date: new Date(order.orderDate).toLocaleDateString(),
-                email: order.email || '',
-                name: order.name,
-                mobile: order.mobile,
-                title: item.title,
-                size: item.size || '',
-                quantity: item.quantity,
-                District: order.district,
-                Thana: order.thana,
-                Address: order.address,
-                paymentDigits: order.paymentDigits || '',
-                advanceAmount: order.advanceAmount,
-                remainingAmount: order.remainingAmount,
-                note: order.note,
-            })) || [];
-        });
-    };
-
     if (isLoading) return (
         <div className="flex justify-center items-center min-h-[50vh]">
             <div className="w-10 h-10 animate-spin rounded-full border-4 border-dashed border-[#FFB300]"></div>
@@ -63,39 +41,7 @@ const AllOrder = () => {
 
     return (
         <div className="pt-2 md:pt-2 lg:pt-2 px-4 sm:px-6 md:px-10 space-y-6 md:space-y-10">
-            <div className="flex justify-between">
-                <h1 className="font-bold text-3xl text-center">All Orders</h1>
-                {
-                    allOrders.length > 0 ?
-                        <div className="text-center">
-                            <CSVLink
-                                data={getCSVData()}
-                                filename={`my_orders_${new Date().toISOString().slice(0, 10)}.csv`}
-                                className="inline-flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition"
-                                headers={[
-                                    { label: "Date", key: "date" },
-                                    { label: "Email", key: "email" },
-                                    { label: "Name", key: "name" },
-                                    { label: "Mobile", key: "mobile" },
-                                    { label: "Product Title", key: "title" },
-                                    { label: "Size", key: "size" },
-                                    { label: "Quantity", key: "quantity" },
-                                    { label: "District", key: "District" },
-                                    { label: "Thana", key: "Thana" },
-                                    { label: "Address", key: "Address" },
-                                    { label: "Payment Digits", key: "paymentDigits" },
-                                    { label: "Advance Amount", key: "advanceAmount" },
-                                    { label: "Remaining Amount", key: "remainingAmount" },
-                                    { label: "Note", key: "note" }
-                                ]}
-                            >
-                                Download CSV
-                            </CSVLink>
-                        </div>
-                        :
-                        <></>
-                }
-            </div>
+            <h1 className="font-bold text-3xl text-center">All Orders</h1>
 
             {allOrders.length > 0 ? (
                 <>

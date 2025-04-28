@@ -63,6 +63,7 @@ const SingleOrderDetails = () => {
                         <p className="text-gray-700"><span className="font-bold">Address:</span> {data.address}</p>
                         <p className="text-gray-700"><span className="font-bold">District:</span> {data.district}</p>
                         <p className="text-gray-700"><span className="font-bold">Thana:</span> {data.thana}</p>
+                        <p className="text-gray-700"><span className="font-bold">Last Digits:</span> {data.paymentDigits}</p>
                     </div>
                 </div>
 

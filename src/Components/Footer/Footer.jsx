@@ -66,29 +66,43 @@ const Footer = () => {
                             <ul className="flex flex-wrap justify-start gap-6 lg:justify-end">
                                 <li>
                                     <Link
-                                        to={{ pathname: "" }}
+                                        to={{ pathname: "https://www.facebook.com/gamerskit.gg" }}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            window.open("https://www.facebook.com/gamerskit.gg", "_blank");
+                                        }}
                                         className="text-gray-600 transition hover:text-[#FFD700]"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
                                     >
                                         <FaFacebookF color='white' className='w-6 h-6' />
                                     </Link>
                                 </li>
                                 <li>
-                                    <NavLink
+                                    {/* <NavLink
                                         className="text-gray-600 transition hover:text-[#FFD700] "
                                         to=''
                                     >
                                         <FiInstagram color='white' className='w-6 h-6' />
-                                    </NavLink>
+                                    </NavLink> */}
+                                    <Link
+                                        to={{ pathname: "https://www.instagram.com/gamerskit.gg" }}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            window.open("https://www.instagram.com/gamerskit.gg", "_blank");
+                                        }}
+                                        className="text-gray-600 transition hover:text-[#FFD700]"
+                                    >
+                                        <FiInstagram color='white' className='w-6 h-6' />
+                                    </Link>
                                 </li>
                                 <li>
-                                    <NavLink
-                                        className="text-gray-600 transition hover:text-[#FFD700] "
-                                        to=''
+                                    <a
+                                        href="https://wa.me/+8801882706510"  // Replace PHONE_NUMBER with the actual number (including country code)
+                                        className="text-gray-600 transition hover:text-[#FFD700]"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                     >
                                         <FaWhatsapp color='white' className='w-6 h-6' />
-                                    </NavLink>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
