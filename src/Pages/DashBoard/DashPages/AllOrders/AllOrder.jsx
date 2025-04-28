@@ -3,6 +3,7 @@ import axios from "axios";
 import { Eye } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import Status from "../../../../Components/Status/Status";
 
 const AllOrder = () => {
     const queryClient = useQueryClient();
@@ -23,6 +24,18 @@ const AllOrder = () => {
             queryClient.invalidateQueries(['orders']);
         } catch (error) {
             console.error('Error deleting order:', error);
+            // Add error handling (e.g., show a toast notification)
+        }
+    };
+
+    const updateOrderStatus = async (orderId, newStatus) => {
+        try {
+            await axios.patch(`${import.meta.env.VITE_API_URL}/orderdetails/${orderId}`, {
+                status: newStatus
+            });
+            queryClient.invalidateQueries(['orders']); // Refresh the orders list
+        } catch (error) {
+            console.error('Error updating order status:', error);
             // Add error handling (e.g., show a toast notification)
         }
     };
@@ -80,7 +93,10 @@ const AllOrder = () => {
                                                     <Eye />
                                                 </NavLink>
                                             </td>
-                                            <td className="py-4 px-6 border-b text-center">{item.status}</td>
+                                            {/* <td className="py-4 px-6 border-b text-center">{item.status}</td> */}
+                                            <td className="py-4 px-6 border-b text-center">
+                                                <Status item={item} onStatusChange={updateOrderStatus} />
+                                            </td>
                                             <td className="py-4 px-6 border-b space-y-1">
                                                 <button
                                                     onClick={() => deleteOrder(item._id)}

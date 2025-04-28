@@ -32,7 +32,7 @@ const DeliveredOrders = () => {
     );
     return (
         <div className="overflow-x-auto">
-            <h1 className="font-bold text-3xl text-center mb-8">Delivered Orders</h1>
+            <h1 className="font-bold text-3xl text-center mb-5">Delivered Orders</h1>
             <table className="min-w-[90%] shadow-md border mx-auto border-gray-100 my-2">
                 <thead>
                     <tr className="bg-[#333333] text-white">

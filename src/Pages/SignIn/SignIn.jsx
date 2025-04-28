@@ -91,11 +91,11 @@ const SignIn = () => {
                                 )}
                             </button>
                         </div>
-                        <div className="flex justify-end">
+                        {/* <div className="flex justify-end">
                             <NavLink className="hover:underline text-sm" to="/forgot-password">
                                 Forgot Password?
                             </NavLink>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="">
                         <button className="px-4 py-2 w-full block rounded-xl text-base hover:bg-[#FF6F61] transition-all ease-in bg-black text-white outline-none">SignIn</button>
