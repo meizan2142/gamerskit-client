@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { ArrowRight, ShoppingBasket } from "lucide-react";
+import { ArrowRight, Eye, ShoppingBasket } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../useAuth/useAuth";
 
@@ -32,7 +32,7 @@ const MyOrders = () => {
     });
 
     // Filter orders by current user's email
-    const userOrders = allOrders.filter(order => 
+    const userOrders = allOrders.filter(order =>
         order?.email === currentUser?.email
     );
 
@@ -61,9 +61,10 @@ const MyOrders = () => {
                                     <th className="py-3 px-6 text-left border-b">Serial</th>
                                     <th className="py-3 px-6 text-left border-b">Date</th>
                                     <th className="py-3 px-6 text-left border-b">Name</th>
-                                    <th className="py-3 px-6 border-b text-end">Quantity</th>
-                                    <th className="py-3 px-6 border-b text-end">Advance Amount</th>
-                                    <th className="py-3 px-6 border-b text-end">Remaining Amount</th>
+                                    <th className="py-3 px-6 border-b text-center">Quantity</th>
+                                    <th className="py-3 px-6 border-b text-center">Advance Amount</th>
+                                    <th className="py-3 px-6 border-b text-center">Remaining Amount</th>
+                                    <th className="py-3 px-6 text-left border-b">Status</th>
                                     <th className="py-3 px-6 text-left border-b">Check Details</th>
                                 </tr>
                             </thead>
@@ -75,17 +76,15 @@ const MyOrders = () => {
                                             {new Date(item.orderDate).toLocaleDateString()}
                                         </td>
                                         <td className="py-4 px-6 border-b">{item.name}</td>
-                                        <td className="py-4 px-6 border-b text-end">
+                                        <td className="py-4 px-6 border-b text-center">
                                             {item.cartItems.reduce((total, item) => total + item.quantity, 0)}
                                         </td>
-                                        <td className="py-4 px-6 border-b text-end">৳{item.advanceAmount}</td>
-                                        <td className="py-4 px-6 border-b text-end">৳{item.remainingAmount}</td>
-                                        <td className="py-4 px-6 border-b space-y-1">
+                                        <td className="py-4 px-6 border-b text-center">৳{item.advanceAmount}</td>
+                                        <td className="py-4 px-6 border-b text-center">৳{item.remainingAmount}</td>
+                                        <td className="py-4 px-6 border-b text-center">{item.status}</td>
+                                        <td className="py-4 px-6 border-b space-y-1 flex items-center justify-center">
                                             <NavLink to={`/single-order-details/${item._id}`}>
-                                                <button className="px-5 gap-2 py-3 rounded-full flex items-center justify-center mx-auto lg:mx-0 xl:mx-0 2xl:mx-0 text-[10px] sm:text-base font-bold hover:bg-[#FFD700] text-white bg-[#FFB300] transition-all">
-                                                    Check Details
-                                                    <ArrowRight />
-                                                </button>
+                                                <Eye />
                                             </NavLink>
                                         </td>
                                     </tr>

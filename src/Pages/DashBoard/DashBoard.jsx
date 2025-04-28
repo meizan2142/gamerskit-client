@@ -27,6 +27,12 @@ const DashBoard = () => {
                         <NavLink to='/dashboard/stock-jerseys' onClick={() => setIsMobileMenuOpen(false)}>
                             <button className="w-full py-2 px-4 mb-3 rounded text-white bg-[#171825]">Stock Jerseys</button>
                         </NavLink>
+                        <NavLink to='/dashboard/pending-orders' onClick={() => setIsMobileMenuOpen(false)}>
+                            <button className="w-full py-2 px-4 mb-3 rounded text-white bg-[#171825]">Pending Orders</button>
+                        </NavLink>
+                        <NavLink to='/dashboard/delivered-orders' onClick={() => setIsMobileMenuOpen(false)}>
+                            <button className="w-full py-2 px-4 mb-3 rounded text-white bg-[#171825]">Delivered Orders</button>
+                        </NavLink>
                     </nav>
                 </div>
 
@@ -54,6 +60,12 @@ const DashBoard = () => {
                             <button className="w-full py-2 px-4 rounded text-white bg-[#171825]">All Orders</button>
                         </NavLink>
                         <NavLink to='/dashboard/stock-jerseys' onClick={() => setIsMobileMenuOpen(false)}>
+                            <button className="w-full py-2 px-4 rounded text-white bg-[#171825]">Stock Jerseys</button>
+                        </NavLink>
+                        <NavLink to='/dashboard/pending-orders' onClick={() => setIsMobileMenuOpen(false)}>
+                            <button className="w-full py-2 px-4 rounded text-white bg-[#171825]">Stock Jerseys</button>
+                        </NavLink>
+                        <NavLink to='/dashboard/delivered-orders' onClick={() => setIsMobileMenuOpen(false)}>
                             <button className="w-full py-2 px-4 rounded text-white bg-[#171825]">Stock Jerseys</button>
                         </NavLink>
                     </div>

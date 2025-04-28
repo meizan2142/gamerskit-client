@@ -13,6 +13,8 @@ import Signup from "../Pages/Signup/Signup";
 import PrivateRoute from "../Pages/PrivateRoute/PrivateRoute";
 import AllOrder from "../Pages/DashBoard/DashPages/AllOrders/AllOrder";
 import StockJerseys from "../Pages/DashBoard/DashPages/StockJerseys/StockJerseys";
+import PendingOrders from "../Pages/DashBoard/DashPages/PendingOrders/PendingOrders";
+import DeliveredOrders from "../Pages/DashBoard/DashPages/DeliveredOrders/DeliveredOrders";
 
 export const router = createBrowserRouter([
     {
@@ -73,6 +75,14 @@ export const router = createBrowserRouter([
             {
                 path: 'stock-jerseys',
                 element: <PrivateRoute><StockJerseys /></PrivateRoute>
+            },
+            {
+                path: 'pending-orders',
+                element: <PrivateRoute><PendingOrders /></PrivateRoute>
+            },
+            {
+                path: 'delivered-orders',
+                element: <PrivateRoute><DeliveredOrders /></PrivateRoute>
             },
         ]
     },

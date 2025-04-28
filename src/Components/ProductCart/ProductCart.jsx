@@ -61,7 +61,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                                 </p>
                                                 {/* Delete button */}
                                                 <button
-                                                    onClick={() => removeFromCart(item.productId)}  // Changed from item._id
+                                                    onClick={() => removeFromCart(item._id)}
                                                     className="text-gray-500 hover:text-red-500"
                                                 >
                                                     <RiDeleteBin5Line size={18} />
