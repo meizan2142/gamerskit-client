@@ -336,7 +336,7 @@ const OrderForm = () => {
                                 <div className="col-span-full grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     {/* Advance amount */}
                                     <div className="w-full">
-                                        <label htmlFor="advanceAmount" className="text-sm sm:text-base font-bold">
+                                        <label htmlFor="advanceAmount" className="text-sm sm:text-sm font-bold text-green-600">
                                             Advance Amount: 100 Tk (Send via Bkash/Nagad:     <span
                                                 onClick={handleCopy}
                                                 className="font-semibold cursor-pointer hover:text-blue-600 transition-colors"

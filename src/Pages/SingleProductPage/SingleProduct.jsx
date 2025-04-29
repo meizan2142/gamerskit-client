@@ -94,12 +94,12 @@ const SingleProduct = () => {
                         </h1>
                         {
                             data?.name === "car" ?
-                                <p>Price: ৳{data?.price} <span className="text-green-600">(Free Home Delivery)</span></p>
+                                <p>Price: ৳{data?.price} <span className="text-green-600 text-sm font-bold">(Free Home Delivery)</span></p>
                                 :
                                 <p>Price: ৳{data?.price}</p>
                         }
-                        <p>
-                            <strong className="font-bold text-xl">Order Process:</strong><br />
+                        <p className="text-green-600 text-base font-semibold">
+                            <strong className="font-bold text-xl text-black">Order Process:</strong><br />
                             {data?.name === "car" && "• RC Car: 500 TK each"}
                             {data?.name === "F1" && "• F1 Jersey: 100 TK each"}
                             {data?.name === "E-sports" && "• E-sports Jersey: 100 TK for each"}
@@ -113,7 +113,7 @@ const SingleProduct = () => {
                                 data?.name === "Tshirt" ||
                                 data?.name === "E-sports") && (
                                     <>
-                                        Send advance via (Bkash/Nagad) to: <strong>01303775977</strong><br /><br />
+                                        Send advance via (Bkash/Nagad) to: <strong className="text-black">01303775977</strong><br /><br />
                                     </>
                                 )}
                             {(data?.name === "car" ||
