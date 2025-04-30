@@ -8,7 +8,7 @@ const DashBoard = () => {
     // Redirect to all-orders when dashboard is accessed directly
     useEffect(() => {
         if (window.location.pathname === '/admin-dashboard') {
-            navigate('/dashboard/all-orders', { replace: true });
+            navigate('/dashboard/pending-orders', { replace: true });
         }
     }, [navigate]);
     return (
