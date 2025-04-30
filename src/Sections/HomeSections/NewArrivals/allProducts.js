@@ -33,6 +33,36 @@ export const allProducts = () => {
             "updatedAt": { "$date": "2023-01-01T00:00:00Z" }
         },
         {
+            "name": "car",
+            "title": "Nissan GTR Mini drift car (Red)",
+            "price": 3500,
+            "description": "Insulated 32oz bottle, keeps drinks cold for 24 hours or hot for 12 hours.",
+            "img": "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1745694102/tysmh1km2exn3dd2gsfd.jpg",
+            "subImages": [
+                "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1745994256/r6tpi3zmuv0iwfy3b4gb.jpg",
+            ]
+        },
+        {
+            "name": "car",
+            "title": "Porche 911 Mini drift car (White)",
+            "price": 3500,
+            "description": "Insulated 32oz bottle, keeps drinks cold for 24 hours or hot for 12 hours.",
+            "img": "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1745693738/mdnmtqg5ptomhmsavfzx.jpg",
+            "subImages": [
+                "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1745994952/iou4mzscgzeorg87xgzv.jpg"
+            ]
+        },
+        {
+            "name": "car",
+            "title": "Porsche 911 Mini Drift Car(Black)",
+            "price": 3500,
+            "description": "Insulated 32oz bottle, keeps drinks cold for 24 hours or hot for 12 hours.",
+            "img": "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1745686704/fkgvid28ifsejbvauhpz.jpg",
+            "subImages": [
+                "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1745994502/pdpmnssbjuwceln1izyn.jpg"
+            ]
+        },
+        {
             "name": "E-sports",
             "title": "Sentinels Jersey",
             "price": 620,
@@ -139,30 +169,32 @@ export const allProducts = () => {
             "title": "Sentinels Mask",
             "price": 70,
             "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
-            "img": "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090261/vwz7hvuuyftui9hklwid.jpg",
-            "subImages": [],
-            "sizes": [],
-            "createdAt": { "$date": "2023-01-01T00:00:00Z" },
-            "updatedAt": { "$date": "2023-01-01T00:00:00Z" }
+            "img": "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1745748875/z3o5a0r2w6wnpryijwmz.jpg",
+            "subImages": [
+                "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1745986050/lrdytgabmeqzzilhbml9.jpg"
+            ],
+            "sizes": []
         },
         {
             "name": "Mask",
             "title": "G2 Mask",
             "price": 70,
-            "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
-            "img": "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090261/vwz7hvuuyftui9hklwid.jpg",
-            "subImages": [],
-            "sizes": [],
-            "createdAt": { "$date": "2023-01-01T00:00:00Z" },
-            "updatedAt": { "$date": "2023-01-01T00:00:00Z" }
+            "description": "Best Quality mask",
+            "img": "https://res.cloudinary.com/dyqjzfdwi/image/upload/v1745748194/duiu5bspfqabyyry130d.jpg",
+            "subImages": [
+                "https://res.cloudinary.com/dyqjzfdwi/image/upload/v1745986387/efcwfeujp3bhx6djnads.jpg"
+            ],
+            "sizes": []
         },
         {
             "name": "Mask",
             "title": "Team Liquid Mask",
             "price": 70,
             "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
-            "img": "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090261/vwz7hvuuyftui9hklwid.jpg",
-            "subImages": [],
+            "img": "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1745748769/wrsyiblwhgbr2d7l8anc.jpg",
+            "subImages": [
+                "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1745985695/mljpycyuothlj6pd55to.jpg"
+            ],
             "sizes": [],
             "createdAt": { "$date": "2023-01-01T00:00:00Z" },
             "updatedAt": { "$date": "2023-01-01T00:00:00Z" }

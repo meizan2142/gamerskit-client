@@ -12,6 +12,17 @@ const SingleProduct = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [selectedSize, setSelectedSize] = useState('');
+    const [isCopied, setIsCopied] = useState(false)
+
+    const handleCopy = async () => {
+        try {
+            await navigator.clipboard.writeText("01303775977");
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 2000);
+        } catch (err) {
+            console.error("Failed to copy!", err);
+        }
+    };
 
     // Use the useCart hook
     const { cartItems, addToCart } = useCart();
@@ -113,9 +124,22 @@ const SingleProduct = () => {
                                 data?.name === "Tshirt" ||
                                 data?.name === "E-sports") && (
                                     <>
-                                        Send advance via (Bkash/Nagad) to: <strong className="text-black">01303775977</strong><br /><br />
+                                        Send advance via (Bkash/Nagad) to:
+                                        <span
+                                            className="text-black font-bold cursor-pointer relative"
+                                            onClick={handleCopy}
+                                        >
+                                            01303775977
+                                            {isCopied && (
+                                                <span className="absolute -top-8 -right-4 bg-black text-white text-xs px-2 py-1 rounded">
+                                                    Copied!
+                                                </span>
+                                            )}
+                                        </span>
+                                        <br /><br />
                                     </>
                                 )}
+
                             {(data?.name === "car" ||
                                 data?.name === "F1" ||
                                 data?.name === "Tshirt" ||
@@ -124,10 +148,22 @@ const SingleProduct = () => {
                                         Need help? Call us at the same number.
                                     </>
                                 )}
+
                             {(data?.name === "Sleeves" ||
                                 data?.name === "Mask") && (
                                     <>
-                                        Need help? Call us 01303775977
+                                        Need help? Call us
+                                        <span
+                                            className="text-black font-bold cursor-pointer relative"
+                                            onClick={handleCopy}
+                                        >
+                                            01303775977
+                                            {isCopied && (
+                                                <span className="absolute -top-8 -right-4 bg-black text-white text-xs px-2 py-1 rounded">
+                                                    Copied!
+                                                </span>
+                                            )}
+                                        </span>
                                     </>
                                 )}
                         </p>

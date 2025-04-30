@@ -16,22 +16,55 @@ const DashBoard = () => {
             <div className="w-full mx-auto flex flex-col lg:flex-row lg:justify-between lg:min-h-screen gap-6">
 
                 {/* Desktop Sidebar */}
-                <div className="hidden lg:block lg:w-1/4 xl:w-1/5 border p-5 rounded-lg bg-[#FFD700] space-y-20">
-                    <nav className="">
-                        <NavLink to='/' onClick={() => setIsMobileMenuOpen(false)}>
-                            <button className="w-full py-2 px-4 mb-3 rounded text-white bg-[#171825]">Home</button>
+                <div className="hidden lg:block lg:w-1/4 xl:w-1/5 border p-5 rounded-lg bg-[#F1EFEC] space-y-20">
+                    <nav className="grid">
+                        <NavLink
+                            to='/'
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
+                            }
+                        >
+                            Home
                         </NavLink>
-                        <NavLink to='/dashboard/all-orders'>
-                            <button className="w-full py-2 px-4 mb-3 rounded text-white bg-[#171825]">All Orders</button>
+
+                        <NavLink
+                            to='/dashboard/all-orders'
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
+                            }
+                        >
+                            All Orders
                         </NavLink>
-                        <NavLink to='/dashboard/stock-jerseys' onClick={() => setIsMobileMenuOpen(false)}>
-                            <button className="w-full py-2 px-4 mb-3 rounded text-white bg-[#171825]">Stock Jerseys</button>
+
+                        <NavLink
+                            to='/dashboard/stock-jerseys'
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
+                            }
+                        >
+                            Stock Jerseys
                         </NavLink>
-                        <NavLink to='/dashboard/pending-orders' onClick={() => setIsMobileMenuOpen(false)}>
-                            <button className="w-full py-2 px-4 mb-3 rounded text-white bg-[#171825]">Pending Orders</button>
+
+                        <NavLink
+                            to='/dashboard/pending-orders'
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
+                            }
+                        >
+                            Pending Orders
                         </NavLink>
-                        <NavLink to='/dashboard/delivered-orders' onClick={() => setIsMobileMenuOpen(false)}>
-                            <button className="w-full py-2 px-4 mb-3 rounded text-white bg-[#171825]">Delivered Orders</button>
+
+                        <NavLink
+                            to='/dashboard/delivered-orders'
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
+                            }
+                        >
+                            Delivered Orders
                         </NavLink>
                     </nav>
                 </div>
