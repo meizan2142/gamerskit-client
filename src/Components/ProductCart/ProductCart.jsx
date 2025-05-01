@@ -1,21 +1,63 @@
 import { ArrowRight, ShoppingBasket, X } from 'lucide-react';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { NavLink } from 'react-router-dom';
-import { useCart } from '../../useCart/useCart';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 
 const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
-    // Use the useCart hook which handles both localStorage and DB operations
-    const {
-        cartItems,
-        removeFromCart,
-        isLoading,
-        error
-    } = useCart();
+    const queryClient = useQueryClient();
+    const [localCartItems, setLocalCartItems] = useState([]);
 
-    // Calculate total
-    const totalPrice = cartItems.reduce((sum, item) => {
-        return sum + (item.price * item.quantity);
+    // Fetch cart items from localStorage
+    const { isLoading, error } = useQuery({
+        queryKey: ['cart'],
+        queryFn: () => {
+            const cartData = localStorage.getItem('cart');
+            const items = cartData ? JSON.parse(cartData) : [];
+            setLocalCartItems(items); // Update local state
+            return items;
+        },
+        refetchOnWindowFocus: true,
+        enabled: isCartOpen // Only fetch when cart is open
+    });
+
+    // Watch for localStorage changes
+    useEffect(() => {
+        const handleStorageChange = () => {
+            const cartData = localStorage.getItem('cart');
+            setLocalCartItems(cartData ? JSON.parse(cartData) : []);
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+        return () => window.removeEventListener('storage', handleStorageChange);
+    }, []);
+
+    // Mutation for removing item from cart
+    const { mutate: removeFromCart } = useMutation({
+        mutationFn: (productId) => {
+            const currentCart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const updatedCart = currentCart.filter(item => item.productId !== productId);
+            localStorage.setItem('cart', JSON.stringify(updatedCart));
+            // Trigger storage event to update all components
+            window.dispatchEvent(new Event('storage'));
+            return updatedCart;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['cart']);
+        }
+    });
+
+    // Calculate total using local state
+    const totalPrice = localCartItems.reduce((sum, item) => {
+        return sum + (item.price * (item.quantity || 1));
     }, 0);
+
+    // Close cart when navigating away
+    useEffect(() => {
+        const handleRouteChange = () => setIsCartOpen(false);
+        window.addEventListener('beforeunload', handleRouteChange);
+        return () => window.removeEventListener('beforeunload', handleRouteChange);
+    }, [setIsCartOpen]);
 
     if (isLoading) return (
         <div className="p-6 text-white">
@@ -42,10 +84,10 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
 
                     {/* Cart items */}
                     <div className="flex-1 overflow-y-auto">
-                        <div className="border-b border-gray-700 py-4 space-y-8">
-                            {cartItems.map((item) => {
-                                return (
-                                    <div key={item._id} className="flex gap-4">
+                        {localCartItems.length > 0 ? (
+                            <div className="border-b border-gray-700 py-4 space-y-8">
+                                {localCartItems.map((item) => (
+                                    <div key={`${item.productId}-${item.size || ''}`} className="flex gap-4">
                                         <div className="w-20 h-20 bg-gray-800 rounded-md overflow-hidden">
                                             <img
                                                 src={item.img || '/placeholder-product.jpg'}
@@ -59,9 +101,8 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                                 <p className="text-white font-medium">
                                                     {item.title || 'Product Name'}
                                                 </p>
-                                                {/* Delete button */}
                                                 <button
-                                                    onClick={() => removeFromCart(item._id)}
+                                                    onClick={() => removeFromCart(item.productId)}
                                                     className="text-gray-500 hover:text-red-500"
                                                 >
                                                     <RiDeleteBin5Line size={18} />
@@ -70,7 +111,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
 
                                             <div className='flex justify-between items-center'>
                                                 <p className="text-[#FFD700] text-sm font-semibold my-1">
-                                                    ৳{(item.price || 0)}
+                                                    ৳{(item.price || 0)} {item.quantity > 1 && `× ${item.quantity}`}
                                                 </p>
                                                 {item.size && (
                                                     <p className="text-[#FFB300] text-sm font-medium my-1">
@@ -80,40 +121,38 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                             </div>
                                         </div>
                                     </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    {/* Cart summary */}
-                    {cartItems.length > 0 ? (
-                        <>
-                            <div className="border-t border-gray-700 pt-4">
-                                <div className="flex justify-between mb-4">
-                                    <span className="text-white">Total:</span>
-                                    <span className="text-[#FFD700] font-bold">৳{totalPrice}</span>
-                                </div>
-                                <NavLink to='/place-orders'>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className='text-white flex flex-col space-y-5 items-center justify-center h-full'>
+                                <p className='font-bold text-xl'>Your Cart is empty</p>
+                                <NavLink to='/shop'>
                                     <button
                                         onClick={() => setIsCartOpen(false)}
-                                        className="w-full flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition"
+                                        className="flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition"
                                     >
-                                        PROCEED TO CHECKOUT
-                                        <ArrowRight />
+                                        <ShoppingBasket className="w-4 h-4" />
+                                        Continue Shopping
                                     </button>
                                 </NavLink>
                             </div>
-                        </>
-                    ) : (
-                        <div className='text-white flex flex-col space-y-5 items-center h-screen justify-center'>
-                            <p className='font-bold text-xl'>Your Cart is empty</p>
-                            <NavLink to='/shop'>
+                        )}
+                    </div>
+
+                    {/* Cart summary - only shows when items exist */}
+                    {localCartItems.length > 0 && (
+                        <div className="border-t border-gray-700 pt-4">
+                            <div className="flex justify-between mb-4">
+                                <span className="text-white">Total:</span>
+                                <span className="text-[#FFD700] font-bold">৳{totalPrice}</span>
+                            </div>
+                            <NavLink to='/place-orders'>
                                 <button
                                     onClick={() => setIsCartOpen(false)}
                                     className="w-full flex items-center justify-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition"
                                 >
-                                    <ShoppingBasket className="w-4 h-4" />
-                                    Continue Shopping
+                                    PROCEED TO CHECKOUT
+                                    <ArrowRight />
                                 </button>
                             </NavLink>
                         </div>

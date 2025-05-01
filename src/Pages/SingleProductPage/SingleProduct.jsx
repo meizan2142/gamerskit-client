@@ -5,14 +5,33 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { useState } from "react";
-import { useCart } from "../../useCart/useCart";
+import { useState, useEffect } from "react";
 
 const SingleProduct = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [selectedSize, setSelectedSize] = useState('');
-    const [isCopied, setIsCopied] = useState(false)
+    const [isCopied, setIsCopied] = useState(false);
+    const [cartItems, setCartItems] = useState([]);
+
+    // Load cart items from localStorage on component mount
+    useEffect(() => {
+        const savedCart = localStorage.getItem('cart');
+        if (savedCart) {
+            setCartItems(JSON.parse(savedCart));
+        }
+    }, []);
+
+    // Fetch product data
+    const { isLoading, error, data } = useQuery({
+        queryKey: ['product', id],
+        queryFn: async () => {
+            const response = await axios.get(
+                `${import.meta.env.VITE_API_URL}/allProducts/${id}`
+            );
+            return response.data;
+        }
+    });
 
     const handleCopy = async () => {
         try {
@@ -24,21 +43,12 @@ const SingleProduct = () => {
         }
     };
 
-    // Use the useCart hook
-    const { cartItems, addToCart } = useCart();
-
-    const { isLoading, error, data } = useQuery({
-        queryKey: ['product', id],
-        queryFn: async () => {
-            const response = await axios.get(
-                `${import.meta.env.VITE_API_URL}/allProducts/${id}`
-            );
-            return response.data;
-        }
-    });
+    const saveCartToLocalStorage = (items) => {
+        localStorage.setItem('cart', JSON.stringify(items));
+        setCartItems(items);
+    };
 
     const handleAddToCart = () => {
-        // Only check for size if the product has sizes
         if (data?.sizes?.length > 0 && !selectedSize) {
             return toast.error('Please select a size');
         }
@@ -52,15 +62,43 @@ const SingleProduct = () => {
             ...(data.sizes?.length > 0 && { size: selectedSize })
         };
 
-        addToCart(cartProduct);
+        const currentCart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+        // Check if item exists
+        const existingIndex = currentCart.findIndex(item =>
+            item.productId === cartProduct.productId &&
+            (!data.sizes || item.size === cartProduct.size)
+        );
+
+        let updatedCart;
+        if (existingIndex >= 0) {
+            // Update quantity if exists
+            updatedCart = [...currentCart];
+            updatedCart[existingIndex].quantity += 1;
+        } else {
+            // Add new item
+            updatedCart = [...currentCart, cartProduct];
+        }
+
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
+        // Trigger storage event to update all components
+        window.dispatchEvent(new Event('storage'));
         toast.success('Added to Cart');
     };
 
     const handleBuyNow = () => {
-        // Only check for size if the product has sizes
         if (data?.sizes?.length > 0 && !selectedSize) {
             return toast.error('Please select a size');
         }
+
+        const cartProduct = {
+            productId: data._id,
+            title: data.title,
+            price: data.price,
+            img: data.img,
+            quantity: 1,
+            ...(data.sizes?.length > 0 && { size: selectedSize })
+        };
 
         // Check if item is already in cart
         const isItemInCart = cartItems.some(item =>
@@ -68,18 +106,16 @@ const SingleProduct = () => {
             (!data.sizes || item.size === selectedSize)
         );
 
-        const cartProduct = {
-            productId: data._id,
-            title: data.title,
-            price: data.price,
-            img: data.img,
-            quantity: 1,
-            ...(data.sizes?.length > 0 && { size: selectedSize })
-        };
-
+        let updatedCart;
         if (!isItemInCart) {
-            addToCart(cartProduct);
+            updatedCart = [...cartItems, cartProduct];
+            saveCartToLocalStorage(updatedCart);
+        } else {
+            updatedCart = [...cartItems];
         }
+
+        // Explicitly trigger storage event to update Navbar
+        window.dispatchEvent(new Event('storage'));
 
         navigate('/place-orders');
     };

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { allLocation } from "./locations";
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
@@ -18,6 +18,7 @@ const OrderForm = () => {
     const navigate = useNavigate()
     const queryClient = useQueryClient();
     const [isCopied, setIsCopied] = useState(false);
+    const [localCartData, setLocalCartData] = useState([]);
 
     const handleCopy = async () => {
         try {
@@ -36,20 +37,13 @@ const OrderForm = () => {
     };
 
 
-    // Fetch cart data
     const { isLoading, error, data: cartData = [] } = useQuery({
         queryKey: ['cart'],
-        queryFn: async () => {
-            try {
-                const response = await axios.get(
-                    `${import.meta.env.VITE_API_URL}/cartList`
-                );
-                return response.data; // Axios automatically parses JSON
-            } catch (err) {
-                console.error(err, "Failed to fetch cart items");
-                return []; // Fallback empty array on error
-            }
+        queryFn: () => {
+            const cartData = localStorage.getItem('cart');
+            return cartData ? JSON.parse(cartData) : [];
         },
+        refetchOnWindowFocus: true, // Optional: refetch when window regains focus
     });
 
     // Get the selected location object based on the selected district name
@@ -58,10 +52,6 @@ const OrderForm = () => {
     // Get thanas for the selected district or empty array if none selected
     const thanas = selectedLocation ? selectedLocation.thana : [];
 
-    // Calculate total
-    const totalPrice = cartData.reduce((sum, item) => {
-        return sum + (item.price * item.quantity);
-    }, 0);
 
     // Calculate delivery charge based on selected district
     // Constants for car identification
@@ -109,9 +99,10 @@ const OrderForm = () => {
     };
 
 
-    // Calculate all values
-    const deliveryCharge = calculateDeliveryCharge(selectedDistrict, cartData);
-    const subtotal = cartData.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const displayData = localCartData.length > 0 ? localCartData : cartData;
+    const totalPrice = displayData.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+    const deliveryCharge = calculateDeliveryCharge(selectedDistrict, displayData);
+    const subtotal = totalPrice;
     const totalAmount = subtotal + deliveryCharge;
     const remainingAmount = totalAmount - advanceAmount;
 
@@ -120,13 +111,13 @@ const OrderForm = () => {
         try {
             setIsSubmitting(true);
 
-            // Prepare order data
-            const cartItems = cartData.map(item => ({
+            // Get cart items from localStorage
+            const cartItems = JSON.parse(localStorage.getItem('cart') || '[]').map(item => ({
                 title: item.title,
                 size: item.size || 'N/A',
                 quantity: item.quantity,
                 price: item.price,
-                productId: item._id,
+                productId: item.productId,
                 productImg: item.img
             }));
 
@@ -141,7 +132,7 @@ const OrderForm = () => {
                 deliveryCharge
             };
 
-            // 1. Place the order
+            // 1. Save order to database
             const orderResponse = await axios.post(
                 `${import.meta.env.VITE_API_URL}/orderdetails`,
                 orderDetails,
@@ -151,36 +142,53 @@ const OrderForm = () => {
                 }
             );
 
-            console.log("Order placed successfully:", orderResponse.data);
+            console.log("order response", orderResponse);
 
-            // 2. Clear the cart
-            await axios.delete(
-                `${import.meta.env.VITE_API_URL}/clearCart`,
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
-            );
 
-            // 3. Invalidate and reset cart queries for instant UI update
-            await queryClient.invalidateQueries(['cart']); // This will refetch the cart
-            queryClient.setQueryData(['cart'], []); // This will instantly set cart to empty
+            // 2. Clear localStorage and update state
+            localStorage.removeItem('cart');
+            setLocalCartData([]);
 
-            // 4. Show success and redirect
+            // 3. Trigger storage event to update all components
+            window.dispatchEvent(new Event('storage'));
+
+            // 4. Invalidate and reset cart queries
+            queryClient.invalidateQueries(['cart']);
+            queryClient.setQueryData(['cart'], []);
+
+            // 5. Show success and redirect
             toast.success("Order placed successfully!");
             setTimeout(() => navigate('/my-orders'), 1000);
 
         } catch (error) {
             console.error("Order error:", error);
-            if (error.response) {
-                toast.error(error.response.data.message || 'Order failed');
-            } else {
-                toast.error("Network error - please try again");
-            }
+            toast.error(error.response?.data?.message || 'Order failed');
         } finally {
             setIsSubmitting(false);
         }
     }
+
+
+    useEffect(() => {
+        const loadCartData = () => {
+            const cartData = localStorage.getItem('cart');
+            setLocalCartData(cartData ? JSON.parse(cartData) : []);
+        };
+
+        const handleStorageChange = () => {
+            loadCartData();
+        };
+
+        // Initial load
+        loadCartData();
+
+        window.addEventListener('storage', handleStorageChange);
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            // Reset local state when component unmounts
+            setLocalCartData([]);
+        };
+    }, []);
 
 
     if (isLoading) return <div className="p-6 text-white">
@@ -415,17 +423,17 @@ const OrderForm = () => {
                 {/* Horizontal divider - shown on mobile, hidden on lg+ */}
                 <hr className="border-t border-black my-4 lg:hidden" />
 
-                {/* Price view - full width on mobile, fixed on larger */}
+                {/* Price view */}
                 <div className="w-full lg:w-1/2 xl:w-1/3 space-y-4 sm:space-y-6 md:space-y-8">
                     {/* Product List */}
                     <div className='grid space-y-3'>
-                        {/* single item */}
-                        {
-                            cartData.map((item) => <div key={item._id} className="flex gap-3 sm:gap-4">
+                        {/* Use localCartData if available, otherwise fallback to cartData */}
+                        {(localCartData.length > 0 ? localCartData : cartData).map((item) => (
+                            <div key={item.productId || item._id} className="flex gap-3 sm:gap-4">
                                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-800 rounded-md overflow-hidden">
                                     <img
                                         src={item.img}
-                                        alt={'Product'}
+                                        alt={item.title || 'Product'}
                                         className="w-full h-full object-cover"
                                     />
                                 </div>
@@ -436,35 +444,34 @@ const OrderForm = () => {
                                             {item.title}
                                         </p>
                                         <p className='text-black font-normal text-xs sm:text-sm'>
-                                            ৳{item.price}
+                                            ৳{item.price} {/* Format price to 2 decimal places */}
+                                            {item.quantity > 1 && (
+                                                <span className="text-gray-500 ml-1">× {item.quantity}</span>
+                                            )}
                                         </p>
                                     </div>
-                                    <div className='flex justify-start'>
-                                        {
-                                            item.size ?
-                                                <p className="text-black font-normal text-xs sm:text-sm">
-                                                    <span className='font-bold'>Size:</span> {item.size}
-                                                </p>
-                                                :
-                                                <></>
-                                        }
-                                    </div>
-
+                                    {item.size && (
+                                        <div className='flex justify-start'>
+                                            <p className="text-black font-normal text-xs sm:text-sm">
+                                                <span className='font-bold'>Size:</span> {item.size}
+                                            </p>
+                                        </div>
+                                    )}
                                 </div>
-                            </div>)
-                        }
+                            </div>
+                        ))}
                     </div>
 
                     {/* Order Summary */}
                     <div className='space-y-1 sm:space-y-2'>
                         <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
-                            <h1>Subtotal - {cartData.length} items</h1>
+                            <h1>Subtotal - {(localCartData.length > 0 ? localCartData : cartData).length} items</h1>
                             <p>৳{totalPrice}</p>
                         </div>
                         <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
                             <h1>Delivery Charge</h1>
-                            {hasOnlyCars(cartData) ? (
-                                hasSpecialCarModels(cartData) ? (
+                            {hasOnlyCars(localCartData.length > 0 ? localCartData : cartData) ? (
+                                hasSpecialCarModels(localCartData.length > 0 ? localCartData : cartData) ? (
                                     <p className="text-green-600">Free Delivery</p>
                                 ) : (
                                     <p className="text-green-600">Free Delivery</p>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavLinks } from "./navData";
 import { AlignJustify, ShoppingCart, User, X } from "lucide-react";
@@ -6,19 +6,36 @@ import { Badge } from "@mui/material";
 import ProductCart from "../ProductCart/ProductCart";
 import mainLogo from '/src/assets/logo-icon.png';
 import { useAuth } from "../../useAuth/useAuth";
-import { useCart } from "../../useCart/useCart";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isCartOpen, setIsCartOpen] = useState(false);
     const links = useNavLinks();
     const { user, logOut } = useAuth();
+    const [cartCount, setCartCount] = useState(0)
+
+    useEffect(() => {
+        const updateCartCount = () => {
+            const cartData = localStorage.getItem('cart');
+            setCartCount(cartData ? JSON.parse(cartData).length : 0);
+        };
+
+        // Initial load
+        updateCartCount();
+
+        // Enhanced storage event listener
+        const handleStorageChange = (e) => {
+            if (e.key === 'cart' || !e.key) { // Handle both specific and dispatched events
+                updateCartCount();
+            }
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+        return () => window.removeEventListener('storage', handleStorageChange);
+    }, []);
+
     
-    // Use the useCart hook to get cart items
-    const { cartItems } = useCart();
-    // useEffect(() => {
-    //     console.log('Cart items updated:', cartItems);
-    // }, [cartItems]);
+
 
     return (
         <>
@@ -80,8 +97,8 @@ const Navbar = () => {
                     {/* Icons and Buttons - Third on small screens */}
                     <div className="flex space-x-4 xl:space-x-6 items-center order-3 lg:order-none">
                         {/* Cart with badge showing total items */}
-                        <Badge 
-                            badgeContent={cartItems.length} 
+                        <Badge
+                            badgeContent={cartCount}
                             color="primary"
                             className="text-[#FAE82A] font-bold"
                         >

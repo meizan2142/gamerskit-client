@@ -1,24 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { ArrowRight, Eye, ShoppingBasket } from "lucide-react";
+import { Eye, ShoppingBasket } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../useAuth/useAuth";
 
 const MyOrders = () => {
     const { user } = useAuth();
-
-    // Fetch current user data
-    const { data: currentUser } = useQuery({
-        queryKey: ['currentUser', user?.email],
-        queryFn: async () => {
-            if (!user?.email) return null;
-            const response = await axios.get(
-                `${import.meta.env.VITE_API_URL}/users/${user.email}`
-            );
-            return response.data;
-        },
-        enabled: !!user?.email,
-    });
 
     // Fetch all orders (no filtering yet)
     const { isLoading, error, data: allOrders = [] } = useQuery({
@@ -31,9 +18,9 @@ const MyOrders = () => {
         },
     });
 
-    // Filter orders by current user's email
+
     const userOrders = allOrders.filter(order =>
-        order?.email === currentUser?.email
+        order?.email === user?.email
     );
 
     if (isLoading) return (
