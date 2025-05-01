@@ -1,27 +1,49 @@
+import { useState, useEffect } from 'react';
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Eye, ShoppingBasket } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../../useAuth/useAuth";
 
 const MyOrders = () => {
-    const { user } = useAuth();
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [filteredOrders, setFilteredOrders] = useState([]);
+    const [isSearching, setIsSearching] = useState(false);
 
-    // Fetch all orders (no filtering yet)
+    // Fetch all orders
     const { isLoading, error, data: allOrders = [] } = useQuery({
         queryKey: ['orders'],
         queryFn: async () => {
-            const response = await axios.get(
-                `${import.meta.env.VITE_API_URL}/orderdetails`
-            );
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/orderdetails`);
             return response.data;
         },
     });
 
+    // Filter orders when phoneNumber changes
+    useEffect(() => {
+        if (!phoneNumber) {
+            setFilteredOrders([]);
+            return;
+        }
 
-    const userOrders = allOrders.filter(order =>
-        order?.email === user?.email
-    );
+        setIsSearching(true);
+        const timer = setTimeout(() => {
+            const normalizedInput = phoneNumber.trim();
+            const matchedOrders = allOrders.filter(order =>
+                order.mobile?.trim() === normalizedInput
+            );
+            setFilteredOrders(matchedOrders);
+            setIsSearching(false);
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, [phoneNumber, allOrders]);
+
+    const handlePhoneChange = (e) => {
+        const value = e.target.value.replace(/\D/g, ''); // Allow only digits
+        if (value.length <= 11) {
+            setPhoneNumber(value);
+        }
+    };
 
     if (isLoading) return (
         <div className="flex justify-center items-center min-h-[50vh]">
@@ -37,41 +59,56 @@ const MyOrders = () => {
 
     return (
         <div className="pt-20 md:pt-20 lg:pt-24 px-4 sm:px-6 md:px-10 space-y-6 md:space-y-10">
-            <h1 className="font-bold text-3xl text-center">My Orders</h1>
+            <h1 className="font-bold text-3xl text-center">Track your parcel by mobile number</h1>
 
-            {userOrders.length > 0 ? (
-                <>
+            <div className="w-full md:w-1/2 mx-auto space-y-2">
+                <input
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={handlePhoneChange}
+                    placeholder="Enter your 11-digit mobile number (e.g., 01919846963)"
+                    className="w-full rounded-md border border-gray-300 p-2 sm:p-3 focus:outline-none focus:ring-2 focus:ring-[#FFB300]"
+                    maxLength={11}
+                />
+                {isSearching && (
+                    <p className="text-gray-500 text-sm text-center mt-10">Searching orders...</p>
+                )}
+            </div>
+
+            {phoneNumber ? (
+                filteredOrders.length > 0 ? (
                     <div className="overflow-x-auto">
-                        <table className="min-w-[90%] shadow-md border mx-auto border-gray-100 my-6">
-                            <thead>
-                                <tr className="bg-[#333333] text-white">
-                                    <th className="py-3 px-6 text-left border-b">Serial</th>
-                                    <th className="py-3 px-6 text-left border-b">Date</th>
-                                    <th className="py-3 px-6 text-left border-b">Name</th>
-                                    <th className="py-3 px-6 border-b text-center">Quantity</th>
-                                    <th className="py-3 px-6 border-b text-center">Advance Amount</th>
-                                    <th className="py-3 px-6 border-b text-center">Remaining Amount</th>
-                                    <th className="py-3 px-6 text-left border-b">Status</th>
-                                    <th className="py-3 px-6 text-left border-b">Check Details</th>
+                        <table className="min-w-full border border-gray-200">
+                            <thead className="bg-gray-800 text-white">
+                                <tr>
+                                    <th className="p-3 text-left">Serial</th>
+                                    <th className="p-3 text-left">Date</th>
+                                    <th className="p-3 text-left">Name</th>
+                                    <th className="p-3 text-center">Qty</th>
+                                    <th className="p-3 text-center">Advance</th>
+                                    <th className="p-3 text-center">Remaining</th>
+                                    <th className="p-3 text-center">Status</th>
+                                    <th className="p-3 text-center">Details</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {userOrders.map((item, index) => (
-                                    <tr key={item._id}>
-                                        <td className="py-4 px-6 border-b">{index + 1}</td>
-                                        <td className="py-4 px-6 border-b">
-                                            {new Date(item.orderDate).toLocaleDateString()}
+                                {filteredOrders.map((order, index) => (
+                                    <tr key={order._id} className="border-b hover:bg-gray-50">
+                                        <td className="p-3">{index + 1}</td>
+                                        <td className="p-3">{new Date(order.orderDate).toLocaleDateString()}</td>
+                                        <td className="p-3">{order.name}</td>
+                                        <td className="p-3 text-center">
+                                            {order.cartItems.reduce((sum, item) => sum + (item.quantity || 0), 0)}
                                         </td>
-                                        <td className="py-4 px-6 border-b">{item.name}</td>
-                                        <td className="py-4 px-6 border-b text-center">
-                                            {item.cartItems.reduce((total, item) => total + item.quantity, 0)}
+                                        <td className="p-3 text-center">৳{order.advanceAmount}</td>
+                                        <td className="p-3 text-center">৳{order.remainingAmount}</td>
+                                        <td className={`p-3 text-center ${order.status === 'delivered' ? 'text-green-600' : 'text-yellow-600'
+                                            }`}>
+                                            {order.status}
                                         </td>
-                                        <td className="py-4 px-6 border-b text-center">৳{item.advanceAmount}</td>
-                                        <td className="py-4 px-6 border-b text-center">৳{item.remainingAmount}</td>
-                                        <td className="py-4 px-6 border-b text-center">{item.status}</td>
-                                        <td className="py-4 px-6 border-b space-y-1 flex items-center justify-center">
-                                            <NavLink to={`/single-order-details/${item._id}`}>
-                                                <Eye />
+                                        <td className="p-3 text-end">
+                                            <NavLink to={`/single-order-details/${order._id}`}>
+                                                <Eye className="w-5 h-5 text-blue-600 hover:text-blue-800" />
                                             </NavLink>
                                         </td>
                                     </tr>
@@ -79,16 +116,16 @@ const MyOrders = () => {
                             </tbody>
                         </table>
                     </div>
-                </>
+                ) : (
+                    <div className="text-center py-10">
+                        <p className="text-xl font-semibold">No orders found for: {phoneNumber}</p>
+                        <p className="text-gray-600 mt-2">Please check if the mobile number is correct</p>
+                    </div>
+                )
             ) : (
-                <div className="text-center min-h-[50vh] flex flex-col justify-center space-y-5">
-                    <p className='font-bold text-xl'>You haven't purchased anything yet.</p>
-                    <NavLink to='/shop' className='flex justify-center'>
-                        <button className="flex items-center gap-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold py-2 px-4 rounded transition">
-                            <ShoppingBasket className="w-4 h-4" />
-                            Continue Shopping
-                        </button>
-                    </NavLink>
+                <div className="text-center py-10">
+                    <p className="text-xl font-semibold">Enter your mobile number to view orders</p>
+                    <p className="text-gray-600 mt-2">Use the same number used during purchase</p>
                 </div>
             )}
         </div>

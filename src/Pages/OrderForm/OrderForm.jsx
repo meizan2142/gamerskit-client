@@ -158,7 +158,7 @@ const OrderForm = () => {
 
             // 5. Show success and redirect
             toast.success("Order placed successfully!");
-            setTimeout(() => navigate('/shop'), 1000);
+            setTimeout(() => navigate('/my-orders'), 1000);
 
         } catch (error) {
             console.error("Order error:", error);
@@ -218,20 +218,14 @@ const OrderForm = () => {
                                 <div className="col-span-full grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     {/* Email */}
                                     <div className="w-full">
-                                        <label htmlFor="email" className="text-sm sm:text-base font-bold">Email</label>
+                                        <label htmlFor="email" className="text-sm sm:text-base font-bold">Email (Optional)</label>
                                         <input
                                             defaultValue={user?.email}
                                             id="email"
                                             type="email"
                                             placeholder="Email"
                                             className="w-full rounded-md border border-black text-black p-2 sm:p-3 outline-none"
-                                            {...register("email", {
-                                                required: "Email is required",
-                                                pattern: {
-                                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                                    message: "Invalid email address"
-                                                }
-                                            })}
+                                            {...register("email")}
                                         />
                                         {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                                     </div>
@@ -378,7 +372,7 @@ const OrderForm = () => {
 
                                     {/* Bkash/Nagad digits */}
                                     <div className="w-full">
-                                        <label htmlFor="paymentDigits" className="text-sm sm:text-base font-bold">Last 4 digits of Bkash/Nagad</label>
+                                        <label htmlFor="paymentDigits" className="text-sm sm:text-base font-bold">Last 4 digits of (Bkash/Nagad) number</label>
                                         <input
                                             id="paymentDigits"
                                             type="text"
