@@ -66,7 +66,7 @@ const Navbar = () => {
                     <nav
                         className={`lg:flex ${isOpen ? "block" : "hidden"} lg:block absolute lg:relative top-16 lg:top-0 left-0 w-full lg:w-auto bg-[#1A1A1A] lg:bg-transparent shadow-md lg:shadow-none transition-all order-4 lg:order-none`}
                     >
-                        <ul className="flex flex-col lg:flex-row items-center space-y-4 lg:space-y-0 lg:space-x-8 xl:space-x-12 text-center p-4 lg:p-0">
+                        <ul className="flex flex-col lg:flex-row items-center space-y-8 lg:space-y-0 lg:space-x-8 xl:space-x-12 text-center p-4 lg:p-0">
                             {links.map((link) => (
                                 <li key={link.path}>
                                     <NavLink

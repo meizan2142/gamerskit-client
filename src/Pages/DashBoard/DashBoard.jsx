@@ -86,20 +86,40 @@ const DashBoard = () => {
                             <h2 className="text-lg font-bold text-left">Dashboard</h2>
                             <button onClick={() => setIsMobileMenuOpen(false)} className="text-gray-600 text-xl">✕</button>
                         </div>
-                        <NavLink to='/' onClick={() => setIsMobileMenuOpen(false)}>
-                            <button className="w-full py-2 px-4 rounded text-white bg-[#171825]">Home</button>
+                        <NavLink to='/' onClick={() => setIsMobileMenuOpen(false)}
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
+                            }
+                        >
+                            <button className="w-full py-2 px-4 rounded text-white">Home</button>
                         </NavLink>
-                        <NavLink to='/dashboard/all-orders' onClick={() => setIsMobileMenuOpen(false)}>
-                            <button className="w-full py-2 px-4 rounded text-white bg-[#171825]">All Orders</button>
+                        <NavLink to='/dashboard/all-orders' onClick={() => setIsMobileMenuOpen(false)}
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
+                            }
+                        >
+                            <button className="w-full py-2 px-4 rounded text-white">All Orders</button>
                         </NavLink>
-                        <NavLink to='/dashboard/stock-jerseys' onClick={() => setIsMobileMenuOpen(false)}>
-                            <button className="w-full py-2 px-4 rounded text-white bg-[#171825]">Stock Jerseys</button>
+                        <NavLink to='/dashboard/stock-jerseys' onClick={() => setIsMobileMenuOpen(false)}
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
+                            }
+                        >
+                            <button className="w-full py-2 px-4 rounded text-white">Stock Jerseys</button>
                         </NavLink>
-                        <NavLink to='/dashboard/pending-orders' onClick={() => setIsMobileMenuOpen(false)}>
-                            <button className="w-full py-2 px-4 rounded text-white bg-[#171825]">Pending Orders</button>
+                        <NavLink to='/dashboard/pending-orders' onClick={() => setIsMobileMenuOpen(false)}
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
+                            }
+                        >
+                            <button className="w-full py-2 px-4 rounded text-white">Pending Orders</button>
                         </NavLink>
-                        <NavLink to='/dashboard/delivered-orders' onClick={() => setIsMobileMenuOpen(false)}>
-                            <button className="w-full py-2 px-4 rounded text-white bg-[#171825]">Delivered Orders</button>
+                        <NavLink to='/dashboard/delivered-orders' onClick={() => setIsMobileMenuOpen(false)}
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
+                            }
+                        >
+                            <button className="w-full py-2 px-4 rounded text-white">Delivered Orders</button>
                         </NavLink>
                     </div>
                 </div>

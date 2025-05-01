@@ -158,7 +158,7 @@ const OrderForm = () => {
 
             // 5. Show success and redirect
             toast.success("Order placed successfully!");
-            setTimeout(() => navigate('/my-orders'), 1000);
+            setTimeout(() => navigate('/shop'), 1000);
 
         } catch (error) {
             console.error("Order error:", error);

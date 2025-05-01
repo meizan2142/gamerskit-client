@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/place-orders",
-                element: <PrivateRoute><OrderForm /></PrivateRoute>,
+                element: <OrderForm />,
             },
             {
                 path: "/my-orders",
