@@ -66,7 +66,7 @@ const MyOrders = () => {
                     type="tel"
                     value={phoneNumber}
                     onChange={handlePhoneChange}
-                    placeholder="Enter your 11-digit mobile number (e.g., 01919846963)"
+                    placeholder="Enter your 11-digits mobile number"
                     className="w-full rounded-md border border-gray-300 p-2 sm:p-3 focus:outline-none focus:ring-2 focus:ring-[#FFB300]"
                     maxLength={11}
                 />
