@@ -147,10 +147,10 @@ const SingleProduct = () => {
                         }
                         <p className="text-green-600 text-base font-semibold">
                             <strong className="font-bold text-xl text-black">Order Process:</strong><br />
-                            {data?.name === "car" && "• RC Car: 500 TK each"}
-                            {data?.name === "F1" && "• F1 Jersey: 100 TK each"}
-                            {data?.name === "E-sports" && "• E-sports Jersey: 100 TK for each"}
-                            {data?.name === "Tshirt" && "• Tshirt: 100 TK each"}
+                            {data?.name === "car" && "• RC Car: For order make 100 tk advance."}
+                            {data?.name === "F1" && "• F1 Jersey: For order make 100 tk advance."}
+                            {data?.name === "E-sports" && "• E-sports Jersey: For order make 100 tk advance."}
+                            {data?.name === "Tshirt" && "• Tshirt: For order make 100 tk advance."}
                             {data?.name === "Sleeves" && "• Hand Sleeves: No advance needed"}
                             {data?.name === "Mask" && "• Mask: No advance needed"}
                             <br />
@@ -160,7 +160,7 @@ const SingleProduct = () => {
                                 data?.name === "Tshirt" ||
                                 data?.name === "E-sports") && (
                                     <>
-                                        Send advance via (Bkash/Nagad) to:
+                                        Send money via (Bkash/Nagad) to:
                                         <span
                                             className="text-black font-bold cursor-pointer relative"
                                             onClick={handleCopy}
