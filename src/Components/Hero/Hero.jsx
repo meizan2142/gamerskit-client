@@ -5,9 +5,9 @@ const Hero = () => {
     return (
         <section
             className="w-full h-[800px] px-4 sm:px-6 md:px-6 lg:px-12 xl:px-20 relative pt-20 
-               bg-[url('http://res.cloudinary.com/dyqjzfdwi/image/upload/v1745202165/kzq2ojbgsv6z8rulhy8h.jpg')] 
-               lg:bg-[url('http://res.cloudinary.com/dyqjzfdwi/image/upload/v1745202025/ude4abhlklldzosiakbi.jpg')] 
-               md:bg-[url('http://res.cloudinary.com/dyqjzfdwi/image/upload/v1745202165/kzq2ojbgsv6z8rulhy8h.jpg')] 
+               bg-[url('https://ik.imagekit.io/Gamerskit/mobile.jpg?updatedAt=1746205747764')] 
+               lg:bg-[url('https://ik.imagekit.io/Gamerskit/PC.jpg?updatedAt=1746205763054')] 
+               md:bg-[url('https://ik.imagekit.io/Gamerskit/mobile.jpg?updatedAt=1746205747764')] 
                bg-cover bg-center bg-no-repeat"
         >
             {/* Content */}

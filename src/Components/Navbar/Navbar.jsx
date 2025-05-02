@@ -142,7 +142,7 @@ const Navbar = () => {
                     </nav>
 
                     {/* Icons and Buttons - Third on small screens */}
-                    <div className="flex space-x-4 xl:space-x-6 items-center order-3 lg:order-none">
+                    <div className="flex space-x-5 xl:space-x-6 items-center order-3 lg:order-none">
                         {/* Cart with badge showing total items */}
                         <Badge
                             badgeContent={cartCount}

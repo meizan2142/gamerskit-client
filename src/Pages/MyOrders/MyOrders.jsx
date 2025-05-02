@@ -108,7 +108,7 @@ const MyOrders = () => {
                                         </td>
                                         <td className="p-3 text-end">
                                             <NavLink to={`/single-order-details/${order._id}`}>
-                                                <Eye className="w-5 h-5 text-blue-600 hover:text-blue-800" />
+                                                <Eye className="w-5 h-5 text-black" />
                                             </NavLink>
                                         </td>
                                     </tr>
