@@ -15,6 +15,8 @@ import AllOrder from "../Pages/DashBoard/DashPages/AllOrders/AllOrder";
 import StockJerseys from "../Pages/DashBoard/DashPages/StockJerseys/StockJerseys";
 import PendingOrders from "../Pages/DashBoard/DashPages/PendingOrders/PendingOrders";
 import DeliveredOrders from "../Pages/DashBoard/DashPages/DeliveredOrders/DeliveredOrders";
+import CancelledOrders from "../Pages/DashBoard/DashPages/CancelledOrders/CancelledOrders";
+import ReturnedOrders from "../Pages/DashBoard/DashPages/ReturnedOrders/ReturnedOrders";
 
 export const router = createBrowserRouter([
     {
@@ -84,6 +86,14 @@ export const router = createBrowserRouter([
             {
                 path: 'delivered-orders',
                 element: <PrivateRoute><DeliveredOrders /></PrivateRoute>
+            },
+            {
+                path: 'cancelled-orders',
+                element: <PrivateRoute><CancelledOrders /></PrivateRoute>
+            },
+            {
+                path: 'returned-orders',
+                element: <PrivateRoute><ReturnedOrders /></PrivateRoute>
             },
         ]
     },

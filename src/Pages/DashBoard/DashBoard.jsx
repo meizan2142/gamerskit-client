@@ -66,6 +66,24 @@ const DashBoard = () => {
                         >
                             Delivered Orders
                         </NavLink>
+                        <NavLink
+                            to='/dashboard/cancelled-orders'
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
+                            }
+                        >
+                            Cancelled Orders
+                        </NavLink>
+                        <NavLink
+                            to='/dashboard/returned-orders'
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
+                            }
+                        >
+                            Returned Orders
+                        </NavLink>
                     </nav>
                 </div>
 
