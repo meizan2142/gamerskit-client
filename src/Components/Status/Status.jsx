@@ -35,7 +35,18 @@ const Status = ({ item, onStatusChange }) => {
         <div ref={dropDownRef} className="relative mx-auto w-fit text-white">
             <button
                 onClick={() => setOpen((prev) => !prev)}
-                className={`rounded-sm px-2 py-1 ${isUpdating ? 'bg-gray-500' : 'bg-sky-600'}`}
+                className={`rounded-sm px-2 py-1 ${isUpdating
+                    ? 'bg-gray-500'
+                    : item.status === 'delivered'
+                        ? 'bg-green-500'
+                        : item.status === 'pending'
+                            ? 'bg-yellow-500'
+                            : item.status === 'cancelled'
+                                ? 'bg-red-500'
+                                : item.status === 'returned'
+                                    ? 'bg-purple-500' // or any color you prefer for returned
+                                    : 'bg-sky-600' // default color
+                    }`}
                 disabled={isUpdating}
             >
                 {isUpdating ? 'Updating...' : item.status}
