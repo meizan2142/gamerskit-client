@@ -15,92 +15,60 @@ const SizeGuide = () => (
 const Accordion = ({ data }) => {
     const [isOpen, setIsOpen] = useState(null);
 
-    // Dynamic data array (now uses `data` prop)
+    // Exchange policy data
+    const exchangePolicy = {
+        title: "Gamerskit's Exchange policy (RC Car)",
+        description: `
+            • Exchanges are only accepted within 24 hours of delivery.
+
+            • Products must be unused, undamaged, and in original packaging.
+
+            • No exchanges will be accepted after 24 hours due to customer use.
+
+            • Contact us via inbox with order details and photos/videos to request an exchange.
+
+            • No refunds, exchange only.
+            
+            Thank you for shopping with GamersKit!
+        `
+    };
+
+    // Dynamic data array
     const dataArr = [
         {
             title: "Product Details",
             description: data?.description || "No product details available.",
         },
-        ...(data?.name !== "car" && data?.name !== "Sleeves" && data?.name !== "Mask" ? [{
+        ...(data?.name && !["Sleeves", "Mask"].includes(data.name) ? [{
             title: "Size Guide",
             description: <SizeGuide />,
         }] : []),
         {
             title: "Delivery Charge Info",
             description: (
-                <p>
-                    {
-                        data?.name === "E-sports" && (
-                            <p>
-                                <strong>Delivery Charges:</strong><br />
-                                • Dhaka: 70 TK<br />
-                                • Sub-Dhaka: 100 TK<br />
-                                • Outside Dhaka: 130 TK<br /><br />
-                                <strong>Delivery Time:</strong><br />
-                                • 2-3 Days<br />
-                            </p>
-                        )
-                    }
-                    {
-                        data?.name === "F1" && (
-                            <p>
-                                <strong>Delivery Charges:</strong><br />
-                                • Dhaka: 70 TK<br />
-                                • Sub-Dhaka: 100 TK<br />
-                                • Outside Dhaka: 130 TK<br /><br />
-                                <strong>Delivery Time:</strong><br />
-                                • 2-3 Days<br />
-                            </p>
-                        )
-                    }
-                    {
-                        data?.name === "Tshirt" && (
-                            <p>
-                                <strong>Delivery Charges:</strong><br />
-                                • Dhaka: 70 TK<br />
-                                • Sub-Dhaka: 100 TK<br />
-                                • Outside Dhaka: 130 TK<br /><br />
-                                <strong>Delivery Time:</strong><br />
-                                • 2-3 Days<br />
-                            </p>
-                        )
-                    }
-                    {
-                        data?.name === "Sleeves" && (
-                            <p>
-                                <strong>Delivery Charges:</strong><br />
-                                • Dhaka: 70 TK<br />
-                                • Sub-Dhaka: 100 TK<br />
-                                • Outside Dhaka: 130 TK<br /><br />
-                                <strong>Delivery Time:</strong><br />
-                                • 2-3 Days<br />
-                            </p>
-                        )
-                    }
-                    {
-                        data?.name === "Mask" && (
-                            <p>
-                                <strong>Delivery Charges:</strong><br />
-                                • Dhaka: 70 TK<br />
-                                • Sub-Dhaka: 100 TK<br />
-                                • Outside Dhaka: 130 TK<br /><br />
-                                <strong>Delivery Time:</strong><br />
-                                • 2-3 Days<br />
-                            </p>
-                        )
-                    }
-
-                    {data?.name === "car" && (
+                <div>
+                    {["E-sports", "F1", "Tshirt", "Sleeves", "Mask"].includes(data?.name) && (
+                        <p>
+                            <strong>Delivery Charges:</strong><br />
+                            • Dhaka: 70 TK<br />
+                            • Sub-Dhaka: 100 TK<br />
+                            • Outside Dhaka: 130 TK<br /><br />
+                            <strong>Delivery Time:</strong><br />
+                            • 2-3 Days<br />
+                        </p>
+                    )}
+                    {data?.name && data.name.toLowerCase().includes("car") && (
                         <p>
                             <strong>RC Cars: Delivery charge will be free</strong><br />
-                            <br/>
+                            <br />
                             <strong>Delivery Time:</strong><br />
                             • 2-10 Days (Depends on stock)<br />
                         </p>
                     )}
-                </p>
+                </div>
             ),
-        }
+        },
+        ...(data?.name && data.name.toLowerCase().includes("car") ? [exchangePolicy] : [])
     ];
 
     const toggle = (idx) => {
