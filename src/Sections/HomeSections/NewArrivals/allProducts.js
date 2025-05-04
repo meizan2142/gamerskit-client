@@ -220,6 +220,28 @@ export const allProducts = () => {
             "subImages": [],
             "createdAt": { "$date": "2023-01-01T00:00:00Z" },
             "updatedAt": { "$date": "2023-01-01T00:00:00Z" }
+        },
+        // Data type
+        {
+            "name": "product name", // small letters
+            "title": "product title",
+            "price": 390,
+            "description": "10,000mAh power bank with fast-charging support for smartphones and tablets.",
+            "img": "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090452/yed9ixavoturdlmftm8q.jpg",
+            "sizes": [
+                { "M": 70 },
+                { "M": 70 },
+                { "M": 70 },
+                { "M": 70 },
+                { "M": 70 }
+            ],
+            "subImages": [
+                "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090452/yed9ixavoturdlmftm8q.jpg",
+                "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090452/yed9ixavoturdlmftm8q.jpg",
+                "http://res.cloudinary.com/dyqjzfdwi/image/upload/v1744090452/yed9ixavoturdlmftm8q.jpg"
+            ],
+            "boughtProducts": 15,
+            "leftProducts": 15
         }
     ];
 };

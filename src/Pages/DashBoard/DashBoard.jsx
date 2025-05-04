@@ -29,6 +29,14 @@ const DashBoard = () => {
                         </NavLink>
 
                         <NavLink
+                            to='/dashboard/add-product'
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
+                            }
+                        >
+                            Add Product
+                        </NavLink>
+                        <NavLink
                             to='/dashboard/all-orders'
                             className={({ isActive }) =>
                                 `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
@@ -118,6 +126,13 @@ const DashBoard = () => {
                         >
                             <button className="w-full py-2 px-4 rounded text-white">All Orders</button>
                         </NavLink>
+                        <NavLink to='/dashboard/add-product' onClick={() => setIsMobileMenuOpen(false)}
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
+                            }
+                        >
+                            <button className="w-full py-2 px-4 rounded text-white">Add Product</button>
+                        </NavLink>
                         <NavLink to='/dashboard/stock-jerseys' onClick={() => setIsMobileMenuOpen(false)}
                             className={({ isActive }) =>
                                 `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
@@ -138,6 +153,20 @@ const DashBoard = () => {
                             }
                         >
                             <button className="w-full py-2 px-4 rounded text-white">Delivered Orders</button>
+                        </NavLink>
+                        <NavLink to='/dashboard/cancelled-orders' onClick={() => setIsMobileMenuOpen(false)}
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
+                            }
+                        >
+                            <button className="w-full py-2 px-4 rounded text-white">Cancelled Orders</button>
+                        </NavLink>
+                        <NavLink to='/dashboard/returned-orders' onClick={() => setIsMobileMenuOpen(false)}
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
+                            }
+                        >
+                            <button className="w-full py-2 px-4 rounded text-white">Returned Orders</button>
                         </NavLink>
                     </div>
                 </div>

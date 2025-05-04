@@ -3,7 +3,6 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from "../Pages/Home/Home";
 import Shop from "../Pages/Shop/Shop";
 import SingleProduct from "../Pages/SingleProductPage/SingleProduct";
-import ImageHosting from "../Pages/ImageHosting/ImageHosting";
 import OrderForm from "../Pages/OrderForm/OrderForm";
 import MyOrders from "../Pages/MyOrders/MyOrders";
 import SingleOrderDetails from "../Pages/SingleOrderDetails/SingleOrderDetails";
@@ -17,6 +16,7 @@ import PendingOrders from "../Pages/DashBoard/DashPages/PendingOrders/PendingOrd
 import DeliveredOrders from "../Pages/DashBoard/DashPages/DeliveredOrders/DeliveredOrders";
 import CancelledOrders from "../Pages/DashBoard/DashPages/CancelledOrders/CancelledOrders";
 import ReturnedOrders from "../Pages/DashBoard/DashPages/ReturnedOrders/ReturnedOrders";
+import AddProduct from "../Pages/DashBoard/DashPages/AddProduct/AddProduct";
 
 export const router = createBrowserRouter([
     {
@@ -35,10 +35,6 @@ export const router = createBrowserRouter([
                 path: "/singleproduct/:id",
                 // element: <PrivateRoute><SingleProduct /></PrivateRoute>,
                 element: <SingleProduct />
-            },
-            {
-                path: "/imagehosting",
-                element: <ImageHosting />,
             },
             {
                 path: "/place-orders",
@@ -94,6 +90,10 @@ export const router = createBrowserRouter([
             {
                 path: 'returned-orders',
                 element: <PrivateRoute><ReturnedOrders /></PrivateRoute>
+            },
+            {
+                path: 'add-product',
+                element: <PrivateRoute><AddProduct /></PrivateRoute>
             },
         ]
     },
