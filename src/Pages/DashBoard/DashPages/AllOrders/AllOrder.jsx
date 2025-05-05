@@ -4,9 +4,11 @@ import { Eye } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import Status from "../../../../Components/Status/Status";
+import { useState } from "react";
 
 const AllOrder = () => {
     const queryClient = useQueryClient();
+    const [deletingId, setDeletingId] = useState(null)
 
     const { isLoading, error, data: allOrders = [] } = useQuery({
         queryKey: ['orders'],
@@ -20,11 +22,14 @@ const AllOrder = () => {
 
     const deleteOrder = async (orderId) => {
         try {
+            setDeletingId(orderId); // Set the ID of the order being deleted
             await axios.delete(`${import.meta.env.VITE_API_URL}/orderdetails/${orderId}`);
             queryClient.invalidateQueries(['orders']);
         } catch (error) {
             console.error('Error deleting order:', error);
             // Add error handling (e.g., show a toast notification)
+        } finally {
+            setDeletingId(null); // Reset the deleting state regardless of success or failure
         }
     };
 
@@ -100,9 +105,17 @@ const AllOrder = () => {
                                             <td className="py-4 px-6 border-b space-y-1">
                                                 <button
                                                     onClick={() => deleteOrder(item._id)}
-                                                    className="text-gray-500 hover:text-red-500"
+                                                    className="text-gray-500 hover:text-red-500 flex items-center gap-1"
+                                                    disabled={deletingId === item._id}
                                                 >
-                                                    <RiDeleteBin5Line size={18} />
+                                                    {deletingId === item._id ? (
+                                                        <>
+                                                            <span>Deleting...</span>
+                                                            <RiDeleteBin5Line size={18} />
+                                                        </>
+                                                    ) : (
+                                                        <RiDeleteBin5Line size={18} />
+                                                    )}
                                                 </button>
                                             </td>
                                         </tr>
