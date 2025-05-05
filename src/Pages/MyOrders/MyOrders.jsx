@@ -102,7 +102,11 @@ const MyOrders = () => {
                                         </td>
                                         <td className="p-3 text-center">৳{order.advanceAmount}</td>
                                         <td className="p-3 text-center">৳{order.remainingAmount}</td>
-                                        <td className={`p-3 text-center ${order.status === 'delivered' ? 'text-green-600' : 'text-yellow-600'
+                                        <td className={`p-3 text-center ${order.status === 'delivered' ? 'text-green-600' :
+                                            order.status === 'pending' ? 'text-yellow-600' :
+                                                order.status === 'cancelled' ? 'text-red-600' :
+                                                    order.status === 'returned' ? 'text-purple-600' :
+                                                        ''
                                             }`}>
                                             {order.status}
                                         </td>

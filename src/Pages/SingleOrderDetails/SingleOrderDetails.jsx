@@ -46,7 +46,12 @@ const SingleOrderDetails = () => {
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
                         <div>
                             <h2 className="text-lg font-semibold">Order Status</h2>
-                            <p className={`text-${data.status === 'completed' ? 'green' : 'orange'}-600 font-medium capitalize`}>
+                            <p className={`text-${data.status === 'delivered' ? 'green' :
+                                data.status === 'pending' ? 'yellow' :
+                                    data.status === 'cancelled' ? 'red' :
+                                        data.status === 'returned' ? 'purple' :
+                                            'gray'
+                                }-600 font-medium capitalize`}>
                                 {data.status}
                             </p>
                         </div>
@@ -64,6 +69,7 @@ const SingleOrderDetails = () => {
                         <p className="text-gray-700"><span className="font-bold">District:</span> {data.district}</p>
                         <p className="text-gray-700"><span className="font-bold">Thana:</span> {data.thana}</p>
                         <p className="text-gray-700"><span className="font-bold">Last Digits:</span> {data.paymentDigits}</p>
+                        <p className="text-gray-700"><span className="font-bold">Note:</span> {data.note}</p>
                     </div>
                 </div>
 
@@ -84,10 +90,10 @@ const SingleOrderDetails = () => {
                                             <div className="space-y-2">
                                                 <h3 className="font-medium">{item.title}</h3>
                                                 {
-                                                    item?.size === "N/A"?
-                                                    <></>
-                                                    :
-                                                    <p className="text-gray-500 text-sm">Size: {item.size}</p>
+                                                    item?.size === "N/A" ?
+                                                        <></>
+                                                        :
+                                                        <p className="text-gray-500 text-sm">Size: {item.size}</p>
                                                 }
                                                 <p className="text-gray-500 text-sm">Qty: {item.quantity}</p>
                                             </div>

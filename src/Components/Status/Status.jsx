@@ -44,7 +44,7 @@ const Status = ({ item, onStatusChange }) => {
                             : item.status === 'cancelled'
                                 ? 'bg-red-500'
                                 : item.status === 'returned'
-                                    ? 'bg-purple-500' // or any color you prefer for returned
+                                    ? 'bg-purple-600' // or any color you prefer for returned
                                     : 'bg-sky-600' // default color
                     }`}
                 disabled={isUpdating}

@@ -74,7 +74,7 @@ const CancelledOrders = () => {
                                                 </NavLink>
                                             </td>
                                             {/* <td className="py-4 px-6 border-b text-center">{item.status}</td> */}
-                                            <td className="py-4 px-6 border-b text-center text-yellow-400 text-xl rounded-full">{item.status}</td>
+                                            <td className="py-4 px-6 border-b text-center text-red-600 text-xl rounded-full">{item.status}</td>
                                         </tr>
                                     ))
                                 }
