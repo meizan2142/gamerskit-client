@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
                     <div className="relative pb-[75%] overflow-hidden rounded-lg flex-shrink-0">
                         <img
                             className="absolute h-full w-full object-cover"
-                            src={product.img}
+                            src={product.mainImage}
                             alt={product.title}
                         />
                     </div>

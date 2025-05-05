@@ -9,6 +9,7 @@ const AddProduct = () => {
         // Extract form data
         const productDetails = {
             name: form.name.value,
+            description: form.description.value,
             title: form.title.value,
             price: form.price.value,
             totalSizes: form.elements.totalSizes?.value || "0",
@@ -46,7 +47,7 @@ const AddProduct = () => {
     return (
         <div>
             <form onSubmit={handleAddProduct} className="container flex flex-col mx-auto space-y-8 md:space-y-12">
-                <Toaster/>
+                <Toaster />
                 <fieldset className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 p-4 sm:p-6 rounded-md shadow-sm">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 col-span-full">
                         {/* Product Name and Title */}
@@ -85,6 +86,16 @@ const AddProduct = () => {
                                 className="w-full rounded-md border-black text-black p-2 sm:p-3 outline"
                             />
                         </div>
+                        <div className="col-span-full sm:col-span-3">
+                            <label htmlFor="description" className="text-sm sm:text-base font-bold">Description (one item per line)</label>
+                            <textarea
+                                id="description"
+                                name="description"
+                                placeholder="Enter each list item on a new line"
+                                className="w-full rounded-md border-black text-black p-2 sm:p-3 outline min-h-[100px]"
+                                rows={4}
+                            />
+                        </div>
 
                         {/* District and Thana */}
                         <div className="col-span-full grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -95,7 +106,7 @@ const AddProduct = () => {
                                     type="number"
                                     id="totalSizes"
                                     name="totalSizes"
-                                    placeholder="Total Sizes Products"
+                                    placeholder="Total Products"
                                     className="w-full rounded-md border border-black text-black p-2 sm:p-3 outline-none" />
                             </div>
 

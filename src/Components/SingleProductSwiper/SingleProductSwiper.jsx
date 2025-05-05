@@ -8,12 +8,13 @@ import 'swiper/css/pagination';
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
 const SingleProductSwiper = ({ images }) => {
-    // Check if there are multiple images to decide whether to use Swiper
-    const hasMultipleImages = images && images.length > 1;
+    // Filter out empty image URLs and check if we should use Swiper
+    const validImages = images ? images.filter(img => img && img.trim() !== "") : [];
+    const useSwiper = validImages.length > 1; // Use Swiper if 2+ valid images
 
     return (
         <div className="w-full pt-5 sm:pt-0 md:pt-0 lg:pt-0 xl:pt-0 2xl:pt-0 lg:w-[60%] xl:w-[50%]">
-            {hasMultipleImages ? (
+            {useSwiper ? (
                 <Swiper
                     spaceBetween={30}
                     centeredSlides={true}
@@ -29,23 +30,27 @@ const SingleProductSwiper = ({ images }) => {
                     modules={[Autoplay, Pagination, Navigation]}
                     className="mySwiper"
                 >
-                    {images.map((image, index) => (
+                    {validImages.map((image, index) => (
                         <SwiperSlide key={index}>
                             <img
                                 src={image}
-                                alt=""
+                                alt={`Product view ${index + 1}`}
                                 className="w-full h-auto max-h-[80vh] object-contain"
                             />
                         </SwiperSlide>
                     ))}
                 </Swiper>
-            ) : (
+            ) : validImages.length > 0 ? (
                 <div className="w-full">
                     <img
-                        src={images?.[0] || ''}
-                        alt=""
+                        src={validImages[0]}
+                        alt="Product view"
                         className="w-full h-auto max-h-[80vh] object-contain"
                     />
+                </div>
+            ) : (
+                <div className="w-full bg-gray-100 flex items-center justify-center h-64">
+                    <span>No images available</span>
                 </div>
             )}
         </div>

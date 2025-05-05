@@ -75,7 +75,7 @@ const NewArrivals = ({ heading }) => {
         queryFn: async () => {
             try {
                 const response = await axios.get(
-                    `${import.meta.env.VITE_API_URL}/allProducts`
+                    `${import.meta.env.VITE_API_URL}/addedProducts`
                 );
                 return response.data; // Axios automatically parses JSON
             } catch (err) {
