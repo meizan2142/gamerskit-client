@@ -30,6 +30,9 @@ const SingleOrderDetails = () => {
         return new Date(dateString).toLocaleDateString(undefined, options);
     };
 
+    console.log(data);
+    
+
     return (
         <div className="pt-20 md:pt-20 lg:pt-24 px-4 sm:px-6 md:px-10 space-y-6 md:space-y-10 min-h-screen">
             <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
@@ -83,7 +86,7 @@ const SingleOrderDetails = () => {
                                     <div key={index} className="flex justify-between items-center border-b pb-4">
                                         <div className="flex items-center space-x-4 spy">
                                             <img
-                                                src={item.productImg}
+                                                src={item.mainImage}
                                                 alt={item.title}
                                                 className="w-16 h-16 object-cover rounded"
                                             />
@@ -96,6 +99,7 @@ const SingleOrderDetails = () => {
                                                         <p className="text-gray-500 text-sm">Size: {item.size}</p>
                                                 }
                                                 <p className="text-gray-500 text-sm">Qty: {item.quantity}</p>
+                                                {/* <p className="text-gray-500 text-sm">Qty: {item}</p> */}
                                             </div>
                                         </div>
                                         <p className="font-medium">৳{item.price * item.quantity}</p>

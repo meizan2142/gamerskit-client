@@ -48,7 +48,13 @@ const SingleProduct = () => {
     };
 
     const handleAddToCart = () => {
-        if (data?.sizes?.length > 0 && !selectedSize) {
+        // Check if sizes exist and are available
+        const hasAvailableSizes = data.sizes && Object.values(data.sizes).some(qty => {
+            const quantity = typeof qty === 'string' ? parseInt(qty) : qty;
+            return quantity > 0;
+        });
+
+        if (hasAvailableSizes && !selectedSize) {
             return toast.error('Please select a size');
         }
 
@@ -58,15 +64,18 @@ const SingleProduct = () => {
             price: data.price,
             mainImage: data.mainImage,
             quantity: 1,
-            ...(data.sizes?.length > 0 && { size: selectedSize })
+            ...(hasAvailableSizes && { size: selectedSize }) // Only add size if product has sizes
         };
 
         const currentCart = JSON.parse(localStorage.getItem('cart') || '[]');
 
-        // Check if item exists
+        // Check if item exists - compare both productId and size
         const existingIndex = currentCart.findIndex(item =>
             item.productId === cartProduct.productId &&
-            (!data.sizes || item.size === cartProduct.size)
+            (
+                (!hasAvailableSizes && !item.size) ||
+                (hasAvailableSizes && item.size === cartProduct.size)
+            )
         );
 
         let updatedCart;
@@ -79,8 +88,8 @@ const SingleProduct = () => {
             updatedCart = [...currentCart, cartProduct];
         }
 
+        console.log('Updated cart:', updatedCart); // Debug log
         localStorage.setItem('cart', JSON.stringify(updatedCart));
-        // Trigger storage event to update all components
         window.dispatchEvent(new Event('storage'));
         toast.success('Added to Cart');
     };
@@ -96,7 +105,7 @@ const SingleProduct = () => {
             price: data.price,
             mainImage: data.mainImage,
             quantity: 1,
-            ...(data.sizes?.length > 0 && { size: selectedSize })
+            ...(data.sizes?.length > 0 && { size: selectedSize }) // Changed from sizes to size
         };
 
         // Check if item is already in cart
@@ -126,7 +135,10 @@ const SingleProduct = () => {
     if (error) return <div className="min-h-screen pt-24 flex justify-center">Error: {error.message}</div>;
     if (!data) return <div className="min-h-screen pt-24 flex justify-center">Product not found</div>;
 
-    const hasSizes = data.sizes?.length > 0;
+    const hasSizes = data.sizes && Object.values(data.sizes).some(qty => {
+        const quantity = typeof qty === 'string' ? parseInt(qty) : qty;
+        return quantity > 0;
+    });
     const isButtonDisabled = hasSizes && !selectedSize;
 
     return (
@@ -208,20 +220,30 @@ const SingleProduct = () => {
                         <div className="space-y-3">
                             <h3 className="font-semibold text-lg">Available Sizes: (Choose a size to place your order)</h3>
                             <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-3 gap-3 sm:gap-4">
-                                {data.sizes.map((size) => (
-                                    <button
-                                        key={size}
-                                        onClick={() => setSelectedSize(size)}
-                                        className={`w-full px-3 py-2 rounded-lg border-2 ${selectedSize === size
-                                            ? 'bg-[#FFD700] border-[#FFD700]'
-                                            : 'border-gray-300 hover:border-[#FFD700]'
-                                            } hover:shadow-md transition-colors`}
-                                    >
-                                        <div className="flex flex-col justify-center items-center">
-                                            <h1 className="text-sm sm:text-base font-bold">{size}</h1>
-                                        </div>
-                                    </button>
-                                ))}
+                                {Object.entries(data.sizes || {})
+                                    // eslint-disable-next-line no-unused-vars
+                                    .filter(([size, quantity]) => {
+                                        // Convert quantity to number and check if it's greater than 0
+                                        const qty = typeof quantity === 'string' ? parseInt(quantity) : quantity;
+                                        return qty > 0;
+                                    })
+                                    .map(([size]) => (
+                                        <button
+                                            key={size}
+                                            onClick={() => {
+                                                console.log('Selected size:', size); // Debug log
+                                                setSelectedSize(size);
+                                            }}
+                                            className={`w-full px-3 py-2 rounded-lg border-2 ${selectedSize === size
+                                                ? 'bg-[#FFD700] border-[#FFD700]'
+                                                : 'border-gray-300 hover:border-[#FFD700]'
+                                                } hover:shadow-md transition-colors`}
+                                        >
+                                            <div className="flex flex-col justify-center items-center">
+                                                <h1 className="text-sm sm:text-base font-bold">{size.toUpperCase()}</h1>
+                                            </div>
+                                        </button>
+                                    ))}
                             </div>
                         </div>
                     )}

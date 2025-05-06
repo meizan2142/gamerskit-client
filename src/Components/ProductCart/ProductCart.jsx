@@ -115,7 +115,8 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                                 </p>
                                                 {item.size && (
                                                     <p className="text-[#FFB300] text-sm font-medium my-1">
-                                                        Size: {item.size}
+                                                        {/* The size is not showing */}
+                                                        Size: {item.size} 
                                                     </p>
                                                 )}
                                             </div>

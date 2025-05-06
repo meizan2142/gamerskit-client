@@ -111,14 +111,14 @@ const OrderForm = () => {
         try {
             setIsSubmitting(true);
 
-            // Get cart items from localStorage
+            // Get cart items from localStorage with proper size handling
             const cartItems = JSON.parse(localStorage.getItem('cart') || '[]').map(item => ({
                 title: item.title,
-                size: item.size || 'N/A',
+                size: item.size || null,  // Use null instead of 'N/A' for better data consistency
                 quantity: item.quantity,
                 price: item.price,
                 productId: item.productId,
-                productImg: item.mainImage
+                mainImage: item.mainImage  // Changed from productImg to mainImage to match your cart structure
             }));
 
             const orderDetails = {
@@ -132,7 +132,8 @@ const OrderForm = () => {
                 deliveryCharge
             };
 
-            // 1. Save order to database
+            console.log("Submitting order:", orderDetails);  // Debug log
+
             const orderResponse = await axios.post(
                 `${import.meta.env.VITE_API_URL}/orderdetails`,
                 orderDetails,
@@ -142,21 +143,16 @@ const OrderForm = () => {
                 }
             );
 
-            console.log("order response", orderResponse);
+            console.log("Order response:", orderResponse);
 
-
-            // 2. Clear localStorage and update state
+            // Clear cart and update state
             localStorage.removeItem('cart');
             setLocalCartData([]);
-
-            // 3. Trigger storage event to update all components
             window.dispatchEvent(new Event('storage'));
 
-            // 4. Invalidate and reset cart queries
             queryClient.invalidateQueries(['cart']);
             queryClient.setQueryData(['cart'], []);
 
-            // 5. Show success and redirect
             toast.success("Order placed successfully!");
             setTimeout(() => navigate('/my-orders'), 1000);
 
@@ -450,7 +446,7 @@ const OrderForm = () => {
                                                 <span className='font-bold'>Size:</span> {item.size}
                                             </p>
                                         </div>
-                                )}
+                                    )}
                                 </div>
                             </div>
                         ))}
