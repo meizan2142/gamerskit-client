@@ -31,7 +31,7 @@ const SingleOrderDetails = () => {
     };
 
     console.log(data);
-    
+
 
     return (
         <div className="pt-20 md:pt-20 lg:pt-24 px-4 sm:px-6 md:px-10 space-y-6 md:space-y-10 min-h-screen">
@@ -86,17 +86,16 @@ const SingleOrderDetails = () => {
                                     <div key={index} className="flex justify-between items-center border-b pb-4">
                                         <div className="flex items-center space-x-4 spy">
                                             <img
-                                                src={item.mainImage}
+                                                src={item.productImg}
                                                 alt={item.title}
                                                 className="w-16 h-16 object-cover rounded"
                                             />
                                             <div className="space-y-2">
                                                 <h3 className="font-medium">{item.title}</h3>
                                                 {
-                                                    item?.size === "N/A" ?
-                                                        <></>
-                                                        :
-                                                        <p className="text-gray-500 text-sm">Size: {item.size}</p>
+                                                    ["car", "Sleeves", "Mask"].includes(item?.name)
+                                                        ? <></>
+                                                        : <p className="text-gray-500 text-sm">Size: {item.size}</p>
                                                 }
                                                 <p className="text-gray-500 text-sm">Qty: {item.quantity}</p>
                                                 {/* <p className="text-gray-500 text-sm">Qty: {item}</p> */}
