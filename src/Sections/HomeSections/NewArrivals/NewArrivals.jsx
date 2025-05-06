@@ -166,8 +166,6 @@ const NewArrivals = ({ heading }) => {
             <div
                 className="2xl:container 2xl:mx-auto 2xl:mt-10">
                 <div
-                    data-aos="fade-up"
-                    data-aos-duration="3000"
                     className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5 gap-3">
                     {filteredProducts.map((product) => (
                         <ProductCard

@@ -39,7 +39,7 @@ const Accordion = ({ data }) => {
             title: "Product Details",
             description: data?.description || "No product details available.",
         },
-        ...(data?.name && !["Sleeves", "Mask"].includes(data.name) ? [{
+        ...(data?.name && !["Sleeves", "Mask", "car"].includes(data.name) ? [{
             title: "Size Guide",
             description: <SizeGuide />,
         }] : []),

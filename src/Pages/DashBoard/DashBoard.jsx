@@ -52,7 +52,7 @@ const DashBoard = () => {
                                 `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
                             }
                         >
-                            Stock Jerseys
+                            Stock Product
                         </NavLink>
 
                         <NavLink
@@ -138,7 +138,7 @@ const DashBoard = () => {
                                 `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#171825] text-white'}`
                             }
                         >
-                            <button className="w-full py-2 px-4 rounded text-white">Stock Jerseys</button>
+                            <button className="w-full py-2 px-4 rounded text-white">Stock Product</button>
                         </NavLink>
                         <NavLink to='/dashboard/pending-orders' onClick={() => setIsMobileMenuOpen(false)}
                             className={({ isActive }) =>
@@ -180,7 +180,7 @@ const DashBoard = () => {
                 )}
 
                 {/* Main Content */}
-                <div className="w-full lg:w-3/4 xl:w-4/5 lg:mr-0 bg-white p-6 rounded-lg shadow">
+                <div className="w-full lg:w-3/4 xl:w-4/5 lg:mr-0 bg-[#E7E7E7] p-6 rounded-lg shadow">
                     <Outlet />
                 </div>
             </div>

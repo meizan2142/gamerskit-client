@@ -118,7 +118,7 @@ const OrderForm = () => {
                 quantity: item.quantity,
                 price: item.price,
                 productId: item.productId,
-                productImg: item.img
+                productImg: item.mainImage
             }));
 
             const orderDetails = {
@@ -426,7 +426,7 @@ const OrderForm = () => {
                             <div key={item.productId || item._id} className="flex gap-3 sm:gap-4">
                                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-800 rounded-md overflow-hidden">
                                     <img
-                                        src={item.img}
+                                        src={item.mainImage}
                                         alt={item.title || 'Product'}
                                         className="w-full h-full object-cover"
                                     />
@@ -450,7 +450,7 @@ const OrderForm = () => {
                                                 <span className='font-bold'>Size:</span> {item.size}
                                             </p>
                                         </div>
-                                    )}
+                                )}
                                 </div>
                             </div>
                         ))}

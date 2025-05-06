@@ -32,7 +32,6 @@ const SingleProduct = () => {
             return response.data;
         }
     });
-
     const handleCopy = async () => {
         try {
             await navigator.clipboard.writeText("01303775977");
@@ -57,7 +56,7 @@ const SingleProduct = () => {
             productId: data._id,
             title: data.title,
             price: data.price,
-            img: data.img,
+            mainImage: data.mainImage,
             quantity: 1,
             ...(data.sizes?.length > 0 && { size: selectedSize })
         };
@@ -95,7 +94,7 @@ const SingleProduct = () => {
             productId: data._id,
             title: data.title,
             price: data.price,
-            img: data.img,
+            mainImage: data.mainImage,
             quantity: 1,
             ...(data.sizes?.length > 0 && { size: selectedSize })
         };

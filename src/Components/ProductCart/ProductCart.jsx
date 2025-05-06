@@ -90,7 +90,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                     <div key={`${item.productId}-${item.size || ''}`} className="flex gap-4">
                                         <div className="w-20 h-20 bg-gray-800 rounded-md overflow-hidden">
                                             <img
-                                                src={item.img || '/placeholder-product.jpg'}
+                                                src={item.mainImage || '/placeholder-product.jpg'}
                                                 alt={item.title || 'Product'}
                                                 className="w-full h-full object-cover"
                                             />
