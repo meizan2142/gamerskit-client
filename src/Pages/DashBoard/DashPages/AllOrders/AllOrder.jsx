@@ -111,7 +111,6 @@ const AllOrder = () => {
                                                     {deletingId === item._id ? (
                                                         <>
                                                             <span>Deleting...</span>
-                                                            <RiDeleteBin5Line size={18} />
                                                         </>
                                                     ) : (
                                                         <RiDeleteBin5Line size={18} />
