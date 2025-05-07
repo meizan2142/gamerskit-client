@@ -32,11 +32,9 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
         return () => window.removeEventListener('storage', handleStorageChange);
     }, []);
 
-    // Mutation for removing item from cart
-    const { mutate: removeFromCart } = useMutation({
-        mutationFn: (productId) => {
-            const currentCart = JSON.parse(localStorage.getItem('cart') || '[]');
-            const updatedCart = currentCart.filter(item => item.productId !== productId);
+    // Mutation for updating cart
+    const { mutate: updateCart } = useMutation({
+        mutationFn: (updatedCart) => {
             localStorage.setItem('cart', JSON.stringify(updatedCart));
             // Trigger storage event to update all components
             window.dispatchEvent(new Event('storage'));
@@ -46,6 +44,38 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
             queryClient.invalidateQueries(['cart']);
         }
     });
+
+    // Handle quantity increase
+    const handleIncrease = (productId, size) => {
+        const updatedItems = localCartItems.map(item => {
+            if (item.productId === productId && item.size === size) {
+                return { ...item, quantity: (item.quantity || 1) + 1 };
+            }
+            return item;
+        });
+        updateCart(updatedItems);
+    };
+
+    // Handle quantity decrease
+    const handleDecrease = (productId, size) => {
+        const updatedItems = localCartItems.map(item => {
+            if (item.productId === productId && item.size === size) {
+                const newQuantity = Math.max((item.quantity || 1) - 1, 0);
+                return { ...item, quantity: newQuantity };
+            }
+            return item;
+        }).filter(item => (item.quantity || 1) > 0); // Remove items with quantity 0
+
+        updateCart(updatedItems);
+    };
+
+    // Handle complete removal of item
+    const handleRemove = (productId, size) => {
+        const updatedItems = localCartItems.filter(item =>
+            !(item.productId === productId && item.size === size)
+        );
+        updateCart(updatedItems);
+    };
 
     // Calculate total using local state
     const totalPrice = localCartItems.reduce((sum, item) => {
@@ -102,7 +132,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                                     {item.title || 'Product Name'}
                                                 </p>
                                                 <button
-                                                    onClick={() => removeFromCart(item.productId)}
+                                                    onClick={() => handleRemove(item.productId, item.size)}
                                                     className="text-gray-500 hover:text-red-500"
                                                 >
                                                     <RiDeleteBin5Line size={18} />
@@ -110,13 +140,30 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                             </div>
 
                                             <div className='flex justify-between items-center'>
-                                                <p className="text-[#FFD700] text-sm font-semibold my-1">
-                                                    ৳{(item.price || 0)} {item.quantity > 1 && `× ${item.quantity}`}
-                                                </p>
+                                                <div className=''>
+                                                    <p className="text-[#FFD700] text-sm font-semibold my-3">
+                                                        ৳{(item.price * (item.quantity || 1))}
+                                                    </p>
+                                                    {/* Increase and Decrease button */}
+                                                    <div className='text-white border border-white space-x-4'>
+                                                        <button
+                                                            className='border-r-2 p-2'
+                                                            onClick={() => handleIncrease(item.productId, item.size)}
+                                                        >
+                                                            +
+                                                        </button>
+                                                        <button className='p-2'>{item.quantity || 1}</button>
+                                                        <button
+                                                            className='border-l-2 p-2'
+                                                            onClick={() => handleDecrease(item.productId, item.size)}
+                                                        >
+                                                            -
+                                                        </button>
+                                                    </div>
+                                                </div>
                                                 {item.size && (
                                                     <p className="text-[#FFB300] text-sm font-medium my-1">
-                                                        {/* The size is not showing */}
-                                                        Size: {item.size} 
+                                                        Size: {item.size}
                                                     </p>
                                                 )}
                                             </div>

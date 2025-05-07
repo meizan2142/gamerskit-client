@@ -16,26 +16,6 @@ const StockJerseys = () => {
             }
         },
     });
-    const { data: orderDetails } = useQuery({
-        queryKey: ['orderDetails'],
-        queryFn: async () => {
-            try {
-                const response = await axios.get(
-                    `${import.meta.env.VITE_API_URL}/orderdetails`
-                );
-                return response.data;
-            } catch (err) {
-                console.error(err, "Failed to fetch order details");
-                return [];
-            }
-        },
-    });
-
-    // Filter to only pending orders
-    const pendingOrders = orderDetails?.filter(order => order.status === 'pending') || [];
-    console.log(pendingOrders); // Only logs orders with status 'pending'
-
-
 
     // Sort the data when needed (e.g., in rendering)
     const sortedData = addedProducts ? [...addedProducts].sort((a, b) => b.price - a.price) : [];
