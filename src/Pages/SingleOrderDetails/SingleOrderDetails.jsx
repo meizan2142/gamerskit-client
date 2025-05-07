@@ -30,9 +30,6 @@ const SingleOrderDetails = () => {
         return new Date(dateString).toLocaleDateString(undefined, options);
     };
 
-    console.log(data);
-
-
     return (
         <div className="pt-20 md:pt-20 lg:pt-24 px-4 sm:px-6 md:px-10 space-y-6 md:space-y-10 min-h-screen">
             <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
