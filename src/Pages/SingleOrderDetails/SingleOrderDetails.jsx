@@ -83,7 +83,7 @@ const SingleOrderDetails = () => {
                                     <div key={index} className="flex justify-between items-center border-b pb-4">
                                         <div className="flex items-center space-x-4 spy">
                                             <img
-                                                src={item.productImg}
+                                                src={item.productImg || item.mainImage}
                                                 alt={item.title}
                                                 className="w-16 h-16 object-cover rounded"
                                             />
