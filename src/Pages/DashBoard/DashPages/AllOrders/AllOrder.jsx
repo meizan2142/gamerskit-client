@@ -36,12 +36,12 @@ const AllOrder = () => {
     const updateOrderStatus = async (orderId, newStatus) => {
         try {
             await axios.patch(`${import.meta.env.VITE_API_URL}/orderdetails/${orderId}`, {
-                status: newStatus
+                status: newStatus,
+                updatedAt: new Date().toISOString() // Add current timestamp
             });
-            queryClient.invalidateQueries(['orders']); // Refresh the orders list
+            queryClient.invalidateQueries(['orders']);
         } catch (error) {
             console.error('Error updating order status:', error);
-            // Add error handling (e.g., show a toast notification)
         }
     };
 

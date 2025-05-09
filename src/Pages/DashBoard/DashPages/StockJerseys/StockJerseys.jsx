@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useEffect } from "react";
 
 const StockJerseys = () => {
     const { isLoading, error, data: addedProducts } = useQuery({
@@ -17,12 +18,53 @@ const StockJerseys = () => {
         },
     });
 
+    const { data: allOrders = [] } = useQuery({
+        queryKey: ['orders'],
+        queryFn: async () => {
+            const response = await axios.get(
+                `${import.meta.env.VITE_API_URL}/orderdetails`
+            );
+            return response.data;
+        },
+    });
+
+    // Check for today's orders whenever allOrders changes
+    useEffect(() => {
+        if (allOrders.length > 0) {
+            const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+
+            const todaysOrders = allOrders.filter(order => {
+                if (!order.updatedAt) return false; // Safeguard against undefined/null
+
+                const parsedDate = new Date(order.updatedAt);
+                if (isNaN(parsedDate)) return false; // Safeguard against invalid date strings
+
+                const orderDate = parsedDate.toISOString().split('T')[0];
+                return orderDate === today;
+            });
+
+            if (todaysOrders.length > 0) {
+                console.log("✅ Today's orders:", todaysOrders);
+                todaysOrders.forEach(order => {
+                    console.log("📦 Full Order Details:", order.cartItems[0].title);
+                });
+            } else {
+                console.log("ℹ️ No orders updated today");
+            }
+        }
+    }, [allOrders]);
+
+
+
     // Sort the data when needed (e.g., in rendering)
     const sortedData = addedProducts ? [...addedProducts].sort((a, b) => b.price - a.price) : [];
+
     if (isLoading) return <div className="min-h-screen pt-24 flex justify-center">
         <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
     </div>;
+
     if (error) return <div className="min-h-screen pt-24 flex justify-center">Error: {error.message}</div>;
+
     return (
         <div className="pt-8 px-4 sm:px-6 md:px-10 space-y-8">
             <h1 className="font-bold text-3xl text-center mb-8">Inventory Overview</h1>
@@ -86,4 +128,4 @@ const StockJerseys = () => {
     )
 }
 
-export default StockJerseys
+export default StockJerseys;
