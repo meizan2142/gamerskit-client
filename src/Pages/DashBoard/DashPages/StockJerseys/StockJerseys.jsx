@@ -35,7 +35,6 @@ const StockJerseys = () => {
 
             const todaysOrders = allOrders.filter(order => {
                 if (!order.updatedAt) return false; // Safeguard against undefined/null
-
                 const parsedDate = new Date(order.updatedAt);
                 if (isNaN(parsedDate)) return false; // Safeguard against invalid date strings
 
@@ -45,13 +44,52 @@ const StockJerseys = () => {
 
             if (todaysOrders.length > 0) {
                 console.log("✅ Today's orders:", todaysOrders);
+
+                // Get today's date in same format as MongoDB dates
+                const today = new Date();
+                const todayStart = new Date(today.setHours(0, 0, 0, 0));
+                const todayEnd = new Date(today.setHours(23, 59, 59, 999));
+
                 todaysOrders.forEach(order => {
-                    console.log("📦 Full Order Details:", order.cartItems[0].title);
+                    const orderTitle = order.cartItems[0].title;
+                    // Find matching product
+                    const matchedProduct = addedProducts.find(product => (
+                        product.title === orderTitle
+                    ));
+                    console.log(matchedProduct.leftProducts);
+
+                    if (matchedProduct) {
+                        console.log('✅ Product match found:', matchedProduct.title);
+
+                        // Check if order was delivered today
+                        const deliveryDate = new Date(order.updatedAt || order.orderDate);
+                        const isDeliveredToday =
+                            order.status === 'delivered' &&
+                            deliveryDate >= todayStart &&
+                            deliveryDate <= todayEnd;
+
+                        if (isDeliveredToday) {
+                            const orderQuantity = order.cartItems[0].quantity
+                            console.log('🎉 Success: Delivered & updated today!', {
+                                productId: matchedProduct.title,
+                                status: orderQuantity
+                            });
+                        } else {
+                            console.log('ℹ️ Matched but not delivered today');
+                            // Additional check for status === 'delivered'
+                            if (order.status === 'delivered') {
+                                console.log('ℹ️ Order status: delivered (but not necessarily today)');
+                            }
+                        }
+                    } else {
+                        console.log('❌ No product match found');
+                    }
                 });
             } else {
-                console.log("ℹ️ No orders updated today");
+                console.log("ℹ️ No orders today");
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [allOrders]);
 
 
