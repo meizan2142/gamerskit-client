@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect } from "react";
+import StockModal from "../../../../Components/StockModal/StockModal";
 
 const StockJerseys = () => {
     const { isLoading, error, data: addedProducts } = useQuery({
@@ -157,6 +158,9 @@ const StockJerseys = () => {
                                         </div>
                                     </div>
                                 )}
+                            </div>
+                            <div>
+                                <StockModal data={data}/>
                             </div>
                         </div>
                     </div>
