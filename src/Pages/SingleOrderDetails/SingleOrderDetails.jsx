@@ -90,9 +90,21 @@ const SingleOrderDetails = () => {
                                             <div className="space-y-2">
                                                 <h3 className="font-medium">{item.title}</h3>
                                                 {
-                                                    ["car", "Sleeves", "Mask"].includes(item?.name)
-                                                        ? <></>
-                                                        : <p className="text-gray-500 text-sm">Size: {item.size}</p>
+                                                    item?.size === null ? null : (
+                                                        <p className="text-gray-500 text-sm">
+                                                            Size: {
+                                                                {
+                                                                    s: "S",
+                                                                    m: "M",
+                                                                    l: "L",
+                                                                    xl: "XL",
+                                                                    xxl: "XXL",
+                                                                    xxxl: "3XL",
+                                                                    xxxxl: "4XL"
+                                                                }[item.size] || item.size
+                                                            }
+                                                        </p>
+                                                    )
                                                 }
                                                 <p className="text-gray-500 text-sm">Qty: {item.quantity}</p>
                                                 {/* <p className="text-gray-500 text-sm">Qty: {item}</p> */}

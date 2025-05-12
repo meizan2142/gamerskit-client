@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const StockModal = ({data}) => {
+const StockModal = ({ data }) => {
     const [openModal, setOpenModal] = useState(false);
 
     useEffect(() => {
@@ -19,7 +19,7 @@ const StockModal = ({data}) => {
                 onClick={() => setOpenModal(true)}
                 className="rounded-lg bg-gradient-to-r from-gray-700 to-gray-600 px-6 py-2.5 font-medium text-white transition-all hover:from-gray-800 hover:to-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
             >
-                Update
+                Update Closing Stock
             </button>
 
             <div
@@ -42,36 +42,52 @@ const StockModal = ({data}) => {
                         <h2 className="mb-6 text-center text-2xl font-semibold text-gray-900 dark:text-white">{data.title}</h2>
 
                         <form className="space-y-5">
-                            <div className="relative">
-                                <input
-                                    id="email"
-                                    type="email"
-                                    className="peer w-full rounded-md border border-gray-300 bg-transparent px-4 py-2.5 text-gray-900 placeholder-transparent focus:outline-none focus:ring-1 focus:ring-gray-500 dark:border-gray-700 dark:text-white"
-                                    placeholder="Email"
-                                />
-                                <label
-                                    htmlFor="email"
-                                    className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-gray-600 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-gray-600 dark:bg-gray-900 dark:text-gray-400 dark:peer-focus:text-gray-400"
-                                >
-                                    Email
-                                </label>
+                            <div className="flex gap-2">
+                                <div className="relative">
+                                    <input
+                                        id="total"
+                                        type="number"
+                                        className="peer w-full rounded-md border border-gray-300 bg-transparent px-4 py-2.5 text-gray-900 placeholder-transparent focus:outline-none focus:ring-1 focus:ring-gray-500 dark:border-gray-700 dark:text-white"
+                                        placeholder="Opening Stock"
+                                    />
+                                    <label
+                                        htmlFor="Opening Stock"
+                                        className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-gray-600 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-gray-600 dark:bg-gray-900 dark:text-gray-400 dark:peer-focus:text-gray-400"
+                                    >
+                                        Opening Stock
+                                    </label>
+                                </div>
+
+                                <div className="relative">
+                                    <input
+                                        id="sold"
+                                        type="number"
+                                        className="peer w-full rounded-md border border-gray-300 bg-transparent px-4 py-2.5 text-gray-900 placeholder-transparent focus:outline-none focus:ring-1 focus:ring-gray-500 dark:border-gray-700 dark:text-white"
+                                        placeholder="Sold Products"
+                                    />
+                                    <label
+                                        htmlFor="sold"
+                                        className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-gray-600 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-gray-600 dark:bg-gray-900 dark:text-gray-400 dark:peer-focus:text-gray-400"
+                                    >
+                                        Sold Products
+                                    </label>
+                                </div>
                             </div>
 
                             <div className="relative">
                                 <input
-                                    id="password"
-                                    type="password"
+                                    id="closing"
+                                    type="number"
                                     className="peer w-full rounded-md border border-gray-300 bg-transparent px-4 py-2.5 text-gray-900 placeholder-transparent focus:outline-none focus:ring-1 focus:ring-gray-500 dark:border-gray-700 dark:text-white"
-                                    placeholder="Password"
+                                    placeholder="Closing Stock"
                                 />
                                 <label
-                                    htmlFor="password"
+                                    htmlFor="closing"
                                     className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-gray-600 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-gray-600 dark:bg-gray-900 dark:text-gray-400 dark:peer-focus:text-gray-400"
                                 >
-                                    Password
+                                    Closing Stock
                                 </label>
                             </div>
-
                             <button
                                 type="button"
                                 className="w-full rounded-lg bg-gradient-to-r from-gray-700 to-gray-600 px-6 py-2.5 font-medium text-white transition-all hover:from-gray-800 hover:to-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
