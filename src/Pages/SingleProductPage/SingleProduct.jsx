@@ -88,14 +88,19 @@ const SingleProduct = () => {
             updatedCart = [...currentCart, cartProduct];
         }
 
-        console.log('Updated cart:', updatedCart); // Debug log
         localStorage.setItem('cart', JSON.stringify(updatedCart));
         window.dispatchEvent(new Event('storage'));
         toast.success('Added to Cart');
     };
 
     const handleBuyNow = () => {
-        if (data?.sizes?.length > 0 && !selectedSize) {
+        // Check if sizes exist and are available (same logic as handleAddToCart)
+        const hasAvailableSizes = data.sizes && Object.values(data.sizes).some(qty => {
+            const quantity = typeof qty === 'string' ? parseInt(qty) : qty;
+            return quantity > 0;
+        });
+
+        if (hasAvailableSizes && !selectedSize) {
             return toast.error('Please select a size');
         }
 
@@ -105,13 +110,16 @@ const SingleProduct = () => {
             price: data.price,
             mainImage: data.mainImage,
             quantity: 1,
-            ...(data.sizes?.length > 0 && { size: selectedSize }) // Changed from sizes to size
+            ...(hasAvailableSizes && { size: selectedSize }) // Only add size if product has sizes
         };
 
         // Check if item is already in cart
         const isItemInCart = cartItems.some(item =>
             item.productId === data._id &&
-            (!data.sizes || item.size === selectedSize)
+            (
+                (!hasAvailableSizes && !item.size) ||
+                (hasAvailableSizes && item.size === selectedSize)
+            )
         );
 
         let updatedCart;
@@ -231,7 +239,6 @@ const SingleProduct = () => {
                                         <button
                                             key={size}
                                             onClick={() => {
-                                                console.log('Selected size:', size); // Debug log
                                                 setSelectedSize(size);
                                             }}
                                             className={`w-full px-3 py-2 rounded-lg border-2 ${selectedSize === size
