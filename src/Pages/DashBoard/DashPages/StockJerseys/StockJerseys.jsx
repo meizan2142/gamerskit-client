@@ -52,12 +52,12 @@ const StockJerseys = () => {
                                 {/* Stock Summary */}
                                 <div className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
                                     <div className="text-center">
-                                        <p className="text-xs text-gray-500">Total</p>
+                                        <p className="text-xs text-gray-500">Opening Stock</p>
                                         <p className="font-bold text-gray-700">{data.totalSizes}</p>
                                     </div>
                                     <div className="h-8 w-px bg-gray-300"></div>
                                     <div className="text-center">
-                                        <p className="text-xs text-gray-500">Available</p>
+                                        <p className="text-xs text-gray-500">Closing Stock</p>
                                         <p className={`font-bold ${data.leftProducts < 5 ? 'text-red-500' : 'text-green-500'}`}>
                                             {data.leftProducts}
                                         </p>
@@ -85,7 +85,7 @@ const StockJerseys = () => {
                                 )}
                             </div>
                             <div>
-                                <StockModal data={data}/>
+                                <StockModal data={data} />
                             </div>
                         </div>
                     </div>
