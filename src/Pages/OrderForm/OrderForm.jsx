@@ -24,7 +24,7 @@ const OrderForm = () => {
         try {
             await navigator.clipboard.writeText("01303775977");
             setIsCopied(true);
-            setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
+            setTimeout(() => setIsCopied(false), 2000);
         } catch (err) {
             console.error("Failed to copy!", err);
         }
@@ -32,7 +32,6 @@ const OrderForm = () => {
 
 
     const handlePlaceOrderClick = () => {
-        // Trigger the hidden submit button click
         hiddenSubmitRef.current.click();
     };
 
@@ -43,21 +42,20 @@ const OrderForm = () => {
             const cartData = localStorage.getItem('cart');
             return cartData ? JSON.parse(cartData) : [];
         },
-        refetchOnWindowFocus: true, // Optional: refetch when window regains focus
+        refetchOnWindowFocus: true, 
     });
 
-    // Get the selected location object based on the selected district name
     const selectedLocation = locations.find(loc => loc.name === selectedDistrict);
 
-    // Get thanas for the selected district or empty array if none selected
     const thanas = selectedLocation ? selectedLocation.thana : [];
 
 
-    // Calculate delivery charge based on selected district
-    // Constants for car identification
     const SPECIAL_CAR_MODELS = [
-        'porsche 911 drift car 4wd',
-        'nissan gtr skyline 4wd'
+        'porsche 911 drift car 4wd (dual batteries)',
+        'nissan gtr skyline 4wd (white-grey) dual batteries',
+        'nissan gtr r34 rwd (dual battery & gyro stabilizer)',
+        'nissan gtr mini drift car (red)',
+        'porsche 911 mini drift car(black)'
     ];
 
     // Check if cart contains only cars
@@ -65,7 +63,7 @@ const OrderForm = () => {
         if (!cartItems || cartItems.length === 0) return false;
 
         return cartItems.every(item =>
-            item.title.toLowerCase().includes('car') || // Basic car check
+            item.title.toLowerCase().includes('car') ||
             SPECIAL_CAR_MODELS.some(model =>
                 item.title.toLowerCase().includes(model)
             )
@@ -434,7 +432,7 @@ const OrderForm = () => {
                                             {item.title}
                                         </p>
                                         <p className='text-black font-normal text-xs sm:text-sm'>
-                                            ৳{item.price} {/* Format price to 2 decimal places */}
+                                            ৳{item.price} 
                                             {item.quantity > 1 && (
                                                 <span className="text-gray-500 ml-1">× {item.quantity}</span>
                                             )}

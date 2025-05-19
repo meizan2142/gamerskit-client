@@ -1,7 +1,9 @@
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 const AddProduct = () => {
+    const navigate = useNavigate()
     const handleAddProduct = async (e) => {
         e.preventDefault();
         const form = e.target;
@@ -39,6 +41,7 @@ const AddProduct = () => {
             );
             console.log("Product added successfully:", response.data);
             toast.success("Product saved successfully!");
+            setTimeout(() => navigate('/my-orders'), 1000);
         } catch (error) {
             console.error("Error saving product:", error);
             toast.error("Failed to save product.");
