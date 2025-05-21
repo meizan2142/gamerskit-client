@@ -42,9 +42,8 @@ const OrderForm = () => {
             const cartData = localStorage.getItem('cart');
             return cartData ? JSON.parse(cartData) : [];
         },
-        refetchOnWindowFocus: true, 
+        refetchOnWindowFocus: true,
     });
-
     const selectedLocation = locations.find(loc => loc.name === selectedDistrict);
 
     const thanas = selectedLocation ? selectedLocation.thana : [];
@@ -98,9 +97,15 @@ const OrderForm = () => {
 
 
     const displayData = localCartData.length > 0 ? localCartData : cartData;
+
+    // Calculate charges
+    const extra4XLCharge = displayData
+        .filter(item => item.size === "xxxxl")
+        .reduce((sum, item) => sum + (100 * (item.quantity || 1)), 0);
+
     const totalPrice = displayData.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
     const deliveryCharge = calculateDeliveryCharge(selectedDistrict, displayData);
-    const subtotal = totalPrice;
+    const subtotal = totalPrice + extra4XLCharge;
     const totalAmount = subtotal + deliveryCharge;
     const remainingAmount = totalAmount - advanceAmount;
 
@@ -112,11 +117,11 @@ const OrderForm = () => {
             // Get cart items from localStorage with proper size handling
             const cartItems = JSON.parse(localStorage.getItem('cart') || '[]').map(item => ({
                 title: item.title,
-                size: item.size || null,  // Use null instead of 'N/A' for better data consistency
+                size: item.size || null,
                 quantity: item.quantity,
                 price: item.price,
                 productId: item.productId,
-                mainImage: item.mainImage  // Changed from productImg to mainImage to match your cart structure
+                mainImage: item.mainImage
             }));
 
             const orderDetails = {
@@ -127,10 +132,9 @@ const OrderForm = () => {
                 cartItems,
                 orderDate: new Date().toISOString(),
                 status: 'pending',
-                deliveryCharge
+                deliveryCharge,
+                extra4XLCharge
             };
-
-            console.log("Submitting order:", orderDetails);  // Debug log
 
             const orderResponse = await axios.post(
                 `${import.meta.env.VITE_API_URL}/orderdetails`,
@@ -432,7 +436,7 @@ const OrderForm = () => {
                                             {item.title}
                                         </p>
                                         <p className='text-black font-normal text-xs sm:text-sm'>
-                                            ৳{item.price} 
+                                            ৳{item.price}
                                             {item.quantity > 1 && (
                                                 <span className="text-gray-500 ml-1">× {item.quantity}</span>
                                             )}
@@ -451,7 +455,7 @@ const OrderForm = () => {
                     </div>
 
                     {/* Order Summary */}
-                    <div className='space-y-1 sm:space-y-2'>
+                    <div className='space-y-1 sm:space-y-4'>
                         <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
                             <h1>Subtotal - {(localCartData.length > 0 ? localCartData : cartData).length} items</h1>
                             <p>৳{totalPrice}</p>
@@ -468,6 +472,14 @@ const OrderForm = () => {
                                 <p>৳{deliveryCharge}</p>
                             )}
                         </div>
+                        {
+                            extra4XLCharge > 0 && (
+                                <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
+                                    <h1>Extra for 4XL Size</h1>
+                                    <p>৳{extra4XLCharge}</p>
+                                </div>
+                            )
+                        }
                         <div className='flex font-normal text-xs sm:text-sm justify-between items-center'>
                             <h1>Advance Amount</h1>
                             <p>৳{advanceAmount}</p>

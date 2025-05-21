@@ -131,6 +131,15 @@ const SingleOrderDetails = () => {
                             <span className="text-gray-600">Delivery Charge</span>
                             <span>৳{data.deliveryCharge}</span>
                         </div>
+                        {
+                            data?.size === "xxxxl" ?
+                                <div className="flex justify-between">
+                                    <span className="text-gray-600">Extra For 4XL Size</span>
+                                    <span>৳{data.extra4XLCharge}</span>
+                                </div>
+                                :
+                                <></>
+                        }
                         <div className="flex justify-between">
                             <span className="text-gray-600">Advance</span>
                             <span>৳{data.advanceAmount}</span>
