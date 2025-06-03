@@ -17,6 +17,7 @@ import DeliveredOrders from "../Pages/DashBoard/DashPages/DeliveredOrders/Delive
 import CancelledOrders from "../Pages/DashBoard/DashPages/CancelledOrders/CancelledOrders";
 import ReturnedOrders from "../Pages/DashBoard/DashPages/ReturnedOrders/ReturnedOrders";
 import AddProduct from "../Pages/DashBoard/DashPages/AddProduct/AddProduct";
+import UpdateOrderDetails from "../Pages/UpdateOrderDetails/UpdateOrderDetails";
 
 export const router = createBrowserRouter([
     {
@@ -33,7 +34,6 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/singleproduct/:id",
-                // element: <PrivateRoute><SingleProduct /></PrivateRoute>,
                 element: <SingleProduct />
             },
             {
@@ -47,6 +47,10 @@ export const router = createBrowserRouter([
             {
                 path: "/single-order-details/:id",
                 element: <SingleOrderDetails />,
+            },
+            {
+                path: "/single-order-details/update-details/:id",
+                element: <UpdateOrderDetails />,
             },
             {
                 path: "/admin-dashboard",

@@ -1,9 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useParams } from "react-router";
+import { SquarePen } from "lucide-react";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { NavLink, useParams } from "react-router";
+import { useAuth } from "../../useAuth/useAuth";
 
 const SingleOrderDetails = () => {
     const { id } = useParams();
+    const { user } = useAuth()
 
     const { isLoading, error, data } = useQuery({
         queryKey: ['orderDetails', id],
@@ -42,7 +46,7 @@ const SingleOrderDetails = () => {
                 </div>
 
                 {/* Order Status */}
-                <div className="p-6 border-b">
+                <div className="p-6 border-b flex items-center justify-between">
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
                         <div>
                             <h2 className="text-lg font-semibold">Order Status</h2>
@@ -56,6 +60,15 @@ const SingleOrderDetails = () => {
                             </p>
                         </div>
                     </div>
+                    {
+                        user?.email === "gamerskit3859@gmail.com" ?
+                            <div className="flex items-center gap-6">
+                                <NavLink to={`/single-order-details/update-details/${data._id}`}><span><SquarePen size={18} /></span></NavLink>
+                                <span><RiDeleteBin5Line size={18} /></span>
+                            </div>
+                            :
+                            <></>
+                    }
                 </div>
 
                 {/* Order Summary */}
