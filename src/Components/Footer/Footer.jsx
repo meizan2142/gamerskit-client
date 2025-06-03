@@ -77,12 +77,6 @@ const Footer = () => {
                                     </Link>
                                 </li>
                                 <li>
-                                    {/* <NavLink
-                                        className="text-gray-600 transition hover:text-[#FFD700] "
-                                        to=''
-                                    >
-                                        <FiInstagram color='white' className='w-6 h-6' />
-                                    </NavLink> */}
                                     <Link
                                         to={{ pathname: "https://www.instagram.com/gamerskit.gg" }}
                                         onClick={(e) => {
@@ -125,6 +119,9 @@ const Footer = () => {
                                 </li>
                             ))}
                         </ul>
+                    </div>
+                    <div className='text-xs text-gray-400 text-start my-8 sm:text-center md:text-center lg:text-center'>
+                        Developed by <a className='font-bold' href='https://saif-portfolio-9c0a3.web.app' target='_blank'>Saif Sultan Mizan</a>
                     </div>
                 </div>
             </div>

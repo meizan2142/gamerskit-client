@@ -9,6 +9,7 @@ const SizeGuide = () => (
         <li><span className="font-semibold">XXL </span>= Chest 44 Length 30</li>
         <li><span className="font-semibold">3XL </span>= Chest 46 Length 31</li>
         <li><span className="font-semibold">4XL </span>= Chest 48 Length 32</li>
+        <li><span className="font-semibold">100 Tk extra for 4xl size</span></li>
     </ul>
 );
 
