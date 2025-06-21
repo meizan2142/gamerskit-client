@@ -158,15 +158,7 @@ const SingleProduct = () => {
                         <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[40px]">
                             {data.title}
                         </h1>
-                        {
-                            data?.name === "car"
-                                ? (
-                                    data?.title === "Nissan GTR Skyline 4WD (White-Grey) Dual Batteries"
-                                        ? <p>Price: ৳{data?.price} <span className="text-red-600 text-sm font-bold">(Stock Out)</span></p>
-                                        : <p>Price: ৳{data?.price} <span className="text-green-600 text-sm font-bold">(Free Home Delivery)</span></p>
-                                )
-                                : <p>Price: ৳{data?.price}</p>
-                        }
+                        <p className="font-bold">Price: <span className="text-green-500 text-xl">৳{data?.price}</span></p>
                         <p className="text-green-600 text-base font-semibold">
                             <strong className="font-bold text-xl text-black">Order Process:</strong><br />
                             {data?.name === "car" && "• RC Car: For order make 100 tk advance."}

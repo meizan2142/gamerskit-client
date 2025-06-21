@@ -19,6 +19,10 @@ const OrderForm = () => {
     const queryClient = useQueryClient();
     const [isCopied, setIsCopied] = useState(false);
     const [localCartData, setLocalCartData] = useState([]);
+    const [promoCode, setPromoCode] = useState('');
+    const [discount, setDiscount] = useState(0);
+    const [isValidPromo, setIsValidPromo] = useState(false);
+
 
     const handleCopy = async () => {
         try {
@@ -27,6 +31,17 @@ const OrderForm = () => {
             setTimeout(() => setIsCopied(false), 2000);
         } catch (err) {
             console.error("Failed to copy!", err);
+        }
+    };
+    const handleApplyPromo = () => {
+        if (promoCode.trim().toUpperCase() === 'PCBBD10') {
+            setDiscount(0.1); // 10% discount
+            setIsValidPromo(true);
+            toast.success('Promo code applied successfully!');
+        } else {
+            setDiscount(0);
+            setIsValidPromo(false);
+            toast.error('Invalid promo code');
         }
     };
 
@@ -51,11 +66,35 @@ const OrderForm = () => {
 
     const SPECIAL_CAR_MODELS = [
         'porsche 911 drift car 4wd (dual batteries)',
+        'ford mustang gt',
         'nissan gtr skyline 4wd (white-grey) dual batteries',
         'nissan gtr r34 rwd (dual battery & gyro stabilizer)',
         'nissan gtr mini drift car (red)',
         'porsche 911 mini drift car(black)'
     ];
+
+    const EXCLUDED_PROMO_PRODUCTS = [
+        "Nissan GTR R34 RWD (Dual battery & Gyro Stabilizer)",
+        "G2 Prestige 2025",
+        "Sentinels Jersey",
+        "F1 Red Bull 2024",
+        "Team Liquid Hand Sleeves",
+        "Fnatic Tshirt",
+        "F1 SHELL 2024",
+        "F1 MERCEDES 2024",
+        "Fnatic Hand Sleeves",
+        "Sentinels Hand Sleeves",
+        "Sentinels Tshirt",
+        "Team Liquid Mask",
+        "Sentinels Mask",
+        "G2 Mask",
+        "F1 SHELL 2025",
+        "Ford Mustang GT (1/16 scale)"
+    ];
+
+    const shouldShowPromoCode = !cartData.some(item =>
+        EXCLUDED_PROMO_PRODUCTS.includes(item.title)
+    );
 
     // Check if cart contains only cars
     const hasOnlyCars = (cartItems) => {
@@ -98,7 +137,7 @@ const OrderForm = () => {
 
     const displayData = localCartData.length > 0 ? localCartData : cartData;
 
-    // Calculate charges
+    // Modify your existing charge calculations to include discount
     const extra4XLCharge = displayData
         .filter(item => item.size === "xxxxl")
         .reduce((sum, item) => sum + (100 * (item.quantity || 1)), 0);
@@ -106,7 +145,8 @@ const OrderForm = () => {
     const totalPrice = displayData.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
     const deliveryCharge = calculateDeliveryCharge(selectedDistrict, displayData);
     const subtotal = totalPrice + extra4XLCharge;
-    const totalAmount = subtotal + deliveryCharge;
+    const discountAmount = isValidPromo ? subtotal * discount : 0;
+    const totalAmount = subtotal + deliveryCharge - discountAmount;
     const remainingAmount = totalAmount - advanceAmount;
 
 
@@ -229,7 +269,7 @@ const OrderForm = () => {
                                     </div>
 
                                     <div className="w-full">
-                                        <label htmlFor="name" className="text-sm sm:text-base font-bold">Name</label>
+                                        <label htmlFor="name" className="text-sm sm:text-base font-bold">Facebook/Instagram Name</label>
                                         <input
                                             defaultValue={user?.displayName}
                                             id="name"
@@ -486,12 +526,43 @@ const OrderForm = () => {
                         </div>
                     </div>
 
+                    {shouldShowPromoCode && (
+                        <div className="flex font-normal text-sm sm:text-base w-full items-center gap-2">
+                            <input
+                                type="text"
+                                className="border rounded-md p-2"
+                                name="promo"
+                                id="promo"
+                                placeholder="Enter Promo Code"
+                                value={promoCode}
+                                onChange={(e) => setPromoCode(e.target.value)}
+                            />
+                            <button
+                                className="border rounded-md py-2 px-4 bg-[#007AFF] text-white"
+                                onClick={handleApplyPromo}
+                            >
+                                Apply
+                            </button>
+                        </div>
+                    )}
+
+                    {/* Show discount if applied */}
+                    {isValidPromo && (
+                        <div className='flex font-normal text-sm sm:text-base justify-between items-center text-green-600'>
+                            <h1 className='font-bold text-base sm:text-[18px]'>Discount Applied (10%)</h1>
+                            <p className='flex items-center gap-1 sm:gap-2 font-bold text-base sm:text-lg'>
+                                <span className='text-[8px] sm:text-[10px] font-normal'>BDT</span>
+                                -৳{discountAmount.toFixed(2)}
+                            </p>
+                        </div>
+                    )}
+
                     {/* Total */}
                     <div className='flex font-normal text-sm sm:text-base justify-between items-center'>
                         <h1 className='font-bold text-base sm:text-[18px]'>Remaining Amount</h1>
                         <p className='flex items-center gap-1 sm:gap-2 font-bold text-base sm:text-lg'>
                             <span className='text-[8px] sm:text-[10px] font-normal'>BDT</span>
-                            ৳{(totalAmount - advanceAmount)}
+                            ৳{remainingAmount}
                         </p>
                     </div>
 
