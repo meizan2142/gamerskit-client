@@ -48,6 +48,7 @@ const StockJerseys = () => {
                             {/* Product Info */}
                             <div className="space-y-3">
                                 <h2 className="text-lg font-semibold text-gray-800 truncate">{data.title}</h2>
+                                <h2 className="text-base font-semibold text-gray-400 truncate">Last Updated : {data.modified}</h2>
 
                                 {/* Stock Summary */}
                                 <div className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">

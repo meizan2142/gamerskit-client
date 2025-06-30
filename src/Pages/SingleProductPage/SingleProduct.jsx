@@ -149,6 +149,28 @@ const SingleProduct = () => {
     });
     const isButtonDisabled = hasSizes && !selectedSize;
 
+    const EXCLUDED_OFFER_PRICE = [
+        "Nissan GTR R34 RWD (Dual battery & Gyro Stabilizer)",
+        "G2 Prestige 2025",
+        "Sentinels Jersey",
+        "F1 Red Bull 2024",
+        "Team Liquid Hand Sleeves",
+        "Fnatic Tshirt",
+        "F1 SHELL 2024",
+        "F1 MERCEDES 2024",
+        "Fnatic Hand Sleeves",
+        "Sentinels Hand Sleeves",
+        "Sentinels Tshirt",
+        "Team Liquid Mask",
+        "Sentinels Mask",
+        "G2 Mask",
+        "F1 SHELL 2025",
+        "Ford Mustang GT",
+        "Nissan GTR Skyline 4WD (White-Grey) Dual Batteries",
+        "Porsche 911 Drift Car 4WD (Dual Batteries)"
+    ];
+
+
     return (
         <div className="min-h-screen pt-12 md:pt-24">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-8 py-6">
@@ -158,7 +180,18 @@ const SingleProduct = () => {
                         <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[40px]">
                             {data.title}
                         </h1>
-                        <p className="font-bold">Price: <span className="text-green-500 text-xl">৳{data?.price}</span></p>
+                        {
+                            EXCLUDED_OFFER_PRICE.includes(data?.title) ?
+                                <>
+                                    <p className="font-bold">Price: <span className="text-green-500 text-xl">৳{data?.price}</span></p>
+                                </>
+                                :
+                                <>
+                                    <p className="font-bold">Regular Price: <span className="text-green-500 text-xl line-through">৳ 3500</span></p>
+                                    <p className="font-bold">Offer Price: <span className="text-green-500 text-xl">৳{data?.price}</span></p>
+                                    <p className="font-bold">Saved: <span className="text-green-500 text-xl">৳ 700</span></p>
+                                </>
+                        }
                         <p className="text-green-600 text-base font-semibold">
                             <strong className="font-bold text-xl text-black">Order Process:</strong><br />
                             {data?.name === "car" && "• RC Car: For order make 100 tk advance."}

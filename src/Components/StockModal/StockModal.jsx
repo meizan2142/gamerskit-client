@@ -85,11 +85,17 @@ const StockModal = ({ data }) => {
             return;
         }
 
+        const updatedAt = new Date().toLocaleString('en-US', {
+            month: 'numeric',
+            day: 'numeric',
+            year: 'numeric'
+        }).replace(',', '');
+
         const payload = {
             openingStock: openingStock,
             closingStock: closingStock,
             sizeValues: sizeValues,
-            modified: new Date().toISOString()
+            modified: updatedAt
         };
 
         await updateStock({ id: data._id, payload });

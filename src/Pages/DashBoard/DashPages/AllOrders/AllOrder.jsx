@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2'
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Eye } from "lucide-react";
@@ -20,24 +21,54 @@ const AllOrder = () => {
         },
     });
 
-    const deleteOrder = async (orderId) => {
-        try {
-            setDeletingId(orderId); // Set the ID of the order being deleted
-            await axios.delete(`${import.meta.env.VITE_API_URL}/orderdetails/${orderId}`);
-            queryClient.invalidateQueries(['orders']);
-        } catch (error) {
-            console.error('Error deleting order:', error);
-            // Add error handling (e.g., show a toast notification)
-        } finally {
-            setDeletingId(null); // Reset the deleting state regardless of success or failure
+    const handleDeleteClick = async (orderId) => {
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        });
+
+        if (result.isConfirmed) {
+            try {
+                setDeletingId(orderId);
+                await axios.delete(`${import.meta.env.VITE_API_URL}/orderdetails/${orderId}`);
+                await queryClient.invalidateQueries(['orders']);
+
+                await Swal.fire({
+                    title: "Deleted!",
+                    text: "Your order has been deleted.",
+                    icon: "success"
+                });
+            } catch (error) {
+                console.error('Error deleting order:', error);
+                await Swal.fire({
+                    title: "Error!",
+                    text: "Failed to delete the order.",
+                    icon: "error"
+                });
+            } finally {
+                setDeletingId(null);
+            }
         }
     };
 
     const updateOrderStatus = async (orderId, newStatus) => {
+        const updatedAt = new Date().toLocaleString('en-US', {
+            month: 'numeric',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true
+        }).replace(',', '');
         try {
             await axios.patch(`${import.meta.env.VITE_API_URL}/orderdetails/${orderId}`, {
                 status: newStatus,
-                updatedAt: new Date().toISOString() // Add current timestamp
+                updatedAt: updatedAt
             });
             queryClient.invalidateQueries(['orders']);
         } catch (error) {
@@ -104,7 +135,7 @@ const AllOrder = () => {
                                             </td>
                                             <td className="py-4 px-6 border-b space-y-1">
                                                 <button
-                                                    onClick={() => deleteOrder(item._id)}
+                                                    onClick={() => handleDeleteClick(item._id)}
                                                     className="text-gray-500 hover:text-red-500 flex items-center gap-1"
                                                     disabled={deletingId === item._id}
                                                 >
