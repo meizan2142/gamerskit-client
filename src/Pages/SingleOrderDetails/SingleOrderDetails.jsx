@@ -28,12 +28,6 @@ const SingleOrderDetails = () => {
     </div>;
     if (error) return <div className="p-6 text-red-500">Error: {error.message}</div>;
 
-    // Format date to be more readable
-    const formatDate = (dateString) => {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        return new Date(dateString).toLocaleDateString(undefined, options);
-    };
-
     return (
         <div className="pt-20 md:pt-20 lg:pt-24 px-4 sm:px-6 md:px-10 space-y-6 md:space-y-10 min-h-screen">
             <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
@@ -41,7 +35,7 @@ const SingleOrderDetails = () => {
                 <div className="bg-[#1A1A1A] p-6 text-white space-y-2">
                     <h1 className="text-2xl font-bold">Order #{data?._id}</h1>
                     <p className="text-blue-100">
-                        Placed on {formatDate(data.orderDate)}
+                        Placed on {data?.orderDate}
                     </p>
                 </div>
 
