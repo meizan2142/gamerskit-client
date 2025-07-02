@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Eye, ShoppingBasket } from "lucide-react";
+import { Eye } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 const MyOrders = () => {
