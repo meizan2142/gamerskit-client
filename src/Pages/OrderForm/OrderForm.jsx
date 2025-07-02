@@ -128,7 +128,7 @@ const OrderForm = () => {
                 mainImage: item.mainImage
             }));
 
-            const updatedAt = new Date().toLocaleString('en-US', {
+            const orderDate = new Date().toLocaleString('en-US', {
                 month: 'numeric',
                 day: 'numeric',
                 year: 'numeric',
@@ -143,7 +143,7 @@ const OrderForm = () => {
                 advanceAmount,
                 remainingAmount,
                 cartItems,
-                orderDate: updatedAt,
+                orderDate: orderDate,
                 status: 'pending',
                 deliveryCharge,
                 extra4XLCharge

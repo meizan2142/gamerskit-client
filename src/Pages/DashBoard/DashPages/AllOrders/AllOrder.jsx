@@ -65,6 +65,7 @@ const AllOrder = () => {
             minute: 'numeric',
             hour12: true
         }).replace(',', '');
+
         try {
             await axios.patch(`${import.meta.env.VITE_API_URL}/orderdetails/${orderId}`, {
                 status: newStatus,

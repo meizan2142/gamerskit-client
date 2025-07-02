@@ -35,8 +35,18 @@ const SingleOrderDetails = () => {
                 <div className="bg-[#1A1A1A] p-6 text-white space-y-2">
                     <h1 className="text-2xl font-bold">Order #{data?._id}</h1>
                     <p className="text-blue-100">
-                        Placed on {data?.orderDate}
+                        Order Placed on {data?.orderDate}
                     </p>
+                    {
+                        data?.updatedAt ?
+                            <>
+                                <p className="text-green-400">
+                                    Rider picked up the parcel on {data?.updatedAt}
+                                </p>
+                            </>
+                            :
+                            <></>
+                    }
                 </div>
 
                 {/* Order Status */}
