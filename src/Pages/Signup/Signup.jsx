@@ -18,7 +18,6 @@ const Signup = () => {
 
     // OnSubmit function
     const onSubmit = async (data) => {
-        console.log(data);
         try {
             setLoading(true);
             // User registration with Firebase

@@ -5,12 +5,25 @@ import { Badge } from "@mui/material";
 import ProductCart from "../ProductCart/ProductCart";
 import mainLogo from '/src/assets/logo-icon.png';
 import { useAuth } from "../../useAuth/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isCartOpen, setIsCartOpen] = useState(false);
     const { user, logOut } = useAuth();
     const [cartCount, setCartCount] = useState(0)
+    const [newUser, setNewUser] = useState(null);
+
+
+    const { data: users = [] } = useQuery({
+        queryKey: ['users'],
+        queryFn: async () => {
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/users`);
+            return response.data;
+        },
+    });
+
 
     useEffect(() => {
         const updateCartCount = () => {
@@ -32,8 +45,17 @@ const Navbar = () => {
         return () => window.removeEventListener('storage', handleStorageChange);
     }, []);
 
+    // Find matching user when either user or users data changes
+    useEffect(() => {
+        if (!user?.email || users.length === 0) return;
 
-
+        const matchedUser = users.find(u => u.email === user.email);
+        if (matchedUser) {
+            setNewUser(matchedUser);
+        } else {
+            console.log("No user found with email:");
+        }
+    }, [user, users]);
 
     return (
         <>
@@ -94,41 +116,40 @@ const Navbar = () => {
                                     Shop
                                 </NavLink>
                             </li>
-
-                            {/* Show Dashboard only for admin */}
-                            {user?.email === "gamerskit3859@gmail.com" && (
-                                <li>
-                                    <NavLink
-                                        to="/dashboard/pending-orders"
-                                        onClick={() => setIsOpen(false)}
-                                        className={({ isActive }) =>
-                                            isActive
-                                                ? "font-bold text-white text-sm sm:text-base border-b-2 border-[#FFD700]"
-                                                : "text-gray-300 hover:text-[#FFD700] transition text-sm sm:text-base"
-                                        }
-                                    >
-                                        Dashboard
-                                    </NavLink>
-                                </li>
-                            )}
-
-                            {/* Show My Orders for all logged-in users except admin */}
-                            {user?.email !== "gamerskit3859@gmail.com" && (
-                                <li>
-                                    <NavLink
-                                        to="/my-orders"
-                                        onClick={() => setIsOpen(false)}
-                                        className={({ isActive }) =>
-                                            isActive
-                                                ? "font-bold text-white text-sm sm:text-base border-b-2 border-[#FFD700]"
-                                                : "text-gray-300 hover:text-[#FFD700] transition text-sm sm:text-base"
-                                        }
-                                    >
-                                        My Orders
-                                    </NavLink>
-                                </li>
-                            )}
-
+                            {
+                                newUser?.role === "admin" ?
+                                    <>
+                                        <li>
+                                            <NavLink
+                                                to="/dashboard/pending-orders"
+                                                onClick={() => setIsOpen(false)}
+                                                className={({ isActive }) =>
+                                                    isActive
+                                                        ? "font-bold text-white text-sm sm:text-base border-b-2 border-[#FFD700]"
+                                                        : "text-gray-300 hover:text-[#FFD700] transition text-sm sm:text-base"
+                                                }
+                                            >
+                                                Dashboard
+                                            </NavLink>
+                                        </li>
+                                    </>
+                                    :
+                                    <>
+                                        <li>
+                                            <NavLink
+                                                to="/my-orders"
+                                                onClick={() => setIsOpen(false)}
+                                                className={({ isActive }) =>
+                                                    isActive
+                                                        ? "font-bold text-white text-sm sm:text-base border-b-2 border-[#FFD700]"
+                                                        : "text-gray-300 hover:text-[#FFD700] transition text-sm sm:text-base"
+                                                }
+                                            >
+                                                My Orders
+                                            </NavLink>
+                                        </li>
+                                    </>
+                            }
                             {/* Mobile signout button */}
                             {user && (
                                 <button
