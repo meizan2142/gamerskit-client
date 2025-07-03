@@ -23,6 +23,7 @@ const SingleOrderDetails = () => {
             }
         },
     });
+
     if (isLoading) return <div className="p-6 text-white flex flex-col items-center">
         <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
     </div>;
@@ -38,7 +39,7 @@ const SingleOrderDetails = () => {
                         Order Placed on {data?.orderDate}
                     </p>
                     {
-                        data?.updatedAt ?
+                        data?.updatedAt  && data?.status === "delivered" ?
                             <>
                                 <p className="text-green-400">
                                     Rider picked up the parcel on {data?.updatedAt}
