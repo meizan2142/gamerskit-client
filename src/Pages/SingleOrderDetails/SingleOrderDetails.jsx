@@ -1,13 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { SquarePen } from "lucide-react";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { NavLink, useParams } from "react-router";
+import { NavLink, useNavigate, useParams } from "react-router";
 import { useAuth } from "../../useAuth/useAuth";
+import Swal from "sweetalert2";
+import { useState } from "react";
 
 const SingleOrderDetails = () => {
     const { id } = useParams();
     const { user } = useAuth()
+    const navigate = useNavigate()
+    const queryClient = useQueryClient();
+    const [deletingId, setDeletingId] = useState(null)
 
     const { isLoading, error, data } = useQuery({
         queryKey: ['orderDetails', id],
@@ -24,6 +29,42 @@ const SingleOrderDetails = () => {
         },
     });
 
+    const handleDeleteClick = async (orderId) => {
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        });
+
+        if (result.isConfirmed) {
+            try {
+                setDeletingId(orderId);
+                await axios.delete(`${import.meta.env.VITE_API_URL}/orderdetails/${orderId}`);
+                await queryClient.invalidateQueries(['orders']);
+                await Swal.fire({
+                    title: "Deleted!",
+                    text: "Your order has been deleted.",
+                    icon: "success"
+                });
+
+                setTimeout(() => navigate('/dashboard/all-orders'), 500);
+            } catch (error) {
+                console.error('Error deleting order:', error);
+                await Swal.fire({
+                    title: "Error!",
+                    text: "Failed to delete the order.",
+                    icon: "error"
+                });
+            } finally {
+                setDeletingId(null);
+            }
+        }
+    };
+
     if (isLoading) return <div className="p-6 text-white flex flex-col items-center">
         <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
     </div>;
@@ -39,7 +80,7 @@ const SingleOrderDetails = () => {
                         Order Placed on {data?.orderDate}
                     </p>
                     {
-                        data?.updatedAt  && data?.status === "delivered" ?
+                        data?.updatedAt && data?.status === "delivered" ?
                             <>
                                 <p className="text-green-400">
                                     Rider picked up the parcel on {data?.updatedAt}
@@ -69,7 +110,21 @@ const SingleOrderDetails = () => {
                         user?.email === "gamerskit3859@gmail.com" ?
                             <div className="flex items-center gap-6">
                                 <NavLink to={`/single-order-details/update-details/${data._id}`}><span><SquarePen size={18} /></span></NavLink>
-                                <span><RiDeleteBin5Line size={18} /></span>
+                                <div className="py-4 px-6 space-y-1">
+                                    <button
+                                        onClick={() => handleDeleteClick(data._id)}  // Changed from item._id to data._id
+                                        className="text-gray-500 hover:text-red-500 flex items-center gap-1"
+                                        disabled={deletingId === data._id}
+                                    >
+                                        {deletingId === data._id ? (
+                                            <>
+                                                <span>Deleting...</span>
+                                            </>
+                                        ) : (
+                                            <RiDeleteBin5Line size={18} />
+                                        )}
+                                    </button>
+                                </div>
                             </div>
                             :
                             <></>

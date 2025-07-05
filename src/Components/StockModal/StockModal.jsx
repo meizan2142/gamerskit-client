@@ -10,11 +10,20 @@ const StockModal = ({ data }) => {
     const [soldProducts, setSoldProducts] = useState(0);
     const [closingStock, setClosingStock] = useState(0);
     const [sizeValues, setSizeValues] = useState(data.sizes || {});
+const [perPiecePrice, setPerPiecePrice] = useState(data.price || 0);
+const [totalPrice, setTotalPrice] = useState((data.price || 0) * (data.totalSizes || 0));
+
+    const handlePerPiecePriceChange = (e) => {
+        const value = Number(e.target.value) || 0;
+        setPerPiecePrice(value);
+        setTotalPrice(value * openingStock);
+    };
 
     const handleOpeningStockChange = (e) => {
         const value = Number(e.target.value) || 0;
         setOpeningStock(value);
         setClosingStock(value - soldProducts);
+        setTotalPrice(perPiecePrice * value);
     };
 
     const handleSoldProductsChange = (e) => {
@@ -29,7 +38,6 @@ const StockModal = ({ data }) => {
             [size]: Number(value) || 0
         }));
     };
-
 
     const { mutateAsync: updateStock, isPending } = useMutation({
         mutationFn: async ({ id, payload }) => {
@@ -54,7 +62,8 @@ const StockModal = ({ data }) => {
                             totalSizes: variables.payload.openingStock,
                             leftProducts: variables.payload.closingStock,
                             sizes: variables.payload.sizeValues,
-                            modified: variables.payload.modified
+                            modified: variables.payload.modified,
+                            price: variables.payload.perPiecePrice
                         }
                         : product
                 );
@@ -95,7 +104,8 @@ const StockModal = ({ data }) => {
             openingStock: openingStock,
             closingStock: closingStock,
             sizeValues: sizeValues,
-            modified: updatedAt
+            modified: updatedAt,
+            perPiecePrice: perPiecePrice
         };
 
         await updateStock({ id: data._id, payload });
@@ -198,6 +208,40 @@ const StockModal = ({ data }) => {
                                         className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-gray-600 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-gray-600 dark:bg-gray-900 dark:text-gray-400 dark:peer-focus:text-gray-400"
                                     >
                                         Closing Stock
+                                    </label>
+                                </div>
+                                {/* Per Piece price */}
+                                <div className="relative mt-4">
+                                    <input
+                                        value={perPiecePrice}
+                                        onChange={handlePerPiecePriceChange}
+                                        id="perPiecePrice"
+                                        type="number"
+                                        className="peer w-full rounded-md border border-gray-300 bg-transparent px-4 py-2.5 text-gray-900 placeholder-transparent focus:outline-none focus:ring-1 focus:ring-gray-500 dark:border-gray-700 dark:text-white"
+                                        placeholder="Per Piece Price"
+                                    />
+                                    <label
+                                        htmlFor="perPiecePrice"
+                                        className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-gray-600 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-gray-600 dark:bg-gray-900 dark:text-gray-400 dark:peer-focus:text-gray-400"
+                                    >
+                                        Per Piece Price
+                                    </label>
+                                </div>
+                                {/* Total Price = perPiecePrice * openingstock */}
+                                <div className="relative mt-4">
+                                    <input
+                                        value={totalPrice}
+                                        id="totalPrice"
+                                        type="number"
+                                        readOnly
+                                        className="peer w-full rounded-md border border-gray-300 bg-transparent px-4 py-2.5 text-gray-900 placeholder-transparent focus:outline-none focus:ring-1 focus:ring-gray-500 dark:border-gray-700 dark:text-white"
+                                        placeholder="Total Price"
+                                    />
+                                    <label
+                                        htmlFor="totalPrice"
+                                        className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-gray-600 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-gray-600 dark:bg-gray-900 dark:text-gray-400 dark:peer-focus:text-gray-400"
+                                    >
+                                        Total Price
                                     </label>
                                 </div>
                                 {/* Different Sizes */}

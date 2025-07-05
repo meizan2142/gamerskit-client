@@ -115,12 +115,16 @@ const PendingOrders = () => {
                                 </td>
                                 <td className="py-4 px-6 border-b text-center">৳{item.advanceAmount}</td>
                                 <td className="py-4 px-6 border-b text-center">৳{item.remainingAmount}</td>
-                                <td className="py-4 px-6 border-b space-y-1">
-                                    <NavLink to={`/single-order-details/${item._id}`}>
-                                        <Eye />
+                                <td className="py-4 px-6 border-b text-center">
+                                    <NavLink to={`/single-order-details/${item._id}`} className="inline-block">
+                                        <Eye className="text-blue-500 hover:text-blue-700" />
                                     </NavLink>
                                 </td>
-                                <td className="py-4 px-6 border-b text-center text-yellow-400 text-xl rounded-full">{item.status}</td>
+                                <td className="py-4 px-6 border-b text-center">
+                                    <span className="inline-block px-3 py-1 bg-yellow-100 text-black rounded-full text-sm">
+                                        {item.status}
+                                    </span>
+                                </td>
                             </tr>
                         ))
                     }

@@ -1,15 +1,11 @@
-import Swal from 'sweetalert2'
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Eye } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import { RiDeleteBin5Line } from "react-icons/ri";
 import Status from "../../../../Components/Status/Status";
-import { useState } from "react";
 
 const AllOrder = () => {
     const queryClient = useQueryClient();
-    const [deletingId, setDeletingId] = useState(null)
 
     const { isLoading, error, data: allOrders = [] } = useQuery({
         queryKey: ['orders'],
@@ -21,40 +17,6 @@ const AllOrder = () => {
         },
     });
 
-    const handleDeleteClick = async (orderId) => {
-        const result = await Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        });
-
-        if (result.isConfirmed) {
-            try {
-                setDeletingId(orderId);
-                await axios.delete(`${import.meta.env.VITE_API_URL}/orderdetails/${orderId}`);
-                await queryClient.invalidateQueries(['orders']);
-
-                await Swal.fire({
-                    title: "Deleted!",
-                    text: "Your order has been deleted.",
-                    icon: "success"
-                });
-            } catch (error) {
-                console.error('Error deleting order:', error);
-                await Swal.fire({
-                    title: "Error!",
-                    text: "Failed to delete the order.",
-                    icon: "error"
-                });
-            } finally {
-                setDeletingId(null);
-            }
-        }
-    };
 
     const updateOrderStatus = async (orderId, newStatus) => {
         const updatedAt = new Date().toLocaleString('en-US', {
@@ -107,7 +69,6 @@ const AllOrder = () => {
                                     <th className="py-3 px-6 border-b text-center">Remaining Amount</th>
                                     <th className="py-3 px-6 text-left border-b">Check Details</th>
                                     <th className="py-3 px-6 text-left border-b">Status</th>
-                                    <th className="py-3 px-6 text-left border-b">Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -125,29 +86,13 @@ const AllOrder = () => {
                                             </td>
                                             <td className="py-4 px-6 border-b text-center">৳{item.advanceAmount}</td>
                                             <td className="py-4 px-6 border-b text-center">৳{item.remainingAmount}</td>
-                                            <td className="py-4 px-6 border-b space-y-1">
-                                                <NavLink to={`/single-order-details/${item._id}`}>
-                                                    <Eye />
+                                            <td className="py-4 px-6 border-b text-center">
+                                                <NavLink to={`/single-order-details/${item._id}`} className="inline-block">
+                                                    <Eye className="text-blue-500 hover:text-blue-700" />
                                                 </NavLink>
                                             </td>
-                                            {/* <td className="py-4 px-6 border-b text-center">{item.status}</td> */}
                                             <td className="py-4 px-6 border-b text-center">
                                                 <Status item={item} onStatusChange={updateOrderStatus} />
-                                            </td>
-                                            <td className="py-4 px-6 border-b space-y-1">
-                                                <button
-                                                    onClick={() => handleDeleteClick(item._id)}
-                                                    className="text-gray-500 hover:text-red-500 flex items-center gap-1"
-                                                    disabled={deletingId === item._id}
-                                                >
-                                                    {deletingId === item._id ? (
-                                                        <>
-                                                            <span>Deleting...</span>
-                                                        </>
-                                                    ) : (
-                                                        <RiDeleteBin5Line size={18} />
-                                                    )}
-                                                </button>
                                             </td>
                                         </tr>
                                     ))
