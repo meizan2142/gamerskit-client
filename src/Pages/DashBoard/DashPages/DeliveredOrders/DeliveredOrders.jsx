@@ -1,15 +1,48 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Eye } from "lucide-react";
-import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { NavLink, useSearchParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const DeliveredOrders = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [selectedTitle, setSelectedTitle] = useState("all");
+
+    // Initialize filters from URL params on component mount
+    useEffect(() => {
+        const paramsStartDate = searchParams.get('startDate');
+        const paramsEndDate = searchParams.get('endDate');
+        const paramsTitle = searchParams.get('title');
+
+        if (paramsStartDate) setStartDate(new Date(paramsStartDate));
+        if (paramsEndDate) setEndDate(new Date(paramsEndDate));
+        if (paramsTitle) setSelectedTitle(paramsTitle);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // Update URL params when filters change
+    useEffect(() => {
+        const params = new URLSearchParams();
+
+        if (startDate) params.set('startDate', startDate.toISOString());
+        if (endDate) params.set('endDate', endDate.toISOString());
+        if (selectedTitle && selectedTitle !== "all") params.set('title', selectedTitle);
+
+        setSearchParams(params, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [startDate, endDate, selectedTitle]);
+
+    // Clear all filters
+    const handleClearFilters = () => {
+        setStartDate(null);
+        setEndDate(null);
+        setSelectedTitle("all");
+        setSearchParams(new URLSearchParams(), { replace: true });
+    };
 
     const { isLoading, error, data: allOrders = [] } = useQuery({
         queryKey: ['delivered'],
@@ -21,24 +54,32 @@ const DeliveredOrders = () => {
         },
     });
 
-    const delivered = allOrders.filter(d =>
-        d?.status === "delivered"
-    );
-
-    // Filter by date range
-    const filteredByDate = delivered.filter(order => {
-        if (!startDate && !endDate) return true;
-        const orderDate = new Date(order.orderDate);
-        return (
-            (!startDate || orderDate >= startDate) &&
-            (!endDate || orderDate <= endDate)
-        );
+    const { data: products = [] } = useQuery({
+        queryKey: ['products'],
+        queryFn: async () => {
+            const response = await axios.get(
+                `${import.meta.env.VITE_API_URL}/addedProducts`
+            );
+            return response.data;
+        },
     });
 
-    // Filter by search term
-    const filteredOrders = filteredByDate.filter(order =>
-        order.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // Filter delivered orders
+    const delivered = allOrders.filter(d => d?.status === "delivered");
+
+    // Filter by date range and title
+    const filteredOrders = delivered.filter(order => {
+        // Date filtering
+        const dateMatch = (!startDate && !endDate) ||
+            (new Date(order.orderDate) >= (startDate || new Date(0)) &&
+                (new Date(order.orderDate) <= (endDate || new Date(8640000000000000))));
+
+        // Title filtering
+        const titleMatch = selectedTitle === "all" ||
+            order.cartItems.some(item => item.title === selectedTitle);
+
+        return dateMatch && titleMatch;
+    });
 
     // Calculate totals
     const totalQuantity = filteredOrders.reduce(
@@ -93,26 +134,27 @@ const DeliveredOrders = () => {
                             placeholderText="End Date"
                             className="p-2 border rounded"
                         />
-                        {(startDate || endDate) && (
-                            <button
-                                onClick={() => {
-                                    setStartDate(null);
-                                    setEndDate(null);
-                                }}
-                                className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
-                            >
-                                Clear
-                            </button>
-                        )}
                     </div>
-
-                    <input
-                        type="text"
-                        placeholder="Search by name..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
+                    <select
+                        name="title"
+                        id="title"
                         className="p-2 border rounded w-full md:w-64"
-                    />
+                        value={selectedTitle}
+                        onChange={(e) => setSelectedTitle(e.target.value)}
+                    >
+                        <option value="all">All Products</option>
+                        {products.map((product) => (
+                            <option key={product._id} value={product.title}>
+                                {product.title}
+                            </option>
+                        ))}
+                    </select>
+                    <button
+                        onClick={handleClearFilters}
+                        className="px-4 py-2 bg-blue-400 rounded transition-colors"
+                    >
+                        Clear Filters
+                    </button>
                 </div>
 
                 <div className="flex flex-col md:flex-row gap-6 items-center">
