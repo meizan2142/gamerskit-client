@@ -21,7 +21,7 @@ const DeliveredOrders = () => {
         if (paramsStartDate) setStartDate(new Date(paramsStartDate));
         if (paramsEndDate) setEndDate(new Date(paramsEndDate));
         if (paramsTitle) setSelectedTitle(paramsTitle);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Update URL params when filters change
@@ -33,7 +33,7 @@ const DeliveredOrders = () => {
         if (selectedTitle && selectedTitle !== "all") params.set('title', selectedTitle);
 
         setSearchParams(params, { replace: true });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [startDate, endDate, selectedTitle]);
 
     // Clear all filters
@@ -111,30 +111,36 @@ const DeliveredOrders = () => {
             </div>
 
             {/* Filters Section */}
-            <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-                <div className="flex flex-col md:flex-row gap-4 items-center">
-                    <div className="flex items-center gap-2">
-                        <DatePicker
-                            selected={startDate}
-                            onChange={(date) => setStartDate(date)}
-                            selectsStart
-                            startDate={startDate}
-                            endDate={endDate}
-                            placeholderText="Start Date"
-                            className="p-2 border rounded"
-                        />
-                        <span>to</span>
-                        <DatePicker
-                            selected={endDate}
-                            onChange={(date) => setEndDate(date)}
-                            selectsEnd
-                            startDate={startDate}
-                            endDate={endDate}
-                            minDate={startDate}
-                            placeholderText="End Date"
-                            className="p-2 border rounded"
-                        />
+            <div className="flex flex-col gap-4 mb-6">
+                {/* First Row - Filters */}
+                <div className="flex flex-col md:flex-row gap-4 w-full">
+                    {/* Date Range Picker */}
+                    <div className="flex flex-col sm:flex-row gap-2 items-center w-full md:w-auto">
+                        <div className="flex items-center gap-2 w-full sm:w-auto">
+                            <DatePicker
+                                selected={startDate}
+                                onChange={(date) => setStartDate(date)}
+                                selectsStart
+                                startDate={startDate}
+                                endDate={endDate}
+                                placeholderText="Start Date"
+                                className="p-2 border rounded w-full sm:w-40"
+                            />
+                            <span className="hidden sm:inline">to</span>
+                            <DatePicker
+                                selected={endDate}
+                                onChange={(date) => setEndDate(date)}
+                                selectsEnd
+                                startDate={startDate}
+                                endDate={endDate}
+                                minDate={startDate}
+                                placeholderText="End Date"
+                                className="p-2 border rounded w-full sm:w-40"
+                            />
+                        </div>
                     </div>
+
+                    {/* Product Select */}
                     <select
                         name="title"
                         id="title"
@@ -149,27 +155,41 @@ const DeliveredOrders = () => {
                             </option>
                         ))}
                     </select>
+
+                    {/* Clear Button - Only visible on md and larger screens */}
                     <button
                         onClick={handleClearFilters}
-                        className="px-4 py-2 bg-blue-400 rounded transition-colors"
+                        className="hidden md:block px-4 py-2 bg-blue-400 hover:bg-blue-500 text-white rounded transition-colors whitespace-nowrap"
                     >
                         Clear Filters
                     </button>
                 </div>
 
-                <div className="flex flex-col md:flex-row gap-6 items-center">
-                    <div className="text-center">
-                        <p className="font-semibold">Total Orders</p>
-                        <p className="text-xl">{filteredOrders.length}</p>
+                {/* Second Row - Stats and Mobile Clear Button */}
+                <div className="flex flex-col-reverse sm:flex-row justify-between items-center gap-4">
+                    {/* Stats */}
+                    <div className="flex flex-wrap justify-center gap-4 sm:gap-6 w-full sm:w-auto">
+                        <div className="text-center min-w-[100px]">
+                            <p className="font-semibold text-sm sm:text-base">Total Orders</p>
+                            <p className="text-lg sm:text-xl">{filteredOrders.length}</p>
+                        </div>
+                        <div className="text-center min-w-[100px]">
+                            <p className="font-semibold text-sm sm:text-base">Total Quantity</p>
+                            <p className="text-lg sm:text-xl">{totalQuantity}</p>
+                        </div>
+                        <div className="text-center min-w-[100px]">
+                            <p className="font-semibold text-sm sm:text-base">Total Amount</p>
+                            <p className="text-lg sm:text-xl">{totalAmount}</p>
+                        </div>
                     </div>
-                    <div className="text-center">
-                        <p className="font-semibold">Total Quantity</p>
-                        <p className="text-xl">{totalQuantity}</p>
-                    </div>
-                    <div className="text-center">
-                        <p className="font-semibold">Total Amount</p>
-                        <p className="text-xl">{totalAmount}</p>
-                    </div>
+
+                    {/* Clear Button - Only visible on mobile */}
+                    <button
+                        onClick={handleClearFilters}
+                        className="md:hidden px-4 py-2 bg-blue-400 hover:bg-blue-500 text-white rounded transition-colors w-full sm:w-auto"
+                    >
+                        Clear Filters
+                    </button>
                 </div>
             </div>
 

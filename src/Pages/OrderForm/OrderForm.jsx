@@ -154,6 +154,15 @@ const OrderForm = () => {
         try {
             setIsSubmitting(true);
 
+            const updatedAt = new Date().toLocaleString('en-US', {
+                month: 'numeric',
+                day: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true
+            }).replace(',', '');
+
             // Get cart items from localStorage with proper size handling
             const cartItems = JSON.parse(localStorage.getItem('cart') || '[]').map(item => ({
                 title: item.title,
@@ -170,7 +179,7 @@ const OrderForm = () => {
                 advanceAmount,
                 remainingAmount,
                 cartItems,
-                orderDate: new Date().toISOString(),
+                orderDate: updatedAt,
                 status: 'pending',
                 deliveryCharge,
                 extra4XLCharge,

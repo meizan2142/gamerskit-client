@@ -63,7 +63,8 @@ const [totalPrice, setTotalPrice] = useState((data.price || 0) * (data.totalSize
                             leftProducts: variables.payload.closingStock,
                             sizes: variables.payload.sizeValues,
                             modified: variables.payload.modified,
-                            price: variables.payload.perPiecePrice
+                            perPiecePrice: variables.payload.perPiecePrice,
+                            totalPrice: variables.payload.totalPrice 
                         }
                         : product
                 );
@@ -100,13 +101,15 @@ const [totalPrice, setTotalPrice] = useState((data.price || 0) * (data.totalSize
             year: 'numeric'
         }).replace(',', '');
 
-        const payload = {
-            openingStock: openingStock,
-            closingStock: closingStock,
-            sizeValues: sizeValues,
-            modified: updatedAt,
-            perPiecePrice: perPiecePrice
-        };
+    const payload = {
+        openingStock: openingStock,
+        closingStock: closingStock,
+        sizeValues: sizeValues,
+        modified: updatedAt,
+        perPiecePrice: perPiecePrice,
+        totalPrice: totalPrice
+    };
+
 
         await updateStock({ id: data._id, payload });
     };
@@ -213,12 +216,10 @@ const [totalPrice, setTotalPrice] = useState((data.price || 0) * (data.totalSize
                                 {/* Per Piece price */}
                                 <div className="relative mt-4">
                                     <input
-                                        value={perPiecePrice}
                                         onChange={handlePerPiecePriceChange}
                                         id="perPiecePrice"
                                         type="number"
                                         className="peer w-full rounded-md border border-gray-300 bg-transparent px-4 py-2.5 text-gray-900 placeholder-transparent focus:outline-none focus:ring-1 focus:ring-gray-500 dark:border-gray-700 dark:text-white"
-                                        placeholder="Per Piece Price"
                                     />
                                     <label
                                         htmlFor="perPiecePrice"
@@ -230,12 +231,9 @@ const [totalPrice, setTotalPrice] = useState((data.price || 0) * (data.totalSize
                                 {/* Total Price = perPiecePrice * openingstock */}
                                 <div className="relative mt-4">
                                     <input
-                                        value={totalPrice}
                                         id="totalPrice"
                                         type="number"
-                                        readOnly
                                         className="peer w-full rounded-md border border-gray-300 bg-transparent px-4 py-2.5 text-gray-900 placeholder-transparent focus:outline-none focus:ring-1 focus:ring-gray-500 dark:border-gray-700 dark:text-white"
-                                        placeholder="Total Price"
                                     />
                                     <label
                                         htmlFor="totalPrice"
