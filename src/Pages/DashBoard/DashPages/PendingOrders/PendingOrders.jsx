@@ -114,11 +114,7 @@ const PendingOrders = () => {
                                     {item.cartItems.reduce((total, item) => total + item.quantity, 0)}
                                 </td>
                                 <td className="py-4 px-6 border-b text-center">৳{item.advanceAmount}</td>
-                                <td className="py-4 px-6 border-b text-center">৳{item.remainingAmount}
-                                    {item.promoCode && (item.promoCode === "PCBBD10" || item.promoCode === "pcbbd10") && (
-                                        <span className="text-green-400 ml-2">(applied)</span>
-                                    )}
-                                </td>
+                                <td className="py-4 px-6 border-b text-center">৳{item.remainingAmount}</td>
                                 <td className="py-4 px-6 border-b text-center">
                                     <NavLink to={`/single-order-details/${item._id}`} className="inline-block">
                                         <Eye className="text-blue-500 hover:text-blue-700" />

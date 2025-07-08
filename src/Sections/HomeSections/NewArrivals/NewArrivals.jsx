@@ -14,6 +14,7 @@ import Car from '/src/assets/sedan.png';
 import F1 from '/src/assets/soccer-jersey.png';
 import Esports from '/src/assets/jersey.png';
 import All from '/src/assets/all.png';
+import game from '/src/assets/gameController.png';
 
 const tabs = [
     {
@@ -25,6 +26,11 @@ const tabs = [
         id: 'car',
         label: 'RC Car',
         icon: <img src={Car} alt="Car products" className="w-6 h-6" />
+    },
+    {
+        id: 'consoles',
+        label: 'Consoles',
+        icon: <img src={game} alt="Game Console" className="w-6 h-6" />
     },
     {
         id: 'E-sports',

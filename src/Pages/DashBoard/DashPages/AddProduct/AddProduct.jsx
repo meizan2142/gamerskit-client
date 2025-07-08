@@ -7,13 +7,14 @@ const AddProduct = () => {
     const handleAddProduct = async (e) => {
         e.preventDefault();
         const form = e.target;
-
         // Extract form data
         const productDetails = {
             name: form.name.value,
             description: form.description.value,
             title: form.title.value,
             price: form.price.value,
+            perPiecePrice: Number(form.perPiecePrice.value),
+            totalPrice: Number(form.totalPrice.value),
             totalSizes: form.elements.totalSizes?.value || "0",
             leftProducts: form.elements.leftProducts?.value || "0",
             sizes: {
@@ -34,6 +35,9 @@ const AddProduct = () => {
             ],
         };
 
+        console.log(productDetails);
+        
+
         try {
             const response = await axios.post(
                 `${import.meta.env.VITE_API_URL}/addedProducts`,
@@ -41,7 +45,7 @@ const AddProduct = () => {
             );
             console.log("Product added successfully:", response.data);
             toast.success("Product saved successfully!");
-            setTimeout(() => navigate('/my-orders'), 1000);
+            setTimeout(() => navigate('/shop'), 1000);
         } catch (error) {
             console.error("Error saving product:", error);
             toast.error("Failed to save product.");
@@ -100,6 +104,30 @@ const AddProduct = () => {
                             />
                         </div>
 
+                        {/* Per Piece Price & Total price */}
+                        <div className="col-span-full grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {/* Per Piece Price */}
+                            <div className="w-full">
+                                <label htmlFor="perPiecePrice" className="text-sm sm:text-base font-bold">Per Piece Price</label>
+                                <input
+                                    type="number"
+                                    id="perPiecePrice"
+                                    name="perPiecePrice"
+                                    placeholder="Per Piece Price"
+                                    className="w-full rounded-md border border-black text-black p-2 sm:p-3 outline-none" />
+                            </div>
+
+                            {/* Total Price */}
+                            <div className="w-full">
+                                <label htmlFor="totalPrice" className="text-sm sm:text-base font-bold">Total Price</label>
+                                <input
+                                    type="number"
+                                    id="totalPrice"
+                                    name="totalPrice"
+                                    placeholder="Total Price"
+                                    className="w-full rounded-md border border-black text-black p-2 sm:p-3 outline-none" />
+                            </div>
+                        </div>
                         {/* District and Thana */}
                         <div className="col-span-full grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {/* District */}

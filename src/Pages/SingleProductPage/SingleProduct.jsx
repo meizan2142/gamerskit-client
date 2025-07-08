@@ -167,7 +167,8 @@ const SingleProduct = () => {
         "F1 SHELL 2025",
         "Ford Mustang GT",
         "Nissan GTR Skyline 4WD (White-Grey) Dual Batteries",
-        "Porsche 911 Drift Car 4WD (Dual Batteries)"
+        "Porsche 911 Drift Car 4WD (Dual Batteries)",
+        "M22 Playstation"
     ];
 
 
@@ -195,6 +196,7 @@ const SingleProduct = () => {
                         <p className="text-green-600 text-base font-semibold">
                             <strong className="font-bold text-xl text-black">Order Process:</strong><br />
                             {data?.name === "car" && "• RC Car: For order make 100 tk advance."}
+                            {data?.name === "consoles" && "• Game Console: For order make 100 tk advance."}
                             {data?.name === "F1" && "• F1 Jersey: For order make 100 tk advance."}
                             {data?.name === "E-sports" && "• E-sports Jersey: For order make 100 tk advance."}
                             {data?.name === "Tshirt" && "• Tshirt: For order make 100 tk advance."}

@@ -40,7 +40,7 @@ const Accordion = ({ data }) => {
             title: "Product Details",
             description: data?.description || "No product details available.",
         },
-        ...(data?.name && !["Sleeves", "Mask", "car"].includes(data.name) ? [{
+        ...(data?.name && !["Sleeves", "Mask", "car", "consoles"].includes(data.name) ? [{
             title: "Size Guide",
             description: <SizeGuide />,
         }] : []),
@@ -66,10 +66,18 @@ const Accordion = ({ data }) => {
                             • 2-10 Days (Depends on stock)<br />
                         </p>
                     )}
+                    {data?.name && data.name.toLowerCase().includes("consoles") && (
+                        <p>
+                            <strong>Game Consoles: Delivery charge will be free</strong><br />
+                            <br />
+                            <strong>Delivery Time:</strong><br />
+                            • 2-10 Days (Depends on stock)<br />
+                        </p>
+                    )}
                 </div>
             ),
         },
-        ...(data?.name && data.name.toLowerCase().includes("car") ? [exchangePolicy] : [])
+        ...(data?.name && data.name.toLowerCase().includes("car", "consoles") ? [exchangePolicy] : [])
     ];
 
     const toggle = (idx) => {

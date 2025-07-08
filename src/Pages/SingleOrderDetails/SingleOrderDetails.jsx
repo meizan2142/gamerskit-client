@@ -217,19 +217,6 @@ const SingleOrderDetails = () => {
                             <span className="text-gray-600">Advance</span>
                             <span>৳{data.advanceAmount}</span>
                         </div>
-                        {
-                            data?.promoCode ?
-                                <>
-                                    <div className="flex justify-between">
-                                        <span className="text-gray-600">Coupon Code</span>
-                                        {data.promoCode && (data.promoCode === "PCBBD10" || data.promoCode === "pcbbd10") && (
-                                            <span className="text-green-400 ml-2">(applied)</span>
-                                        )}
-                                    </div>
-                                </>
-                                :
-                                <></>
-                        }
                         <div className="flex justify-between font-bold text-lg pt-2 border-t border-gray-200">
                             <span>Remaining Amount</span>
                             <span>৳{data.remainingAmount}</span>

@@ -227,6 +227,7 @@ const [totalPrice, setTotalPrice] = useState((data.price || 0) * (data.totalSize
                                     >
                                         Per Piece Price
                                     </label>
+                                    {/* perPiecePrice */}
                                 </div>
                                 {/* Total Price = perPiecePrice * openingstock */}
                                 <div className="relative mt-4">
