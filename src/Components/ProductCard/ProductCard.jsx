@@ -1,6 +1,10 @@
 import { NavLink } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
+    const FRRE_DELIVERY_TEXT = [
+        "car",
+        "consoles"
+    ]
     return (
         <div className="group w-full flex flex-col h-full rounded-lg relative overflow-hidden items-center">
             <NavLink
@@ -21,7 +25,7 @@ const ProductCard = ({ product }) => {
                         </h1>
                         <div className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-lg 2xl:text-xl font-semibold text-[#E53935] mt-auto">
                             {
-                                product.name === "car" ?
+                                FRRE_DELIVERY_TEXT.includes(product?.name) ?
                                 <p>Price: ৳{product.price} <span className="text-green-400">(Free Delivery)</span></p>
                                 :
                                 <p>Price: ৳{product.price}</p>

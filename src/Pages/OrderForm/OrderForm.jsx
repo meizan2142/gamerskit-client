@@ -55,6 +55,9 @@ const OrderForm = () => {
         'ford mustang gt',
         'nissan gtr skyline 4wd (white-grey) dual batteries',
         'nissan gtr r34 rwd (dual battery & gyro stabilizer)',
+        "r36s max handheld game console",
+        "m22 playstation",
+        "r36s handheld game console"
     ];
 
     // Check if cart contains only cars
