@@ -165,11 +165,15 @@ const SingleProduct = () => {
         "Sentinels Mask",
         "G2 Mask",
         "F1 SHELL 2025",
-        "Ford Mustang GT",
-        "Nissan GTR Skyline 4WD (White-Grey) Dual Batteries",
-        "Porsche 911 Drift Car 4WD (Dual Batteries)",
+
         "M22 Playstation"
     ];
+
+    const ANOTHER_OFFER_PRICE = [
+        "Nissan GTR Skyline 4WD (White-Grey) Dual Batteries",
+        "Porsche 911 Drift Car 4WD (Dual Batteries)",
+        "Ford Mustang GT"
+    ]
 
 
     return (
@@ -188,9 +192,32 @@ const SingleProduct = () => {
                                 </>
                                 :
                                 <>
-                                    <p className="font-bold">Regular Price: <span className="text-green-500 text-xl line-through">৳ 3500</span></p>
-                                    <p className="font-bold">Offer Price: <span className="text-green-500 text-xl">৳{data?.price}</span></p>
-                                    <p className="font-bold">Saved: <span className="text-green-500 text-xl">৳ 700</span></p>
+                                    {
+                                        ANOTHER_OFFER_PRICE.includes(data?.title) ?
+                                            <>
+                                                {
+                                                    data?.title === "Ford Mustang GT"
+                                                        ?
+                                                        <>
+                                                            <p className="font-bold">Regular Price: <span className="text-green-500 text-xl line-through">৳ 3700</span></p>
+                                                            <p className="font-bold">Offer Price: <span className="text-green-500 text-xl">৳{data?.price}</span></p>
+                                                            <p className="font-bold">Saved: <span className="text-green-500 text-xl">৳ 300</span></p>
+                                                        </>
+                                                        :
+                                                        <>
+                                                            <p className="font-bold">Regular Price: <span className="text-green-500 text-xl line-through">৳ 3500</span></p>
+                                                            <p className="font-bold">Offer Price: <span className="text-green-500 text-xl">৳{data?.price}</span></p>
+                                                            <p className="font-bold">Saved: <span className="text-green-500 text-xl">৳ 300</span></p>
+                                                        </>
+                                                }
+                                            </>
+                                            :
+                                            <>
+                                                <p className="font-bold">Regular Price: <span className="text-green-500 text-xl line-through">৳ 3500</span></p>
+                                                <p className="font-bold">Offer Price: <span className="text-green-500 text-xl">৳{data?.price}</span></p>
+                                                <p className="font-bold">Saved: <span className="text-green-500 text-xl">৳ 700</span></p>
+                                            </>
+                                    }
                                 </>
                         }
                         <p className="text-green-600 text-base font-semibold">

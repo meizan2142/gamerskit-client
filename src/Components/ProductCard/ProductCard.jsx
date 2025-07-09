@@ -19,7 +19,7 @@ const ProductCard = ({ product }) => {
                         <h1 className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl 2xl:text-[23] font-semibold text-black line-clamp-2">
                             {product.title}
                         </h1>
-                        <div className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-lg 2xl:text-xl font-normal text-[#E53935] mt-auto">
+                        <div className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-lg 2xl:text-xl font-semibold text-[#E53935] mt-auto">
                             {
                                 product.name === "car" ?
                                 <p>Price: ৳{product.price} <span className="text-green-400">(Free Delivery)</span></p>

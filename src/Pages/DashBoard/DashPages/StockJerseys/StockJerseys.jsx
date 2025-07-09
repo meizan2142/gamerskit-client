@@ -66,7 +66,7 @@ const StockJerseys = () => {
                                 </div>
 
                                 {/* Size Breakdown */}
-                                {!['car', 'Sleeves', 'Mask'].includes(data.name) && (
+                                {!['car', 'Sleeves', 'Mask', 'consoles'].includes(data.name) && (
                                     <div className="pt-2">
                                         <div className="grid grid-cols-3 gap-2">
                                             {['s', 'm', 'l', 'xl', 'xxl', 'xxxl', 'xxxxl'].map(size => (
