@@ -64,6 +64,15 @@ const DashBoard = () => {
                         >
                             Pending Orders
                         </NavLink>
+                        <NavLink
+                            to='/dashboard/orders-summary'
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
+                            }
+                        >
+                            Pending Orders Summary
+                        </NavLink>
 
                         <NavLink
                             to='/dashboard/delivered-orders'

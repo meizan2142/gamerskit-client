@@ -18,6 +18,7 @@ import CancelledOrders from "../Pages/DashBoard/DashPages/CancelledOrders/Cancel
 import ReturnedOrders from "../Pages/DashBoard/DashPages/ReturnedOrders/ReturnedOrders";
 import AddProduct from "../Pages/DashBoard/DashPages/AddProduct/AddProduct";
 import UpdateOrderDetails from "../Pages/UpdateOrderDetails/UpdateOrderDetails";
+import OrdersSummary from "../Pages/DashBoard/DashPages/OrdersSummary/OrdersSummary";
 
 export const router = createBrowserRouter([
     {
@@ -98,6 +99,10 @@ export const router = createBrowserRouter([
             {
                 path: 'add-product',
                 element: <PrivateRoute><AddProduct /></PrivateRoute>
+            },
+            {
+                path: 'orders-summary',
+                element: <PrivateRoute><OrdersSummary/></PrivateRoute>
             },
         ]
     },
