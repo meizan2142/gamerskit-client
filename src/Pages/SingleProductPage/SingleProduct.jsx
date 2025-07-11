@@ -6,6 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useState, useEffect } from "react";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import "react-tabs/style/react-tabs.css";
 
 const SingleProduct = () => {
     const { id } = useParams();
@@ -13,12 +15,20 @@ const SingleProduct = () => {
     const [selectedSize, setSelectedSize] = useState('');
     const [isCopied, setIsCopied] = useState(false);
     const [cartItems, setCartItems] = useState([]);
+    const [selectedTab, setSelectedTab] = useState(0);
 
     // Load cart items from localStorage on component mount
     useEffect(() => {
         const savedCart = localStorage.getItem('cart');
         if (savedCart) {
             setCartItems(JSON.parse(savedCart));
+        }
+    }, []);
+
+    useEffect(() => {
+        const savedTab = localStorage.getItem('selectedTab');
+        if (savedTab !== null) {
+            setSelectedTab(parseInt(savedTab));
         }
     }, []);
 
@@ -58,33 +68,41 @@ const SingleProduct = () => {
             return toast.error('Please select a size');
         }
 
+        // For R36S Max Handheld Game Console, include storage option
+        const storageOption = data.title === "R36S Max Handheld Game Console"
+            ? (selectedTab === 0 ? "64GB" : "128GB")
+            : null;
+
         const cartProduct = {
             productId: data._id,
             title: data.title,
-            price: data.price,
+            price: selectedTab === 0 ? 5400 : 5700,
             mainImage: data.mainImage,
             quantity: 1,
-            ...(hasAvailableSizes && { size: selectedSize }) // Only add size if product has sizes
+            ...(hasAvailableSizes && { size: selectedSize }),
+            ...(storageOption && { storage: storageOption })
         };
 
         const currentCart = JSON.parse(localStorage.getItem('cart') || '[]');
 
-        // Check if item exists - compare both productId and size
+        // Check if item exists - compare productId, size, and storage
         const existingIndex = currentCart.findIndex(item =>
             item.productId === cartProduct.productId &&
             (
                 (!hasAvailableSizes && !item.size) ||
                 (hasAvailableSizes && item.size === cartProduct.size)
+            ) &&
+            (
+                !storageOption ||
+                (storageOption && item.storage === cartProduct.storage)
             )
         );
 
         let updatedCart;
         if (existingIndex >= 0) {
-            // Update quantity if exists
             updatedCart = [...currentCart];
             updatedCart[existingIndex].quantity += 1;
         } else {
-            // Add new item
             updatedCart = [...currentCart, cartProduct];
         }
 
@@ -94,7 +112,7 @@ const SingleProduct = () => {
     };
 
     const handleBuyNow = () => {
-        // Check if sizes exist and are available (same logic as handleAddToCart)
+        // Similar modifications as handleAddToCart
         const hasAvailableSizes = data.sizes && Object.values(data.sizes).some(qty => {
             const quantity = typeof qty === 'string' ? parseInt(qty) : qty;
             return quantity > 0;
@@ -104,21 +122,29 @@ const SingleProduct = () => {
             return toast.error('Please select a size');
         }
 
+        const storageOption = data.title === "R36S Max Handheld Game Console"
+            ? (selectedTab === 0 ? "64GB" : "128GB")
+            : null;
+
         const cartProduct = {
             productId: data._id,
             title: data.title,
-            price: data.price,
+            price: selectedTab === 0 ? 5400 : 5700,
             mainImage: data.mainImage,
             quantity: 1,
-            ...(hasAvailableSizes && { size: selectedSize }) // Only add size if product has sizes
+            ...(hasAvailableSizes && { size: selectedSize }),
+            ...(storageOption && { storage: storageOption })
         };
 
-        // Check if item is already in cart
         const isItemInCart = cartItems.some(item =>
             item.productId === data._id &&
             (
                 (!hasAvailableSizes && !item.size) ||
                 (hasAvailableSizes && item.size === selectedSize)
+            ) &&
+            (
+                !storageOption ||
+                (storageOption && item.storage === cartProduct.storage)
             )
         );
 
@@ -130,9 +156,7 @@ const SingleProduct = () => {
             updatedCart = [...cartItems];
         }
 
-        // Explicitly trigger storage event to update Navbar
         window.dispatchEvent(new Event('storage'));
-
         navigate('/place-orders');
     };
 
@@ -175,6 +199,9 @@ const SingleProduct = () => {
         "Porsche 911 Drift Car 4WD (Dual Batteries)",
         "Ford Mustang GT"
     ]
+    const REACT_TABS = [
+        "R36S Max Handheld Game Console"
+    ]
 
 
     return (
@@ -189,7 +216,46 @@ const SingleProduct = () => {
                         {
                             EXCLUDED_OFFER_PRICE.includes(data?.title) ?
                                 <>
-                                    <p className="font-bold">Price: <span className="text-green-500 text-xl">৳{data?.price}</span></p>
+                                    {
+                                        REACT_TABS.includes(data?.title) ?
+                                            <>
+                                                <div className="max-w-4xl mx-auto px-4 py-6">
+                                                    <Tabs
+                                                        selectedIndex={selectedTab}
+                                                        onSelect={(index) => {
+                                                            setSelectedTab(index);
+                                                            localStorage.setItem('selectedTab', index.toString());
+                                                        }}
+                                                    >
+                                                        <TabList className="flex flex-wrap gap-3 border-b border-gray-200 mb-4">
+                                                            <Tab
+                                                                className="px-4 py-2 text-sm font-medium text-gray-700 border border-transparent rounded-t-md cursor-pointer transition duration-200"
+                                                                selectedClassName="border-b-2 border-blue-500 text-blue-600 bg-[#FFD700]"
+                                                            >
+                                                                64GB
+                                                            </Tab>
+                                                            <Tab
+                                                                className="px-4 py-2 text-sm font-medium text-gray-700 border border-transparent rounded-t-md cursor-pointer transition duration-200"
+                                                                selectedClassName="border-b-2 border-blue-500 text-blue-600 bg-[#FFD700]"
+                                                            >
+                                                                128GB
+                                                            </Tab>
+                                                        </TabList>
+
+                                                        <TabPanel>
+                                                            <p className="font-bold">Price: <span className="text-green-500 text-xl">৳5400</span></p>
+                                                        </TabPanel>
+                                                        <TabPanel>
+                                                            <p className="font-bold">Price: <span className="text-green-500 text-xl">৳5700</span></p>
+                                                        </TabPanel>
+                                                    </Tabs>
+                                                </div>
+                                            </>
+                                            :
+                                            <>
+                                                <p className="font-bold">Price: <span className="text-green-500 text-xl">৳{data?.price}</span></p>
+                                            </>
+                                    }
                                 </>
                                 :
                                 <>

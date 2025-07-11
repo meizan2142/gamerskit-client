@@ -19,6 +19,7 @@ import ReturnedOrders from "../Pages/DashBoard/DashPages/ReturnedOrders/Returned
 import AddProduct from "../Pages/DashBoard/DashPages/AddProduct/AddProduct";
 import UpdateOrderDetails from "../Pages/UpdateOrderDetails/UpdateOrderDetails";
 import OrdersSummary from "../Pages/DashBoard/DashPages/OrdersSummary/OrdersSummary";
+import Accounts from "../Pages/DashBoard/DashPages/Accounts/Accounts";
 
 export const router = createBrowserRouter([
     {
@@ -103,6 +104,10 @@ export const router = createBrowserRouter([
             {
                 path: 'orders-summary',
                 element: <PrivateRoute><OrdersSummary/></PrivateRoute>
+            },
+            {
+                path: 'accounts',
+                element: <PrivateRoute><Accounts/></PrivateRoute>
             },
         ]
     },
