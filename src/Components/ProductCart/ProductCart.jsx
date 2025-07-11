@@ -141,9 +141,17 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
 
                                             <div className='flex justify-between items-center'>
                                                 <div className=''>
-                                                    <p className="text-[#FFD700] text-sm font-semibold my-3">
-                                                        ৳{(item.price * (item.quantity || 1))}
-                                                    </p>
+                                                    {
+                                                        item?.title === "R36S Max Handheld Game Console" && item?.storage ? (
+                                                            <p className="text-[#FFD700] text-sm font-semibold my-3">
+                                                                ৳{(item.price * (item.quantity || 1))} - ({item.storage})
+                                                            </p>
+                                                        ) : (
+                                                            <p className="text-[#FFD700] text-sm font-semibold my-3">
+                                                                ৳{(item.price * (item.quantity || 1))}
+                                                            </p>
+                                                        )
+                                                    }
                                                     {/* Increase and Decrease button */}
                                                     <div className='text-white border border-white space-x-4'>
                                                         <button

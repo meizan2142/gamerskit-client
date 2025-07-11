@@ -133,7 +133,8 @@ const OrderForm = () => {
                 quantity: item.quantity,
                 price: item.price,
                 productId: item.productId,
-                mainImage: item.mainImage
+                mainImage: item.mainImage,
+                storage: item.storage
             }));
 
             const orderDetails = {
@@ -461,6 +462,18 @@ const OrderForm = () => {
                                             </p>
                                         </div>
                                     )}
+                                    {
+                                        item?.title === "R36S Max Handheld Game Console" && item?.storage ?
+                                            <>
+                                                <div className='flex justify-start'>
+                                                    <p className="text-black font-normal text-xs sm:text-sm">
+                                                        <span className='font-bold'>Storage:</span> {item.storage}
+                                                    </p>
+                                                </div>
+                                            </>
+                                            :
+                                            <></>
+                                    }
                                 </div>
                             </div>
                         ))}

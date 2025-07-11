@@ -42,6 +42,7 @@ const SingleProduct = () => {
             return response.data;
         }
     });
+    
     const handleCopy = async () => {
         try {
             await navigator.clipboard.writeText("01303775977");

@@ -161,7 +161,7 @@ const SingleOrderDetails = () => {
                                                 className="w-16 h-16 object-cover rounded"
                                             />
                                             <div className="space-y-2">
-                                                <h3 className="font-medium">{item.title}</h3>
+                                                <h3 className="font-medium">{item.title} - ({item.storage})</h3>
                                                 {
                                                     item?.size === null ? null : (
                                                         <p className="text-gray-500 text-sm">
