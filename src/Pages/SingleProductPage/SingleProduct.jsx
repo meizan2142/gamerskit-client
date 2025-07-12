@@ -202,7 +202,7 @@ const SingleProduct = () => {
         "Sentinels Mask",
         "G2 Mask",
         "F1 SHELL 2025",
-        "M22 Playstation",
+        "M22 Playstation 128GB",
         "R36S Handheld Game Console",
         "R36S Max Handheld Game Console"
     ];
