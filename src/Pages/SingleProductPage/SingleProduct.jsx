@@ -79,7 +79,7 @@ const SingleProduct = () => {
             : null;
 
         const price = REACT_TABS.includes(data.title)
-            ? (selectedTab === 0 ? 5400 : 5700)
+            ? (selectedTab === 0 ? 5200 : 5700)
             : data.price;
 
         const cartProduct = {
@@ -132,7 +132,7 @@ const SingleProduct = () => {
         }
 
         const price = REACT_TABS.includes(data.title)
-            ? (selectedTab === 0 ? 5400 : 5700)
+            ? (selectedTab === 0 ? 5200 : 5700)
             : data.price;
 
         const storageOption = data.title === "R36S Max Handheld Game Console"
@@ -253,7 +253,7 @@ const SingleProduct = () => {
                                                         </TabList>
 
                                                         <TabPanel>
-                                                            <p className="font-bold">Price: <span className="text-green-500 text-xl">৳5400</span></p>
+                                                            <p className="font-bold">Price: <span className="text-green-500 text-xl">৳5200</span></p>
                                                         </TabPanel>
                                                         <TabPanel>
                                                             <p className="font-bold">Price: <span className="text-green-500 text-xl">৳5700</span></p>
