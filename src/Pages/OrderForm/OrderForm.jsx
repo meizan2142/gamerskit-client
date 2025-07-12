@@ -448,12 +448,26 @@ const OrderForm = () => {
                                         <p className="text-black font-bold text-xs sm:text-sm">
                                             {item.title}
                                         </p>
-                                        <p className='text-black font-normal text-xs sm:text-sm'>
-                                            ৳{item.price}
-                                            {item.quantity > 1 && (
-                                                <span className="text-gray-500 ml-1">× {item.quantity}</span>
-                                            )}
-                                        </p>
+                                        {
+                                            item?.title === "R36S Max Handheld Game Console" ?
+                                                <>
+                                                    <p className='text-black font-normal text-xs sm:text-sm'>
+                                                        ৳{item.price}
+                                                        {item.quantity > 1 && (
+                                                            <span className="text-gray-500 ml-1">× {item.quantity}</span>
+                                                        )}
+                                                    </p>
+                                                </>
+                                                :
+                                                <>
+                                                    <p className='text-black font-normal text-xs sm:text-sm'>
+                                                        ৳{item.price}
+                                                        {item.quantity > 1 && (
+                                                            <span className="text-gray-500 ml-1">× {item.quantity}</span>
+                                                        )}
+                                                    </p>
+                                                </>
+                                        }
                                     </div>
                                     {item.size && (
                                         <div className='flex justify-start'>

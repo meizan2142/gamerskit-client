@@ -17,6 +17,10 @@ const SingleProduct = () => {
     const [cartItems, setCartItems] = useState([]);
     const [selectedTab, setSelectedTab] = useState(0);
 
+    const REACT_TABS = [
+        "R36S Max Handheld Game Console"
+    ]
+
     // Load cart items from localStorage on component mount
     useEffect(() => {
         const savedCart = localStorage.getItem('cart');
@@ -42,7 +46,7 @@ const SingleProduct = () => {
             return response.data;
         }
     });
-    
+
     const handleCopy = async () => {
         try {
             await navigator.clipboard.writeText("01303775977");
@@ -74,10 +78,14 @@ const SingleProduct = () => {
             ? (selectedTab === 0 ? "64GB" : "128GB")
             : null;
 
+        const price = REACT_TABS.includes(data.title)
+            ? (selectedTab === 0 ? 5400 : 5700)
+            : data.price;
+
         const cartProduct = {
             productId: data._id,
             title: data.title,
-            price: selectedTab === 0 ? 5400 : 5700,
+            price: price, // Use the determined price
             mainImage: data.mainImage,
             quantity: 1,
             ...(hasAvailableSizes && { size: selectedSize }),
@@ -123,6 +131,10 @@ const SingleProduct = () => {
             return toast.error('Please select a size');
         }
 
+        const price = REACT_TABS.includes(data.title)
+            ? (selectedTab === 0 ? 5400 : 5700)
+            : data.price;
+
         const storageOption = data.title === "R36S Max Handheld Game Console"
             ? (selectedTab === 0 ? "64GB" : "128GB")
             : null;
@@ -130,7 +142,7 @@ const SingleProduct = () => {
         const cartProduct = {
             productId: data._id,
             title: data.title,
-            price: selectedTab === 0 ? 5400 : 5700,
+            price: price,
             mainImage: data.mainImage,
             quantity: 1,
             ...(hasAvailableSizes && { size: selectedSize }),
@@ -199,9 +211,6 @@ const SingleProduct = () => {
         "Nissan GTR Skyline 4WD (White-Grey) Dual Batteries",
         "Porsche 911 Drift Car 4WD (Dual Batteries)",
         "Ford Mustang GT"
-    ]
-    const REACT_TABS = [
-        "R36S Max Handheld Game Console"
     ]
 
 
