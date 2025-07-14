@@ -14,7 +14,8 @@ const OrdersSummary = () => {
 
     const pending = allOrders.filter(p => p?.status === "pending");
 
-    // Calculate product frequency
+    // Calculate product frequency and total quantity
+    let totalQuantityAllProducts = 0;
     const productStats = pending.reduce((acc, order) => {
         order.cartItems.forEach(item => {
             const productName = item.title || item.name;
@@ -28,6 +29,7 @@ const OrdersSummary = () => {
             }
             acc[productName].orderCount += 1;
             acc[productName].totalQuantity += item.quantity;
+            totalQuantityAllProducts += item.quantity; // Add to the total sum
             // Update latest order date if this one is newer
             const currentDate = new Date(order.orderDate);
             if (currentDate > acc[productName].latestOrder) {
@@ -38,7 +40,7 @@ const OrdersSummary = () => {
     }, {});
 
     const productList = Object.values(productStats)
-        .sort((a, b) => b.orderCount - a.orderCount); // Sort by most ordered first
+        .sort((a, b) => b.orderCount - a.orderCount);
 
     if (isLoading) return (
         <div className="flex justify-center items-center min-h-[50vh]">
@@ -54,10 +56,10 @@ const OrdersSummary = () => {
 
     return (
         <div className="pt-2 md:pt-2 lg:pt-2 px-4 sm:px-6 md:px-10 space-y-6 md:space-y-10">
-            <h1 className="font-bold text-3xl text-center">Pending Orders Summary</h1>
-
+            <h1 className="font-bold text-3xl text-center">Pending Orders Summary ({totalQuantityAllProducts})</h1>
             {pending.length > 0 ? (
                 <>
+
                     {/* Product Frequency Table */}
                     <div className="mb-8">
                         <div className="overflow-x-auto">
