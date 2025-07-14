@@ -8,7 +8,7 @@ const ProductCard = ({ product }) => {
     return (
         <div className="group w-full flex flex-col h-full rounded-lg relative overflow-hidden items-center">
             <NavLink
-                to={`/product/category/${product._id}`}
+                to={`/product/${product._id}`}
                 className="block w-full h-full max-w-[350px] mx-auto"
             >
                 <div className="w-full h-full flex flex-col space-y-4 rounded-lg p-4 sm:p-6 shadow-lg bg-white hover:shadow-xl transition-shadow duration-300">
