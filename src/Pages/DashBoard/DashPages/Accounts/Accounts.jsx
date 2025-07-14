@@ -201,18 +201,18 @@ const Account = () => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="p-3 bg-gray-50 rounded">
                             <h3 className="font-semibold text-gray-600">Total Sales</h3>
-                            <p className="text-xl font-bold">৳{totalAmount.toFixed(2)}</p>
+                            <p className="text-xl font-bold">{totalAmount}</p>
                         </div>
                         <div className="p-3 bg-gray-50 rounded">
                             <h3 className="font-semibold text-gray-600">Cost of Goods</h3>
-                            <p className="text-xl font-bold">৳{totalCOGS.toFixed(2)}</p>
+                            <p className="text-xl font-bold">{totalCOGS}</p>
                         </div>
                         <div className={`p-3 rounded ${grossProfit >= 0 ? 'bg-green-50' : 'bg-red-50'}`}>
                             <h3 className={`font-semibold ${grossProfit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                                 Gross Profit
                             </h3>
                             <p className={`text-xl font-bold ${grossProfit >= 0 ? 'text-green-700' : 'text-red-700'}`}>
-                                ৳{grossProfit.toFixed(2)}
+                                {grossProfit}
                             </p>
                         </div>
                     </div>

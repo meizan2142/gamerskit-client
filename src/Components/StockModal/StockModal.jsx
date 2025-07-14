@@ -10,20 +10,22 @@ const StockModal = ({ data }) => {
     const [soldProducts, setSoldProducts] = useState(0);
     const [closingStock, setClosingStock] = useState(0);
     const [sizeValues, setSizeValues] = useState(data.sizes || {});
-const [perPiecePrice, setPerPiecePrice] = useState(data.price || 0);
-const [totalPrice, setTotalPrice] = useState((data.price || 0) * (data.totalSizes || 0));
-
-    const handlePerPiecePriceChange = (e) => {
-        const value = Number(e.target.value) || 0;
-        setPerPiecePrice(value);
-        setTotalPrice(value * openingStock);
-    };
+    const [perPiecePrice, setPerPiecePrice] = useState(data?.perPiecePrice || 0);
+    const [totalPrice, setTotalPrice] = useState(data?.totalPrice || 0);
 
     const handleOpeningStockChange = (e) => {
         const value = Number(e.target.value) || 0;
         setOpeningStock(value);
         setClosingStock(value - soldProducts);
-        setTotalPrice(perPiecePrice * value);
+    };
+
+    useEffect(() => {
+        setTotalPrice(openingStock * perPiecePrice);
+    }, [openingStock, perPiecePrice]);
+
+    const handlePerPiecePriceChange = (e) => {
+        const value = Number(e.target.value) || 0;
+        setPerPiecePrice(value);
     };
 
     const handleSoldProductsChange = (e) => {
@@ -64,7 +66,7 @@ const [totalPrice, setTotalPrice] = useState((data.price || 0) * (data.totalSize
                             sizes: variables.payload.sizeValues,
                             modified: variables.payload.modified,
                             perPiecePrice: variables.payload.perPiecePrice,
-                            totalPrice: variables.payload.totalPrice 
+                            totalPrice: variables.payload.totalPrice
                         }
                         : product
                 );
@@ -101,14 +103,14 @@ const [totalPrice, setTotalPrice] = useState((data.price || 0) * (data.totalSize
             year: 'numeric'
         }).replace(',', '');
 
-    const payload = {
-        openingStock: openingStock,
-        closingStock: closingStock,
-        sizeValues: sizeValues,
-        modified: updatedAt,
-        perPiecePrice: perPiecePrice,
-        totalPrice: totalPrice
-    };
+        const payload = {
+            openingStock: openingStock,
+            closingStock: closingStock,
+            sizeValues: sizeValues,
+            modified: updatedAt,
+            perPiecePrice: perPiecePrice,
+            totalPrice: totalPrice
+        };
 
 
         await updateStock({ id: data._id, payload });
@@ -216,6 +218,7 @@ const [totalPrice, setTotalPrice] = useState((data.price || 0) * (data.totalSize
                                 {/* Per Piece price */}
                                 <div className="relative mt-4">
                                     <input
+                                        value={perPiecePrice}
                                         onChange={handlePerPiecePriceChange}
                                         id="perPiecePrice"
                                         type="number"
@@ -227,13 +230,13 @@ const [totalPrice, setTotalPrice] = useState((data.price || 0) * (data.totalSize
                                     >
                                         Per Piece Price
                                     </label>
-                                    {/* perPiecePrice */}
                                 </div>
-                                {/* Total Price = perPiecePrice * openingstock */}
                                 <div className="relative mt-4">
                                     <input
+                                        value={totalPrice}
                                         id="totalPrice"
                                         type="number"
+                                        readOnly
                                         className="peer w-full rounded-md border border-gray-300 bg-transparent px-4 py-2.5 text-gray-900 placeholder-transparent focus:outline-none focus:ring-1 focus:ring-gray-500 dark:border-gray-700 dark:text-white"
                                     />
                                     <label

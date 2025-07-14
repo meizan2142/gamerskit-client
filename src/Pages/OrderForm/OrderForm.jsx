@@ -56,7 +56,7 @@ const OrderForm = () => {
         'nissan gtr skyline 4wd (white-grey) dual batteries',
         'nissan gtr r34 rwd (dual battery & gyro stabilizer)',
         "r36s max handheld game console",
-        "M22 Playstation 128GB",
+        "m22 playstation 128gb",
         "r36s handheld game console"
     ];
 
