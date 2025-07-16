@@ -4,11 +4,18 @@ const ProductCard = ({ product }) => {
     const FRRE_DELIVERY_TEXT = [
         "car",
         "consoles"
-    ]
+    ];
+
+    const productSlug = product.slug ||
+        product.title.toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^\w-]+/g, '');
+
     return (
         <div className="group w-full flex flex-col h-full rounded-lg relative overflow-hidden items-center">
             <NavLink
-                to={`/product/${product._id}`}
+                to={`/product/${productSlug}`}
+                state={{ productId: product._id }}
                 className="block w-full h-full max-w-[350px] mx-auto"
             >
                 <div className="w-full h-full flex flex-col space-y-4 rounded-lg p-4 sm:p-6 shadow-lg bg-white hover:shadow-xl transition-shadow duration-300">
@@ -17,6 +24,7 @@ const ProductCard = ({ product }) => {
                             className="absolute h-full w-full object-cover"
                             src={product.mainImage}
                             alt={product.title}
+                            loading="lazy"  // Add lazy loading
                         />
                     </div>
                     <div className="flex flex-col flex-grow space-y-2">
@@ -26,16 +34,16 @@ const ProductCard = ({ product }) => {
                         <div className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-lg 2xl:text-xl font-semibold text-[#E53935] mt-auto">
                             {
                                 FRRE_DELIVERY_TEXT.includes(product?.name) ?
-                                <p>Price: ৳{product.price} <span className="text-green-400">(Free Delivery)</span></p>
-                                :
-                                <p>Price: ৳{product.price}</p>
+                                    <p>Price: ৳{product.price} <span className="text-green-400">(Free Delivery)</span></p>
+                                    :
+                                    <p>Price: ৳{product.price}</p>
                             }
                         </div>
                     </div>
                 </div>
             </NavLink>
         </div>
-    )
-}
+    );
+};
 
 export default ProductCard;

@@ -1,7 +1,7 @@
 import { ShoppingBasket, ShoppingCart } from "lucide-react";
 import Accordion from "../../Components/Accordion/Accordion";
 import SingleProductSwiper from "../../Components/SingleProductSwiper/SingleProductSwiper";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
@@ -10,7 +10,9 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 
 const SingleProduct = () => {
-    const { id } = useParams();
+    const { productSlug } = useParams();
+    const location = useLocation();
+    const productId = location.state?.productId;
     const navigate = useNavigate();
     const [selectedSize, setSelectedSize] = useState('');
     const [isCopied, setIsCopied] = useState(false);
@@ -37,13 +39,25 @@ const SingleProduct = () => {
     }, []);
 
     // Fetch product data
-    const { isLoading, error, data } = useQuery({
-        queryKey: ['product', id],
+    const { data, isLoading, error } = useQuery({
+        queryKey: ['product', productSlug],
         queryFn: async () => {
-            const response = await axios.get(
-                `${import.meta.env.VITE_API_URL}/addedProducts/${id}`
-            );
-            return response.data;
+            try {
+                // First try fetching by slug
+                const response = await axios.get(
+                    `${import.meta.env.VITE_API_URL}/products-by-slug/${productSlug}`
+                );
+                return response.data;
+            } catch (error) {
+                if (error.response?.status === 404 && productId) {
+                    // Fallback to ID-based fetch if available
+                    const fallback = await axios.get(
+                        `${import.meta.env.VITE_API_URL}/addedProducts/${productId}`
+                    );
+                    return fallback.data;
+                }
+                throw error;
+            }
         }
     });
 
@@ -212,7 +226,6 @@ const SingleProduct = () => {
         "Porsche 911 Drift Car 4WD (Dual Batteries)",
         "Ford Mustang GT"
     ]
-
 
     return (
         <div className="min-h-screen pt-12 md:pt-24">
@@ -390,7 +403,7 @@ const SingleProduct = () => {
                     )}
 
                     <div>
-                        <Accordion data={data} />
+                        <Accordion data={data} selectedTab={selectedTab} />
                     </div>
 
                     <div className="space-y-4">
