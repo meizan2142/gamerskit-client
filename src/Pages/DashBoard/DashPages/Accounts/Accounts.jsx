@@ -61,8 +61,15 @@ const Account = () => {
         },
     });
 
-    // Memoized calculations for better performance
-    const { totalAmount, totalCOGS, grossProfit } = useMemo(() => {
+    const {
+        totalAmount,
+        totalCOGS,
+        grossProfit,
+        totalProductSales,
+        perPiecePrice,
+        // totalPrice,
+        totalSizes
+    } = useMemo(() => {
         const delivered = allOrders.filter(d => d?.status === "delivered");
 
         const filteredOrders = delivered.filter(order => {
@@ -76,6 +83,17 @@ const Account = () => {
             return dateMatch && titleMatch;
         });
 
+        // Find the selected product
+        const selectedProduct = selectedTitle !== "all"
+            ? products.find(p => p.title?.trim().toLowerCase() === selectedTitle?.trim().toLowerCase())
+            : null;
+
+        // Get product values
+        const perPiecePrice = selectedProduct?.perPiecePrice || 0;
+        const totalSizes = selectedProduct?.totalSizes || 0;
+        const totalPrice = totalSizes * perPiecePrice;
+
+        // Other calculations
         const totalAmount = filteredOrders.reduce(
             (total, order) => total + (order.advanceAmount + order.remainingAmount),
             0
@@ -86,27 +104,28 @@ const Account = () => {
                 const product = products.find(p =>
                     p.title?.trim().toLowerCase() === item.title?.trim().toLowerCase()
                 );
-
-                if (!product) {
-                    console.warn(`Product not found for title: ${item.title}`);
-                    return sum;
-                }
-
-                const productCost = product.costPrice ??
-                    product.perPiecePrice ??
-                    product.cost ??
-                    0;
-
-                return sum + (productCost * item.quantity);
+                return sum + (product?.perPiecePrice * item.quantity);
             }, 0);
-
             return total + orderCOGS;
         }, 0);
 
         const grossProfit = totalAmount - totalCOGS;
 
-        return { delivered, filteredOrders, totalAmount, totalCOGS, grossProfit };
+        const totalProductSales = filteredOrders.reduce((total, order) => {
+            return total + order.cartItems.reduce((sum, item) => sum + item.quantity, 0);
+        }, 0);
+
+        return {
+            totalAmount,
+            totalCOGS,
+            grossProfit,
+            totalProductSales,
+            perPiecePrice,
+            totalPrice,
+            totalSizes
+        };
     }, [allOrders, products, startDate, endDate, selectedTitle]);
+
 
     const isLoading = isLoadingOrders || isLoadingProducts;
     const error = ordersError || productsError;
@@ -196,6 +215,37 @@ const Account = () => {
                     </button>
                 </div>
 
+                <div className="bg-white p-4 rounded-lg shadow">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {/* Units Sold */}
+                        <div className="p-3 bg-gray-50 rounded">
+                            <h3 className="font-semibold text-gray-600">Units Sold</h3>
+                            <p className="text-xl font-bold">{totalProductSales}</p>
+                        </div>
+
+                        {/* Per Piece Price */}
+                        <div className="p-3 bg-gray-50 rounded">
+                            <h3 className="font-semibold text-gray-600">Per Piece Price</h3>
+                            <p className="text-xl font-bold">
+                                {selectedTitle === "all"
+                                    ? "N/A"
+                                    : perPiecePrice
+                                }
+                            </p>
+                        </div>
+
+                        {/* Inventory Value (openingStock * perPiecePrice) */}
+                        <div className="p-3 bg-gray-50 rounded">
+                            <h3 className="font-semibold text-gray-600">Inventory Value ({totalSizes} x {perPiecePrice})</h3>
+                            <p className="text-xl font-bold">
+                                {selectedTitle === "all"
+                                    ? "N/A"
+                                    : (totalSizes * perPiecePrice)
+                                }
+                            </p>
+                        </div>
+                    </div>  
+                </div>
                 {/* Stats Section */}
                 <div className="bg-white p-4 rounded-lg shadow">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
