@@ -137,6 +137,14 @@ const DashBoard = () => {
                         >
                             <button className="w-full py-2 px-4 rounded text-white">Home</button>
                         </NavLink>
+                        <NavLink
+                            to='/dashboard/accounts'
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
+                            }
+                        >
+                            Accounts
+                        </NavLink>
                         <NavLink to='/dashboard/all-orders' onClick={() => setIsMobileMenuOpen(false)}
                             className={({ isActive }) =>
                                 `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
@@ -164,6 +172,15 @@ const DashBoard = () => {
                             }
                         >
                             <button className="w-full py-2 px-4 rounded text-white">Pending Orders</button>
+                        </NavLink>
+                        <NavLink
+                            to='/dashboard/orders-summary'
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className={({ isActive }) =>
+                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
+                            }
+                        >
+                            Pending Orders Summary
                         </NavLink>
                         <NavLink to='/dashboard/delivered-orders' onClick={() => setIsMobileMenuOpen(false)}
                             className={({ isActive }) =>
