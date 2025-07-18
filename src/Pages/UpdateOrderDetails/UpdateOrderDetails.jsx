@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { allLocation } from "../OrderForm/locations";
@@ -12,6 +12,7 @@ const UpdateOrderDetails = () => {
     const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm();
     const [selectedDistrict, setSelectedDistrict] = useState("");
     const [advanceAmount, setAdvanceAmount] = useState(0);
+    const navigate = useNavigate()
 
     const { isLoading, error, data } = useQuery({
         queryKey: ['orderDetails', id],
@@ -34,6 +35,7 @@ const UpdateOrderDetails = () => {
         onSuccess: () => {
             queryClient.invalidateQueries(['orderDetails', id]);
             alert('Order updated successfully!');
+            navigate(-1);
         },
         onError: (error) => {
             console.error('Error updating order:', error);

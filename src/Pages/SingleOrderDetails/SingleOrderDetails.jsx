@@ -50,8 +50,7 @@ const SingleOrderDetails = () => {
                     text: "Your order has been deleted.",
                     icon: "success"
                 });
-
-                setTimeout(() => navigate('/dashboard/all-orders'), 500);
+                setTimeout(() => navigate(-1), 500);
             } catch (error) {
                 console.error('Error deleting order:', error);
                 await Swal.fire({
