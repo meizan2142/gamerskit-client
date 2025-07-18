@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { allLocation } from "../OrderForm/locations";
+import toast from "react-hot-toast";
 
 const UpdateOrderDetails = () => {
     const { id } = useParams();
@@ -34,7 +35,7 @@ const UpdateOrderDetails = () => {
             axios.put(`${import.meta.env.VITE_API_URL}/orderdetails/${id}`, updatedOrder),
         onSuccess: () => {
             queryClient.invalidateQueries(['orderDetails', id]);
-            alert('Order updated successfully!');
+            toast.success('Order updated successfully!');
             navigate(-1);
         },
         onError: (error) => {
@@ -100,6 +101,9 @@ const UpdateOrderDetails = () => {
 
     return (
         <div className="pt-20 md:pt-20 lg:pt-24 px-4 sm:px-6 md:px-10 space-y-6 md:space-y-10 min-h-screen">
+            <div>
+                <Toaster />
+            </div>
             <form onSubmit={handleSubmit(onSubmit)} className="container flex flex-col mx-auto space-y-8 md:space-y-12">
                 <fieldset className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 p-4 sm:p-6 rounded-md shadow-sm">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 col-span-full">
