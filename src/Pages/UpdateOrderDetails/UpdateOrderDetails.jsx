@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { allLocation } from "../OrderForm/locations";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const UpdateOrderDetails = () => {
     const { id } = useParams();
