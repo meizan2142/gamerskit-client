@@ -214,59 +214,106 @@ const Account = () => {
                         Clear Filters
                     </button>
                 </div>
+                {
+                    selectedTitle === "all" ?
+                        <>                <div className="bg-white p-4 rounded-lg shadow">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {/* Units Sold */}
+                                <div className="p-3 bg-gray-50 rounded">
+                                    <h3 className="font-semibold text-gray-600">Units Sold</h3>
+                                    <p className="text-xl font-bold">{totalProductSales}</p>
+                                </div>
 
-                <div className="bg-white p-4 rounded-lg shadow">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        {/* Units Sold */}
-                        <div className="p-3 bg-gray-50 rounded">
-                            <h3 className="font-semibold text-gray-600">Units Sold</h3>
-                            <p className="text-xl font-bold">{totalProductSales}</p>
+                                {/* Inventory Value (openingStock * perPiecePrice) */}
+                                <div className="p-3 bg-gray-50 rounded">
+                                    <h3 className="font-semibold text-gray-600">Inventory Value ({totalSizes} x {perPiecePrice})</h3>
+                                    <p className="text-xl font-bold">
+                                        {selectedTitle === "all"
+                                            ? "N/A"
+                                            : (totalSizes * perPiecePrice)
+                                        }
+                                    </p>
+                                </div>
+                            </div>
                         </div>
+                            {/* Stats Section */}
+                            <div className="bg-white p-4 rounded-lg shadow">
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div className="p-3 bg-gray-50 rounded">
+                                        <h3 className="font-semibold text-gray-600">Total Sales</h3>
+                                        <p className="text-xl font-bold">{totalAmount}</p>
+                                    </div>
+                                    <div className="p-3 bg-gray-50 rounded">
+                                        <h3 className="font-semibold text-gray-600">Cost of Goods</h3>
+                                        <p className="text-xl font-bold">{totalCOGS}</p>
+                                    </div>
+                                    <div className={`p-3 rounded ${grossProfit >= 0 ? 'bg-green-50' : 'bg-red-50'}`}>
+                                        <h3 className={`font-semibold ${grossProfit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                            Gross Profit
+                                        </h3>
+                                        <p className={`text-xl font-bold ${grossProfit >= 0 ? 'text-green-700' : 'text-red-700'}`}>
+                                            {grossProfit}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                        :
+                        <>
+                            <div className="bg-white p-4 rounded-lg shadow">
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    {/* Units Sold */}
+                                    <div className="p-3 bg-gray-50 rounded">
+                                        <h3 className="font-semibold text-gray-600">Units Sold</h3>
+                                        <p className="text-xl font-bold">{totalProductSales}</p>
+                                    </div>
 
-                        {/* Per Piece Price */}
-                        <div className="p-3 bg-gray-50 rounded">
-                            <h3 className="font-semibold text-gray-600">Per Piece Price</h3>
-                            <p className="text-xl font-bold">
-                                {selectedTitle === "all"
-                                    ? "N/A"
-                                    : perPiecePrice
-                                }
-                            </p>
-                        </div>
+                                    {/* Per Piece Price */}
+                                    <div className="p-3 bg-gray-50 rounded">
+                                        <h3 className="font-semibold text-gray-600">Per Piece Price</h3>
+                                        <p className="text-xl font-bold">
+                                            {selectedTitle === "all"
+                                                ? "N/A"
+                                                : perPiecePrice
+                                            }
+                                        </p>
+                                    </div>
 
-                        {/* Inventory Value (openingStock * perPiecePrice) */}
-                        <div className="p-3 bg-gray-50 rounded">
-                            <h3 className="font-semibold text-gray-600">Inventory Value ({totalSizes} x {perPiecePrice})</h3>
-                            <p className="text-xl font-bold">
-                                {selectedTitle === "all"
-                                    ? "N/A"
-                                    : (totalSizes * perPiecePrice)
-                                }
-                            </p>
-                        </div>
-                    </div>  
-                </div>
-                {/* Stats Section */}
-                <div className="bg-white p-4 rounded-lg shadow">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="p-3 bg-gray-50 rounded">
-                            <h3 className="font-semibold text-gray-600">Total Sales</h3>
-                            <p className="text-xl font-bold">{totalAmount}</p>
-                        </div>
-                        <div className="p-3 bg-gray-50 rounded">
-                            <h3 className="font-semibold text-gray-600">Cost of Goods</h3>
-                            <p className="text-xl font-bold">{totalCOGS}</p>
-                        </div>
-                        <div className={`p-3 rounded ${grossProfit >= 0 ? 'bg-green-50' : 'bg-red-50'}`}>
-                            <h3 className={`font-semibold ${grossProfit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                                Gross Profit
-                            </h3>
-                            <p className={`text-xl font-bold ${grossProfit >= 0 ? 'text-green-700' : 'text-red-700'}`}>
-                                {grossProfit}
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                                    {/* Inventory Value (openingStock * perPiecePrice) */}
+                                    <div className="p-3 bg-gray-50 rounded">
+                                        <h3 className="font-semibold text-gray-600">Inventory Value ({totalSizes} x {perPiecePrice})</h3>
+                                        <p className="text-xl font-bold">
+                                            {selectedTitle === "all"
+                                                ? "N/A"
+                                                : (totalSizes * perPiecePrice)
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* Stats Section */}
+                            <div className="bg-white p-4 rounded-lg shadow">
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div className="p-3 bg-gray-50 rounded">
+                                        <h3 className="font-semibold text-gray-600">Total Sales</h3>
+                                        <p className="text-xl font-bold">{totalAmount}</p>
+                                    </div>
+                                    <div className="p-3 bg-gray-50 rounded">
+                                        <h3 className="font-semibold text-gray-600">Cost of Goods</h3>
+                                        <p className="text-xl font-bold">{totalCOGS}</p>
+                                    </div>
+                                    <div className={`p-3 rounded ${grossProfit >= 0 ? 'bg-green-50' : 'bg-red-50'}`}>
+                                        <h3 className={`font-semibold ${grossProfit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                            Gross Profit
+                                        </h3>
+                                        <p className={`text-xl font-bold ${grossProfit >= 0 ? 'text-green-700' : 'text-red-700'}`}>
+                                            {grossProfit}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                }
             </div>
         </div>
     )
