@@ -289,9 +289,9 @@ const SingleProduct = () => {
                                                     data?.title === "Ford Mustang GT"
                                                         ?
                                                         <>
-                                                            <p className="font-bold">Regular Price: <span className="text-green-500 text-xl line-through">৳ 3700</span></p>
+                                                            <p className="font-bold">Regular Price: <span className="text-green-500 text-xl line-through">৳ 3400</span></p>
                                                             <p className="font-bold">Offer Price: <span className="text-green-500 text-xl">৳{data?.price}</span></p>
-                                                            <p className="font-bold">Saved: <span className="text-green-500 text-xl">৳ 300</span></p>
+                                                            <p className="font-bold">Saved: <span className="text-green-500 text-xl">৳ 400</span></p>
                                                         </>
                                                         :
                                                         <>
