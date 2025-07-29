@@ -90,7 +90,7 @@ const Footer = () => {
                                 </li>
                                 <li>
                                     <a
-                                        href="https://wa.me/+8801882706510"  // Replace PHONE_NUMBER with the actual number (including country code)
+                                        href="https://wa.me/+8801818136701"  // Replace PHONE_NUMBER with the actual number (including country code)
                                         className="text-gray-600 transition hover:text-[#FFD700]"
                                         target="_blank"
                                         rel="noopener noreferrer"
