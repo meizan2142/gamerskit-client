@@ -295,17 +295,17 @@ const SingleProduct = () => {
                                                         </>
                                                         :
                                                         <>
-                                                            <p className="font-bold">Regular Price: <span className="text-green-500 text-xl line-through">৳ 3500</span></p>
+                                                            <p className="font-bold">Regular Price: <span className="text-green-500 text-xl line-through">৳ 3200</span></p>
                                                             <p className="font-bold">Offer Price: <span className="text-green-500 text-xl">৳{data?.price}</span></p>
-                                                            <p className="font-bold">Saved: <span className="text-green-500 text-xl">৳ 300</span></p>
+                                                            <p className="font-bold">Saved: <span className="text-green-500 text-xl">৳ 700</span></p>
                                                         </>
                                                 }
                                             </>
                                             :
                                             <>
-                                                <p className="font-bold">Regular Price: <span className="text-green-500 text-xl line-through">৳ 3500</span></p>
+                                                <p className="font-bold">Regular Price: <span className="text-green-500 text-xl line-through">৳ 2800</span></p>
                                                 <p className="font-bold">Offer Price: <span className="text-green-500 text-xl">৳{data?.price}</span></p>
-                                                <p className="font-bold">Saved: <span className="text-green-500 text-xl">৳ 700</span></p>
+                                                <p className="font-bold">Saved: <span className="text-green-500 text-xl">৳ 500</span></p>
                                             </>
                                     }
                                 </>
