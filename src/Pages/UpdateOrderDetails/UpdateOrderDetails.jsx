@@ -54,14 +54,14 @@ const UpdateOrderDetails = () => {
                 district: data.district,
                 thana: data.thana,
                 address: data.address,
-                advanceAmount: data.advanceAmount,
+                advanceAmount: Number(data.advanceAmount),
                 paymentDigits: data.paymentDigits,
                 note: data.note
             });
 
             // Set district and thana states
             setSelectedDistrict(data.district);
-            setAdvanceAmount(data.advanceAmount || 0);
+            setAdvanceAmount(Number(data.advanceAmount) || 0);
         }
     }, [data, reset]);
 

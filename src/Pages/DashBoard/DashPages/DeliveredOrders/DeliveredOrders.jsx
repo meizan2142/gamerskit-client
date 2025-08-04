@@ -46,7 +46,6 @@ const DeliveredOrders = () => {
                         <th className="py-3 px-6 border-b text-center">Quantity</th>
                         <th className="py-3 px-6 border-b text-center">Advance Amount</th>
                         <th className="py-3 px-6 border-b text-center">Remaining Amount</th>
-                        <th className="py-3 px-6 border-b text-center">Total Amount</th>
                         <th className="py-3 px-6 text-left border-b">Details</th>
                         <th className="py-3 px-6 text-left border-b">Status</th>
                     </tr>
@@ -66,9 +65,6 @@ const DeliveredOrders = () => {
                                 </td>
                                 <td className="py-4 px-6 border-b text-center">৳{item.advanceAmount}</td>
                                 <td className="py-4 px-6 border-b text-center">৳{item.remainingAmount}</td>
-                                <td className="py-4 px-6 border-b text-center font-medium">
-                                    ৳{(item.advanceAmount + item.remainingAmount)}
-                                </td>
                                 <td className="py-4 px-6 border-b text-center">
                                     <NavLink to={`/single-order-details/${item._id}`} className="inline-block">
                                         <Eye className="text-blue-500 hover:text-blue-700" />

@@ -28,14 +28,14 @@ const DashBoard = () => {
                             Home
                         </NavLink>
 
-                        {/* <NavLink
+                        <NavLink
                             to='/dashboard/accounts'
                             className={({ isActive }) =>
                                 `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
                             }
                         >
                             Accounts
-                        </NavLink> */}
+                        </NavLink>
 
                         <NavLink
                             to='/dashboard/add-product'

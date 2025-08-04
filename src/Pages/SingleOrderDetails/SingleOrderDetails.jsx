@@ -108,7 +108,7 @@ const SingleOrderDetails = () => {
                     {
                         user?.email === "gamerskit3859@gmail.com" ?
                             <div className="flex items-center gap-6">
-                                <NavLink to={`/single-order-details/update-details/${data._id}`}><span><SquarePen size={18} /></span></NavLink>
+                                {/* <NavLink to={`/single-order-details/update-details/${data._id}`}><span><SquarePen size={18} /></span></NavLink> */}
                                 <div className="py-4 px-6 space-y-1">
                                     <button
                                         onClick={() => handleDeleteClick(data._id)}  // Changed from item._id to data._id
