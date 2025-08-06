@@ -57,7 +57,9 @@ const OrderForm = () => {
         'nissan gtr r34 rwd (dual battery & gyro stabilizer)',
         "r36s max handheld game console",
         "m22 playstation 128gb",
-        "r36s handheld game console"
+        "r36s handheld game console",
+        "mn99s full scale 4wd climbing defender (black)",
+        "mn98 rc rock crawler defender (yellow)"
     ];
 
     // Check if cart contains only cars
