@@ -58,8 +58,8 @@ const OrderForm = () => {
         "r36s max handheld game console",
         "m22 playstation 128gb",
         "r36s handheld game console",
-        "mn99s full scale 4wd climbing defender (black)",
-        "mn98 rc rock crawler defender (yellow)"
+        "mn99s full scale 4wd climbing defender (black) - (dual battery)",
+        "mn98 rc rock crawler defender (yellow) - (dual battery)"
     ];
 
     // Check if cart contains only cars
