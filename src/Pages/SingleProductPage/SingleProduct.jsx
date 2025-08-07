@@ -204,6 +204,7 @@ const SingleProduct = () => {
         "Nissan GTR R34 RWD (Dual battery & Gyro Stabilizer)",
         "MN99S Full Scale 4WD Climbing Defender (Black) - (Dual Battery)",
         "MN98 RC Rock Crawler Defender (Yellow) - (Dual Battery)",
+        "Nissan Black Racer (Dual Battery)",
         "G2 Prestige 2025",
         "Sentinels Jersey",
         "F1 Red Bull 2024",

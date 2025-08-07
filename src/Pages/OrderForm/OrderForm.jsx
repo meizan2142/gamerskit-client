@@ -59,7 +59,8 @@ const OrderForm = () => {
         "m22 playstation 128gb",
         "r36s handheld game console",
         "mn99s full scale 4wd climbing defender (black) - (dual battery)",
-        "mn98 rc rock crawler defender (yellow) - (dual battery)"
+        "mn98 rc rock crawler defender (yellow) - (dual battery)",
+        "nissan black racer (dual battery)"
     ];
 
     // Check if cart contains only cars
