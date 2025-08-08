@@ -20,6 +20,7 @@ import AddProduct from "../Pages/DashBoard/DashPages/AddProduct/AddProduct";
 import UpdateOrderDetails from "../Pages/UpdateOrderDetails/UpdateOrderDetails";
 import OrdersSummary from "../Pages/DashBoard/DashPages/OrdersSummary/OrdersSummary";
 import Accounts from "../Pages/DashBoard/DashPages/Accounts/Accounts";
+import AdminRoute from "../Pages/PrivateRoute/AdminRoute";
 
 export const router = createBrowserRouter([
     {
@@ -39,7 +40,7 @@ export const router = createBrowserRouter([
                 element: <SingleProduct />
             },
             {
-                path: "/product/:productSlug",  // Simplified single parameter
+                path: "/product/:productSlug",
                 element: <SingleProduct />
             },
             {
@@ -74,7 +75,7 @@ export const router = createBrowserRouter([
     },
     {
         path: 'dashboard',
-        element: <PrivateRoute><DashBoard></DashBoard></PrivateRoute>,
+        element: <AdminRoute><DashBoard></DashBoard></AdminRoute>,
         children: [
             // Worker's Routes
             {
