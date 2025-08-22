@@ -5,124 +5,68 @@ import { Link, NavLink } from 'react-router';
 
 const Footer = () => {
     return (
-        <footer className="bg-[#1A1A1A] mt-10">
-            <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-                {/* Main Content */}
-                <div className="lg:flex lg:items-start lg:gap-8">
-                    <div className="grid grid-cols-2 gap-8 md:grid-cols-2 lg:grid-cols-5 lg:gap-y-16">
-                        {/* Newsletter Section - Full width on mobile, 2 cols on md+ */}
-                        <div className="col-span-2">
-                            <div>
-                                <h2 className="text-2xl font-bold text-white">
-                                    Get the latest news!
-                                </h2>
-                                <p className="mt-4 text-gray-300">
-                                    Stay updated with our newest products and exclusive offers.
-                                </p>
-                            </div>
-                        </div>
+        <footer className="bg-[#1A1A1A] mt-10 text-white">
+            <div className="max-w-screen-xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
 
-                        {/* Newsletter Form - Full width on mobile, 2 cols on md+ */}
-                        <div className="col-span-2 lg:col-span-3 lg:flex lg:items-end">
-                            <form className="w-full">
-                                <label htmlFor="UserEmail" className="sr-only">Email</label>
-                                <div className="border rounded-md p-2 focus-within:ring-2 focus-within:ring-[#FFD700] sm:flex sm:items-center sm:gap-4 border-gray-700">
-                                    <input
-                                        type="email"
-                                        id="UserEmail"
-                                        placeholder="your@email.com"
-                                        className="w-full border-none bg-transparent outline-none text-white"
-                                    />
-                                    <button
-                                        className="mt-1 w-full px-6 py-3 text-sm font-bold uppercase tracking-wide transition sm:mt-0 sm:w-auto sm:shrink-0 bg-[#FFD700] text-black hover:bg-[#FFB300] rounded-md"
-                                    >
-                                        Sign Up
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                {/* Newsletter Section */}
+                <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-6 md:gap-4">
+                    <div>
+                        <h2 className="text-2xl font-bold">Get the latest news!</h2>
+                        <p className="mt-2 text-gray-300 text-sm sm:text-base">
+                            Stay updated with our newest products and exclusive offers.
+                        </p>
+                    </div>
 
-                        {/* Footer Links - Always 2 columns on mobile and up */}
-                        {[
-                            { title: "Helpful Links", items: ['Contact', 'FAQs'] },
-                            { title: "Legal", items: ['Terms', 'Privacy Policy'] }
-                        ].map((section, index) => (
-                            <div key={index} className="col-span-1">
-                                <p className="font-medium text-white">{section.title}</p>
-                                <ul className="mt-6 space-y-4 text-sm">
-                                    {section.items.map((item) => (
-                                        <li key={item}>
-                                            <a href="#" className="transition text-gray-300 hover:text-[#FFD700]">
-                                                {item}
-                                            </a>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
+                    <form className="flex flex-col sm:flex-row gap-2 sm:gap-0 w-full md:w-auto">
+                        <input
+                            type="email"
+                            placeholder="your@email.com"
+                            className="w-full md:w-64 px-3 py-2 rounded-l-md border border-gray-700 bg-[#111] text-white outline-none focus:ring-2 focus:ring-[#FFD700]"
+                        />
+                        <button className="px-5 py-2 bg-[#FFD700] hover:bg-[#FFB300] text-black font-bold rounded-r-md transition">
+                            Sign Up
+                        </button>
+                    </form>
+                </div>
 
-                        {/* Social Links - Full width on mobile, 5 cols on lg+ */}
-                        <div className="col-span-2 lg:col-span-5">
-                            <ul className="flex flex-wrap justify-start gap-6 lg:justify-end">
-                                <li>
-                                    <Link
-                                        to={{ pathname: "https://www.facebook.com/gamerskit.gg" }}
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            window.open("https://www.facebook.com/gamerskit.gg", "_blank");
-                                        }}
-                                        className="text-gray-600 transition hover:text-[#FFD700]"
-                                    >
-                                        <FaFacebookF color='white' className='w-6 h-6' />
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to={{ pathname: "https://www.instagram.com/gamerskit.gg" }}
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            window.open("https://www.instagram.com/gamerskit.gg", "_blank");
-                                        }}
-                                        className="text-gray-600 transition hover:text-[#FFD700]"
-                                    >
-                                        <FiInstagram color='white' className='w-6 h-6' />
-                                    </Link>
-                                </li>
-                                <li>
-                                    <a
-                                        href="https://wa.me/+8801818136701"  // Replace PHONE_NUMBER with the actual number (including country code)
-                                        className="text-gray-600 transition hover:text-[#FFD700]"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <FaWhatsapp color='white' className='w-6 h-6' />
-                                    </a>
-                                </li>
+                {/* Links Section */}
+                <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-8">
+                    {[
+                        { title: "Helpful Links", items: ['Contact', 'FAQs'] },
+                        { title: "Legal", items: ['Terms', 'Privacy Policy'] }
+                    ].map((section, idx) => (
+                        <div key={idx}>
+                            <p className="font-medium">{section.title}</p>
+                            <ul className="mt-4 space-y-2 text-sm">
+                                {section.items.map((item) => (
+                                    <li key={item}>
+                                        <a href="#" className="hover:text-[#FFD700] transition">{item}</a>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
+                    ))}
+
+                    {/* Social Links */}
+                    <div className="col-span-2 sm:col-span-2 flex gap-4 lg:justify-end mt-4 lg:mt-0">
+                        <Link href="#" onClick={(e) => { e.preventDefault(); window.open("https://facebook.com/gamerskit.gg", "_blank") }} className="hover:text-[#FFD700] transition-transform transform hover:scale-110">
+                            <FaFacebookF size={20} />
+                        </Link>
+                        <Link href="#" onClick={(e) => { e.preventDefault(); window.open("https://instagram.com/gamerskit.gg", "_blank") }} className="hover:text-[#FFD700] transition-transform transform hover:scale-110">
+                            <FiInstagram size={20} />
+                        </Link>
+                        <a href="https://wa.me/+8801818136701" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFD700] transition-transform transform hover:scale-110">
+                            <FaWhatsapp size={20} />
+                        </a>
                     </div>
                 </div>
 
                 {/* Copyright Section */}
-                <div className="mt-8 border-t  pt-8 border-gray-800">
-                    <div className="sm:flex sm:justify-between">
-                        <p className="text-xs text-gray-400">
-                            &copy; {new Date().getFullYear()} Your Company. All rights reserved.
-                        </p>
-
-                        <ul className="mt-4 flex flex-wrap justify-start gap-4 text-xs sm:mt-0 lg:justify-end">
-                            {['Terms', 'Privacy', 'Cookies'].map((item) => (
-                                <li key={item}>
-                                    <a href="#" className="text-white transition hover:text-[#FFD700]">
-                                        {item}
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className='text-xs text-gray-400 text-start my-8 sm:text-center md:text-center lg:text-center'>
-                        Design & Developed by <a className='font-bold' href='https://saif-portfolio-9c0a3.web.app' target='_blank'>Saif Sultan Mizan</a>
-                    </div>
+                <div className="mt-10 border-t border-gray-800 pt-6 text-sm sm:text-xs flex flex-col sm:flex-row justify-between items-center">
+                    <p className="text-gray-400">&copy; {new Date().getFullYear()} GamersKit. All rights reserved.</p>
+                    <p className="text-gray-400 mt-2 sm:mt-0">
+                        Designed & Developed by <a className="font-bold hover:text-[#FFD700]" href="https://saif-portfolio-9c0a3.web.app" target="_blank">Saif Sultan Mizan</a>
+                    </p>
                 </div>
             </div>
         </footer>
