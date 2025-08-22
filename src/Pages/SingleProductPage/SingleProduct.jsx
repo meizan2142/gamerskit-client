@@ -245,37 +245,7 @@ const SingleProduct = () => {
                                     {
                                         REACT_TABS.includes(data?.title) ?
                                             <>
-                                                <div className="max-w-4xl mx-auto px-4 py-6">
-                                                    <Tabs
-                                                        selectedIndex={selectedTab}
-                                                        onSelect={(index) => {
-                                                            setSelectedTab(index);
-                                                            localStorage.setItem('selectedTab', index.toString());
-                                                        }}
-                                                    >
-                                                        <TabList className="flex flex-wrap gap-3 border-b border-gray-200 mb-4">
-                                                            <Tab
-                                                                className="px-4 py-2 text-sm font-medium text-gray-700 border border-transparent rounded-t-md cursor-pointer transition duration-200"
-                                                                selectedClassName="border-b-2 border-blue-500 text-blue-600 bg-[#FFD700]"
-                                                            >
-                                                                64GB
-                                                            </Tab>
-                                                            <Tab
-                                                                className="px-4 py-2 text-sm font-medium text-gray-700 border border-transparent rounded-t-md cursor-pointer transition duration-200"
-                                                                selectedClassName="border-b-2 border-blue-500 text-blue-600 bg-[#FFD700]"
-                                                            >
-                                                                128GB
-                                                            </Tab>
-                                                        </TabList>
-
-                                                        <TabPanel>
-                                                            <p className="font-bold">Price: <span className="text-green-500 text-xl">৳5200</span></p>
-                                                        </TabPanel>
-                                                        <TabPanel>
-                                                            <p className="font-bold">Price: <span className="text-green-500 text-xl">৳5700</span></p>
-                                                        </TabPanel>
-                                                    </Tabs>
-                                                </div>
+                                                <p className="font-bold">Price: <span className="text-green-500 text-xl">৳{data?.price}-(64GB)</span></p>
                                             </>
                                             :
                                             <>
