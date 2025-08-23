@@ -110,7 +110,7 @@ const NewArrivals = ({ heading }) => {
       : data.filter((product) => product.name === activeTab);
 
   return (
-    <div className="space-y-3 mt-10 px-4 sm:px-6 lg:px-8">
+    <div className="space-y-3 my-10 px-4 sm:px-6 lg:px-8">
       {/* Heading */}
       <div className="text-center space-y-3">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
@@ -154,15 +154,15 @@ const NewArrivals = ({ heading }) => {
             ))}
           </Swiper>
         ) : (
-          <div className="flex items-center justify-center gap-4 md:gap-6 lg:gap-8 mt-6 flex-wrap">
+          <div className="flex items-center justify-center gap-4 md:gap-6 lg:gap-8 mt-6 flex-wrap cursor-pointer">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`w-[110px] aspect-square px-3 py-2 rounded-xl shadow-sm border transition-all ${
+                className={`w-[110px] aspect-square px-3 py-2 rounded-xl border transition-all ${
                   activeTab === tab.id
-                    ? "bg-[#FFD700] text-black border-[#E6C200] shadow-md"
-                    : "bg-white hover:bg-gray-50 hover:shadow-md border-gray-200"
+                    ? "bg-[#FFD700] text-black border-[#E6C200]"
+                    : "bg-white hover:bg-gray-50 border-gray-200"
                 }`}>
                 <div className="flex flex-col justify-center items-center gap-1">
                   <span className="text-lg">{tab.icon}</span>
@@ -178,7 +178,7 @@ const NewArrivals = ({ heading }) => {
 
       {/* Products Grid */}
       <div className="2xl:container 2xl:mx-auto 2xl:mt-10">
-        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5 gap-3">
           {isLoading
             ? Array.from({ length: 10 }).map((_, i) => <SkeletonCard key={i} />)
             : filteredProducts.map((product) => (

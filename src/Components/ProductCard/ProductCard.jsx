@@ -33,7 +33,7 @@ const ProductCard = ({ product, onAddToCart }) => {
             <NavLink
               to={`/product/${productSlug}`}
               state={{ productId: product._id }}>
-              <h1 className="text-xs sm:text-sm font-semibold text-gray-900 line-clamp-2 hover:underline">
+              <h1 className="text-sm font-semibold text-gray-900 line-clamp-2 hover:underline">
                 {product.title}
               </h1>
             </NavLink>
@@ -59,7 +59,7 @@ const ProductCard = ({ product, onAddToCart }) => {
               <NavLink
                 to={`/product/${productSlug}`}
                 state={{ productId: product._id }}
-                className="w-full flex items-center justify-center gap-1 bg-[#FFB300] text-white text-xs sm:text-sm font-medium py-1.5 rounded-2xl shadow hover:bg-[#e6a100] transition">
+                className="w-full flex items-center justify-center gap-1 bg-[#FFB300] text-white text-xs sm:text-sm font-medium py-1.5 rounded-2xl hover:bg-[#e6a100] transition">
                 Buy Now
               </NavLink>
             </div>
