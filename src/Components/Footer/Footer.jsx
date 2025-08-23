@@ -2,16 +2,30 @@ import mainLogo from "../../assets/logo.jpg";
 import instragramLogo from "../../assets/instragram.svg";
 import facebookLogo from "../../assets/facebook.svg";
 import whatsAppLogo from "../../assets/whatsappIcon.svg";
-import { FaFacebookF, FaWhatsapp } from "react-icons/fa";
-import { FiInstagram } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-black  text-white">
-      <div className="max-w-screen-xl mx-auto px-4 py-12 sm:px-6 lg:px-8 flex flex-col items-center justify-center gap-8 text-center">
+    <footer className="relative bg-black text-white overflow-hidden">
+      {/* Top Fade */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+            linear-gradient(to top, rgba(255,255,255,0.05) 1px, transparent 1px)
+          `,
+          backgroundSize: "50px 50px",
+          maskImage:
+            "linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%)",
+        }}
+      ></div>
+
+      <div className="relative max-w-screen-xl mx-auto px-4 py-12 sm:px-6 lg:px-8 flex flex-col items-center justify-center gap-8 text-center z-10">
         {/* Logo + Description */}
-        <div className="pb-5 border-b border-gray-800 w-full">
+        <div className="pb-5 w-full">
           <div className="flex justify-center items-center gap-3 mb-4">
             <img
               src={mainLogo}
@@ -76,7 +90,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom Line */}
-      <div className="pb-6 text-xs text-center text-gray-400">
+      <div className="pb-6 text-xs text-center text-gray-400 z-10 relative">
         <p className="text-gray-400 mt-2 sm:mt-0 text-xs pb-1">
           Designed & Developed by{" "}
           <a

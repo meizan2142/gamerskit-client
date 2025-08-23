@@ -44,8 +44,24 @@ const Reviews = () => {
   ];
 
   return (
-    <section className="py-12 bg-[#111] text-white">
-      <div className="max-w-6xl mx-auto px-4 text-center">
+    <section className="relative py-12 bg-black text-white overflow-hidden">
+      {/* Full Linear Strip Background with Bottom Fade */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px)
+          `,
+          backgroundSize: "50px 50px",
+          maskImage:
+            "linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%)",
+        }}
+      ></div>
+
+      <div className="relative 2xl:container 2xl:mx-auto px-4 text-center z-10">
         {/* Title + Subtitle */}
         <h2 className="text-3xl font-bold">What Gamers Say</h2>
         <p className="text-gray-400 mt-2 mb-8 text-lg">
@@ -65,22 +81,16 @@ const Reviews = () => {
           autoplay={{ delay: 3000, disableOnInteraction: false }}
           pagination={{
             clickable: true,
-            el: ".custom-swiper-pagination", // external pagination
+            el: ".custom-swiper-pagination",
             bulletClass: "swiper-pagination-bullet custom-bullet",
-            bulletActiveClass:
-              "swiper-pagination-bullet-active custom-bullet-active",
+            bulletActiveClass: "swiper-pagination-bullet-active custom-bullet-active",
           }}
         >
           {reviews.map((item, index) => (
             <SwiperSlide key={index}>
               <div className="p-6 bg-[#1c1c1c] rounded-2xl shadow-lg flex flex-col h-full min-h-[280px]">
-                {/* Top Icon */}
                 <FaQuoteLeft className="text-yellow-400 text-3xl mb-4" />
-
-                {/* Review Text */}
                 <p className="text-lg italic flex-grow">"{item.review}"</p>
-
-                {/* Bottom Section: Picture + Name + Stars */}
                 <div className="flex items-center justify-between mt-6">
                   <div className="flex items-center space-x-3">
                     <img
@@ -95,9 +105,7 @@ const Reviews = () => {
                       <FaStar
                         key={i}
                         className={`${
-                          i < item.rating
-                            ? "text-yellow-400"
-                            : "text-gray-600"
+                          i < item.rating ? "text-yellow-400" : "text-gray-600"
                         }`}
                       />
                     ))}
@@ -108,15 +116,15 @@ const Reviews = () => {
           ))}
         </Swiper>
 
-        {/* External Pagination Bullets */}
+        {/* Pagination */}
         <div className="custom-swiper-pagination mt-6 flex justify-center"></div>
       </div>
 
-      {/* Custom Swiper Bullet Styling */}
+      {/* Custom Swiper Bullets */}
       <style>
         {`
           .custom-bullet {
-            background-color: #FFD700; /* yellow */
+            background-color: #FFD700;
             opacity: 0.5;
             width: 10px;
             height: 10px;

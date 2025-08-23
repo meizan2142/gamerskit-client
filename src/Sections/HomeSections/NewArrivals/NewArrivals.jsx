@@ -62,7 +62,6 @@ const tabs = [
 // Skeleton Card
 const SkeletonCard = () => (
   <div className="animate-pulse flex flex-col rounded-lg bg-white shadow-md overflow-hidden">
-    {/* Image placeholder */}
     <div className="bg-gray-200 h-48 w-full"></div>
     <div className="p-3 flex flex-col space-y-2">
       <div className="h-4 bg-gray-200 rounded w-3/4"></div>
@@ -79,6 +78,7 @@ const NewArrivals = ({ heading }) => {
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -109,8 +109,12 @@ const NewArrivals = ({ heading }) => {
       ? [...data].sort((a, b) => b.price - a.price)
       : data.filter((product) => product.name === activeTab);
 
+  const displayedProducts = showAll
+    ? filteredProducts
+    : filteredProducts.slice(0, 14);
+
   return (
-    <div className="space-y-3 my-10 px-4 sm:px-6 lg:px-8">
+    <div className="space-y-3 my-10 px-4 sm:px-6 lg:px-8 relative">
       {/* Heading */}
       <div className="text-center space-y-3">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
@@ -177,11 +181,12 @@ const NewArrivals = ({ heading }) => {
       </div>
 
       {/* Products Grid */}
-      <div className="2xl:container 2xl:mx-auto 2xl:mt-10">
+      <div className="2xl:container 2xl:mx-auto 2xl:mt-10 relative">
+        {/* Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5 gap-3">
           {isLoading
             ? Array.from({ length: 10 }).map((_, i) => <SkeletonCard key={i} />)
-            : filteredProducts.map((product) => (
+            : displayedProducts.map((product) => (
                 <ProductCard
                   key={`${product.name}-${product.title}`}
                   product={product}
@@ -190,7 +195,23 @@ const NewArrivals = ({ heading }) => {
                 />
               ))}
         </div>
+
+        {/* Blur Effect */}
+        {!showAll && filteredProducts.length > 8 && (
+          <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#F1EFEC] to-transparent pointer-events-none"></div>
+        )}
       </div>
+
+      {/* See All Button */}
+      {!showAll && filteredProducts.length > 8 && (
+        <div className="text-center mt-6">
+          <button
+            onClick={() => setShowAll(true)}
+            className="px-6 py-2 rounded-lg bg-[#FFD700] hover:bg-[#e6c200] text-black font-semibold">
+            See All
+          </button>
+        </div>
+      )}
 
       {error && (
         <div className="text-center text-red-500 font-medium mt-6">
