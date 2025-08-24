@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
+import Heading from "../../../Components/Heading";
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -34,18 +35,16 @@ const FAQ = () => {
   return (
     <section className="py-12 bg-black text-white">
       <div className="2xl:container 2xl:mx-auto 2xl:mt-10 px-4">
-        <h2 className="text-3xl font-bold text-center">FAQ</h2>
-        <p className="text-gray-400 text-center mt-2 mb-8">
-          Find answers to the most common questions
-        </p>
-
+        <Heading
+          title="FAQ"
+          subtitle="Find answers to the most common questions"
+        />
         <div className="space-y-4">
           {faqs.map((faq, index) => (
             <div
               key={index}
               className="bg-[#1c1c1c] rounded-xl shadow-md p-5 cursor-pointer transition hover:bg-[#222]"
-              onClick={() => toggleFAQ(index)}
-            >
+              onClick={() => toggleFAQ(index)}>
               {/* Question */}
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold">{faq.question}</h3>
@@ -59,9 +58,10 @@ const FAQ = () => {
               {/* Answer */}
               <div
                 className={`mt-3 text-gray-300 text-sm transition-all duration-300 overflow-hidden ${
-                  openIndex === index ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
-                }`}
-              >
+                  openIndex === index
+                    ? "max-h-40 opacity-100"
+                    : "max-h-0 opacity-0"
+                }`}>
                 {faq.answer}
               </div>
             </div>

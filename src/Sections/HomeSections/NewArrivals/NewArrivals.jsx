@@ -61,14 +61,14 @@ const tabs = [
 
 // Skeleton Card
 const SkeletonCard = () => (
-  <div className="animate-pulse flex flex-col rounded-lg bg-white shadow-md overflow-hidden">
-    <div className="bg-gray-200 h-48 w-full"></div>
+  <div className="animate-pulse flex flex-col rounded-lg bg-white overflow-hidden">
+    <div className="bg-gray-100 h-48 w-full"></div>
     <div className="p-3 flex flex-col space-y-2">
-      <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-      <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+      <div className="h-4 bg-gray-100 rounded w-3/4"></div>
+      <div className="h-4 bg-gray-100 rounded w-1/2"></div>
       <div className="mt-auto flex gap-2">
-        <div className="h-8 bg-gray-200 rounded w-1/2"></div>
-        <div className="h-8 bg-gray-200 rounded w-1/2"></div>
+        <div className="h-8 bg-gray-100 rounded w-1/2"></div>
+        <div className="h-8 bg-gray-100 rounded w-1/2"></div>
       </div>
     </div>
   </div>
@@ -204,11 +204,11 @@ const NewArrivals = ({ heading }) => {
 
       {/* See All Button */}
       {!showAll && filteredProducts.length > 8 && (
-        <div className="text-center mt-6">
+        <div className="text-center mt-6 py-3 md:py-8">
           <button
             onClick={() => setShowAll(true)}
-            className="px-6 py-2 rounded-lg bg-[#FFD700] hover:bg-[#e6c200] text-black font-semibold">
-            See All
+            className="px-6 py-2 rounded-lg bg-[#FFD700] hover:bg-[#e6c200] text-black font-semibold text-sm">
+            See All...
           </button>
         </div>
       )}

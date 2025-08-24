@@ -3,6 +3,7 @@ import axios from "axios";
 import { Eye } from "lucide-react";
 import { CSVLink } from "react-csv";
 import { NavLink } from "react-router";
+import Loader from "../../../../Components/loader";
 
 const PendingOrders = () => {
     const { isLoading, error, data: allOrders = [] } = useQuery({
@@ -42,9 +43,7 @@ const PendingOrders = () => {
 
 
     if (isLoading) return (
-        <div className="flex justify-center items-center min-h-[50vh]">
-            <div className="w-10 h-10 animate-spin rounded-full border-4 border-dashed border-[#FFB300]"></div>
-        </div>
+        <Loader/>
     );
 
     if (error) return (

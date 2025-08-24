@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import { useState, useEffect, useMemo } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Loader from "../../../../Components/loader";
 
 const Account = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -133,9 +134,7 @@ const Account = () => {
 
 
     if (isLoading) return (
-        <div className="flex justify-center items-center min-h-[50vh]">
-            <div className="w-10 h-10 animate-spin rounded-full border-4 border-dashed border-[#FFB300]"></div>
-        </div>
+        <Loader/>
     );
 
     if (error) return (

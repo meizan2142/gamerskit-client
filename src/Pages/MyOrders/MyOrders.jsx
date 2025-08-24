@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Eye } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import Loader from '../../Components/loader';
 
 const MyOrders = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -46,9 +47,7 @@ const MyOrders = () => {
     };
 
     if (isLoading) return (
-        <div className="flex justify-center items-center min-h-[50vh]">
-            <div className="w-10 h-10 animate-spin rounded-full border-4 border-dashed border-[#FFB300]"></div>
-        </div>
+        <Loader />
     );
 
     if (error) return (

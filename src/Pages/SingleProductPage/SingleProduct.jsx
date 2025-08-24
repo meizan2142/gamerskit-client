@@ -8,6 +8,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useState, useEffect } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import Loader from "../../Components/loader";
 
 const SingleProduct = () => {
   const { productSlug } = useParams();
@@ -193,11 +194,8 @@ const SingleProduct = () => {
     navigate("/place-orders");
   };
 
-  if (isLoading)
-    return (
-      <div className="min-h-screen pt-24 flex justify-center">
-        <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
-      </div>
+  if (isLoading) return (
+        <Loader/>
     );
 
   if (error)

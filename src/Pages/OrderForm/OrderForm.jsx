@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import toast, { Toaster } from 'react-hot-toast';
 import { useAuth } from '../../useAuth/useAuth';
+import Loader from '../../Components/loader';
 
 const OrderForm = () => {
     const locations = allLocation();
@@ -205,9 +206,9 @@ const OrderForm = () => {
     }, []);
 
 
-    if (isLoading) return <div className="p-6 text-white">
-        <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
-    </div>;
+     if (isLoading) return (
+        <Loader/>
+    );
     if (error) return <div className="p-6 text-red-500">Error: {error.message}</div>;
 
 

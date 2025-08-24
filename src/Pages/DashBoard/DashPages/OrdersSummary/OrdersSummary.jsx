@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Loader from "../../../../Components/loader";
 
 const OrdersSummary = () => {
     const { isLoading, error, data: allOrders = [] } = useQuery({
@@ -42,10 +43,8 @@ const OrdersSummary = () => {
     const productList = Object.values(productStats)
         .sort((a, b) => b.orderCount - a.orderCount);
 
-    if (isLoading) return (
-        <div className="flex justify-center items-center min-h-[50vh]">
-            <div className="w-10 h-10 animate-spin rounded-full border-4 border-dashed border-[#FFB300]"></div>
-        </div>
+     if (isLoading) return (
+        <Loader/>
     );
 
     if (error) return (

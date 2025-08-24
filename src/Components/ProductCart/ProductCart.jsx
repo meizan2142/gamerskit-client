@@ -3,6 +3,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import Loader from "../loader";
 
 const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
   const queryClient = useQueryClient();
@@ -81,9 +82,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
 
   if (isLoading)
     return (
-      <div className="p-6 text-white flex justify-center">
-        <div className="w-10 h-10 animate-spin rounded-full border-4 border-dashed border-[#FFB300]"></div>
-      </div>
+      <Loader/>
     );
 
   if (error)

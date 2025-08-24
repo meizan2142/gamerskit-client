@@ -109,6 +109,19 @@ const Navbar = () => {
                   <span className="absolute bottom-[-4px] left-0 w-full h-[2px] bg-[#FFD700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
                 </NavLink>
               </li>
+              <li>
+                <NavLink
+                  to="/media"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "font-bold text-white text-sm sm:text-base border-b-2 border-[#FFD700]"
+                      : "text-gray-300 hover:text-[#FFD700] transition duration-300 text-sm sm:text-base relative group"
+                  }
+                >
+                  Media
+                  <span className="absolute bottom-[-4px] left-0 w-full h-[2px] bg-[#FFD700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
+                </NavLink>
+              </li>
               {newUser?.role === "admin" ? (
                 <li>
                   <NavLink

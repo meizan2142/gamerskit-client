@@ -3,6 +3,7 @@ import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { FaStar, FaQuoteLeft } from "react-icons/fa";
+import Heading from "../../../Components/Heading";
 
 const Reviews = () => {
   const reviews = [
@@ -50,8 +51,8 @@ const Reviews = () => {
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage: `
-            linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px)
+            linear-gradient(to right, rgba(255,255,255,0.05) 2px, transparent 1px),
+            linear-gradient(to bottom, rgba(255,255,255,0.05) 2px, transparent 1px)
           `,
           backgroundSize: "50px 50px",
           maskImage:
@@ -62,11 +63,7 @@ const Reviews = () => {
       ></div>
 
       <div className="relative 2xl:container 2xl:mx-auto px-4 text-center z-10">
-        {/* Title + Subtitle */}
-        <h2 className="text-3xl font-bold">What Gamers Say</h2>
-        <p className="text-gray-400 mt-2 mb-8 text-lg">
-          Reviews from our Facebook Page
-        </p>
+        <Heading title="What Gamers Say" subtitle="Reviews from our Facebook Page"/>
 
         {/* Swiper */}
         <Swiper

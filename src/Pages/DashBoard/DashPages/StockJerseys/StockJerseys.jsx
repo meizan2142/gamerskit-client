@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import StockModal from "../../../../Components/StockModal/StockModal";
+import Loader from "../../../../Components/loader";
 
 const StockJerseys = () => {
     const { isLoading, error, data: addedProducts } = useQuery({
@@ -23,9 +24,9 @@ const StockJerseys = () => {
     // Sort the data when needed (e.g., in rendering)
     const sortedData = addedProducts ? [...addedProducts].sort((a, b) => b.price - a.price) : [];
 
-    if (isLoading) return <div className="min-h-screen pt-24 flex justify-center">
-        <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
-    </div>;
+     if (isLoading) return (
+        <Loader/>
+    );
 
     if (error) return <div className="min-h-screen pt-24 flex justify-center">Error: {error.message}</div>;
 

@@ -3,6 +3,7 @@ import axios from "axios";
 import { Eye } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
+import Loader from "../../../../Components/loader";
 
 const DeliveredOrders = () => {
 
@@ -20,9 +21,7 @@ const DeliveredOrders = () => {
     const delivered = allOrders.filter(d => d?.status === "delivered");
 
     if (isLoading) return (
-        <div className="flex justify-center items-center min-h-[50vh]">
-            <div className="w-10 h-10 animate-spin rounded-full border-4 border-dashed border-[#FFB300]"></div>
-        </div>
+        <Loader/>
     );
 
     if (error) return (

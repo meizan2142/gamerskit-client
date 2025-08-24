@@ -12,8 +12,8 @@ const Footer = () => {
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage: `
-            linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
-            linear-gradient(to top, rgba(255,255,255,0.05) 1px, transparent 1px)
+            linear-gradient(to right, rgba(255,255,255,0.05) 2px, transparent 1px),
+            linear-gradient(to top, rgba(255,255,255,0.05) 2px, transparent 1px)
           `,
           backgroundSize: "50px 50px",
           maskImage:
@@ -47,6 +47,7 @@ const Footer = () => {
               {[
                 { label: "Home", href: "/" },
                 { label: "Shop", href: "/shop" },
+                { label: "Media", href: "/media" },
                 { label: "My Orders", href: "/my-orders" },
               ].map((item) => (
                 <li key={item.label}>
