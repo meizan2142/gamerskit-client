@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../assets/logo-icon.png"
 import "./loader.css";
 
-const LogoLoader = () => {
+const Loader = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-black">
       <img
@@ -14,4 +14,4 @@ const LogoLoader = () => {
   );
 };
 
-export default LogoLoader;
+export default Loader;

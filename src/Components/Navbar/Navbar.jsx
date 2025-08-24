@@ -57,14 +57,13 @@ const Navbar = () => {
   }, [user, users]);
 
   return (
-<>
+    <>
       <header className="p-4 lg:px-8 xl:px-20 shadow-none fixed w-full z-50 bg-gray-900/60 backdrop-blur-md">
         <div className="container mx-auto flex justify-between items-center">
           {/* Mobile Menu Button (visible on small screens only) */}
           <button
             className="p-2 lg:hidden text-white order-1"
-            onClick={() => setIsOpen(!isOpen)}
-          >
+            onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? (
               <X size={28} className="hover:text-[#FFD700] transition" />
             ) : (
@@ -90,8 +89,7 @@ const Navbar = () => {
                     isActive
                       ? "font-bold text-white text-sm sm:text-base border-b-2 border-[#FFD700]"
                       : "text-gray-300 hover:text-[#FFD700] transition duration-300 text-sm sm:text-base relative group"
-                  }
-                >
+                  }>
                   Home
                   <span className="absolute bottom-[-4px] left-0 w-full h-[2px] bg-[#FFD700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
                 </NavLink>
@@ -103,8 +101,7 @@ const Navbar = () => {
                     isActive
                       ? "font-bold text-white text-sm sm:text-base border-b-2 border-[#FFD700]"
                       : "text-gray-300 hover:text-[#FFD700] transition duration-300 text-sm sm:text-base relative group"
-                  }
-                >
+                  }>
                   Shop
                   <span className="absolute bottom-[-4px] left-0 w-full h-[2px] bg-[#FFD700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
                 </NavLink>
@@ -116,8 +113,7 @@ const Navbar = () => {
                     isActive
                       ? "font-bold text-white text-sm sm:text-base border-b-2 border-[#FFD700]"
                       : "text-gray-300 hover:text-[#FFD700] transition duration-300 text-sm sm:text-base relative group"
-                  }
-                >
+                  }>
                   Media
                   <span className="absolute bottom-[-4px] left-0 w-full h-[2px] bg-[#FFD700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
                 </NavLink>
@@ -130,8 +126,7 @@ const Navbar = () => {
                       isActive
                         ? "font-bold text-white text-sm sm:text-base border-b-2 border-[#FFD700]"
                         : "text-gray-300 hover:text-[#FFD700] transition duration-300 text-sm sm:text-base relative group"
-                    }
-                  >
+                    }>
                     Dashboard
                     <span className="absolute bottom-[-4px] left-0 w-full h-[2px] bg-[#FFD700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
                   </NavLink>
@@ -144,8 +139,7 @@ const Navbar = () => {
                       isActive
                         ? "font-bold text-white text-sm sm:text-base border-b-2 border-[#FFD700]"
                         : "text-gray-300 hover:text-[#FFD700] transition duration-300 text-sm sm:text-base relative group"
-                    }
-                  >
+                    }>
                     My Orders
                     <span className="absolute bottom-[-4px] left-0 w-full h-[2px] bg-[#FFD700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
                   </NavLink>
@@ -160,8 +154,7 @@ const Navbar = () => {
             <Badge
               badgeContent={cartCount}
               color="primary"
-              className="text-[#FAE82A] font-bold"
-            >
+              className="text-[#FAE82A] font-bold">
               <button onClick={() => setIsCartOpen(true)}>
                 <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-white hover:text-[#FFD700] transition" />
               </button>
@@ -170,8 +163,7 @@ const Navbar = () => {
             {user ? (
               <button
                 onClick={logOut}
-                className="hidden lg:flex px-3 py-2 text-sm font-bold tracking-wide transition bg-[#FFD700] text-black hover:bg-[#FFB300] rounded-md"
-              >
+                className="hidden lg:flex px-3 py-2 text-sm font-bold tracking-wide transition bg-[#FFD700] text-black hover:bg-[#FFB300] rounded-md">
                 Signout
               </button>
             ) : (
@@ -187,14 +179,12 @@ const Navbar = () => {
       <nav
         className={`lg:hidden fixed top-0 left-0 w-screen h-screen z-40 transition-transform duration-500 ease-in-out bg-gray-950 transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
+        }`}>
         <div className="relative w-full h-full flex flex-col items-center justify-center space-y-8 text-center p-4">
           {/* Close button */}
           <button
             className="absolute top-6 right-6 p-2 text-white"
-            onClick={() => setIsOpen(false)}
-          >
+            onClick={() => setIsOpen(false)}>
             <X size={32} className="hover:text-[#FFD700] transition" />
           </button>
           <ul className="flex flex-col items-center space-y-8 text-center">
@@ -206,8 +196,7 @@ const Navbar = () => {
                   isActive
                     ? "font-bold text-white text-lg border-b-2 border-[#FFD700]"
                     : "text-gray-300 hover:text-[#FFD700] transition duration-300 text-lg relative group"
-                }
-              >
+                }>
                 Home
                 <span className="absolute bottom-[-4px] left-0 w-full h-[2px] bg-[#FFD700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
               </NavLink>
@@ -220,8 +209,7 @@ const Navbar = () => {
                   isActive
                     ? "font-bold text-white text-lg border-b-2 border-[#FFD700]"
                     : "text-gray-300 hover:text-[#FFD700] transition duration-300 text-lg relative group"
-                }
-              >
+                }>
                 Shop
                 <span className="absolute bottom-[-4px] left-0 w-full h-[2px] bg-[#FFD700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
               </NavLink>
@@ -235,8 +223,7 @@ const Navbar = () => {
                     isActive
                       ? "font-bold text-white text-lg border-b-2 border-[#FFD700]"
                       : "text-gray-300 hover:text-[#FFD700] transition duration-300 text-lg relative group"
-                  }
-                >
+                  }>
                   Dashboard
                   <span className="absolute bottom-[-4px] left-0 w-full h-[2px] bg-[#FFD700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
                 </NavLink>
@@ -250,8 +237,7 @@ const Navbar = () => {
                     isActive
                       ? "font-bold text-white text-lg border-b-2 border-[#FFD700]"
                       : "text-gray-300 hover:text-[#FFD700] transition duration-300 text-lg relative group"
-                  }
-                >
+                  }>
                   My Orders
                   <span className="absolute bottom-[-4px] left-0 w-full h-[2px] bg-[#FFD700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
                 </NavLink>
@@ -264,8 +250,7 @@ const Navbar = () => {
                     logOut();
                     setIsOpen(false);
                   }}
-                  className="px-6 py-3 text-base font-bold tracking-wide transition bg-[#FFD700] text-black hover:bg-[#FFB300] rounded-md"
-                >
+                  className="px-6 py-3 text-base font-bold tracking-wide transition bg-[#FFD700] text-black hover:bg-[#FFB300] rounded-md">
                   Signout
                 </button>
               </li>
