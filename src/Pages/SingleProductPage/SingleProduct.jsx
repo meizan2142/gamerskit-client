@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Loader from "../../Components/loader";
+import ProductCard from "../../Components/ProductCard/ProductCard";
 
 const SingleProduct = () => {
   const { productSlug } = useParams();
@@ -57,6 +58,17 @@ const SingleProduct = () => {
         }
         throw error;
       }
+    },
+  });
+
+  // Fetch all products
+  const { data: allProducts = [] } = useQuery({
+    queryKey: ["allProduct"],
+    queryFn: async () => {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/addedProducts`
+      );
+      return response.data;
     },
   });
 
@@ -194,9 +206,7 @@ const SingleProduct = () => {
     navigate("/place-orders");
   };
 
-  if (isLoading) return (
-        <Loader/>
-    );
+  if (isLoading) return <Loader />;
 
   if (error)
     return (
@@ -218,6 +228,11 @@ const SingleProduct = () => {
       return quantity > 0;
     });
   const isButtonDisabled = hasSizes && !selectedSize;
+
+  // Suggested products
+  const suggestedProducts = allProducts.filter(
+    (p) => p.name === data.name && p._id !== allProducts._id
+  );
 
   const EXCLUDED_OFFER_PRICE = [
     "Nissan GTR R34 RWD (Dual battery & Gyro Stabilizer)",
@@ -251,7 +266,7 @@ const SingleProduct = () => {
 
   return (
     <div className="min-h-screen pt-12 md:pt-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-8 py-6">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-8 py-6 rounded-[32px] border-2 border-white bg-white/40">
         <SingleProductSwiper
           images={
             data.subImages
@@ -259,156 +274,145 @@ const SingleProduct = () => {
               : [data.mainImage]
           }
         />
-        <div className="w-full lg:w-[40%] xl:w-[30%] space-y-8">
+        <div className="w-full space-y-8 rounded-[32px] border p-6 border-[#E9E9E9] bg-white">
           <div className="mb-6 space-y-3">
-            <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[40px]">
+            <h1 className=" text-[#1F1F1F] font-urbanist text-[28px] not-italic font-bold leading-[40px]">
               {data.title}
             </h1>
-            {EXCLUDED_OFFER_PRICE.includes(data?.title) ? (
-              <>
-                {REACT_TABS.includes(data?.title) ? (
-                  <>
-                    <div className="max-w-4xl mx-auto px-4 py-6">
-                      <Tabs
-                        selectedIndex={selectedTab}
-                        onSelect={(index) => {
-                          setSelectedTab(index);
-                          localStorage.setItem("selectedTab", index.toString());
-                        }}>
-                        <TabList className="flex flex-wrap gap-3 border-b border-gray-200 mb-4">
-                          <Tab
-                            className="px-4 py-2 text-sm font-medium text-gray-700 border border-transparent rounded-t-md cursor-pointer transition duration-200"
-                            selectedClassName="border-b-2 border-blue-500 text-blue-600 bg-[#FFD700]">
-                            64GB
-                          </Tab>
-                          <Tab
-                            className="px-4 py-2 text-sm font-medium text-gray-700 border border-transparent rounded-t-md cursor-pointer transition duration-200"
-                            selectedClassName="border-b-2 border-blue-500 text-blue-600 bg-[#FFD700]">
-                            128GB
-                          </Tab>
-                        </TabList>
+            {/* With Tabs (64GB / 128GB) */}
+            {REACT_TABS.includes(data?.title) ? (
+              <div className="max-w-4xl mx-auto px-4 py-6">
+                <Tabs
+                  selectedIndex={selectedTab}
+                  onSelect={(index) => {
+                    setSelectedTab(index);
+                    localStorage.setItem("selectedTab", index.toString());
+                  }}>
+                  <TabList className="flex flex-wrap gap-3 border-b border-gray-200 mb-4">
+                    <Tab
+                      className="px-4 py-2 text-sm font-medium text-gray-700 border border-transparent rounded-t-md cursor-pointer transition duration-200"
+                      selectedClassName="border-b-2 border-[#FFD700] text-[#1F1F1F] bg-[#FFF8DC]">
+                      64GB
+                    </Tab>
+                    <Tab
+                      className="px-4 py-2 text-sm font-medium text-gray-700 border border-transparent rounded-t-md cursor-pointer transition duration-200"
+                      selectedClassName="border-b-2 border-[#FFD700] text-[#1F1F1F] bg-[#FFF8DC]">
+                      128GB
+                    </Tab>
+                  </TabList>
 
-                        <TabPanel>
-                          <p className="font-bold">
-                            Price:{" "}
-                            <span className="text-green-500 text-xl">
-                              ৳5200
-                            </span>
-                          </p>
-                        </TabPanel>
-                        <TabPanel>
-                          <p className="font-bold">
-                            Price:{" "}
-                            <span className="text-green-500 text-xl">
-                              ৳5700
-                            </span>
-                          </p>
-                        </TabPanel>
-                      </Tabs>
-                    </div>
+                  <TabPanel>
+                    <p className="font-bold">
+                      Price:{" "}
+                      <span className="text-xl text-[#FFD700] font-extrabold">
+                        ৳5200
+                      </span>
+                    </p>
+                  </TabPanel>
+                  <TabPanel>
+                    <p className="font-bold">
+                      Price:{" "}
+                      <span className="text-xl text-[#FFD700] font-extrabold">
+                        ৳5700
+                      </span>
+                    </p>
+                  </TabPanel>
+                </Tabs>
+              </div>
+            ) : (
+              <p className="text-[#1F1F1F] font-urbanist text-[20px] font-extrabold leading-[26px]">
+                Price: <span className="text-[#FFD700]">৳{data?.price}</span>
+              </p>
+            )}
+
+            {/* Offer Pricing */}
+            {ANOTHER_OFFER_PRICE.includes(data?.title) ? (
+              <>
+                {data?.title === "Ford Mustang GT" ? (
+                  <>
+                    <p className="font-semibold text-gray-500">
+                      Regular Price:{" "}
+                      <span className="text-xl line-through">৳ 3400</span>
+                    </p>
+                    <p className="font-bold">
+                      Offer Price:{" "}
+                      <span className="text-2xl text-[#FFD700] font-extrabold">
+                        ৳{data?.price}
+                      </span>
+                    </p>
+                    <p className="font-semibold text-red-600">
+                      You Save: <span className="text-lg">৳ 400</span>
+                    </p>
                   </>
                 ) : (
                   <>
+                    <p className="font-semibold text-gray-500">
+                      Regular Price:{" "}
+                      <span className="text-xl line-through">৳ 3200</span>
+                    </p>
                     <p className="font-bold">
-                      Price:{" "}
-                      <span className="text-green-500 text-xl">
+                      Offer Price:{" "}
+                      <span className="text-2xl text-[#FFD700] font-extrabold">
                         ৳{data?.price}
                       </span>
+                    </p>
+                    <p className="font-semibold text-red-600">
+                      You Save: <span className="text-lg">৳ 700</span>
                     </p>
                   </>
                 )}
               </>
             ) : (
               <>
-                {ANOTHER_OFFER_PRICE.includes(data?.title) ? (
-                  <>
-                    {data?.title === "Ford Mustang GT" ? (
-                      <>
-                        <p className="font-bold">
-                          Regular Price:{" "}
-                          <span className="text-green-500 text-xl line-through">
-                            ৳ 3400
-                          </span>
-                        </p>
-                        <p className="font-bold">
-                          Offer Price:{" "}
-                          <span className="text-green-500 text-xl">
-                            ৳{data?.price}
-                          </span>
-                        </p>
-                        <p className="font-bold">
-                          Saved:{" "}
-                          <span className="text-green-500 text-xl">৳ 400</span>
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <p className="font-bold">
-                          Regular Price:{" "}
-                          <span className="text-green-500 text-xl line-through">
-                            ৳ 3200
-                          </span>
-                        </p>
-                        <p className="font-bold">
-                          Offer Price:{" "}
-                          <span className="text-green-500 text-xl">
-                            ৳{data?.price}
-                          </span>
-                        </p>
-                        <p className="font-bold">
-                          Saved:{" "}
-                          <span className="text-green-500 text-xl">৳ 700</span>
-                        </p>
-                      </>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <p className="font-bold">
-                      Regular Price:{" "}
-                      <span className="text-green-500 text-xl line-through">
-                        ৳ 2800
-                      </span>
-                    </p>
-                    <p className="font-bold">
-                      Offer Price:{" "}
-                      <span className="text-green-500 text-xl">
-                        ৳{data?.price}
-                      </span>
-                    </p>
-                    <p className="font-bold">
-                      Saved:{" "}
-                      <span className="text-green-500 text-xl">৳ 500</span>
-                    </p>
-                  </>
-                )}
+                <p className="font-semibold text-gray-500">
+                  Regular Price:{" "}
+                  <span className="text-xl line-through">৳ 2800</span>
+                </p>
+                <p className="font-bold">
+                  Offer Price:{" "}
+                  <span className="text-2xl text-[#FFD700] font-extrabold">
+                    ৳{data?.price}
+                  </span>
+                </p>
+                <p className="font-semibold text-red-600">
+                  You Save: <span className="text-lg">৳ 500</span>
+                </p>
               </>
             )}
-            <p className="text-green-600 text-base font-semibold">
-              <strong className="font-bold text-xl text-black">
-                Order Process:
-              </strong>
-              <br />
-              {data?.name === "car" &&
-                "• RC Car: For order make 100 tk advance."}
-              {data?.name === "consoles" &&
-                "• Game Console: For order make 100 tk advance."}
-              {data?.name === "F1" &&
-                "• F1 Jersey: For order make 100 tk advance."}
-              {data?.name === "E-sports" &&
-                "• E-sports Jersey: For order make 100 tk advance."}
-              {data?.name === "Tshirt" &&
-                "• Tshirt: For order make 100 tk advance."}
-              {data?.name === "Sleeves" && "• Hand Sleeves: No advance needed"}
-              {data?.name === "Mask" && "• Mask: No advance needed"}
-              <br />
+
+            <div className="mt-6 rounded-xl border border-yellow-300 bg-yellow-50 p-5 shadow-sm">
+              <p className="text-yellow-800 text-lg font-bold mb-2">
+                Order Process
+              </p>
+
+              <div className="text-gray-800 text-base space-y-2">
+                {data?.name === "car" && (
+                  <p>• RC Car: For order make 100 tk advance.</p>
+                )}
+                {data?.name === "consoles" && (
+                  <p>• Game Console: For order make 100 tk advance.</p>
+                )}
+                {data?.name === "F1" && (
+                  <p>• F1 Jersey: For order make 100 tk advance.</p>
+                )}
+                {data?.name === "E-sports" && (
+                  <p>• E-sports Jersey: For order make 100 tk advance.</p>
+                )}
+                {data?.name === "Tshirt" && (
+                  <p>• Tshirt: For order make 100 tk advance.</p>
+                )}
+                {data?.name === "Sleeves" && (
+                  <p>• Hand Sleeves: No advance needed.</p>
+                )}
+                {data?.name === "Mask" && <p>• Mask: No advance needed.</p>}
+              </div>
 
               {(data?.name === "car" ||
                 data?.name === "F1" ||
                 data?.name === "Tshirt" ||
                 data?.name === "E-sports") && (
-                <>
-                  Send money via (Bkash/Nagad) to:
+                <div className="mt-4 text-gray-900 font-medium">
+                  Send money via (Bkash/Nagad) to:{" "}
                   <span
                     className="text-black font-bold cursor-pointer relative"
                     onClick={handleCopy}>
@@ -419,21 +423,15 @@ const SingleProduct = () => {
                       </span>
                     )}
                   </span>
-                  <br />
-                  <br />
-                </>
-              )}
-
-              {(data?.name === "car" ||
-                data?.name === "F1" ||
-                data?.name === "Tshirt" ||
-                data?.name === "E-sports") && (
-                <>Need help? Call us at the same number.</>
+                  <p className="mt-2">
+                    Need help? Call us at the same number.
+                  </p>
+                </div>
               )}
 
               {(data?.name === "Sleeves" || data?.name === "Mask") && (
-                <>
-                  Need help? Call us
+                <div className="mt-4 text-gray-900 font-medium">
+                  📞 Need help? Call us{" "}
                   <span
                     className="text-black font-bold cursor-pointer relative"
                     onClick={handleCopy}>
@@ -444,9 +442,9 @@ const SingleProduct = () => {
                       </span>
                     )}
                   </span>
-                </>
+                </div>
               )}
-            </p>
+            </div>
           </div>
 
           {hasSizes && (
@@ -518,6 +516,17 @@ const SingleProduct = () => {
           </div>
         </div>
       </div>
+      {/* Suggested products */}
+      {suggestedProducts.length > 0 && (
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <h2 className="text-2xl font-bold mb-6">You may also like</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {suggestedProducts.map((p) => (
+              <ProductCard key={p._id} product={p} />
+            ))}
+          </div>
+        </div>
+      )}
       <div>
         <Toaster />
       </div>

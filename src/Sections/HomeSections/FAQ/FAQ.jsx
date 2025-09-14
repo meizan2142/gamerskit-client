@@ -14,12 +14,12 @@ const FAQ = () => {
     {
       question: "Do you offer international shipping?",
       answer:
-        "Yes! We ship worldwide. Shipping costs vary depending on your location and will be calculated at checkout.",
+        "For now, we only ship within Bangladesh. We plan to expand our shipping options in the future.",
     },
     {
       question: "How can I track my order?",
       answer:
-        "Once your order is shipped, you’ll receive a tracking link via email or SMS to follow your package in real-time.",
+        "Once your order is shipped, you’ll track your order through a phone number or email provided during checkout.",
     },
     {
       question: "Can I return a product?",

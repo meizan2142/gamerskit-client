@@ -1,14 +1,18 @@
 import React from "react";
-import logo from "../assets/logo-icon.png"
+import logo from "../assets/logo-icon.png";
+import blackLogo from "../assets/logo-black.png";
 import "./loader.css";
 
-const Loader = () => {
+const Loader = ({ bg = "white" }) => {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-black">
+    <div
+      className={`flex items-center justify-center min-h-screen  ${
+        bg == "white" ? "bg-white" : "bg-black"
+      }`}>
       <img
-        src={logo}
+        src={bg == "white" ? blackLogo : logo}
         alt="Logo"
-        className="w-20 logo-zoom animate-pulse opacity-80"
+        className="w-20 logo-zoom animate-pulse"
       />
     </div>
   );

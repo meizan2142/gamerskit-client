@@ -98,7 +98,14 @@ const Footer = () => {
             className="font-bold hover:text-[#FFD700]"
             href="https://saif-portfolio-9c0a3.web.app"
             target="_blank">
-            Saif Sultan Mizan
+            Saif
+          </a>
+          <span> X </span>
+          <a
+            className="font-bold hover:text-[#FFD700]"
+            href="https://nasif-s-portfolio.web.app/"
+            target="_blank">
+            Nasif
           </a>
         </p>
         &copy; {new Date().getFullYear()}{" "}

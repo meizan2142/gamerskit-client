@@ -1,118 +1,176 @@
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 
+/* ---------- SizeGuide ---------- */
 const SizeGuide = () => (
-    <ul className="pl-5 space-y-1 list-none">
-        <li><span className="font-semibold">S </span>= Chest 36 Length 26</li>
-        <li><span className="font-semibold">M </span>= Chest 38 Length 27</li>
-        <li><span className="font-semibold">L </span>= Chest 40 Length 28</li>
-        <li><span className="font-semibold">XL </span>= Chest 42 Length 29</li>
-        <li><span className="font-semibold">XXL </span>= Chest 44 Length 30</li>
-        <li><span className="font-semibold">3XL </span>= Chest 46 Length 31</li>
-        <li><span className="font-semibold">4XL </span>= Chest 48 Length 32</li>
-        <li><span className="font-semibold">100 Tk extra for 4xl size</span></li>
-    </ul>
+  <ul className="pl-4 space-y-2 text-sm text-gray-700">
+    <li><span className="font-semibold">S </span>= Chest 36 • Length 26</li>
+    <li><span className="font-semibold">M </span>= Chest 38 • Length 27</li>
+    <li><span className="font-semibold">L </span>= Chest 40 • Length 28</li>
+    <li><span className="font-semibold">XL </span>= Chest 42 • Length 29</li>
+    <li><span className="font-semibold">XXL </span>= Chest 44 • Length 30</li>
+    <li><span className="font-semibold">3XL </span>= Chest 46 • Length 31</li>
+    <li><span className="font-semibold">4XL </span>= Chest 48 • Length 32</li>
+    <li className="text-yellow-600 font-semibold">100 Tk extra for 4XL size</li>
+  </ul>
 );
 
+/* ---------- Accordion Component ---------- */
 const Accordion = ({ data }) => {
-    const [isOpen, setIsOpen] = useState(null);
+  const [openIndex, setOpenIndex] = useState(null);
 
-    // Exchange policy data
-    const exchangePolicy = {
-        title: "Gamerskit's Exchange policy (RC Car)",
-        description: `
-            • Exchanges are only accepted within 24 hours of delivery.
+  // Exchange policy data
+  const exchangePolicy = {
+    title: "Gamerskit's Exchange policy (RC Car)",
+    description: `• Exchanges are only accepted within 24 hours of delivery.
 
-            • Products must be unused, undamaged, and in original packaging.
+• Products must be unused, undamaged, and in original packaging.
 
-            • No exchanges will be accepted after 24 hours due to customer use.
+• No exchanges will be accepted after 24 hours due to customer use.
 
-            • Contact us via inbox with order details and photos/videos to request an exchange.
+• Contact us via inbox with order details and photos/videos to request an exchange.
 
-            • No refunds, exchange only.
-            
-            Thank you for shopping with GamersKit!
-        `
-    };
+• No refunds, exchange only.
 
-    // Dynamic data array
-    const dataArr = [
-        {
-            title: "Product Details",
-            description: data?.description || "No product details available.",
-        },
-        ...(data?.name && !["Sleeves", "Mask", "car", "consoles"].includes(data.name) ? [{
-            title: "Size Guide",
-            description: <SizeGuide />,
-        }] : []),
-        {
-            title: "Delivery Charge Info",
-            description: (
-                <div>
-                    {["E-sports", "F1", "Tshirt", "Sleeves", "Mask"].includes(data?.name) && (
-                        <p>
-                            <strong>Delivery Charges:</strong><br />
-                            • Dhaka: 70 TK<br />
-                            • Sub-Dhaka: 100 TK<br />
-                            • Outside Dhaka: 130 TK<br /><br />
-                            <strong>Delivery Time:</strong><br />
-                            • 2-3 Days<br />
-                        </p>
-                    )}
-                    {data?.name && data.name.toLowerCase().includes("car") && (
-                        <p>
-                            <strong>RC Cars: Delivery charge will be free</strong><br />
-                            <br />
-                            <strong>Delivery Time:</strong><br />
-                            • 2-10 Days (Depends on stock)<br />
-                        </p>
-                    )}
-                    {data?.name && data.name.toLowerCase().includes("consoles") && (
-                        <p>
-                            <strong>Game Consoles: Delivery charge will be free</strong><br />
-                            <br />
-                            <strong>Delivery Time:</strong><br />
-                            • 2-10 Days (Depends on stock)<br />
-                        </p>
-                    )}
-                </div>
-            ),
-        },
-        ...(data?.name && data.name.toLowerCase().includes("car", "consoles") ? [exchangePolicy] : [])
-    ];
+Thank you for shopping with GamersKit!`,
+  };
 
-    const toggle = (idx) => {
-        setIsOpen((prevIdx) => (prevIdx === idx ? null : idx));
-    };
+  // Build dynamic accordion items
+  const items = [];
 
-    return (
-        <div className="mx-auto w-full max-w-[500px] rounded-lg">
-            {dataArr.map((item, idx) => (
-                <div key={idx} className="my-2 rounded-lg border p-3 py-3 *:mix-blend-difference bg-zinc-800">
-                    <button
-                        onClick={() => toggle(idx)}
-                        className="flex h-full w-full items-center justify-between font-medium text-white outline-none"
-                    >
-                        <span>{item.title}</span>
-                        <span className="rounded-full">
-                            <svg className="ml-8 size-3 shrink-0 fill-white" xmlns="http://www.w3.org/2000/svg">
-                                <rect y="5" width="12" height="2" rx="1" className={`origin-center transform transition duration-200 ease-out ${isOpen === idx && '!rotate-180'}`} />
-                                <rect y="5" width="12" height="2" rx="1" className={`origin-center rotate-90 transform transition duration-200 ease-out ${isOpen === idx && '!rotate-180'}`} />
-                            </svg>
-                        </span>
-                    </button>
-                    <div className={`grid overflow-hidden text-white transition-all duration-300 ease-in-out ${isOpen === idx ? 'grid-rows-[1fr] pb-1 pt-3 opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
-                        <div className="overflow-hidden pr-4 text-sm">
-                            {typeof item.description === "string" ? (
-                                <p style={{ whiteSpace: "pre-line" }}>{item.description}</p>
-                            ) : (
-                                item.description
-                            )}
-                        </div>
-                    </div>
-                </div>
-            ))}
-        </div>
-    );
+  // Product Details (always)
+  items.push({
+    title: "Product Details",
+    content: data?.description || "No product details available.",
+    isHtml: false,
+  });
+
+  // Size Guide (excluded for some items)
+  const excludeSizeGuide = ["Sleeves", "Mask", "car", "consoles"];
+  if (data?.name && !excludeSizeGuide.includes(String(data.name))) {
+    items.push({
+      title: "Size Guide",
+      content: <SizeGuide />,
+      isHtml: false,
+    });
+  }
+
+  // Delivery Charge Info
+  items.push({
+    title: "Delivery Charge Info",
+    content: (
+      <div className="text-sm text-gray-700 space-y-3">
+        {["E-sports", "F1", "Tshirt", "Sleeves", "Mask"].includes(
+          data?.name
+        ) && (
+          <div>
+            <p className="font-semibold">Delivery Charges:</p>
+            <p className="mt-1">
+              • Dhaka: <span className="font-semibold">70 TK</span>
+              <br />
+              • Sub-Dhaka: <span className="font-semibold">100 TK</span>
+              <br />
+              • Outside Dhaka: <span className="font-semibold">130 TK</span>
+            </p>
+            <p className="mt-2 font-semibold">Delivery Time:</p>
+            <p className="mt-1">• 2-3 Days</p>
+          </div>
+        )}
+
+        {data?.name &&
+          String(data.name).toLowerCase().includes("car") && (
+            <div>
+              <p className="font-semibold">RC Cars: Delivery charge will be free</p>
+              <p className="mt-2 font-semibold">Delivery Time:</p>
+              <p className="mt-1">• 2-10 Days (Depends on stock)</p>
+            </div>
+          )}
+
+        {data?.name &&
+          String(data.name).toLowerCase().includes("consoles") && (
+            <div>
+              <p className="font-semibold">Game Consoles: Delivery charge will be free</p>
+              <p className="mt-2 font-semibold">Delivery Time:</p>
+              <p className="mt-1">• 2-10 Days (Depends on stock)</p>
+            </div>
+          )}
+
+        {/* fallback */}
+        {!["E-sports", "F1", "Tshirt", "Sleeves", "Mask"].includes(
+          data?.name
+        ) &&
+          !(String(data?.name || "").toLowerCase().includes("car") ||
+            String(data?.name || "").toLowerCase().includes("consoles")) && (
+            <p>Standard delivery charges apply.</p>
+          )}
+      </div>
+    ),
+    isHtml: true,
+  });
+
+  // Exchange policy only for car OR consoles
+  if (
+    data?.name &&
+    (String(data.name).toLowerCase().includes("car") ||
+      String(data.name).toLowerCase().includes("consoles"))
+  ) {
+    items.push({
+      title: exchangePolicy.title,
+      content: exchangePolicy.description,
+      isHtml: false,
+    });
+  }
+
+  // Toggle function
+  const toggle = (idx) => {
+    setOpenIndex((prev) => (prev === idx ? null : idx));
+  };
+
+  /* ---------- Render ---------- */
+  return (
+    <div className="mx-auto w-full max-w-[820px] divide-y divide-gray-300">
+      {items.map((item, idx) => {
+        const opened = openIndex === idx;
+        return (
+          <div key={idx} className="border-t border-b border-gray-300">
+            {/* Title */}
+            <button
+              aria-expanded={opened}
+              onClick={() => toggle(idx)}
+              className="w-full flex items-center justify-between py-4 text-left focus:outline-none"
+            >
+              <h3 className="text-base md:text-lg font-semibold text-gray-900">
+                {item.title}
+              </h3>
+              <ChevronDown
+                className={`text-gray-600 transition-transform duration-300 ${
+                  opened ? "rotate-180" : "rotate-0"
+                }`}
+                size={20}
+              />
+            </button>
+
+            {/* Content */}
+            <div
+              className={`transition-all duration-300 ease-in-out`}
+              style={{
+                maxHeight: opened ? "600px" : "0px",
+                overflow: "hidden",
+              }}
+            >
+              <div className="pb-4 text-sm text-gray-700 leading-relaxed">
+                {typeof item.content === "string" ? (
+                  <p style={{ whiteSpace: "pre-line" }}>{item.content}</p>
+                ) : (
+                  item.content
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
 };
 
 export default Accordion;
