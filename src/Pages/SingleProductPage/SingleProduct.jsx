@@ -1,4 +1,3 @@
-import { ShoppingBasket, ShoppingCart } from "lucide-react";
 import Accordion from "../../Components/Accordion/Accordion";
 import SingleProductSwiper from "../../Components/SingleProductSwiper/SingleProductSwiper";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
@@ -265,8 +264,8 @@ const SingleProduct = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-12 md:pt-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-8 py-6 rounded-[32px] border-2 border-white bg-white/40">
+    <div className="min-h-screen pt-16 md:pt-24 px-2">
+      <div className="container mx-auto px-2 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-8 py-6 rounded-2xl md:rounded-[32px] border-2 border-white bg-white/40">
         <SingleProductSwiper
           images={
             data.subImages
@@ -274,170 +273,159 @@ const SingleProduct = () => {
               : [data.mainImage]
           }
         />
-        <div className="w-full space-y-8 rounded-[32px] border p-6 border-[#E9E9E9] bg-white">
+        <div className="w-full space-y-8 rounded-xl md:rounded-[32px] border p-3 md:p-6 border-[#E9E9E9] bg-white">
           <div className="mb-6 space-y-3">
-            <h1 className=" text-[#1F1F1F] font-urbanist text-[28px] not-italic font-bold leading-[40px]">
+            <h1 className=" text-[#1F1F1F] font-urbanist text-xl md:text-[28px] not-italic font-semibold md:font-bold md:leading-[40px]">
               {data.title}
             </h1>
-            {/* With Tabs (64GB / 128GB) */}
-            {REACT_TABS.includes(data?.title) ? (
-              <div className="max-w-4xl mx-auto px-4 py-6">
-                <Tabs
-                  selectedIndex={selectedTab}
-                  onSelect={(index) => {
-                    setSelectedTab(index);
-                    localStorage.setItem("selectedTab", index.toString());
-                  }}>
-                  <TabList className="flex flex-wrap gap-3 border-b border-gray-200 mb-4">
-                    <Tab
-                      className="px-4 py-2 text-sm font-medium text-gray-700 border border-transparent rounded-t-md cursor-pointer transition duration-200"
-                      selectedClassName="border-b-2 border-[#FFD700] text-[#1F1F1F] bg-[#FFF8DC]">
-                      64GB
-                    </Tab>
-                    <Tab
-                      className="px-4 py-2 text-sm font-medium text-gray-700 border border-transparent rounded-t-md cursor-pointer transition duration-200"
-                      selectedClassName="border-b-2 border-[#FFD700] text-[#1F1F1F] bg-[#FFF8DC]">
-                      128GB
-                    </Tab>
-                  </TabList>
-
-                  <TabPanel>
-                    <p className="font-bold">
-                      Price:{" "}
-                      <span className="text-xl text-[#FFD700] font-extrabold">
-                        ৳5200
+            <hr className="border-t border-gray-300 my-4" />
+            <div className="mt-4 space-y-2 text-base sm:text-lg">
+              {EXCLUDED_OFFER_PRICE.includes(data?.title) ? (
+                <>
+                  {REACT_TABS.includes(data?.title) ? (
+                    <div className="sm:flex-row sm:items-center sm:gap-3">
+                      <span className="font-semibold">Price: </span>
+                      <span className="text-xl font-bold">
+                        ৳{data?.price}{" "}
+                        <span className="text-sm text-gray-500">(64GB)</span>
                       </span>
-                    </p>
-                  </TabPanel>
-                  <TabPanel>
-                    <p className="font-bold">
-                      Price:{" "}
-                      <span className="text-xl text-[#FFD700] font-extrabold">
-                        ৳5700
-                      </span>
-                    </p>
-                  </TabPanel>
-                </Tabs>
-              </div>
-            ) : (
-              <p className="text-[#1F1F1F] font-urbanist text-[20px] font-extrabold leading-[26px]">
-                Price: <span className="text-[#FFD700]">৳{data?.price}</span>
-              </p>
-            )}
+                    </div>
+                  ) : (
+                    <div className="sm:flex-row sm:items-center sm:gap-3">
+                      <span className="font-semibold">Price: </span>
+                      <span className="text-xl font-bold">৳{data?.price}</span>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  {ANOTHER_OFFER_PRICE.includes(data?.title) ? (
+                    <>
+                      {data?.title === "Ford Mustang GT" ? (
+                        <>
+                          <div className="sm:flex-row sm:items-center sm:gap-3">
+                            <span className="font-semibold">
+                              Regular Price:
+                            </span>
+                            <span className="text-xl line-through">৳ 3400</span>
+                          </div>
+                          <div className="sm:flex-row sm:items-center sm:gap-3">
+                            <span className="font-semibold">Offer Price:</span>
+                            <span className="text-xl font-bold">
+                              ৳{data?.price}
+                            </span>
+                          </div>
+                          <div className="sm:flex-row sm:items-center sm:gap-3">
+                            <span className="font-semibold">You Save: </span>
+                            <span className="text-xl font-bold">৳ 400</span>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="sm:flex-row sm:items-center sm:gap-3 text-gray-400">
+                            <span className="font-semibold">
+                              Regular Price:
+                            </span>
+                            <span className="text-xl line-through ml-1.5">
+                              {" "}
+                              ৳ 3200
+                            </span>
+                          </div>
+                          <div className="sm:flex-row sm:items-center sm:gap-3">
+                            <span className="font-semibold">Offer Price: </span>
+                            <span className="text-xl font-bold">
+                              ৳{data?.price}
+                            </span>
+                          </div>
+                          <div className="sm:flex-row sm:items-center sm:gap-3">
+                            <span className="font-semibold">You Save: </span>
+                            <span className="text-xl font-bold">৳ 700</span>
+                          </div>
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <div className="sm:flex-row sm:items-center sm:gap-3">
+                        <span className="font-semibold">Regular Price: </span>
+                        <span className="text-xl line-through">৳ 2800</span>
+                      </div>
+                      <div className="sm:flex-row sm:items-center sm:gap-3">
+                        <span className="font-semibold">Offer Price: </span>
+                        <span className="text-xl font-bold">
+                          ৳{data?.price}
+                        </span>
+                      </div>
+                      <div className="sm:flex-row sm:items-center sm:gap-3">
+                        <span className="font-semibold">You Save: </span>
+                        <span className="text-xl font-bold">৳ 500</span>
+                      </div>
+                    </>
+                  )}
+                </>
+              )}
+            </div>
+            <hr className="border-t border-gray-300 my-4" />
 
-            {/* Offer Pricing */}
-            {ANOTHER_OFFER_PRICE.includes(data?.title) ? (
-              <>
-                {data?.title === "Ford Mustang GT" ? (
-                  <>
-                    <p className="font-semibold text-gray-500">
-                      Regular Price:{" "}
-                      <span className="text-xl line-through">৳ 3400</span>
-                    </p>
-                    <p className="font-bold">
-                      Offer Price:{" "}
-                      <span className="text-2xl text-[#FFD700] font-extrabold">
-                        ৳{data?.price}
-                      </span>
-                    </p>
-                    <p className="font-semibold text-red-600">
-                      You Save: <span className="text-lg">৳ 400</span>
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <p className="font-semibold text-gray-500">
-                      Regular Price:{" "}
-                      <span className="text-xl line-through">৳ 3200</span>
-                    </p>
-                    <p className="font-bold">
-                      Offer Price:{" "}
-                      <span className="text-2xl text-[#FFD700] font-extrabold">
-                        ৳{data?.price}
-                      </span>
-                    </p>
-                    <p className="font-semibold text-red-600">
-                      You Save: <span className="text-lg">৳ 700</span>
-                    </p>
-                  </>
-                )}
-              </>
-            ) : (
-              <>
-                <p className="font-semibold text-gray-500">
-                  Regular Price:{" "}
-                  <span className="text-xl line-through">৳ 2800</span>
-                </p>
-                <p className="font-bold">
-                  Offer Price:{" "}
-                  <span className="text-2xl text-[#FFD700] font-extrabold">
-                    ৳{data?.price}
-                  </span>
-                </p>
-                <p className="font-semibold text-red-600">
-                  You Save: <span className="text-lg">৳ 500</span>
-                </p>
-              </>
-            )}
+            <div className="rounded-lg border border-yellow-300 bg-yellow-50 p-2 md:p-4">
+              {/* Title */}
 
-            <div className="mt-6 rounded-xl border border-yellow-300 bg-yellow-50 p-5 shadow-sm">
-              <p className="text-yellow-800 text-lg font-bold mb-2">
-                Order Process
-              </p>
-
-              <div className="text-gray-800 text-base space-y-2">
+              {/* Order instructions */}
+              <span className="text-yellow-800 text-lg font-bold text-nowrap">
+                Order Process:
+              </span>
+              <div className="text-gray-800 text-sm space-y-1">
                 {data?.name === "car" && (
-                  <p>• RC Car: For order make 100 tk advance.</p>
+                  <p>RC Car: For order make 100 tk advance.</p>
                 )}
                 {data?.name === "consoles" && (
-                  <p>• Game Console: For order make 100 tk advance.</p>
+                  <p>Game Console: For order make 100 tk advance.</p>
                 )}
                 {data?.name === "F1" && (
-                  <p>• F1 Jersey: For order make 100 tk advance.</p>
+                  <p>F1 Jersey: For order make 100 tk advance.</p>
                 )}
                 {data?.name === "E-sports" && (
-                  <p>• E-sports Jersey: For order make 100 tk advance.</p>
+                  <p>E-sports Jersey: For order make 100 tk advance.</p>
                 )}
                 {data?.name === "Tshirt" && (
-                  <p>• Tshirt: For order make 100 tk advance.</p>
+                  <p>Tshirt: For order make 100 tk advance.</p>
                 )}
                 {data?.name === "Sleeves" && (
-                  <p>• Hand Sleeves: No advance needed.</p>
+                  <p>Hand Sleeves: No advance needed.</p>
                 )}
                 {data?.name === "Mask" && <p>• Mask: No advance needed.</p>}
               </div>
 
+              {/* Payment instructions */}
               {(data?.name === "car" ||
                 data?.name === "F1" ||
                 data?.name === "Tshirt" ||
                 data?.name === "E-sports") && (
-                <div className="mt-4 text-gray-900 font-medium">
+                <div className="text-gray-900 text-sm font-medium">
                   Send money via (Bkash/Nagad) to:{" "}
                   <span
                     className="text-black font-bold cursor-pointer relative"
                     onClick={handleCopy}>
                     01303775977
                     {isCopied && (
-                      <span className="absolute -top-8 -right-4 bg-black text-white text-xs px-2 py-1 rounded">
+                      <span className="absolute -top-7 -right-4 bg-black text-white text-xs px-2 py-1 rounded">
                         Copied!
                       </span>
                     )}
                   </span>
-                  <p className="mt-2">
-                    Need help? Call us at the same number.
-                  </p>
+                  <p className="mt-1">Need help? Call us at the same number.</p>
                 </div>
               )}
 
               {(data?.name === "Sleeves" || data?.name === "Mask") && (
-                <div className="mt-4 text-gray-900 font-medium">
-                  📞 Need help? Call us{" "}
+                <div className="mt-3 text-gray-900 text-sm font-medium">
+                  Need help? Call us{" "}
                   <span
                     className="text-black font-bold cursor-pointer relative"
                     onClick={handleCopy}>
                     01303775977
                     {isCopied && (
-                      <span className="absolute -top-8 -right-4 bg-black text-white text-xs px-2 py-1 rounded">
+                      <span className="absolute -top-7 -right-4 bg-black text-white text-xs px-2 py-1 rounded">
                         Copied!
                       </span>
                     )}
@@ -473,7 +461,7 @@ const SingleProduct = () => {
                         selectedSize === size
                           ? "bg-[#FFD700] border-[#FFD700]"
                           : "border-gray-300 hover:border-[#FFD700]"
-                      } hover:shadow-md transition-colors`}>
+                      }  transition-colors`}>
                       <div className="flex flex-col justify-center items-center">
                         <h1 className="text-sm sm:text-base font-bold">
                           {size.toUpperCase()}
@@ -489,28 +477,28 @@ const SingleProduct = () => {
             <Accordion data={data} selectedTab={selectedTab} />
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-4 w-full mx-auto">
+            {/* Add to Cart Button (Border only) */}
             <button
               onClick={handleAddToCart}
-              className={`w-full flex items-center justify-center gap-3 ${
+              className={`w-full flex items-center justify-center gap-3  rounded-2xl py-3 px-4 text-sm sm:text-base font-semibold transition ${
                 isButtonDisabled
-                  ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-[#FFD700] hover:bg-[#FFB300]"
-              } text-black font-bold py-2 px-4 rounded transition`}
+                  ? "border-gray-300 text-gray-400 cursor-not-allowed"
+                  : "border-[0.5px] border-gray-400 text-[#1F1F1F] hover:bg-[#FFF9E6]"
+              }`}
               disabled={isButtonDisabled}>
-              <ShoppingCart className="w-4 h-4" />
-              Add to cart
+              Add to Cart
             </button>
 
+            {/* Buy Now Button (Solid background) */}
             <button
               onClick={handleBuyNow}
-              className={`w-full flex items-center justify-center gap-3 ${
+              className={`w-full flex items-center justify-center gap-3 rounded-2xl py-3 px-4 text-sm sm:text-base font-semibold transition ${
                 isButtonDisabled
-                  ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-[#FFD700] hover:bg-[#FFB300]"
-              } text-black font-bold py-2 px-4 rounded transition`}
+                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : "bg-[#FFD700] text-black hover:bg-yellow-300 border-[0.5px] border-gray-400"
+              }`}
               disabled={isButtonDisabled}>
-              <ShoppingBasket className="w-4 h-4" />
               Buy Now
             </button>
           </div>

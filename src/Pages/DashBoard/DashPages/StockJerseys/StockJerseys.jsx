@@ -31,11 +31,11 @@ const StockJerseys = () => {
     if (error) return <div className="min-h-screen pt-24 flex justify-center">Error: {error.message}</div>;
 
     return (
-        <div className="pt-8 px-4 sm:px-6 md:px-10 space-y-8">
+        <div className="pt-8 sm:px-6 md:px-10 space-y-8">
             <h1 className="font-bold text-3xl text-center mb-8">Inventory Overview</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {sortedData.map((data) => (
-                    <div key={data._id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <div key={data._id} className="bg-white rounded-xl overflow-hidden hover:shadow-lg transition-shadow duration-300">
                         <div className="p-5">
                             {/* Product Image */}
                             <div className="relative pb-[100%] mb-4 rounded-lg overflow-hidden bg-gray-100">

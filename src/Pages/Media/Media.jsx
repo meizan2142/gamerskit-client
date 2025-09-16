@@ -1,10 +1,9 @@
 import React from "react";
 
-// Example video links (replace with your actual Facebook video links)
 const videos = [
-  "https://www.facebook.com/plugins/video.php?height=800&href=https%3A%2F%2Fwww.facebook.com%2F61574253842852%2Fvideos%2F3283402501811120%2F&show_text=false&width=800&t=0",
-  "https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/yourpage/videos/9876543210",
-  "https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/yourpage/videos/1122334455",
+  // Google Drive video (fixed with /preview)
+  "https://drive.google.com/file/d/1gAUQPH8m0tP7odYPAgeFf2RW4YBlh2_M/preview",
+  
 ];
 
 const Media = () => {
@@ -20,7 +19,7 @@ const Media = () => {
           {videos.map((video, index) => (
             <div
               key={index}
-              className="relative w-full h-88 overflow-hidden rounded-xl shadow-lg aspect-video"
+              className="relative w-full overflow-hidden rounded-xl shadow-lg aspect-video"
             >
               <iframe
                 src={video}

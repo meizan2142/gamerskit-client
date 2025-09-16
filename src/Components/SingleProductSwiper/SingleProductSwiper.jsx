@@ -23,9 +23,12 @@ const SingleProductSwiper = ({ images }) => {
       </div>
     );
   }
+  
 
   return (
+
     <div className="w-full lg:w-[60%] xl:w-[50%]">
+      
       {/* Main Swiper */}
       <Swiper
         spaceBetween={10}
@@ -43,7 +46,7 @@ const SingleProductSwiper = ({ images }) => {
             <img
               src={image}
               alt={`Product view ${index + 1}`}
-              className="w-full h-auto max-h-[80vh] object-contain rounded-2xl"
+              className="w-full h-auto max-h-[60vh] object-contain rounded-2xl"
             />
           </SwiperSlide>
         ))}

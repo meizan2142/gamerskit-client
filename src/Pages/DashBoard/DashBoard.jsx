@@ -134,7 +134,7 @@ const DashBoard = () => {
 
       {/* Mobile Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full w-64 p-5 bg-gray-100 border-r border-gray-200 flex flex-col z-50 transform transition-transform duration-300
+        className={`fixed top-0 left-0 h-full w-64 p-5 bg-gray-100 border-r border-gray-200 flex flex-col z-[900] transform transition-transform duration-300
         ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         } lg:hidden justify-between`}>
@@ -182,7 +182,7 @@ const DashBoard = () => {
       )}
 
       {/* Main Content */}
-      <main className="flex-1 lg:ml-64 pt-20 p-4 overflow-y-auto">
+      <main className="flex-1 lg:ml-64 pt-20 md:pt-8 p-4 overflow-y-auto">
         <Outlet />
       </main>
     </div>
