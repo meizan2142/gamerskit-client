@@ -92,8 +92,6 @@ const NewArrivals = ({ heading }) => {
     });
 
 
-
-
     if (isLoading) return <div className="min-h-screen pt-24 flex justify-center">
         <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
     </div>;

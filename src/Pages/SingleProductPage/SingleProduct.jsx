@@ -6,7 +6,6 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useState, useEffect } from "react";
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 
 const SingleProduct = () => {
@@ -221,7 +220,8 @@ const SingleProduct = () => {
         "F1 SHELL 2025",
         "M22 Playstation 128GB",
         "R36S Handheld Game Console",
-        "R36S Max Handheld Game Console"
+        "R36S Max Handheld Game Console",
+        "McLaren 750S Saros Grey (1:64 Scale)"
     ];
 
     const ANOTHER_OFFER_PRICE = [

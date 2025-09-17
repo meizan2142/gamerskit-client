@@ -1,6 +1,12 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../useAuth/useAuth";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const ProductCard = ({ product }) => {
+    const { user } = useAuth();
+    const [newUser, setNewUser] = useState(null);
     const FRRE_DELIVERY_TEXT = [
         "car",
         "consoles"
@@ -10,6 +16,30 @@ const ProductCard = ({ product }) => {
         product.title.toLowerCase()
             .replace(/\s+/g, '-')
             .replace(/[^\w-]+/g, '');
+
+
+    const { data: users = [] } = useQuery({
+        queryKey: ['users'],
+        queryFn: async () => {
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/users`);
+            return response.data;
+        },
+    });
+
+    // Find matching user when either user or users data changes
+    useEffect(() => {
+        if (!user?.email || users.length === 0) return;
+
+        const matchedUser = users.find(u => u.email === user.email);
+        if (matchedUser) {
+            setNewUser(matchedUser);
+        } else {
+            console.log("No user found with email:");
+        }
+    }, [user, users]);
+
+    console.log(newUser?.role); 
+
 
     return (
         <div className="group w-full flex flex-col h-full rounded-lg relative overflow-hidden items-center">
@@ -28,9 +58,9 @@ const ProductCard = ({ product }) => {
                         />
                     </div>
                     <div className="flex flex-col flex-grow space-y-2">
-                        <h1 className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl 2xl:text-[23] font-semibold text-black line-clamp-2">
-                            {product.title}
-                        </h1>
+                            <h1 className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl 2xl:text-[23] font-semibold text-black line-clamp-2">
+                                {product.title}
+                            </h1>
                         <div className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-lg 2xl:text-xl font-semibold text-[#E53935] mt-auto">
                             {
                                 FRRE_DELIVERY_TEXT.includes(product?.name) ?
