@@ -82,14 +82,14 @@ const DashBoard = () => {
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex fixed top-0 left-0 h-full w-64 p-5 bg-gray-100 border-r border-gray-200 flex-col z-50 justify-between">
         <div>
-          <div className="flex items-center justify-center h-20 border-b border-gray-200 mb-6">
+          <NavLink to={"/"} className="flex items-center justify-center h-20 border-b border-gray-200 mb-6">
             <img
               src={logo}
               alt="GamersKit Logo"
               className="w-14 rounded-full mr-3"
             />
             <h1 className="font-bold text-2xl">GamersKit</h1>
-          </div>
+          </NavLink>
           <nav className="flex-1 overflow-y-auto p-2 space-y-2 bg-white rounded-xl">
             {navItems.map((item) => (
               <NavLink
@@ -118,9 +118,9 @@ const DashBoard = () => {
 
       {/* Mobile Top Navbar */}
       <div className="lg:hidden fixed top-0 left-0 right-0 flex items-center justify-between p-4 bg-gray-100 border-b-[0.2px] border-gray-300 z-50">
-        <div className="flex items-center gap-3">
+        <NavLink to={"/"} className="flex items-center gap-3">
           <h1 className="font-bold text-xl">GamersKit</h1>
-        </div>
+        </NavLink>
         <button
           className="p-2 rounded "
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -176,10 +176,12 @@ const DashBoard = () => {
       {/* Mobile Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-opacity-30 z-40 lg:hidden"
+          className="fixed inset-0 bg-black/20 z-[99]"
           onClick={() => setIsMobileMenuOpen(false)}
         />
+         
       )}
+      
 
       {/* Main Content */}
       <main className="flex-1 lg:ml-64 pt-20 md:pt-8 p-4 overflow-y-auto">

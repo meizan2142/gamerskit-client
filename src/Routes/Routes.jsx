@@ -52,10 +52,10 @@ export const router = createBrowserRouter([
                 path: "/my-orders",
                 element: <MyOrders />,
             },
-            {
-                path: "/media",
-                element: <Media />,
-            },
+            // {
+            //     path: "/media",
+            //     element: <Media />,
+            // },
             {
                 path: "/single-order-details/:id",
                 element: <SingleOrderDetails />,

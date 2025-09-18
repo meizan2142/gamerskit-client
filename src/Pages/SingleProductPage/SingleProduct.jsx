@@ -39,7 +39,7 @@ const SingleProduct = () => {
 
   // Fetch product data
   const { data, isLoading, error } = useQuery({
-    queryKey: ["product", productSlug],
+    queryKey: ["product", productSlug, productId],
     queryFn: async () => {
       try {
         // First try fetching by slug
@@ -57,7 +57,7 @@ const SingleProduct = () => {
         }
         throw error;
       }
-    },
+    },  
   });
 
   // Fetch all products
