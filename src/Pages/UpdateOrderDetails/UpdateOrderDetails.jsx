@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { allLocation } from "../OrderForm/locations";
 import toast, { Toaster } from "react-hot-toast";
+import Loader from "../../Components/loader";
 
 const UpdateOrderDetails = () => {
     const { id } = useParams();
@@ -92,9 +93,7 @@ const UpdateOrderDetails = () => {
     const totalPrice = data?.totalPrice || 0;
 
     if (isLoading) return (
-        <div className="p-6 text-white flex flex-col items-center">
-            <div className="w-10 h-10 animate-[spin_2s_linear_infinite] rounded-full border-4 border-dashed border-[#FFB300]"></div>
-        </div>
+        <Loader/>
     );
 
     if (error) return <div className="p-6 text-red-500">Error: {error.message}</div>;

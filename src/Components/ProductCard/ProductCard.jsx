@@ -1,79 +1,134 @@
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../../useAuth/useAuth";
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { ShoppingCart } from "lucide-react";
+import toast, { Toaster } from "react-hot-toast";
 
 const ProductCard = ({ product }) => {
-    const { user } = useAuth();
-    const [newUser, setNewUser] = useState(null);
-    const FRRE_DELIVERY_TEXT = [
-        "car",
-        "consoles"
-    ];
+  const FREE_DELIVERY_TEXT = ["car", "consoles"];
+  const REACT_TABS = ["R36S Max Handheld Game Console"];
 
-    const productSlug = product.slug ||
-        product.title.toLowerCase()
-            .replace(/\s+/g, '-')
-            .replace(/[^\w-]+/g, '');
+  const handleAddToCart = () => {
+    // 1. If product has sizes → force user to go to details page
+    const hasAvailableSizes =
+      product.sizes &&
+      Object.values(product.sizes).some((qty) => {
+        const quantity = typeof qty === "string" ? parseInt(qty) : qty;
+        return quantity > 0;
+      });
 
+    if (hasAvailableSizes) {
+      return toast.error("Please select a size from details page");
+    }
 
-    const { data: users = [] } = useQuery({
-        queryKey: ['users'],
-        queryFn: async () => {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/users`);
-            return response.data;
-        },
-    });
+    // 2. Handle storage option only for R36S Max
+    const storageOption =
+      product.title === "R36S Max Handheld Game Console" ? "64GB" : null;
 
-    // Find matching user when either user or users data changes
-    useEffect(() => {
-        if (!user?.email || users.length === 0) return;
+    // 3. Handle price for REACT_TABS items
+    const price = REACT_TABS.includes(product.title)
+      ? 5200 // default price when quick-adding
+      : product.price;
 
-        const matchedUser = users.find(u => u.email === user.email);
-        if (matchedUser) {
-            setNewUser(matchedUser);
-        } else {
-            console.log("No user found with email:");
-        }
-    }, [user, users]);
+    // 4. Build cart product
+    const cartProduct = {
+      productId: product._id,
+      title: product.title,
+      price,
+      mainImage: product.mainImage,
+      quantity: 1,
+      ...(storageOption && { storage: storageOption }),
+    };
 
-    console.log(newUser?.role); 
+    // 5. Get current cart
+    const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");
 
+    // 6. Check if product already exists
+    const existingIndex = currentCart.findIndex(
+      (item) =>
+        item.productId === cartProduct.productId &&
+        (!storageOption ||
+          (storageOption && item.storage === cartProduct.storage))
+    );
 
-    return (
-        <div className="group w-full flex flex-col h-full rounded-lg relative overflow-hidden items-center">
+    let updatedCart;
+    if (existingIndex >= 0) {
+      updatedCart = [...currentCart];
+      updatedCart[existingIndex].quantity += 1;
+    } else {
+      updatedCart = [...currentCart, cartProduct];
+    }
+
+    // 7. Save and update
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    window.dispatchEvent(new Event("storage"));
+    toast.success("Added to Cart");
+  };
+
+  const productSlug =
+    product.slug ||
+    product.title
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^\w-]+/g, "");
+
+  return (
+    <div className="group w-full flex flex-col h-full rounded-lg relative overflow-hidden items-center">
+      <div className="block w-full h-full max-w-[260px] sm:max-w-[300px] mx-auto">
+        <div className="relative flex flex-col rounded-lg bg-white shadow-md hover:shadow-lg transition duration-300 overflow-hidden h-full">
+          {/* Product Image (clickable for details) */}
+          <NavLink
+            to={`/product/${productSlug}`}
+            state={{ productId: product._id }}
+            className="relative pb-[65%] p-2 block">
+            <img
+              className="absolute inset-2 h-[calc(100%-16px)] w-[calc(100%-16px)] object-contain rounded-md transition-transform duration-300 group-hover:scale-105"
+              src={product.mainImage}
+              alt={product.title}
+              loading="lazy"
+            />
+          </NavLink>
+
+          {/* Product Info */}
+          <div className="flex flex-col p-3 space-y-2 flex-grow">
             <NavLink
+              to={`/product/${productSlug}`}
+              state={{ productId: product._id }}>
+              <h1 className="text-sm font-semibold text-gray-900 line-clamp-2 hover:underline">
+                {product.title}
+              </h1>
+            </NavLink>
+
+            <p className="text-sm font-medium text-gray-600">
+              Price: ৳{product.price}{" "}
+              {FREE_DELIVERY_TEXT.includes(product?.name) && (
+                <span className="text-green-500 text-xs font-medium ml-1">
+                  + Free Delivery
+                </span>
+              )}
+            </p>
+
+            <div className="mt-auto flex gap-2 lg:gap-5">
+              {/* Add to Cart button */}
+              <button
+                onClick={handleAddToCart}
+                className="flex items-center justify-center gap-1 text-gray-800 text-xs sm:text-sm font-medium py-1.5 border-gray-300 border-1 hover:bg-gray-200 transition px-2 rounded-full">
+                <ShoppingCart className="w-3.5 h-3.5" />
+              </button>
+
+              <NavLink
                 to={`/product/${productSlug}`}
                 state={{ productId: product._id }}
-                className="block w-full h-full max-w-[350px] mx-auto"
-            >
-                <div className="w-full h-full flex flex-col space-y-4 rounded-lg p-4 sm:p-6 shadow-lg bg-white hover:shadow-xl transition-shadow duration-300">
-                    <div className="relative pb-[75%] overflow-hidden rounded-lg flex-shrink-0">
-                        <img
-                            className="absolute h-full w-full object-cover"
-                            src={product.mainImage}
-                            alt={product.title}
-                            loading="lazy"  // Add lazy loading
-                        />
-                    </div>
-                    <div className="flex flex-col flex-grow space-y-2">
-                            <h1 className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl 2xl:text-[23] font-semibold text-black line-clamp-2">
-                                {product.title}
-                            </h1>
-                        <div className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-lg 2xl:text-xl font-semibold text-[#E53935] mt-auto">
-                            {
-                                FRRE_DELIVERY_TEXT.includes(product?.name) ?
-                                    <p>Price: ৳{product.price} <span className="text-green-400">(Free Delivery)</span></p>
-                                    :
-                                    <p>Price: ৳{product.price}</p>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </NavLink>
+                className="w-full flex items-center justify-center gap-1 bg-[#FFB300] text-white text-xs sm:text-sm font-medium py-1.5 rounded-2xl hover:bg-[#e6a100] transition">
+                see details
+              </NavLink>
+            </div>
+          </div>
         </div>
-    );
+      </div>
+      <div>
+        <Toaster />
+      </div>
+    </div>
+  );
 };
 
 export default ProductCard;

@@ -1,226 +1,194 @@
-import { useEffect, useState } from "react";
-import { NavLink, Outlet, useNavigate } from "react-router"
+import { useState, useEffect } from "react";
+import { NavLink, Outlet, useNavigate } from "react-router";
+import {
+  Home,
+  User,
+  PlusCircle,
+  Box,
+  Clock,
+  ListCheck,
+  Truck,
+  XCircle,
+  RotateCw,
+  Menu,
+  X,
+  LogOut,
+} from "lucide-react";
+import logo from "../../assets/logo.jpg";
+import { useAuth } from "../../useAuth/useAuth";
 
 const DashBoard = () => {
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const { logOut } = useAuth();
 
-    // Redirect to all-orders when dashboard is accessed directly
-    useEffect(() => {
-        if (window.location.pathname === '/admin-dashboard') {
-            navigate('/dashboard/pending-orders', { replace: true });
-        }
-    }, [navigate]);
-    return (
-        <div className="pt-8 md:pt-8 lg:pt-8 px-4 sm:px-6 md:px-10 text-center space-y-6 md:space-y-10 relative">
-            <div className="w-full mx-auto flex flex-col lg:flex-row lg:justify-between lg:min-h-screen gap-6">
+  useEffect(() => {
+    if (window.location.pathname === "/admin-dashboard") {
+      navigate("/dashboard/pending-orders", { replace: true });
+    }
+  }, [navigate]);
 
-                {/* Desktop Sidebar */}
-                <div className="hidden lg:block lg:w-1/4 xl:w-1/5 border p-5 rounded-lg bg-[#F1EFEC] space-y-20">
-                    <nav className="grid">
-                        <NavLink
-                            to='/'
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            Home
-                        </NavLink>
+  const navItems = [
+    { name: "Home", path: "/", icon: <Home className="w-4 h-4 mr-2" /> },
+    {
+      name: "Accounts",
+      path: "/dashboard/accounts",
+      icon: <User className="w-4 h-4 mr-2" />,
+    },
+    {
+      name: "Add Product",
+      path: "/dashboard/add-product",
+      icon: <PlusCircle className="w-4 h-4 mr-2" />,
+    },
+    {
+      name: "All Orders",
+      path: "/dashboard/all-orders",
+      icon: <ListCheck className="w-4 h-4 mr-2" />,
+    },
+    {
+      name: "Stock Product",
+      path: "/dashboard/stock-jerseys",
+      icon: <Box className="w-4 h-4 mr-2" />,
+    },
+    {
+      name: "Pending Orders",
+      path: "/dashboard/pending-orders",
+      icon: <Clock className="w-4 h-4 mr-2" />,
+    },
+    {
+      name: "Orders Summary",
+      path: "/dashboard/orders-summary",
+      icon: <ListCheck className="w-4 h-4 mr-2" />,
+    },
+    {
+      name: "Delivered Orders",
+      path: "/dashboard/delivered-orders",
+      icon: <Truck className="w-4 h-4 mr-2" />,
+    },
+    {
+      name: "Cancelled Orders",
+      path: "/dashboard/cancelled-orders",
+      icon: <XCircle className="w-4 h-4 mr-2" />,
+    },
+    {
+      name: "Returned Orders",
+      path: "/dashboard/returned-orders",
+      icon: <RotateCw className="w-4 h-4 mr-2" />,
+    },
+  ];
 
-                        <NavLink
-                            to='/dashboard/accounts'
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            Accounts
-                        </NavLink>
-
-                        <NavLink
-                            to='/dashboard/add-product'
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            Add Product
-                        </NavLink>
-                        <NavLink
-                            to='/dashboard/all-orders'
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            All Orders
-                        </NavLink>
-
-                        <NavLink
-                            to='/dashboard/stock-jerseys'
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            Stock Product
-                        </NavLink>
-
-                        <NavLink
-                            to='/dashboard/pending-orders'
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            Pending Orders
-                        </NavLink>
-                        <NavLink
-                            to='/dashboard/orders-summary'
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            Pending Orders Summary
-                        </NavLink>
-
-                        <NavLink
-                            to='/dashboard/delivered-orders'
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            Delivered Orders
-                        </NavLink>
-                        <NavLink
-                            to='/dashboard/cancelled-orders'
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            Cancelled Orders
-                        </NavLink>
-                        <NavLink
-                            to='/dashboard/returned-orders'
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            Returned Orders
-                        </NavLink>
-                    </nav>
-                </div>
-
-                {/* Mobile Menu Button */}
-                <div className="lg:hidden">
-                    <button
-                        className="w-full py-2 px-4 rounded bg-[#333333] text-white mb-4"
-                        onClick={() => setIsMobileMenuOpen(true)}
-                    >
-                        Menu
-                    </button>
-                </div>
-
-                {/* Mobile Sidebar */}
-                <div className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-                    <div className="p-5 space-y-6 h-full flex flex-col">
-                        <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-lg font-bold text-left">Dashboard</h2>
-                            <button onClick={() => setIsMobileMenuOpen(false)} className="text-gray-600 text-xl">✕</button>
-                        </div>
-                        <NavLink to='/' onClick={() => setIsMobileMenuOpen(false)}
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            <button className="w-full py-2 px-4 rounded text-white">Home</button>
-                        </NavLink>
-                        <NavLink
-                            to='/dashboard/accounts'
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            Accounts
-                        </NavLink>
-                        <NavLink to='/dashboard/all-orders' onClick={() => setIsMobileMenuOpen(false)}
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            <button className="w-full py-2 px-4 rounded text-white">All Orders</button>
-                        </NavLink>
-                        <NavLink to='/dashboard/add-product' onClick={() => setIsMobileMenuOpen(false)}
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            <button className="w-full py-2 px-4 rounded text-white">Add Product</button>
-                        </NavLink>
-                        <NavLink to='/dashboard/stock-jerseys' onClick={() => setIsMobileMenuOpen(false)}
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            <button className="w-full py-2 px-4 rounded text-white">Stock Product</button>
-                        </NavLink>
-                        <NavLink to='/dashboard/pending-orders' onClick={() => setIsMobileMenuOpen(false)}
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            <button className="w-full py-2 px-4 rounded text-white">Pending Orders</button>
-                        </NavLink>
-                        <NavLink
-                            to='/dashboard/orders-summary'
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            Pending Orders Summary
-                        </NavLink>
-                        <NavLink to='/dashboard/delivered-orders' onClick={() => setIsMobileMenuOpen(false)}
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            <button className="w-full py-2 px-4 rounded text-white">Delivered Orders</button>
-                        </NavLink>
-                        <NavLink to='/dashboard/cancelled-orders' onClick={() => setIsMobileMenuOpen(false)}
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            <button className="w-full py-2 px-4 rounded text-white">Cancelled Orders</button>
-                        </NavLink>
-                        <NavLink to='/dashboard/returned-orders' onClick={() => setIsMobileMenuOpen(false)}
-                            className={({ isActive }) =>
-                                `w-full py-2 px-4 mb-3 rounded ${isActive ? 'bg-green-600 text-white' : 'bg-[#333333] text-white'}`
-                            }
-                        >
-                            <button className="w-full py-2 px-4 rounded text-white">Returned Orders</button>
-                        </NavLink>
-                    </div>
-                </div>
-
-                {/* Backdrop Overlay */}
-                {isMobileMenuOpen && (
-                    <div
-                        className="fixed inset-0 bg-[#333333] bg-opacity-30 z-40"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                    />
-                )}
-
-                {/* Main Content */}
-                <div className="w-full lg:w-3/4 xl:w-4/5 lg:mr-0 bg-[#E7E7E7] p-6 rounded-lg shadow">
-                    <Outlet />
-                </div>
-            </div>
+  return (
+    <div className="flex h-screen text-gray-900 bg-gray-50">
+      {/* Desktop Sidebar */}
+      <aside className="hidden lg:flex fixed top-0 left-0 h-full w-64 p-5 bg-gray-100 border-r border-gray-200 flex-col z-50 justify-between">
+        <div>
+          <NavLink to={"/"} className="flex items-center justify-center h-20 border-b border-gray-200 mb-6">
+            <img
+              src={logo}
+              alt="GamersKit Logo"
+              className="w-14 rounded-full mr-3"
+            />
+            <h1 className="font-bold text-2xl">GamersKit</h1>
+          </NavLink>
+          <nav className="flex-1 overflow-y-auto p-2 space-y-2 bg-white rounded-xl">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.name}
+                to={item.path}
+                className={({ isActive }) =>
+                  `flex items-center py-2 px-4 rounded transition-colors duration-200 ${
+                    isActive
+                      ? "bg-yellow-100 rounded-lg text-yellow-500 border border-yellow-300 font-semibold"
+                      : "hover:bg-yellow-100"
+                  }`
+                }>
+                {item.icon}
+                {item.name}
+              </NavLink>
+            ))}
+          </nav>
         </div>
-    )
-}
+        <button
+          onClick={logOut}
+          className="flex items-center py-2 px-4 mt-4 rounded text-red-600 hover:bg-red-100 font-semibold">
+          <LogOut className="w-4 h-4 mr-2" />
+          Logout
+        </button>
+      </aside>
 
-export default DashBoard
+      {/* Mobile Top Navbar */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 flex items-center justify-between p-4 bg-gray-100 border-b-[0.2px] border-gray-300 z-50">
+        <NavLink to={"/"} className="flex items-center gap-3">
+          <h1 className="font-bold text-xl">GamersKit</h1>
+        </NavLink>
+        <button
+          className="p-2 rounded "
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          {isMobileMenuOpen ? (
+            <X className="w-6 h-6" />
+          ) : (
+            <Menu className="w-6 h-6" />
+          )}
+        </button>
+      </div>
+
+      {/* Mobile Sidebar */}
+      <aside
+        className={`fixed top-0 left-0 h-full w-64 p-5 bg-gray-100 border-r border-gray-200 flex flex-col z-[900] transform transition-transform duration-300
+        ${
+          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:hidden justify-between`}>
+        <div>
+          <div className="flex items-center justify-center border-b border-gray-200 mb-6">
+            <img
+              src={logo}
+              alt="GamersKit Logo"
+              className="w-12 h-12 rounded-full mb-4"
+            />
+          </div>
+          <nav className="flex-1 overflow-y-auto p-2 space-y-2 bg-white rounded-xl">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.name}
+                to={item.path}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={({ isActive }) =>
+                  `flex items-center py-2 px-4 rounded transition-colors duration-200 ${
+                    isActive
+                      ? "bg-yellow-100 rounded-lg text-yellow-500 border border-yellow-300 font-semibold"
+                      : "hover:bg-yellow-100"
+                  }`
+                }>
+                {item.icon}
+                {item.name}
+              </NavLink>
+            ))}
+          </nav>
+        </div>
+        <button
+          onClick={logOut}
+          className="flex items-center py-2 px-4 mt-4 rounded text-red-600 hover:bg-red-100 font-semibold">
+          <LogOut className="w-4 h-4 mr-2" />
+          Logout
+        </button>
+      </aside>
+
+      {/* Mobile Overlay */}
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/20 z-[99]"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+         
+      )}
+      
+
+      {/* Main Content */}
+      <main className="flex-1 lg:ml-64 pt-20 md:pt-8 p-4 overflow-y-auto">
+        <Outlet />
+      </main>
+    </div>
+  );
+};
+
+export default DashBoard;

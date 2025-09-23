@@ -21,6 +21,7 @@ import UpdateOrderDetails from "../Pages/UpdateOrderDetails/UpdateOrderDetails";
 import OrdersSummary from "../Pages/DashBoard/DashPages/OrdersSummary/OrdersSummary";
 import Accounts from "../Pages/DashBoard/DashPages/Accounts/Accounts";
 import AdminRoute from "../Pages/PrivateRoute/AdminRoute";
+import Media from "../Pages/Media/Media";
 
 export const router = createBrowserRouter([
     {
@@ -51,6 +52,10 @@ export const router = createBrowserRouter([
                 path: "/my-orders",
                 element: <MyOrders />,
             },
+            // {
+            //     path: "/media",
+            //     element: <Media />,
+            // },
             {
                 path: "/single-order-details/:id",
                 element: <SingleOrderDetails />,

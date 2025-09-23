@@ -19,7 +19,7 @@
     "aos": "^2.3.4",
     "axios": "^1.8.4",
     "firebase": "^11.6.0",
-    "framer-motion": "^12.5.0",
+    "framer-motion": "^12.23.12",
     "lucide-react": "^0.482.0",
     "react": "^19.0.0",
     "react-csv": "^2.2.2",

@@ -1,132 +1,118 @@
-import React from 'react';
-import { FaFacebookF, FaWhatsapp } from "react-icons/fa";
-import { FiInstagram } from "react-icons/fi";
-import { Link, NavLink } from 'react-router';
+import mainLogo from "../../assets/logo.jpg";
+import instragramLogo from "../../assets/instragram.svg";
+import facebookLogo from "../../assets/facebook.svg";
+import whatsAppLogo from "../../assets/whatsappIcon.svg";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
-    return (
-        <footer className="bg-[#1A1A1A] mt-10">
-            <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-                {/* Main Content */}
-                <div className="lg:flex lg:items-start lg:gap-8">
-                    <div className="grid grid-cols-2 gap-8 md:grid-cols-2 lg:grid-cols-5 lg:gap-y-16">
-                        {/* Newsletter Section - Full width on mobile, 2 cols on md+ */}
-                        <div className="col-span-2">
-                            <div>
-                                <h2 className="text-2xl font-bold text-white">
-                                    Get the latest news!
-                                </h2>
-                                <p className="mt-4 text-gray-300">
-                                    Stay updated with our newest products and exclusive offers.
-                                </p>
-                            </div>
-                        </div>
+  return (
+    <footer className="relative bg-black text-white overflow-hidden">
+      {/* Top Fade */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(255,255,255,0.05) 2px, transparent 1px),
+            linear-gradient(to top, rgba(255,255,255,0.05) 2px, transparent 1px)
+          `,
+          backgroundSize: "50px 50px",
+          maskImage:
+            "linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%)",
+        }}
+      ></div>
 
-                        {/* Newsletter Form - Full width on mobile, 2 cols on md+ */}
-                        <div className="col-span-2 lg:col-span-3 lg:flex lg:items-end">
-                            <form className="w-full">
-                                <label htmlFor="UserEmail" className="sr-only">Email</label>
-                                <div className="border rounded-md p-2 focus-within:ring-2 focus-within:ring-[#FFD700] sm:flex sm:items-center sm:gap-4 border-gray-700">
-                                    <input
-                                        type="email"
-                                        id="UserEmail"
-                                        placeholder="your@email.com"
-                                        className="w-full border-none bg-transparent outline-none text-white"
-                                    />
-                                    <button
-                                        className="mt-1 w-full px-6 py-3 text-sm font-bold uppercase tracking-wide transition sm:mt-0 sm:w-auto sm:shrink-0 bg-[#FFD700] text-black hover:bg-[#FFB300] rounded-md"
-                                    >
-                                        Sign Up
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+      <div className="relative max-w-screen-xl mx-auto px-4 py-12 sm:px-6 lg:px-8 flex flex-col items-center justify-center gap-8 text-center z-10">
+        {/* Logo + Description */}
+        <div className="pb-5 w-full">
+          <div className="flex justify-center items-center gap-3 mb-4">
+            <img
+              src={mainLogo}
+              alt="GamersKit Logo"
+              className="w-14 rounded-full"
+            />
+            <h1 className="font-bold text-2xl">GamersKit</h1>
+          </div>
+          <p className="text-gray-400 text-sm">
+            <span className="font-bold">GamersKit</span> brings you the best
+            gaming gears and accessories with top-notch quality and service.
+          </p>
+        </div>
 
-                        {/* Footer Links - Always 2 columns on mobile and up */}
-                        {[
-                            { title: "Helpful Links", items: ['Contact', 'FAQs'] },
-                            { title: "Legal", items: ['Terms', 'Privacy Policy'] }
-                        ].map((section, index) => (
-                            <div key={index} className="col-span-1">
-                                <p className="font-medium text-white">{section.title}</p>
-                                <ul className="mt-6 space-y-4 text-sm">
-                                    {section.items.map((item) => (
-                                        <li key={item}>
-                                            <a href="#" className="transition text-gray-300 hover:text-[#FFD700]">
-                                                {item}
-                                            </a>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
+        {/* Quick Links */}
+        <div className="w-full lg:flex lg:justify-center">
+          <div>
+            <ul className="space-y-2 text-sm lg:space-y-0 lg:flex lg:gap-6">
+              {[
+                { label: "Home", href: "/" },
+                { label: "Shop", href: "/shop" },
+                { label: "Media", href: "/media" },
+                { label: "My Orders", href: "/my-orders" },
+              ].map((item) => (
+                <li key={item.label}>
+                  <Link
+                    to={item.href}
+                    className="hover:text-[#FFD700] transition">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
 
-                        {/* Social Links - Full width on mobile, 5 cols on lg+ */}
-                        <div className="col-span-2 lg:col-span-5">
-                            <ul className="flex flex-wrap justify-start gap-6 lg:justify-end">
-                                <li>
-                                    <Link
-                                        to={{ pathname: "https://www.facebook.com/gamerskit.gg" }}
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            window.open("https://www.facebook.com/gamerskit.gg", "_blank");
-                                        }}
-                                        className="text-gray-600 transition hover:text-[#FFD700]"
-                                    >
-                                        <FaFacebookF color='white' className='w-6 h-6' />
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        to={{ pathname: "https://www.instagram.com/gamerskit.gg" }}
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            window.open("https://www.instagram.com/gamerskit.gg", "_blank");
-                                        }}
-                                        className="text-gray-600 transition hover:text-[#FFD700]"
-                                    >
-                                        <FiInstagram color='white' className='w-6 h-6' />
-                                    </Link>
-                                </li>
-                                <li>
-                                    <a
-                                        href="https://wa.me/+8801818136701"  // Replace PHONE_NUMBER with the actual number (including country code)
-                                        className="text-gray-600 transition hover:text-[#FFD700]"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <FaWhatsapp color='white' className='w-6 h-6' />
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+        {/* Social Media */}
+        <div>
+          <div className="flex justify-center gap-4 md:gap-8">
+            <a
+              href="https://facebook.com/gamerskit.gg"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#FFD700] transition-transform transform hover:scale-110">
+              <img src={facebookLogo} className="w-8" alt="" />
+            </a>
+            <a
+              href="https://instagram.com/gamerskit.gg"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#FFD700] transition-transform transform hover:scale-110">
+              <img src={instragramLogo} className="w-8" alt="" />
+            </a>
+            <a
+              href="https://wa.me/+8801818136701"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#FFD700] transition-transform transform hover:scale-110">
+              <img src={whatsAppLogo} alt="" className="w-8" />
+            </a>
+          </div>
+        </div>
+      </div>
 
-                {/* Copyright Section */}
-                <div className="mt-8 border-t  pt-8 border-gray-800">
-                    <div className="sm:flex sm:justify-between">
-                        <p className="text-xs text-gray-400">
-                            &copy; {new Date().getFullYear()} Your Company. All rights reserved.
-                        </p>
-
-                        <ul className="mt-4 flex flex-wrap justify-start gap-4 text-xs sm:mt-0 lg:justify-end">
-                            {['Terms', 'Privacy', 'Cookies'].map((item) => (
-                                <li key={item}>
-                                    <a href="#" className="text-white transition hover:text-[#FFD700]">
-                                        {item}
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className='text-xs text-gray-400 text-start my-8 sm:text-center md:text-center lg:text-center'>
-                        Design & Developed by <a className='font-bold' href='https://saif-portfolio-9c0a3.web.app' target='_blank'>Saif Sultan Mizan</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    );
+      {/* Bottom Line */}
+      <div className="pb-6 text-xs text-center text-gray-400 z-10 relative">
+        <p className="text-gray-400 mt-2 sm:mt-0 text-xs pb-1">
+          Designed & Developed by{" "}
+          <a
+            className="font-bold hover:text-[#FFD700]"
+            href="https://saif-portfolio-9c0a3.web.app"
+            target="_blank">
+            Saif
+          </a>
+          <span> X </span>
+          <a
+            className="font-bold hover:text-[#FFD700]"
+            href="https://nasif-s-portfolio.web.app/"
+            target="_blank">
+            Nasif
+          </a>
+        </p>
+        &copy; {new Date().getFullYear()}{" "}
+        <span className="font-bold">GamersKit</span>. All rights reserved.
+      </div>
+    </footer>
+  );
 };
 
 export default Footer;
