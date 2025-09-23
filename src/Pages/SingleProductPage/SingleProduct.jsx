@@ -57,7 +57,7 @@ const SingleProduct = () => {
         }
         throw error;
       }
-    },  
+    },
   });
 
   // Fetch all products
@@ -70,6 +70,32 @@ const SingleProduct = () => {
       return response.data;
     },
   });
+
+  useEffect(() => {
+    if (!data) return;
+
+    window.dataLayer = window.dataLayer || [];
+
+    // GA4 event
+    window.dataLayer.push({
+      event: "view_item",
+      item_id: productId,
+      item_name: data.title,
+      price: data.price,
+      currency: "BDT",
+    });
+
+    // Facebook Pixel event
+    window.dataLayer.push({
+      event: "ViewContent",
+      content_ids: [productId],
+      content_name: data.title,
+      content_type: "product",
+      value: data.price,
+      currency: "BDT",
+    });
+  }, [data, productId]);
+
 
   const handleCopy = async () => {
     try {
