@@ -69,6 +69,7 @@ const OrderForm = () => {
     "mn99s full scale 4wd climbing defender (black) - (dual battery)",
     "mn98 rc rock crawler defender (yellow) - (dual battery)",
     "nissan black racer (dual battery)",
+    "mclaren 750s saros grey (1:64 scale)"
   ];
 
   // Check if cart contains only cars
