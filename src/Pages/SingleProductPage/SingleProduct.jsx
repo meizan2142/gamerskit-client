@@ -81,6 +81,7 @@ const SingleProduct = () => {
       event: "view_item",
       item_id: productId,
       item_name: data.title,
+      item_category: data.name,
       price: data.price,
       currency: "BDT",
     });
@@ -90,12 +91,12 @@ const SingleProduct = () => {
       event: "ViewContent",
       content_ids: [productId],
       content_name: data.title,
+      item_category: data.name,
       content_type: "product",
       value: data.price,
       currency: "BDT",
     });
   }, [data, productId]);
-
 
   const handleCopy = async () => {
     try {
@@ -172,8 +173,17 @@ const SingleProduct = () => {
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     window.dispatchEvent(new Event("storage"));
     toast.success("Added to Cart");
+    // Push event to GTM
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: "add_to_cart",
+      item_id: cartProduct.productId, // match your DB/product unique ID
+      item_name: cartProduct.title, // match your cart product title
+      price: cartProduct.price, // use final calculated price
+      currency: "BDT",
+      quantity: cartProduct.quantity,
+    });
   };
-
   const handleBuyNow = () => {
     // Similar modifications as handleAddToCart
     const hasAvailableSizes =

@@ -61,6 +61,16 @@ const ProductCard = ({ product }) => {
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     window.dispatchEvent(new Event("storage"));
     toast.success("Added to Cart");
+    // Push event to GTM
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: "add_to_cart",
+      item_id: cartProduct.productId, // match your DB/product unique ID
+      item_name: cartProduct.title, // match your cart product title
+      price: cartProduct.price, // use final calculated price
+      currency: "BDT",
+      quantity: cartProduct.quantity,
+    });
   };
 
   const productSlug =
