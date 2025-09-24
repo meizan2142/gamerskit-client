@@ -291,6 +291,7 @@ const SingleProduct = () => {
     "M22 Playstation 128GB",
     "R36S Handheld Game Console",
     "R36S Max Handheld Game Console",
+    "McLaren 750S Saros Grey (1:64 Scale)"
   ];
 
   const ANOTHER_OFFER_PRICE = [

@@ -40,7 +40,7 @@ const Status = ({ item, onStatusChange }) => {
           isUpdating
             ? "bg-gray-500"
             : item.status === "delivered"
-            ? "bg-yellow-400"
+            ? "bg-green-400"
             : item.status === "pending"
             ? "bg-yellow-500"
             : item.status === "cancelled"
