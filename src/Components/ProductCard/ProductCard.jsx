@@ -79,7 +79,7 @@ const ProductCard = ({ product }) => {
       .toLowerCase()
       .replace(/\s+/g, "-")
       .replace(/[^\w-]+/g, "");
-
+      console.log(productSlug);
   return (
     <div className="group w-full flex flex-col h-full rounded-lg relative overflow-hidden items-center">
       <div className="block w-full h-full max-w-[260px] sm:max-w-[300px] mx-auto">

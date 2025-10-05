@@ -9,9 +9,11 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Loader from "../../Components/loader";
 import ProductCard from "../../Components/ProductCard/ProductCard";
+import OpenGraph from "../../Components/OpenGraph";
 
 const SingleProduct = () => {
-  const { productSlug } = useParams();
+  const { id: productSlug } = useParams();
+  // console.log(useParams());
   const location = useLocation();
   const productId = location.state?.productId;
   const navigate = useNavigate();
@@ -44,7 +46,7 @@ const SingleProduct = () => {
       try {
         // First try fetching by slug
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/products-by-slug/${productSlug}`
+          `${import.meta.env.VITE_API_URL}/products/${productSlug}`
         );
         return response.data;
       } catch (error) {
@@ -59,7 +61,6 @@ const SingleProduct = () => {
       }
     },
   });
-
   // Fetch all products
   const { data: allProducts = [] } = useQuery({
     queryKey: ["allProduct"],
@@ -291,7 +292,7 @@ const SingleProduct = () => {
     "M22 Playstation 128GB",
     "R36S Handheld Game Console",
     "R36S Max Handheld Game Console",
-    "McLaren 750S Saros Grey (1:64 Scale)"
+    "McLaren 750S Saros Grey (1:64 Scale)",
   ];
 
   const ANOTHER_OFFER_PRICE = [
@@ -302,6 +303,16 @@ const SingleProduct = () => {
 
   return (
     <div className="min-h-screen pt-16 md:pt-24 px-2">
+      <OpenGraph
+        title={data.name}
+        description={data.description}
+        image={data.mainImage}
+        url={"https://gamerskitbd.com/product/" + data.slug}
+        type="data"
+        price={data.price}
+        currency={data.currency || "BDT"}
+        availability={data.inStock ? "instock" : "outofstock"}
+      />
       <div className="container mx-auto px-2 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-8 py-6 rounded-2xl md:rounded-[32px] border-2 border-white bg-white/40">
         <SingleProductSwiper
           images={
@@ -552,6 +563,38 @@ const SingleProduct = () => {
           </div>
         </div>
       )}
+
+      {/* Microdata (JSON-LD) for SEO */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org/",
+          "@type": "Product",
+          name: data?.title,
+          image: [data?.mainImage, ...(data?.subImages || [])],
+          description: data?.description || data?.title,
+          sku: data?._id,
+          brand: {
+            "@type": "Brand",
+            name: "GamersKit",
+          },
+          offers: {
+            "@type": "Offer",
+            url: window.location.href,
+            priceCurrency: "BDT",
+            price: data?.price,
+            availability: "https://schema.org/InStock",
+            itemCondition: "https://schema.org/NewCondition",
+          },
+          aggregateRating: data?.rating
+            ? {
+                "@type": "AggregateRating",
+                ratingValue: data?.rating,
+                reviewCount: data?.reviewCount || 1,
+              }
+            : undefined,
+        })}
+      </script>
+
       <div>
         <Toaster />
       </div>
