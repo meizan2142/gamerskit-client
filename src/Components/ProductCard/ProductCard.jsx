@@ -61,6 +61,16 @@ const ProductCard = ({ product }) => {
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     window.dispatchEvent(new Event("storage"));
     toast.success("Added to Cart");
+    // Push event to GTM
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: "add_to_cart",
+      item_id: cartProduct.productId, // match your DB/product unique ID
+      item_name: cartProduct.title, // match your cart product title
+      price: cartProduct.price, // use final calculated price
+      currency: "BDT",
+      quantity: cartProduct.quantity,
+    });
   };
 
   const productSlug =
@@ -69,7 +79,7 @@ const ProductCard = ({ product }) => {
       .toLowerCase()
       .replace(/\s+/g, "-")
       .replace(/[^\w-]+/g, "");
-
+      console.log(productSlug);
   return (
     <div className="group w-full flex flex-col h-full rounded-lg relative overflow-hidden items-center">
       <div className="block w-full h-full max-w-[260px] sm:max-w-[300px] mx-auto">
