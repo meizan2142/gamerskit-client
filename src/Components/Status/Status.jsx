@@ -4,7 +4,13 @@ const Status = ({ item, onStatusChange }) => {
   const [open, setOpen] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const dropDownRef = useRef(null);
-  const items = ["pending", "delivered", "cancelled", "returned"];
+  const items = [
+    "pending",
+    "delivered",
+    "cancelled",
+    "return-restock",
+    "return-damage",
+  ];
 
   useEffect(() => {
     const close = (e) => {
@@ -23,7 +29,7 @@ const Status = ({ item, onStatusChange }) => {
 
     setIsUpdating(true);
     try {
-      await onStatusChange(item._id, newStatus);
+      await onStatusChange(item, newStatus);
     } catch (error) {
       console.error("Status update failed:", error);
     } finally {
