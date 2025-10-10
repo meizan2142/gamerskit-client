@@ -26,6 +26,27 @@ const OrderForm = () => {
   const [isCopied, setIsCopied] = useState(false);
   const [localCartData, setLocalCartData] = useState([]);
 
+  useEffect(() => {
+    // Get cart data from localStorage
+    const cart = localCartData || "[]";
+
+    if (cart.length > 0) {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "begin_checkout", // GA4 standard event
+        ecommerce: {
+          currency: "BDT",
+          items: cart.map((item) => ({
+            item_id: item.productId,
+            item_name: item.title,
+            price: Number(item.price),
+            quantity: item.quantity,
+          })),
+        },
+      });
+    }
+  }, [localCartData]);
+
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText("01303775977");
@@ -177,6 +198,35 @@ const OrderForm = () => {
       );
 
       console.log("Order response:", orderResponse);
+
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "purchase",
+        ecommerce: {
+          transaction_id: orderResponse.data?._id || Date.now().toString(), // use backend order id if available
+          value: Number(totalAmount), // total price incl. delivery
+          currency: "BDT",
+          items: cartItems.map((item) => ({
+            item_id: item.productId,
+            item_name: item.title,
+            price: Number(item.price),
+            quantity: Number(item.quantity),
+          })),
+        },
+        customer: {
+          name: data.name,
+          email: data.email || user?.email || "",
+          phone: data.mobile,
+          district: data.district,
+          thana: data.thana,
+          address: data.address,
+          note: data.note || "",
+        },
+        item_id: cartItems.map((item) => item.productId),
+        content_type: "product",
+        value: Number(totalAmount),
+        currency: "BDT",
+      });
 
       // Clear cart and update state
       localStorage.removeItem("cart");

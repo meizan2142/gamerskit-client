@@ -64,6 +64,18 @@ const StockJerseys = () => {
                                             {data.leftProducts}
                                         </p>
                                     </div>
+                                    <div className="h-8 w-px bg-gray-300"></div>
+                                    {data.damage > 0 ? (
+                                        <div className="text-center">
+                                            <p className="text-xs text-gray-500">Damaged</p>
+                                            <p className="font-bold text-red-500">{data.damage}</p>
+                                        </div>
+                                    ) : (
+                                        <div className="text-center">
+                                            <p className="text-xs text-gray-500">Damaged</p>
+                                            <p className="font-bold text-gray-400">0</p>
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Size Breakdown */}

@@ -22,31 +22,55 @@ const AllOrder = () => {
     },
   });
 
-  const updateOrderStatus = async (orderId, newStatus) => {
-    const updatedAt = new Date()
-      .toLocaleString("en-US", {
-        month: "numeric",
-        day: "numeric",
-        year: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        hour12: true,
-      })
-      .replace(",", "");
+const updateOrderStatus = async (order, newStatus) => {
+  console.log(order, newStatus );
 
-    try {
-      await axios.patch(
-        `${import.meta.env.VITE_API_URL}/orderdetails/${orderId}`,
+  const updatedAt = new Date()
+    .toLocaleString("en-US", {
+      month: "numeric",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    })
+    .replace(",", "");
+
+  try {
+    // 1️⃣ Update order status first
+    await axios.patch(
+        `${import.meta.env.VITE_API_URL}/orderdetails/${order._id}`,
         {
           status: newStatus,
           updatedAt: updatedAt,
         }
       );
-      queryClient.invalidateQueries(["orders"]);
-    } catch (error) {
-      console.error("Error updating order status:", error);
+    queryClient.invalidateQueries(["orders"]);
+
+   // 2️⃣ Update stock or damage only for specific statuses
+    if (["delivered", "return-restock", "return-damage"].includes(newStatus)) {
+      for (const item of order.cartItems) {
+        const { productId, quantity, size } = item;
+
+        await axios.patch(
+          `${import.meta.env.VITE_API_URL}/products/updateStock/${productId}`,
+          {
+            action: newStatus,
+            quantity,
+            size
+          }
+        );
+      }
     }
-  };
+
+    // 3️⃣ Refresh data
+    queryClient.invalidateQueries(["products"]);
+
+    console.log("✅ Order and stock updated successfully!");
+  } catch (error) {
+    console.error("❌ Error updating order or stock:", error);
+  }
+};
 
   if (isLoading) return <Loader />;
 
