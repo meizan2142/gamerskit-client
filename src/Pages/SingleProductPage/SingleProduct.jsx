@@ -280,9 +280,16 @@ const SingleProduct = () => {
     "F1 SHELL 2025",
     "M22 Playstation 128GB",
     "R36S Handheld Game Console",
-    "R36S Max Handheld Game Console",
-    "McLaren 750S Saros Grey (1:64 Scale)"
   ];
+
+  const STOCK_OUT = [
+    "MN99S Full Scale 4WD Climbing Defender (Black) - (Dual Battery)",
+    "Nissan GTR Skyline 4WD (White-Grey) Dual Batteries",
+    "Porsche 911 Mini Drift Car(Black)",
+    "Nissan GTR Mini drift car (Navy-Blue)"
+  ];
+
+
 
   const ANOTHER_OFFER_PRICE = [
     "Nissan GTR Skyline 4WD (White-Grey) Dual Batteries",
@@ -307,90 +314,19 @@ const SingleProduct = () => {
             </h1>
             <hr className="border-t border-gray-300 my-4" />
             <div className="mt-4 space-y-2 text-base sm:text-lg">
-              {EXCLUDED_OFFER_PRICE.includes(data?.title) ? (
-                <>
-                  {REACT_TABS.includes(data?.title) ? (
-                    <div className="sm:flex-row sm:items-center sm:gap-3">
-                      <span className="font-semibold">Price: </span>
-                      <span className="text-xl font-bold">
-                        ৳{data?.price}{" "}
-                        <span className="text-sm text-gray-500">(64GB)</span>
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="sm:flex-row sm:items-center sm:gap-3">
-                      <span className="font-semibold">Price: </span>
-                      <span className="text-xl font-bold">৳{data?.price}</span>
-                    </div>
-                  )}
-                </>
-              ) : (
-                <>
-                  {ANOTHER_OFFER_PRICE.includes(data?.title) ? (
-                    <>
-                      {data?.title === "Ford Mustang GT" ? (
-                        <>
-                          <div className="sm:flex-row sm:items-center sm:gap-3">
-                            <span className="font-semibold">
-                              Regular Price:
-                            </span>
-                            <span className="text-xl line-through">৳ 3400</span>
-                          </div>
-                          <div className="sm:flex-row sm:items-center sm:gap-3">
-                            <span className="font-semibold">Offer Price:</span>
-                            <span className="text-xl font-bold">
-                              ৳{data?.price}
-                            </span>
-                          </div>
-                          <div className="sm:flex-row sm:items-center sm:gap-3">
-                            <span className="font-semibold">You Save: </span>
-                            <span className="text-xl font-bold">৳ 400</span>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <div className="sm:flex-row sm:items-center sm:gap-3 text-gray-400">
-                            <span className="font-semibold">
-                              Regular Price:
-                            </span>
-                            <span className="text-xl line-through ml-1.5">
-                              {" "}
-                              ৳ 3200
-                            </span>
-                          </div>
-                          <div className="sm:flex-row sm:items-center sm:gap-3">
-                            <span className="font-semibold">Offer Price: </span>
-                            <span className="text-xl font-bold">
-                              ৳{data?.price}
-                            </span>
-                          </div>
-                          <div className="sm:flex-row sm:items-center sm:gap-3">
-                            <span className="font-semibold">You Save: </span>
-                            <span className="text-xl font-bold">৳ 700</span>
-                          </div>
-                        </>
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      <div className="sm:flex-row sm:items-center sm:gap-3">
-                        <span className="font-semibold">Regular Price: </span>
-                        <span className="text-xl line-through">৳ 2800</span>
-                      </div>
-                      <div className="sm:flex-row sm:items-center sm:gap-3">
-                        <span className="font-semibold">Offer Price: </span>
-                        <span className="text-xl font-bold">
-                          ৳{data?.price}
-                        </span>
-                      </div>
-                      <div className="sm:flex-row sm:items-center sm:gap-3">
-                        <span className="font-semibold">You Save: </span>
-                        <span className="text-xl font-bold">৳ 500</span>
-                      </div>
-                    </>
-                  )}
-                </>
-              )}
+              <div className="sm:flex-row sm:items-center sm:gap-3">
+                <span className="font-semibold">Price: </span>
+                {
+                  STOCK_OUT.includes(data?.title) ?
+                    <span className="text-xl font-bold">
+                      ৳{data?.price} - <span className="font-medium text-red-500">(Stock out)</span>
+                    </span> 
+                    :
+                    <span className="text-xl font-bold">
+                      ৳{data?.price} - <span className="font-medium text-green-500">(In stock)</span>
+                    </span>
+                }
+              </div>
             </div>
             <hr className="border-t border-gray-300 my-4" />
 
@@ -428,21 +364,21 @@ const SingleProduct = () => {
                 data?.name === "F1" ||
                 data?.name === "Tshirt" ||
                 data?.name === "E-sports") && (
-                <div className="text-gray-900 text-sm font-medium">
-                  Send money via (Bkash/Nagad) to:{" "}
-                  <span
-                    className="text-black font-bold cursor-pointer relative"
-                    onClick={handleCopy}>
-                    01303775977
-                    {isCopied && (
-                      <span className="absolute -top-7 -right-4 bg-black text-white text-xs px-2 py-1 rounded">
-                        Copied!
-                      </span>
-                    )}
-                  </span>
-                  <p className="mt-1">Need help? Call us at the same number.</p>
-                </div>
-              )}
+                  <div className="text-gray-900 text-sm font-medium">
+                    Send money via (Bkash/Nagad) to:{" "}
+                    <span
+                      className="text-black font-bold cursor-pointer relative"
+                      onClick={handleCopy}>
+                      01303775977
+                      {isCopied && (
+                        <span className="absolute -top-7 -right-4 bg-black text-white text-xs px-2 py-1 rounded">
+                          Copied!
+                        </span>
+                      )}
+                    </span>
+                    <p className="mt-1">Need help? Call us at the same number.</p>
+                  </div>
+                )}
 
               {(data?.name === "Sleeves" || data?.name === "Mask") && (
                 <div className="mt-3 text-gray-900 text-sm font-medium">
@@ -484,11 +420,10 @@ const SingleProduct = () => {
                       onClick={() => {
                         setSelectedSize(size);
                       }}
-                      className={`w-full px-3 py-2 rounded-lg border-2 ${
-                        selectedSize === size
-                          ? "bg-[#FFD700] border-[#FFD700]"
-                          : "border-gray-300 hover:border-[#FFD700]"
-                      }  transition-colors`}>
+                      className={`w-full px-3 py-2 rounded-lg border-2 ${selectedSize === size
+                        ? "bg-[#FFD700] border-[#FFD700]"
+                        : "border-gray-300 hover:border-[#FFD700]"
+                        }  transition-colors`}>
                       <div className="flex flex-col justify-center items-center">
                         <h1 className="text-sm sm:text-base font-bold">
                           {size.toUpperCase()}
@@ -508,11 +443,10 @@ const SingleProduct = () => {
             {/* Add to Cart Button (Border only) */}
             <button
               onClick={handleAddToCart}
-              className={`w-full flex items-center justify-center gap-3  rounded-2xl py-3 px-4 text-sm sm:text-base font-semibold transition ${
-                isButtonDisabled
-                  ? "border-gray-300 text-gray-400 cursor-not-allowed"
-                  : "border-[0.5px] border-gray-400 text-[#1F1F1F] hover:bg-[#FFF9E6]"
-              }`}
+              className={`w-full flex items-center justify-center gap-3  rounded-2xl py-3 px-4 text-sm sm:text-base font-semibold transition ${isButtonDisabled
+                ? "border-gray-300 text-gray-400 cursor-not-allowed"
+                : "border-[0.5px] border-gray-400 text-[#1F1F1F] hover:bg-[#FFF9E6]"
+                }`}
               disabled={isButtonDisabled}>
               Add to Cart
             </button>
@@ -520,11 +454,10 @@ const SingleProduct = () => {
             {/* Buy Now Button (Solid background) */}
             <button
               onClick={handleBuyNow}
-              className={`w-full flex items-center justify-center gap-3 rounded-2xl py-3 px-4 text-sm sm:text-base font-semibold transition ${
-                isButtonDisabled
-                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  : "bg-[#FFD700] text-black hover:bg-yellow-300 border-[0.5px] border-gray-400"
-              }`}
+              className={`w-full flex items-center justify-center gap-3 rounded-2xl py-3 px-4 text-sm sm:text-base font-semibold transition ${isButtonDisabled
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-[#FFD700] text-black hover:bg-yellow-300 border-[0.5px] border-gray-400"
+                }`}
               disabled={isButtonDisabled}>
               Buy Now
             </button>
