@@ -60,6 +60,8 @@ const SingleProduct = () => {
       }
     },
   });
+
+  console.log(data?.leftProducts)
   // Fetch all products
   const { data: allProducts = [] } = useQuery({
     queryKey: ["allProduct"],
@@ -269,45 +271,6 @@ const SingleProduct = () => {
     (p) => p.name === data.name && p._id !== allProducts._id
   );
 
-  const EXCLUDED_OFFER_PRICE = [
-    "Nissan GTR R34 RWD (Dual battery & Gyro Stabilizer)",
-    "MN99S Full Scale 4WD Climbing Defender (Black) - (Dual Battery)",
-    "MN98 RC Rock Crawler Defender (Yellow) - (Dual Battery)",
-    "Nissan Black Racer (Dual Battery)",
-    "G2 Prestige 2025",
-    "Sentinels Jersey",
-    "F1 Red Bull 2024",
-    "Team Liquid Hand Sleeves",
-    "Fnatic Tshirt",
-    "F1 SHELL 2024",
-    "F1 MERCEDES 2024",
-    "Fnatic Hand Sleeves",
-    "Sentinels Hand Sleeves",
-    "Sentinels Tshirt",
-    "Team Liquid Mask",
-    "Sentinels Mask",
-    "G2 Mask",
-    "F1 SHELL 2025",
-    "M22 Playstation 128GB",
-    "R36S Handheld Game Console",
-    "R36S Max Handheld Game Console",
-    "McLaren 750S Saros Grey (1:64 Scale)",
-  ];
-
-  const STOCK_OUT = [
-    "MN99S Full Scale 4WD Climbing Defender (Black) - (Dual Battery)",
-    "Nissan GTR Skyline 4WD (White-Grey) Dual Batteries",
-    "Porsche 911 Mini Drift Car(Black)",
-    "Nissan GTR Mini drift car (Navy-Blue)"
-  ];
-
-
-
-  const ANOTHER_OFFER_PRICE = [
-    "Nissan GTR Skyline 4WD (White-Grey) Dual Batteries",
-    "Porsche 911 Drift Car 4WD (Dual Batteries)",
-    "Ford Mustang GT",
-  ];
 
   return (
     <div className="min-h-screen pt-16 md:pt-24 px-2">
@@ -339,7 +302,7 @@ const SingleProduct = () => {
               <div className="sm:flex-row sm:items-center sm:gap-3">
                 <span className="font-semibold">Price: </span>
                 {
-                  STOCK_OUT.includes(data?.title) ?
+                  data?.leftProducts === 0 ?
                     <span className="text-xl font-bold">
                       ৳{data?.price} - <span className="font-medium text-red-500">(Stock out)</span>
                     </span> 
