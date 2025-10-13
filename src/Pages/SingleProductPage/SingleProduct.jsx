@@ -12,29 +12,18 @@ import OpenGraph from "../../Components/OpenGraph";
 
 const SingleProduct = () => {
   const { id: productSlug } = useParams();
-  // console.log(useParams());
   const location = useLocation();
   const productId = location.state?.productId;
   const navigate = useNavigate();
   const [selectedSize, setSelectedSize] = useState("");
   const [isCopied, setIsCopied] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-  const [selectedTab, setSelectedTab] = useState(0);
-
-  const REACT_TABS = ["R36S Max Handheld Game Console"];
 
   // Load cart items from localStorage on component mount
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
     if (savedCart) {
       setCartItems(JSON.parse(savedCart));
-    }
-  }, []);
-
-  useEffect(() => {
-    const savedTab = localStorage.getItem("selectedTab");
-    if (savedTab !== null) {
-      setSelectedTab(parseInt(savedTab));
     }
   }, []);
 
@@ -61,7 +50,6 @@ const SingleProduct = () => {
     },
   });
 
-  console.log(data?.leftProducts)
   // Fetch all products
   const { data: allProducts = [] } = useQuery({
     queryKey: ["allProduct"],
@@ -128,28 +116,13 @@ const SingleProduct = () => {
       return toast.error("Please select a size");
     }
 
-    // For R36S Max Handheld Game Console, include storage option
-    const storageOption =
-      data.title === "R36S Max Handheld Game Console"
-        ? selectedTab === 0
-          ? "64GB"
-          : "128GB"
-        : null;
-
-    const price = REACT_TABS.includes(data.title)
-      ? selectedTab === 0
-        ? 5200
-        : 5700
-      : data.price;
-
     const cartProduct = {
       productId: data._id,
       title: data.title,
-      price: price, // Use the determined price
+      price: data.price, // Use the determined price
       mainImage: data.mainImage,
       quantity: 1,
-      ...(hasAvailableSizes && { size: selectedSize }),
-      ...(storageOption && { storage: storageOption }),
+      ...(hasAvailableSizes && { size: selectedSize })
     };
 
     const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -159,9 +132,7 @@ const SingleProduct = () => {
       (item) =>
         item.productId === cartProduct.productId &&
         ((!hasAvailableSizes && !item.size) ||
-          (hasAvailableSizes && item.size === cartProduct.size)) &&
-        (!storageOption ||
-          (storageOption && item.storage === cartProduct.storage))
+          (hasAvailableSizes && item.size === cartProduct.size))
     );
 
     let updatedCart;
@@ -199,27 +170,13 @@ const SingleProduct = () => {
       return toast.error("Please select a size");
     }
 
-    const price = REACT_TABS.includes(data.title)
-      ? selectedTab === 0
-        ? 5200
-        : 5700
-      : data.price;
-
-    const storageOption =
-      data.title === "R36S Max Handheld Game Console"
-        ? selectedTab === 0
-          ? "64GB"
-          : "128GB"
-        : null;
-
     const cartProduct = {
       productId: data._id,
       title: data.title,
-      price: price,
+      price: data.price,
       mainImage: data.mainImage,
       quantity: 1,
       ...(hasAvailableSizes && { size: selectedSize }),
-      ...(storageOption && { storage: storageOption }),
     };
 
     const isItemInCart = cartItems.some(
@@ -329,6 +286,9 @@ const SingleProduct = () => {
                 {data?.name === "consoles" && (
                   <p>Game Console: For order make 100 tk advance.</p>
                 )}
+                {data?.name === "YoYo" && (
+                  <p>YoYo: For order make 100 tk advance.</p>
+                )}
                 {data?.name === "F1" && (
                   <p>F1 Jersey: For order make 100 tk advance.</p>
                 )}
@@ -421,7 +381,7 @@ const SingleProduct = () => {
           )}
 
           <div>
-            <Accordion data={data} selectedTab={selectedTab} />
+            <Accordion data={data} />
           </div>
 
           <div className="space-y-4 w-full mx-auto">

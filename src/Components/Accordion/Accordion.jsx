@@ -58,7 +58,7 @@ Thank you for shopping with GamersKit!`,
   });
 
   // Size Guide (conditionally)
-  const excludeSizeGuide = ["Sleeves", "Mask", "car", "consoles"];
+  const excludeSizeGuide = ["Sleeves", "Mask", "car", "consoles", "YoYo"];
   if (data?.name && !excludeSizeGuide.includes(String(data.name))) {
     items.push({
       title: "Size Guide",
@@ -107,11 +107,20 @@ Thank you for shopping with GamersKit!`,
             <p className="mt-1">• 2-10 Days (Depends on stock)</p>
           </div>
         )}
+        {data?.name && String(data.name).toLowerCase().includes("yoyo") && (
+          <div>
+            <p className="font-semibold">
+              YoYo: Delivery charge will be free
+            </p>
+            <p className="mt-2 font-semibold">Delivery Time:</p>
+            <p className="mt-1">• 2-10 Days (Depends on stock)</p>
+          </div>
+        )}
 
         {!["E-sports", "F1", "Tshirt", "Sleeves", "Mask"].includes(
           data?.name
         ) &&
-          !["car", "consoles"].some((key) =>
+          !["car", "consoles", "yoyo"].some((key) =>
             String(data?.name || "")
               .toLowerCase()
               .includes(key)
@@ -125,7 +134,7 @@ Thank you for shopping with GamersKit!`,
   if (
     data?.name &&
     (String(data.name).toLowerCase().includes("car") ||
-      String(data.name).toLowerCase().includes("consoles"))
+      String(data.name).toLowerCase().includes("consoles")) 
   ) {
     items.push({
       title: exchangePolicy.title,

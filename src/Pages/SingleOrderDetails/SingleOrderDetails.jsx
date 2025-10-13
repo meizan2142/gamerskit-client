@@ -108,7 +108,7 @@ const SingleOrderDetails = () => {
           <div className="bg-gray-50 p-4 rounded-lg space-y-2">
             <h2 className="text-lg font-semibold">Customer Information</h2>
             <p><span className="font-bold">Name:</span> {data.name}</p>
-            <p><span className="font-bold">Email:</span> {data.email}</p>
+            {data.email && <p><span className="font-bold">Email:</span> {data.email}</p>}
             <p><span className="font-bold">Mobile:</span> {data.mobile}</p>
             <p><span className="font-bold">Address:</span> {data.address}</p>
             <p><span className="font-bold">District:</span> {data.district}</p>
@@ -164,7 +164,7 @@ const SingleOrderDetails = () => {
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Delivery Charge</span>
-              <span>৳{data.deliveryCharge}</span>
+              <span>{data.deliveryCharge === 0 ? <span className="text-green-500">Free Delivery</span> : <span>৳{data?.deliveryCharge}</span>}</span>
             </div>
             {data?.size === "xxxxl" && (
               <div className="flex justify-between">
