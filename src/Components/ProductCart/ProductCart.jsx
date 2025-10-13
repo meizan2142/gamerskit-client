@@ -82,7 +82,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
 
   if (isLoading)
     return (
-      <Loader/>
+      <Loader />
     );
 
   if (error)
@@ -92,9 +92,8 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
     <>
       {/* Cart Sidebar */}
       <div
-        className={`fixed top-0 right-0 h-full w-full sm:w-96 bg-[#121212] shadow-lg transform ${
-          isCartOpen ? "translate-x-0" : "translate-x-full"
-        } transition-transform duration-300 ease-in-out z-50`}
+        className={`fixed top-0 right-0 h-full w-full sm:w-96 bg-[#121212] shadow-lg transform ${isCartOpen ? "translate-x-0" : "translate-x-full"
+          } transition-transform duration-300 ease-in-out z-50`}
       >
         <div className="p-4 h-full flex flex-col">
           {/* Header */}
@@ -126,7 +125,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                   </div>
 
                   {/* Details */}
-                  <div className="flex-1 flex flex-col justify-between">
+                  <div className="flex-1 flex flex-col justify-between space-y-2">
                     <div className="flex justify-between items-start">
                       <p className="text-sm font-medium text-white">
                         {item.title || "Product"}
@@ -141,6 +140,19 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
 
                     <p className="text-[#FFD700] text-sm font-semibold">
                       ৳{item.price * (item.quantity || 1)}
+                      <span
+                        className={
+                          item?.tabColor === "Red"
+                            ? "text-red-500"
+                            : item?.tabColor === "Black"
+                              ? "text-yellow-600"
+                              : item?.tabColor === "Blue"
+                                ? "text-blue-500"
+                                : "text-green-500"
+                        }
+                      >
+                      - - ({item?.tabColor ? item?.tabColor : <></>})
+                      </span>
                       {item?.storage && (
                         <span className="ml-1 text-xs text-gray-300">
                           ({item.storage})

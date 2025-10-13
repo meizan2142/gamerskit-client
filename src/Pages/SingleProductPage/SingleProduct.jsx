@@ -9,6 +9,7 @@ import "react-tabs/style/react-tabs.css";
 import Loader from "../../Components/loader";
 import ProductCard from "../../Components/ProductCard/ProductCard";
 import OpenGraph from "../../Components/OpenGraph";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 const SingleProduct = () => {
   const { id: productSlug } = useParams();
@@ -18,6 +19,10 @@ const SingleProduct = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [isCopied, setIsCopied] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [selectedTab, setSelectedTab] = useState(0);
+  const REACT_TABS = "Professional YTP YOYO - The Divine Lion - BLUE/RED/BLACK"
+  const COLOR_TABS = ["Red", "Black", "Blue"]
+  const tabColor = COLOR_TABS[selectedTab];
 
   // Load cart items from localStorage on component mount
   useEffect(() => {
@@ -26,6 +31,15 @@ const SingleProduct = () => {
       setCartItems(JSON.parse(savedCart));
     }
   }, []);
+
+
+  useEffect(() => {
+    const savedTab = localStorage.getItem('selectedTab');
+    if (savedTab !== null) {
+      setSelectedTab(parseInt(savedTab));
+    }
+  }, []);
+
 
   // Fetch product data
   const { data, isLoading, error } = useQuery({
@@ -119,10 +133,11 @@ const SingleProduct = () => {
     const cartProduct = {
       productId: data._id,
       title: data.title,
-      price: data.price, // Use the determined price
+      price: data.price,
       mainImage: data.mainImage,
       quantity: 1,
-      ...(hasAvailableSizes && { size: selectedSize })
+      ...(hasAvailableSizes && { size: selectedSize }),
+      tabColor,
     };
 
     const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -177,6 +192,7 @@ const SingleProduct = () => {
       mainImage: data.mainImage,
       quantity: 1,
       ...(hasAvailableSizes && { size: selectedSize }),
+      tabColor,
     };
 
     const isItemInCart = cartItems.some(
@@ -256,13 +272,59 @@ const SingleProduct = () => {
             </h1>
             <hr className="border-t border-gray-300 my-4" />
             <div className="mt-4 space-y-2 text-base sm:text-lg">
+              {
+                REACT_TABS.includes(data?.title) ?
+                  <div className="max-w-4xl mx-auto px-4 py-6">
+                    <span className="text-yellow-600">Select a color your own(required)</span>
+                    <Tabs
+                      selectedIndex={selectedTab}
+                      onSelect={(index) => {
+                        setSelectedTab(index);
+                        localStorage.setItem('selectedTab', index.toString());
+                      }}
+                    >
+                      <TabList className="flex flex-wrap gap-3 border-b border-gray-200 mb-4">
+                        <Tab
+                          className="px-4 py-2 text-sm font-medium text-gray-700 border border-transparent rounded-t-md cursor-pointer transition duration-200"
+                          selectedClassName="border-b-2 border-blue-500 text-blue-600 bg-[#FFD700]"
+                        >
+                          <span>Red</span>
+                        </Tab>
+                        <Tab
+                          className="px-4 py-2 text-sm font-medium text-gray-700 border border-transparent rounded-t-md cursor-pointer transition duration-200"
+                          selectedClassName="border-b-2 border-blue-500 text-blue-600 bg-[#FFD700]"
+                        >
+                          <span>Black</span>
+                        </Tab>
+                        <Tab
+                          className="px-4 py-2 text-sm font-medium text-gray-700 border border-transparent rounded-t-md cursor-pointer transition duration-200"
+                          selectedClassName="border-b-2 border-blue-500 text-blue-600 bg-[#FFD700]"
+                        >
+                          <span>Blue</span>
+                        </Tab>
+                      </TabList>
+
+                      <TabPanel>
+                        <></>
+                      </TabPanel>
+                      <TabPanel>
+                        <></>
+                      </TabPanel>
+                      <TabPanel>
+                        <></>
+                      </TabPanel>
+                    </Tabs>
+                  </div>
+                  :
+                  <></>
+              }
               <div className="sm:flex-row sm:items-center sm:gap-3">
                 <span className="font-semibold">Price: </span>
                 {
                   data?.leftProducts === 0 ?
                     <span className="text-xl font-bold">
                       ৳{data?.price} - <span className="font-medium text-red-500">(Stock out)</span>
-                    </span> 
+                    </span>
                     :
                     <span className="text-xl font-bold">
                       ৳{data?.price} - <span className="font-medium text-green-500">(In stock)</span>
@@ -444,10 +506,10 @@ const SingleProduct = () => {
           },
           aggregateRating: data?.rating
             ? {
-                "@type": "AggregateRating",
-                ratingValue: data?.rating,
-                reviewCount: data?.reviewCount || 1,
-              }
+              "@type": "AggregateRating",
+              ratingValue: data?.rating,
+              reviewCount: data?.reviewCount || 1,
+            }
             : undefined,
         })}
       </script>

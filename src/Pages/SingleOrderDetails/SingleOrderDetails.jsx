@@ -136,7 +136,20 @@ const SingleOrderDetails = () => {
                     />
                     <div className="space-y-1">
                       <h3 className="font-medium">
-                        {item.title} {item.storage ? `- (${item.storage})` : ""}
+                        {item.title}
+                        <span
+                          className={
+                            item?.tabColor === "Red"
+                              ? "text-red-500"
+                              : item?.tabColor === "Black"
+                                ? "text-yellow-600"
+                                : item?.tabColor === "Blue"
+                                  ? "text-blue-500"
+                                  : "text-green-500"
+                          }
+                        >
+                          -  - ({item?.tabColor ? item?.tabColor : <></>})
+                        </span>
                       </h3>
                       {item.size && (
                         <p className="text-gray-500 text-sm">
