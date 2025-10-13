@@ -151,7 +151,7 @@ const ProductCart = ({ isCartOpen, setIsCartOpen }) => {
                                 : "text-green-500"
                         }
                       >
-                      - - ({item?.tabColor ? item?.tabColor : <></>})
+                        {item?.tabColor && ` - (${item.tabColor})`}
                       </span>
                       {item?.storage && (
                         <span className="ml-1 text-xs text-gray-300">

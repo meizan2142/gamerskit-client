@@ -588,19 +588,19 @@ const OrderForm = () => {
                     <div className="flex justify-between gap-2 md:gap-12">
                       <p className="text-gray-800 font-semibold text-sm sm:text-base leading-snug text-start">
                         {item.title}  
-                        <span
-                          className={
-                            item?.tabColor === "Red"
-                              ? "text-red-500"
-                              : item?.tabColor === "Black"
-                                ? "text-yellow-600"
-                                : item?.tabColor === "Blue"
-                                  ? "text-blue-500"
-                                  : "text-green-500"
-                          }
-                        >
-                          -  - ({item?.tabColor ? item?.tabColor : <></>})
-                        </span>
+                      <span
+                        className={
+                          item?.tabColor === "Red"
+                            ? "text-red-500"
+                            : item?.tabColor === "Black"
+                              ? "text-yellow-600"
+                              : item?.tabColor === "Blue"
+                                ? "text-blue-500"
+                                : "text-green-500"
+                        }
+                      >
+                        {item?.tabColor && ` - (${item.tabColor})`}
+                      </span>
                       </p>
                       <p className="text-gray-900 font-medium text-sm sm:text-base text-nowrap">
                         ৳{item.price}

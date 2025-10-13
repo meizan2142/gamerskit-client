@@ -130,6 +130,7 @@ const SingleProduct = () => {
       return toast.error("Please select a size");
     }
 
+    const shouldAddTabColor = ['68ec89eba47eea6c4c80d432'].includes(data?._id)
     const cartProduct = {
       productId: data._id,
       title: data.title,
@@ -137,7 +138,7 @@ const SingleProduct = () => {
       mainImage: data.mainImage,
       quantity: 1,
       ...(hasAvailableSizes && { size: selectedSize }),
-      tabColor,
+      ...(shouldAddTabColor && { tabColor }),
     };
 
     const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -185,6 +186,7 @@ const SingleProduct = () => {
       return toast.error("Please select a size");
     }
 
+    const shouldAddTabColor = ['68ec89eba47eea6c4c80d432'].includes(data?._id)
     const cartProduct = {
       productId: data._id,
       title: data.title,
@@ -192,7 +194,7 @@ const SingleProduct = () => {
       mainImage: data.mainImage,
       quantity: 1,
       ...(hasAvailableSizes && { size: selectedSize }),
-      tabColor,
+      ...(shouldAddTabColor && { tabColor }),
     };
 
     const isItemInCart = cartItems.some(

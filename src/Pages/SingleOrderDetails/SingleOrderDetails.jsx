@@ -148,7 +148,7 @@ const SingleOrderDetails = () => {
                                   : "text-green-500"
                           }
                         >
-                          -  - ({item?.tabColor ? item?.tabColor : <></>})
+                          {item?.tabColor && ` - (${item.tabColor})`}
                         </span>
                       </h3>
                       {item.size && (
