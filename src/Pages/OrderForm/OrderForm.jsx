@@ -92,7 +92,8 @@ const OrderForm = () => {
     "mn98 rc rock crawler defender (yellow) - (dual battery)",
     "nissan black racer (dual battery)",
     "mclaren 750s saros grey (1:64 scale)",
-    "professional ytp yoyo - the divine lion - blue/red/black"
+    "professional ytp yoyo - the divine lion - blue/red/black",
+    "mouse pad"
   ];
 
   // Check if cart contains only cars

@@ -201,9 +201,7 @@ const SingleProduct = () => {
       (item) =>
         item.productId === data._id &&
         ((!hasAvailableSizes && !item.size) ||
-          (hasAvailableSizes && item.size === selectedSize)) &&
-        (!storageOption ||
-          (storageOption && item.storage === cartProduct.storage))
+          (hasAvailableSizes && item.size === selectedSize))
     );
 
     let updatedCart;
@@ -352,6 +350,9 @@ const SingleProduct = () => {
                 )}
                 {data?.name === "YoYo" && (
                   <p>YoYo: For order make 100 tk advance.</p>
+                )}
+                {data?.name === "pc" && (
+                  <p>PC Accessories: For order make 100 tk advance.</p>
                 )}
                 {data?.name === "F1" && (
                   <p>F1 Jersey: For order make 100 tk advance.</p>

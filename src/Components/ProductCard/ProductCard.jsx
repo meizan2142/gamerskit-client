@@ -3,7 +3,7 @@ import { ShoppingCart } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 
 const ProductCard = ({ product }) => {
-  const FREE_DELIVERY_TEXT = ["car", "consoles", "YoYo"];
+  const FREE_DELIVERY_TEXT = ["car", "consoles", "YoYo", "pc"];
   const REACT_TABS = ["R36S Max Handheld Game Console"];
 
   const handleAddToCart = () => {
