@@ -93,7 +93,8 @@ const OrderForm = () => {
     "nissan black racer (dual battery)",
     "mclaren 750s saros grey (1:64 scale)",
     "professional ytp yoyo - the divine lion - blue/red/black",
-    "mouse pad"
+    "mouse pad",
+    "ford mustang gt - (white)"
   ];
 
   // Check if cart contains only cars
