@@ -24,8 +24,8 @@ const StockJerseys = () => {
     // Sort the data when needed (e.g., in rendering)
     const sortedData = addedProducts ? [...addedProducts].sort((a, b) => b.price - a.price) : [];
 
-     if (isLoading) return (
-        <Loader/>
+    if (isLoading) return (
+        <Loader />
     );
 
     if (error) return <div className="min-h-screen pt-24 flex justify-center">Error: {error.message}</div>;
@@ -79,7 +79,7 @@ const StockJerseys = () => {
                                 </div>
 
                                 {/* Size Breakdown */}
-                                {!['car', 'Sleeves', 'Mask', 'consoles'].includes(data.name) && (
+                                {!['car', 'Sleeves', 'Mask', 'consoles', 'pc', 'YoYo'].includes(data.name) && (
                                     <div className="pt-2">
                                         <div className="grid grid-cols-3 gap-2">
                                             {['s', 'm', 'l', 'xl', 'xxl', 'xxxl', 'xxxxl'].map(size => (
