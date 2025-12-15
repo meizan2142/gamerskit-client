@@ -244,6 +244,49 @@ const SingleProduct = () => {
     (p) => p.name === data.name && p._id !== allProducts._id
   );
 
+  const WITHOUT_ADVANCE = [
+    "porsche 911 drift car 4wd (dual batteries)",
+    "ford mustang gt",
+    "toyota ae86 rc drif car 1:16 scale",
+    "nissan gtr skyline 4wd (white-grey) dual batteries",
+    "professional ytp yoyo - the divine lion - blue/red/black",
+    "nissan gt-r r35 4wd rc drift car - (red)",
+    "nissan gt-r r35 4wd rc drift car - (silver)",
+    "mouse pad",
+    "nissan gtr mini drift car (navy-blue)",
+    "porsche 911 mini drift car(black)",
+    "nissan gtr mini drift car (red)",
+    "sentinels jersey",
+    "f1 red bull 2024",
+    "f1 shell 2024",
+    "f1 mercedes 2024",
+    "f1 shell 2025",
+    "g2 prestige 2025",
+    "sentinels hand sleeves",
+    "fnatic hand sleeves",
+    "team liquid hand sleeves",
+    "g2 mask",
+    "sentinels mask",
+    "team liquid mask",
+    "sentinels tshirt",
+    "fnatic tshirt"
+  ];
+  const isWithoutAdvance = (title = "") =>
+    WITHOUT_ADVANCE.some(item =>
+      title.toLowerCase().includes(item.toLowerCase())
+    );
+
+
+  const ADVANCE_RULES = {
+    car: "RC Car: For order, 100 Tk advance is required.",
+    YoYo: "YoYo: For order, 100 Tk advance is required.",
+    pc: "PC Accessories: For order, 100 Tk advance is required.",
+    F1: "F1 Jersey: For order, 100 Tk advance is required.",
+    "E-sports": "E-sports Jersey: For order, 100 Tk advance is required.",
+    Tshirt: "T-Shirt: For order, 100 Tk advance is required.",
+    Sleeves: "Hand Sleeves: No advance required.",
+    Mask: "Mask: No advance required."
+  };
 
   return (
     <div className="min-h-screen pt-16 md:pt-24 px-2">
@@ -335,50 +378,23 @@ const SingleProduct = () => {
             <hr className="border-t border-gray-300 my-4" />
 
             <div className="rounded-lg border border-yellow-300 bg-yellow-50 p-2 md:p-4">
-              {/* Title */}
-
-              {/* Order instructions */}
               <span className="text-yellow-800 text-lg font-bold text-nowrap">
                 Order Process:
               </span>
-              <div className="text-gray-800 text-sm space-y-1">
-                {data?.name === "car" && (
-                  <p>RC Car: For order make 100 tk advance.</p>
-                )}
-                {data?.name === "consoles" && (
-                  <p>Game Console: For order make 100 tk advance.</p>
-                )}
-                {data?.name === "YoYo" && (
-                  <p>YoYo: For order make 100 tk advance.</p>
-                )}
-                {data?.name === "pc" && (
-                  <p>PC Accessories: For order make 100 tk advance.</p>
-                )}
-                {data?.name === "F1" && (
-                  <p>F1 Jersey: For order make 100 tk advance.</p>
-                )}
-                {data?.name === "E-sports" && (
-                  <p>E-sports Jersey: For order make 100 tk advance.</p>
-                )}
-                {data?.name === "Tshirt" && (
-                  <p>Tshirt: For order make 100 tk advance.</p>
-                )}
-                {data?.name === "Sleeves" && (
-                  <p>Hand Sleeves: No advance needed.</p>
-                )}
-                {data?.name === "Mask" && <p>• Mask: No advance needed.</p>}
-              </div>
 
-              {/* Payment instructions */}
-              {(data?.name === "car" ||
-                data?.name === "F1" ||
-                data?.name === "Tshirt" ||
-                data?.name === "E-sports") && (
-                  <div className="text-gray-900 text-sm font-medium">
-                    Send money via (Bkash/Nagad) to:{" "}
+              {/* FULL CASH ON DELIVERY */}
+              {isWithoutAdvance(data?.title) ? (
+                <div className="mt-2 text-gray-900 text-sm font-medium">
+                  <p className="font-bold text-green-500">
+                    Full Cash on Delivery Available.
+                  </p>
+                  <br />
+                  <p>
+                    For confirmation, call{" "}
                     <span
                       className="text-black font-bold cursor-pointer relative"
-                      onClick={handleCopy}>
+                      onClick={handleCopy}
+                    >
                       01303775977
                       {isCopied && (
                         <span className="absolute -top-7 -right-4 bg-black text-white text-xs px-2 py-1 rounded">
@@ -386,26 +402,59 @@ const SingleProduct = () => {
                         </span>
                       )}
                     </span>
-                    <p className="mt-1">Need help? Call us at the same number.</p>
-                  </div>
-                )}
-
-              {(data?.name === "Sleeves" || data?.name === "Mask") && (
-                <div className="mt-3 text-gray-900 text-sm font-medium">
-                  Need help? Call us{" "}
-                  <span
-                    className="text-black font-bold cursor-pointer relative"
-                    onClick={handleCopy}>
-                    01303775977
-                    {isCopied && (
-                      <span className="absolute -top-7 -right-4 bg-black text-white text-xs px-2 py-1 rounded">
-                        Copied!
-                      </span>
-                    )}
-                  </span>
+                  </p>
                 </div>
+              ) : (
+                <>
+                  {/* ADVANCE RULE */}
+                  <div className="text-sm font-bold text-green-500 space-y-1">
+                    {ADVANCE_RULES[data?.name] && (
+                      <p>{ADVANCE_RULES[data.name]}</p>
+                    )}
+                  </div>
+
+                  {/* PAYMENT INSTRUCTIONS */}
+                  {(data?.name === "car" ||
+                    data?.name === "F1" ||
+                    data?.name === "Tshirt" ||
+                    data?.name === "E-sports") && (
+                      <div className="mt-2 text-gray-900 text-sm font-medium">
+                        Send money via (Bkash/Nagad) to{" "}
+                        <span
+                          className="text-black font-bold cursor-pointer relative"
+                          onClick={handleCopy}
+                        >
+                          01303775977
+                          {isCopied && (
+                            <span className="absolute -top-7 -right-4 bg-black text-white text-xs px-2 py-1 rounded">
+                              Copied!
+                            </span>
+                          )}
+                        </span>
+                        <p className="mt-1">Need help? Call us at the same number.</p>
+                      </div>
+                    )}
+
+                  {(data?.name === "Sleeves" || data?.name === "Mask") && (
+                    <div className="mt-3 text-gray-900 text-sm font-medium">
+                      Need help? Call{" "}
+                      <span
+                        className="text-black font-bold cursor-pointer relative"
+                        onClick={handleCopy}
+                      >
+                        01303775977
+                        {isCopied && (
+                          <span className="absolute -top-7 -right-4 bg-black text-white text-xs px-2 py-1 rounded">
+                            Copied!
+                          </span>
+                        )}
+                      </span>
+                    </div>
+                  )}
+                </>
               )}
             </div>
+
           </div>
 
           {hasSizes && (
