@@ -2,43 +2,58 @@ import { useEffect, useState } from "react";
 
 const CountDown = () => {
     const [timeLeft, setTimeLeft] = useState(0);
+    
+    // Fixed end time for all users (e.g., next midnight)
+    const getGlobalEndTime = () => {
+        // Set to next midnight (24:00) or any fixed future time
+        const now = Date.now();
+        const nextMidnight = new Date();
+        nextMidnight.setHours(24, 0, 0, 0); // Set to next midnight
+        return nextMidnight.getTime();
+        
+    };
 
     useEffect(() => {
-        // Function to calculate the next 11:44 AM Bangladesh time
-        const getNextBangladesh1144 = () => {
-            const now = new Date();
+        let endTime;
+        
+        // Check if we have a stored end time
+        const storedEndTime = localStorage.getItem("countdownEndTime");
+        
+        if (storedEndTime) {
+            endTime = parseInt(storedEndTime, 10);
             
-            // Convert to Bangladesh time (UTC+6)
-            const bdTime = new Date(now.getTime() + (6 * 60 * 60 * 1000));
-            
-            // Create a date for today at 11:44 AM Bangladesh time
-            const today1144 = new Date(bdTime);
-            today1144.setUTCHours(5, 44, 0, 0); // 11:44 AM UTC+6 = 05:44 UTC
-            
-            // If current Bangladesh time is past 11:44 AM, set to tomorrow
-            if (bdTime.getTime() > today1144.getTime()) {
-                today1144.setUTCDate(today1144.getUTCDate() + 1);
+            // If stored time is in the past, reset it
+            if (endTime <= Date.now()) {
+                endTime = getGlobalEndTime();
+                localStorage.setItem("countdownEndTime", endTime);
             }
-            
-            // Convert back to local time for comparison
-            return today1144.getTime() - (6 * 60 * 60 * 1000);
-        };
+        } else {
+            // First time - set to global end time
+            endTime = getGlobalEndTime();
+            localStorage.setItem("countdownEndTime", endTime);
+        }
 
         const updateCountdown = () => {
-            const remaining = Math.max(
-                Math.floor((getNextBangladesh1144() - Date.now()) / 1000),
-                0
-            );
-            setTimeLeft(remaining);
+            const diff = Math.floor((endTime - Date.now()) / 1000);
+
+            if (diff <= 0) {
+                // Reset to next period
+                const newEndTime = getGlobalEndTime();
+                localStorage.setItem("countdownEndTime", newEndTime);
+                endTime = newEndTime;
+                setTimeLeft(Math.floor((newEndTime - Date.now()) / 1000));
+            } else {
+                setTimeLeft(diff);
+            }
         };
 
         updateCountdown();
         const interval = setInterval(updateCountdown, 1000);
-        
+
         return () => clearInterval(interval);
     }, []);
 
-    const hours = String(Math.floor((timeLeft % 86400) / 3600)).padStart(2, "0");
+    const hours = String(Math.floor(timeLeft / 3600)).padStart(2, "0");
     const minutes = String(Math.floor((timeLeft % 3600) / 60)).padStart(2, "0");
     const seconds = String(timeLeft % 60).padStart(2, "0");
 
@@ -46,7 +61,7 @@ const CountDown = () => {
         <div className="w-full bg-yellow text-white text-md py-2 text-center">
             <span>Full Cash on Delivery</span>
             <span className="mx-2">|</span>
-            <span>Delivery charge free all over Bangladesh</span>
+            <span>Free Delivery All Over Bangladesh</span>
             <span className="mx-2">|</span>
             <span className="font-semibold">
                 ⏳ Offer ends in {hours}:{minutes}:{seconds}
