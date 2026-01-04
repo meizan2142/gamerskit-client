@@ -61,7 +61,7 @@ const Account = () => {
         },
     });
 
-    const { unitsSold, totalSales } = useMemo(() => {
+    const { unitsSold, unitSales } = useMemo(() => {
         // 1. Only delivered orders
         const deliveredOrders = allOrders.filter(
             order => order?.status === "delivered"
@@ -70,18 +70,17 @@ const Account = () => {
         // 2. Apply date filter
         const dateFilteredOrders = deliveredOrders.filter(order => {
             const orderDate = new Date(order.updatedAt);
-
             if (startDate && orderDate < startDate) return false;
             if (endDate && orderDate > endDate) return false;
-
             return true;
         });
 
         let unitsSold = 0;
         let totalSales = 0;
+        let unitSales = 0;
 
-        // 3. Calculate based on product selection
         dateFilteredOrders.forEach(order => {
+            // Check if order contains the selected product
             const orderHasSelectedProduct =
                 selectedTitle === "all" ||
                 order.cartItems.some(item => item.title === selectedTitle);
@@ -91,16 +90,19 @@ const Account = () => {
             // Total sales (order-based)
             totalSales += order.advanceAmount + order.remainingAmount;
 
-            // Units sold
+            // Units sold and unit sales
             order.cartItems.forEach(item => {
                 if (selectedTitle === "all" || item.title === selectedTitle) {
                     unitsSold += item.quantity;
+                    // Calculate unit sales: quantity * price
+                    unitSales += item.quantity * item.price;
                 }
             });
         });
 
-        return { unitsSold, totalSales };
+        return { unitsSold, totalSales, unitSales };
     }, [allOrders, startDate, endDate, selectedTitle]);
+
 
 
 
@@ -200,7 +202,7 @@ const Account = () => {
 
                         <div className="p-3 bg-gray-50 rounded">
                             <h3 className="font-semibold text-gray-600">Total Sales</h3>
-                            <p className="text-xl font-bold">{totalSales}</p>
+                            <p className="text-xl font-bold">{unitSales}</p>
                         </div>
                     </div>
                 </div>

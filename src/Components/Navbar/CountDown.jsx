@@ -2,11 +2,8 @@ import { useEffect, useState } from "react";
 
 const CountDown = () => {
     const [timeLeft, setTimeLeft] = useState(0);
-    
-    // Fixed end time for all users (e.g., next midnight)
     const getGlobalEndTime = () => {
         // Set to next midnight (24:00) or any fixed future time
-        const now = Date.now();
         const nextMidnight = new Date();
         nextMidnight.setHours(24, 0, 0, 0); // Set to next midnight
         return nextMidnight.getTime();
