@@ -174,6 +174,7 @@ const OrderForm = () => {
           size: item.size || null,
           quantity: item.quantity,
           price: item.price,
+          cost: item.cost,
           productId: item.productId,
           mainImage: item.mainImage,
           storage: item.storage,

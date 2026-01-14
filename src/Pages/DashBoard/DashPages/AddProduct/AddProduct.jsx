@@ -14,6 +14,7 @@ const AddProduct = () => {
       title: form.title.value,
       price: form.price.value,
       perPiecePrice: Number(form.perPiecePrice.value),
+      perPieceCost: Number(form.perPieceCost.value),
       totalPrice: Number(form.totalPrice.value),
       totalSizes: form.elements.totalSizes?.value || "0",
       leftProducts: form.elements.leftProducts?.value || "0",
@@ -136,6 +137,20 @@ const AddProduct = () => {
                   id="perPiecePrice"
                   name="perPiecePrice"
                   placeholder="Per Piece Price"
+                  className="w-full rounded-md border border-gray-300 text-black p-2 sm:p-3 outline-none"
+                />
+              </div>
+              <div className="w-full">
+                <label
+                  htmlFor="perPieceCost"
+                  className="text-sm sm:text-base font-bold">
+                  Cost
+                </label>
+                <input
+                  type="number"
+                  id="perPieceCost"
+                  name="perPieceCost"
+                  placeholder="Per Piece Cost"
                   className="w-full rounded-md border border-gray-300 text-black p-2 sm:p-3 outline-none"
                 />
               </div>

@@ -70,6 +70,9 @@ const DeliveredOrders = () => {
                     Total
                   </th>
                   <th className="py-3 px-6 text-center text-sm font-semibold">
+                    Cost
+                  </th>
+                  <th className="py-3 px-6 text-center text-sm font-semibold">
                     Details
                   </th>
                   <th className="py-3 px-6 text-center text-sm font-semibold">
@@ -103,6 +106,9 @@ const DeliveredOrders = () => {
                       </td>
                       <td className="py-4 px-6 text-center font-medium text-gray-700">
                         ৳{item.advanceAmount + item.remainingAmount}
+                      </td>
+                      <td className="py-4 px-6 text-center font-medium text-gray-700">
+                        {item.cost ? `৳${item.cost}` : '--'}
                       </td>
                       <td className="py-4 px-6 text-center">
                         <NavLink

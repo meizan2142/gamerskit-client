@@ -102,7 +102,7 @@ const AllOrder = () => {
         Error loading orders. Please try again later.
       </div>
     );
-
+console.log(allOrders);
   return (
     <div className="sm:px-6 md:px-10 space-y-6 md:space-y-10">
       <div className="flex flex-col md:flex-row justify-between items-center">
@@ -161,6 +161,12 @@ const AllOrder = () => {
                     Remaining
                   </th>
                   <th className="py-3 px-4 text-center text-sm font-semibold">
+                    Total
+                  </th>
+                  <th className="py-3 px-4 text-center text-sm font-semibold">
+                    Cost
+                  </th>
+                  <th className="py-3 px-4 text-center text-sm font-semibold">
                     Details
                   </th>
                   <th className="py-3 px-4 text-center text-sm font-semibold">
@@ -195,6 +201,12 @@ const AllOrder = () => {
                       </td>
                       <td className="py-3 px-4 text-sm text-gray-700 text-center">
                         ৳{item.remainingAmount}
+                      </td>
+                     <td className="py-4 px-6 text-center font-medium text-gray-700">
+                        ৳{item.advanceAmount + item.remainingAmount}
+                      </td>
+                       <td className="py-4 px-6 text-center font-medium text-gray-700">
+                        {item.cost ? `৳${item.cost}` : '--'}
                       </td>
                       <td className="py-3 px-4 text-center">
                         <NavLink to={`/single-order-details/${item._id}`}>
