@@ -48,7 +48,7 @@ const PendingOrders = () => {
     );
 
   return (
- <div className="sm:px-6 md:px-10 space-y-6 md:space-y-10">
+    <div className="sm:px-6 md:px-10 space-y-6 md:space-y-10">
       <div className="flex flex-col md:flex-row justify-between items-center">
         <h1 className="font-bold text-xl md:text-3xl text-center md:text-left mb-4 md:mb-0 text-gray-800">
           Pending Orders

@@ -4,7 +4,6 @@ import { useSearchParams } from "react-router-dom";
 import { useState, useEffect, useMemo } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Loader from "../../../../Components/loader";
 
 const Account = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -62,70 +61,49 @@ const Account = () => {
         },
     });
 
-    const {
-        totalAmount,
-        totalCOGS,
-        grossProfit,
-        totalProductSales,
-        perPiecePrice,
-        // totalPrice,
-        totalSizes
-    } = useMemo(() => {
-        const delivered = allOrders.filter(d => d?.status === "delivered");
-
-        const filteredOrders = delivered.filter(order => {
-            const dateMatch = (!startDate && !endDate) ||
-                (new Date(order.updatedAt) >= (startDate || new Date(0)) &&
-                    (new Date(order.updatedAt) <= (endDate || new Date(8640000000000000))));
-
-            const titleMatch = selectedTitle === "all" ||
-                order.cartItems.some(item => item.title === selectedTitle);
-
-            return dateMatch && titleMatch;
-        });
-
-        // Find the selected product
-        const selectedProduct = selectedTitle !== "all"
-            ? products.find(p => p.title?.trim().toLowerCase() === selectedTitle?.trim().toLowerCase())
-            : null;
-
-        // Get product values
-        const perPiecePrice = selectedProduct?.perPiecePrice || 0;
-        const totalSizes = selectedProduct?.totalSizes || 0;
-        const totalPrice = totalSizes * perPiecePrice;
-
-        // Other calculations
-        const totalAmount = filteredOrders.reduce(
-            (total, order) => total + (order.advanceAmount + order.remainingAmount),
-            0
+    const { unitsSold, unitSales } = useMemo(() => {
+        // 1. Only delivered orders
+        const deliveredOrders = allOrders.filter(
+            order => order?.status === "delivered"
         );
 
-        const totalCOGS = filteredOrders.reduce((total, order) => {
-            const orderCOGS = order.cartItems.reduce((sum, item) => {
-                const product = products.find(p =>
-                    p.title?.trim().toLowerCase() === item.title?.trim().toLowerCase()
-                );
-                return sum + (product?.perPiecePrice * item.quantity);
-            }, 0);
-            return total + orderCOGS;
-        }, 0);
+        // 2. Apply date filter
+        const dateFilteredOrders = deliveredOrders.filter(order => {
+            const orderDate = new Date(order.updatedAt);
+            if (startDate && orderDate < startDate) return false;
+            if (endDate && orderDate > endDate) return false;
+            return true;
+        });
 
-        const grossProfit = totalAmount - totalCOGS;
+        let unitsSold = 0;
+        let totalSales = 0;
+        let unitSales = 0;
 
-        const totalProductSales = filteredOrders.reduce((total, order) => {
-            return total + order.cartItems.reduce((sum, item) => sum + item.quantity, 0);
-        }, 0);
+        dateFilteredOrders.forEach(order => {
+            // Check if order contains the selected product
+            const orderHasSelectedProduct =
+                selectedTitle === "all" ||
+                order.cartItems.some(item => item.title === selectedTitle);
 
-        return {
-            totalAmount,
-            totalCOGS,
-            grossProfit,
-            totalProductSales,
-            perPiecePrice,
-            totalPrice,
-            totalSizes
-        };
-    }, [allOrders, products, startDate, endDate, selectedTitle]);
+            if (!orderHasSelectedProduct) return;
+
+            // Total sales (order-based)
+            totalSales += order.advanceAmount + order.remainingAmount;
+
+            // Units sold and unit sales
+            order.cartItems.forEach(item => {
+                if (selectedTitle === "all" || item.title === selectedTitle) {
+                    unitsSold += item.quantity;
+                    // Calculate unit sales: quantity * price
+                    unitSales += item.quantity * item.price;
+                }
+            });
+        });
+
+        return { unitsSold, totalSales, unitSales };
+    }, [allOrders, startDate, endDate, selectedTitle]);
+
+
 
 
     const isLoading = isLoadingOrders || isLoadingProducts;
@@ -134,7 +112,9 @@ const Account = () => {
 
 
     if (isLoading) return (
-        <Loader/>
+        <div className="flex justify-center items-center min-h-[50vh]">
+            <div className="w-10 h-10 animate-spin rounded-full border-4 border-dashed border-[#FFB300]"></div>
+        </div>
     );
 
     if (error) return (
@@ -213,109 +193,23 @@ const Account = () => {
                         Clear Filters
                     </button>
                 </div>
-                {
-                    selectedTitle === "all" ?
-                        <>                <div className="bg-white p-4 rounded-lg shadow">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {/* Units Sold */}
-                                <div className="p-3 bg-gray-50 rounded">
-                                    <h3 className="font-semibold text-gray-600">Units Sold</h3>
-                                    <p className="text-xl font-bold">{totalProductSales}</p>
-                                </div>
-
-                                {/* Inventory Value (openingStock * perPiecePrice) */}
-                                <div className="p-3 bg-gray-50 rounded">
-                                    <h3 className="font-semibold text-gray-600">Inventory Value ({totalSizes} x {perPiecePrice})</h3>
-                                    <p className="text-xl font-bold">
-                                        {selectedTitle === "all"
-                                            ? "N/A"
-                                            : (totalSizes * perPiecePrice)
-                                        }
-                                    </p>
-                                </div>
-                            </div>
+                <div className="bg-white p-4 rounded-lg shadow">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="p-3 bg-gray-50 rounded">
+                            <h3 className="font-semibold text-gray-600">Units Sold</h3>
+                            <p className="text-xl font-bold">{unitsSold}</p>
                         </div>
-                            {/* Stats Section */}
-                            <div className="bg-white p-4 rounded-lg shadow">
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div className="p-3 bg-gray-50 rounded">
-                                        <h3 className="font-semibold text-gray-600">Total Sales</h3>
-                                        <p className="text-xl font-bold">{totalAmount}</p>
-                                    </div>
-                                    <div className="p-3 bg-gray-50 rounded">
-                                        <h3 className="font-semibold text-gray-600">Cost of Goods</h3>
-                                        <p className="text-xl font-bold">{totalCOGS}</p>
-                                    </div>
-                                    <div className={`p-3 rounded ${grossProfit >= 0 ? 'bg-green-50' : 'bg-red-50'}`}>
-                                        <h3 className={`font-semibold ${grossProfit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                                            Gross Profit
-                                        </h3>
-                                        <p className={`text-xl font-bold ${grossProfit >= 0 ? 'text-green-700' : 'text-red-700'}`}>
-                                            {grossProfit}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </>
-                        :
-                        <>
-                            <div className="bg-white p-4 rounded-lg shadow">
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    {/* Units Sold */}
-                                    <div className="p-3 bg-gray-50 rounded">
-                                        <h3 className="font-semibold text-gray-600">Units Sold</h3>
-                                        <p className="text-xl font-bold">{totalProductSales}</p>
-                                    </div>
 
-                                    {/* Per Piece Price */}
-                                    <div className="p-3 bg-gray-50 rounded">
-                                        <h3 className="font-semibold text-gray-600">Per Piece Price</h3>
-                                        <p className="text-xl font-bold">
-                                            {selectedTitle === "all"
-                                                ? "N/A"
-                                                : perPiecePrice
-                                            }
-                                        </p>
-                                    </div>
+                        <div className="p-3 bg-gray-50 rounded">
+                            <h3 className="font-semibold text-gray-600">Total Sales</h3>
+                            <p className="text-xl font-bold">{unitSales}</p>
+                        </div>
+                    </div>
+                </div>
 
-                                    {/* Inventory Value (openingStock * perPiecePrice) */}
-                                    <div className="p-3 bg-gray-50 rounded">
-                                        <h3 className="font-semibold text-gray-600">Inventory Value ({totalSizes} x {perPiecePrice})</h3>
-                                        <p className="text-xl font-bold">
-                                            {selectedTitle === "all"
-                                                ? "N/A"
-                                                : (totalSizes * perPiecePrice)
-                                            }
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            {/* Stats Section */}
-                            <div className="bg-white p-4 rounded-lg shadow">
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div className="p-3 bg-gray-50 rounded">
-                                        <h3 className="font-semibold text-gray-600">Total Sales</h3>
-                                        <p className="text-xl font-bold">{totalAmount}</p>
-                                    </div>
-                                    <div className="p-3 bg-gray-50 rounded">
-                                        <h3 className="font-semibold text-gray-600">Cost of Goods</h3>
-                                        <p className="text-xl font-bold">{totalCOGS}</p>
-                                    </div>
-                                    <div className={`p-3 rounded ${grossProfit >= 0 ? 'bg-green-50' : 'bg-red-50'}`}>
-                                        <h3 className={`font-semibold ${grossProfit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                                            Gross Profit
-                                        </h3>
-                                        <p className={`text-xl font-bold ${grossProfit >= 0 ? 'text-green-700' : 'text-red-700'}`}>
-                                            {grossProfit}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </>
-                }
             </div>
         </div>
     )
 }
 
-export default Account
+export default Account  

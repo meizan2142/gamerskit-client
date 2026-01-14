@@ -5,15 +5,14 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useState, useEffect } from "react";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Loader from "../../Components/loader";
 import ProductCard from "../../Components/ProductCard/ProductCard";
 import OpenGraph from "../../Components/OpenGraph";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 const SingleProduct = () => {
   const { id: productSlug } = useParams();
-  // console.log(useParams());
   const location = useLocation();
   const productId = location.state?.productId;
   const navigate = useNavigate();
@@ -21,8 +20,9 @@ const SingleProduct = () => {
   const [isCopied, setIsCopied] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [selectedTab, setSelectedTab] = useState(0);
-
-  const REACT_TABS = ["R36S Max Handheld Game Console"];
+  const REACT_TABS = "Professional YTP YOYO - The Divine Lion - BLUE/RED/BLACK"
+  const COLOR_TABS = ["Red", "Black", "Blue"]
+  const tabColor = COLOR_TABS[selectedTab];
 
   // Load cart items from localStorage on component mount
   useEffect(() => {
@@ -32,12 +32,14 @@ const SingleProduct = () => {
     }
   }, []);
 
+
   useEffect(() => {
-    const savedTab = localStorage.getItem("selectedTab");
+    const savedTab = localStorage.getItem('selectedTab');
     if (savedTab !== null) {
       setSelectedTab(parseInt(savedTab));
     }
   }, []);
+
 
   // Fetch product data
   const { data, isLoading, error } = useQuery({
@@ -61,6 +63,7 @@ const SingleProduct = () => {
       }
     },
   });
+
   // Fetch all products
   const { data: allProducts = [] } = useQuery({
     queryKey: ["allProduct"],
@@ -127,28 +130,15 @@ const SingleProduct = () => {
       return toast.error("Please select a size");
     }
 
-    // For R36S Max Handheld Game Console, include storage option
-    const storageOption =
-      data.title === "R36S Max Handheld Game Console"
-        ? selectedTab === 0
-          ? "64GB"
-          : "128GB"
-        : null;
-
-    const price = REACT_TABS.includes(data.title)
-      ? selectedTab === 0
-        ? 5200
-        : 5700
-      : data.price;
-
+    const shouldAddTabColor = ['68ec89eba47eea6c4c80d432'].includes(data?._id)
     const cartProduct = {
       productId: data._id,
       title: data.title,
-      price: price, // Use the determined price
+      price: data.price,
       mainImage: data.mainImage,
       quantity: 1,
       ...(hasAvailableSizes && { size: selectedSize }),
-      ...(storageOption && { storage: storageOption }),
+      ...(shouldAddTabColor && { tabColor }),
     };
 
     const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -158,9 +148,7 @@ const SingleProduct = () => {
       (item) =>
         item.productId === cartProduct.productId &&
         ((!hasAvailableSizes && !item.size) ||
-          (hasAvailableSizes && item.size === cartProduct.size)) &&
-        (!storageOption ||
-          (storageOption && item.storage === cartProduct.storage))
+          (hasAvailableSizes && item.size === cartProduct.size))
     );
 
     let updatedCart;
@@ -198,36 +186,22 @@ const SingleProduct = () => {
       return toast.error("Please select a size");
     }
 
-    const price = REACT_TABS.includes(data.title)
-      ? selectedTab === 0
-        ? 5200
-        : 5700
-      : data.price;
-
-    const storageOption =
-      data.title === "R36S Max Handheld Game Console"
-        ? selectedTab === 0
-          ? "64GB"
-          : "128GB"
-        : null;
-
+    const shouldAddTabColor = ['68ec89eba47eea6c4c80d432'].includes(data?._id)
     const cartProduct = {
       productId: data._id,
       title: data.title,
-      price: price,
+      price: data.price,
       mainImage: data.mainImage,
       quantity: 1,
       ...(hasAvailableSizes && { size: selectedSize }),
-      ...(storageOption && { storage: storageOption }),
+      ...(shouldAddTabColor && { tabColor }),
     };
 
     const isItemInCart = cartItems.some(
       (item) =>
         item.productId === data._id &&
         ((!hasAvailableSizes && !item.size) ||
-          (hasAvailableSizes && item.size === selectedSize)) &&
-        (!storageOption ||
-          (storageOption && item.storage === cartProduct.storage))
+          (hasAvailableSizes && item.size === selectedSize))
     );
 
     let updatedCart;
@@ -270,36 +244,49 @@ const SingleProduct = () => {
     (p) => p.name === data.name && p._id !== allProducts._id
   );
 
-  const EXCLUDED_OFFER_PRICE = [
-    "Nissan GTR R34 RWD (Dual battery & Gyro Stabilizer)",
-    "MN99S Full Scale 4WD Climbing Defender (Black) - (Dual Battery)",
-    "MN98 RC Rock Crawler Defender (Yellow) - (Dual Battery)",
-    "Nissan Black Racer (Dual Battery)",
-    "G2 Prestige 2025",
-    "Sentinels Jersey",
-    "F1 Red Bull 2024",
-    "Team Liquid Hand Sleeves",
-    "Fnatic Tshirt",
-    "F1 SHELL 2024",
-    "F1 MERCEDES 2024",
-    "Fnatic Hand Sleeves",
-    "Sentinels Hand Sleeves",
-    "Sentinels Tshirt",
-    "Team Liquid Mask",
-    "Sentinels Mask",
-    "G2 Mask",
-    "F1 SHELL 2025",
-    "M22 Playstation 128GB",
-    "R36S Handheld Game Console",
-    "R36S Max Handheld Game Console",
-    "McLaren 750S Saros Grey (1:64 Scale)",
+  const WITHOUT_ADVANCE = [
+    "porsche 911 drift car 4wd (dual batteries)",
+    "ford mustang gt",
+    "toyota ae86 rc drif car 1:16 scale",
+    "nissan gtr skyline 4wd (white-grey) dual batteries",
+    "professional ytp yoyo - the divine lion - blue/red/black",
+    "nissan gt-r r35 4wd rc drift car - (red)",
+    "nissan gt-r r35 4wd rc drift car - (silver)",
+    "mouse pad",
+    "nissan gtr mini drift car (navy-blue)",
+    "porsche 911 mini drift car(black)",
+    "nissan gtr mini drift car (red)",
+    "sentinels jersey",
+    "f1 red bull 2024",
+    "f1 shell 2024",
+    "f1 mercedes 2024",
+    "f1 shell 2025",
+    "g2 prestige 2025",
+    "sentinels hand sleeves",
+    "fnatic hand sleeves",
+    "team liquid hand sleeves",
+    "g2 mask",
+    "sentinels mask",
+    "team liquid mask",
+    "sentinels tshirt",
+    "fnatic tshirt"
   ];
+  const isWithoutAdvance = (title = "") =>
+    WITHOUT_ADVANCE.some(item =>
+      title.toLowerCase().includes(item.toLowerCase())
+    );
 
-  const ANOTHER_OFFER_PRICE = [
-    "Nissan GTR Skyline 4WD (White-Grey) Dual Batteries",
-    "Porsche 911 Drift Car 4WD (Dual Batteries)",
-    "Ford Mustang GT",
-  ];
+
+  const ADVANCE_RULES = {
+    car: "RC Car: For order, 100 Tk advance is required.",
+    YoYo: "YoYo: For order, 100 Tk advance is required.",
+    pc: "PC Accessories: For order, 100 Tk advance is required.",
+    F1: "F1 Jersey: For order, 100 Tk advance is required.",
+    "E-sports": "E-sports Jersey: For order, 100 Tk advance is required.",
+    Tshirt: "T-Shirt: For order, 100 Tk advance is required.",
+    Sleeves: "Hand Sleeves: No advance required.",
+    Mask: "Mask: No advance required."
+  };
 
   return (
     <div className="min-h-screen pt-16 md:pt-24 px-2">
@@ -328,159 +315,146 @@ const SingleProduct = () => {
             </h1>
             <hr className="border-t border-gray-300 my-4" />
             <div className="mt-4 space-y-2 text-base sm:text-lg">
-              {EXCLUDED_OFFER_PRICE.includes(data?.title) ? (
-                <>
-                  {REACT_TABS.includes(data?.title) ? (
-                    <div className="sm:flex-row sm:items-center sm:gap-3">
-                      <span className="font-semibold">Price: </span>
-                      <span className="text-xl font-bold">
-                        ৳{data?.price}{" "}
-                        <span className="text-sm text-gray-500">(64GB)</span>
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="sm:flex-row sm:items-center sm:gap-3">
-                      <span className="font-semibold">Price: </span>
-                      <span className="text-xl font-bold">৳{data?.price}</span>
-                    </div>
-                  )}
-                </>
-              ) : (
-                <>
-                  {ANOTHER_OFFER_PRICE.includes(data?.title) ? (
-                    <>
-                      {data?.title === "Ford Mustang GT" ? (
-                        <>
-                          <div className="sm:flex-row sm:items-center sm:gap-3">
-                            <span className="font-semibold">
-                              Regular Price:
-                            </span>
-                            <span className="text-xl line-through">৳ 3400</span>
-                          </div>
-                          <div className="sm:flex-row sm:items-center sm:gap-3">
-                            <span className="font-semibold">Offer Price:</span>
-                            <span className="text-xl font-bold">
-                              ৳{data?.price}
-                            </span>
-                          </div>
-                          <div className="sm:flex-row sm:items-center sm:gap-3">
-                            <span className="font-semibold">You Save: </span>
-                            <span className="text-xl font-bold">৳ 400</span>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <div className="sm:flex-row sm:items-center sm:gap-3 text-gray-400">
-                            <span className="font-semibold">
-                              Regular Price:
-                            </span>
-                            <span className="text-xl line-through ml-1.5">
-                              {" "}
-                              ৳ 3200
-                            </span>
-                          </div>
-                          <div className="sm:flex-row sm:items-center sm:gap-3">
-                            <span className="font-semibold">Offer Price: </span>
-                            <span className="text-xl font-bold">
-                              ৳{data?.price}
-                            </span>
-                          </div>
-                          <div className="sm:flex-row sm:items-center sm:gap-3">
-                            <span className="font-semibold">You Save: </span>
-                            <span className="text-xl font-bold">৳ 700</span>
-                          </div>
-                        </>
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      <div className="sm:flex-row sm:items-center sm:gap-3">
-                        <span className="font-semibold">Regular Price: </span>
-                        <span className="text-xl line-through">৳ 2800</span>
-                      </div>
-                      <div className="sm:flex-row sm:items-center sm:gap-3">
-                        <span className="font-semibold">Offer Price: </span>
-                        <span className="text-xl font-bold">
-                          ৳{data?.price}
-                        </span>
-                      </div>
-                      <div className="sm:flex-row sm:items-center sm:gap-3">
-                        <span className="font-semibold">You Save: </span>
-                        <span className="text-xl font-bold">৳ 500</span>
-                      </div>
-                    </>
-                  )}
-                </>
-              )}
+              {
+                REACT_TABS.includes(data?.title) ?
+                  <div className="max-w-4xl mx-auto px-4 py-6">
+                    <span className="text-yellow-600">Select a color your own(required)</span>
+                    <Tabs
+                      selectedIndex={selectedTab}
+                      onSelect={(index) => {
+                        setSelectedTab(index);
+                        localStorage.setItem('selectedTab', index.toString());
+                      }}
+                    >
+                      <TabList className="flex flex-wrap gap-3 border-b border-gray-200 mb-4">
+                        <Tab
+                          className="px-4 py-2 text-sm font-medium text-gray-700 border border-transparent rounded-t-md cursor-pointer transition duration-200"
+                          selectedClassName="border-b-2 border-blue-500 text-blue-600 bg-[#FFD700]"
+                        >
+                          <span>Red</span>
+                        </Tab>
+                        <Tab
+                          className="px-4 py-2 text-sm font-medium text-gray-700 border border-transparent rounded-t-md cursor-pointer transition duration-200"
+                          selectedClassName="border-b-2 border-blue-500 text-blue-600 bg-[#FFD700]"
+                        >
+                          <span>Black</span>
+                        </Tab>
+                        <Tab
+                          className="px-4 py-2 text-sm font-medium text-gray-700 border border-transparent rounded-t-md cursor-pointer transition duration-200"
+                          selectedClassName="border-b-2 border-blue-500 text-blue-600 bg-[#FFD700]"
+                        >
+                          <span>Blue</span>
+                        </Tab>
+                      </TabList>
+
+                      <TabPanel>
+                        <></>
+                      </TabPanel>
+                      <TabPanel>
+                        <></>
+                      </TabPanel>
+                      <TabPanel>
+                        <></>
+                      </TabPanel>
+                    </Tabs>
+                  </div>
+                  :
+                  <></>
+              }
+              <div className="sm:flex-row sm:items-center sm:gap-3">
+                <span className="font-semibold">Price: </span>
+                {
+                  data?.leftProducts === 0 ?
+                    <span className="text-xl font-bold">
+                      ৳{data?.price} - <span className="font-medium text-red-500">(Stock out)</span>
+                    </span>
+                    :
+                    <span className="text-xl font-bold">
+                      ৳{data?.price} - <span className="font-medium text-green-500">(In stock)</span>
+                    </span>
+                }
+              </div>
             </div>
             <hr className="border-t border-gray-300 my-4" />
 
             <div className="rounded-lg border border-yellow-300 bg-yellow-50 p-2 md:p-4">
-              {/* Title */}
-
-              {/* Order instructions */}
               <span className="text-yellow-800 text-lg font-bold text-nowrap">
                 Order Process:
               </span>
-              <div className="text-gray-800 text-sm space-y-1">
-                {data?.name === "car" && (
-                  <p>RC Car: For order make 100 tk advance.</p>
-                )}
-                {data?.name === "consoles" && (
-                  <p>Game Console: For order make 100 tk advance.</p>
-                )}
-                {data?.name === "F1" && (
-                  <p>F1 Jersey: For order make 100 tk advance.</p>
-                )}
-                {data?.name === "E-sports" && (
-                  <p>E-sports Jersey: For order make 100 tk advance.</p>
-                )}
-                {data?.name === "Tshirt" && (
-                  <p>Tshirt: For order make 100 tk advance.</p>
-                )}
-                {data?.name === "Sleeves" && (
-                  <p>Hand Sleeves: No advance needed.</p>
-                )}
-                {data?.name === "Mask" && <p>• Mask: No advance needed.</p>}
-              </div>
 
-              {/* Payment instructions */}
-              {(data?.name === "car" ||
-                data?.name === "F1" ||
-                data?.name === "Tshirt" ||
-                data?.name === "E-sports") && (
-                <div className="text-gray-900 text-sm font-medium">
-                  Send money via (Bkash/Nagad) to:{" "}
-                  <span
-                    className="text-black font-bold cursor-pointer relative"
-                    onClick={handleCopy}>
-                    01303775977
-                    {isCopied && (
-                      <span className="absolute -top-7 -right-4 bg-black text-white text-xs px-2 py-1 rounded">
-                        Copied!
-                      </span>
-                    )}
-                  </span>
-                  <p className="mt-1">Need help? Call us at the same number.</p>
+              {/* FULL CASH ON DELIVERY */}
+              {isWithoutAdvance(data?.title) ? (
+                <div className="mt-2 text-gray-900 text-sm font-medium">
+                  <p className="font-bold text-green-500">
+                    Full Cash on Delivery Available.
+                  </p>
+                  <br />
+                  <p>
+                    For confirmation, call{" "}
+                    <span
+                      className="text-black font-bold cursor-pointer relative"
+                      onClick={handleCopy}
+                    >
+                      01303775977
+                      {isCopied && (
+                        <span className="absolute -top-7 -right-4 bg-black text-white text-xs px-2 py-1 rounded">
+                          Copied!
+                        </span>
+                      )}
+                    </span>
+                  </p>
                 </div>
-              )}
+              ) : (
+                <>
+                  {/* ADVANCE RULE */}
+                  <div className="text-sm font-bold text-green-500 space-y-1">
+                    {ADVANCE_RULES[data?.name] && (
+                      <p>{ADVANCE_RULES[data.name]}</p>
+                    )}
+                  </div>
 
-              {(data?.name === "Sleeves" || data?.name === "Mask") && (
-                <div className="mt-3 text-gray-900 text-sm font-medium">
-                  Need help? Call us{" "}
-                  <span
-                    className="text-black font-bold cursor-pointer relative"
-                    onClick={handleCopy}>
-                    01303775977
-                    {isCopied && (
-                      <span className="absolute -top-7 -right-4 bg-black text-white text-xs px-2 py-1 rounded">
-                        Copied!
-                      </span>
+                  {/* PAYMENT INSTRUCTIONS */}
+                  {(data?.name === "car" ||
+                    data?.name === "F1" ||
+                    data?.name === "Tshirt" ||
+                    data?.name === "E-sports") && (
+                      <div className="mt-2 text-gray-900 text-sm font-medium">
+                        Send money via (Bkash/Nagad) to{" "}
+                        <span
+                          className="text-black font-bold cursor-pointer relative"
+                          onClick={handleCopy}
+                        >
+                          01303775977
+                          {isCopied && (
+                            <span className="absolute -top-7 -right-4 bg-black text-white text-xs px-2 py-1 rounded">
+                              Copied!
+                            </span>
+                          )}
+                        </span>
+                        <p className="mt-1">Need help? Call us at the same number.</p>
+                      </div>
                     )}
-                  </span>
-                </div>
+
+                  {(data?.name === "Sleeves" || data?.name === "Mask") && (
+                    <div className="mt-3 text-gray-900 text-sm font-medium">
+                      Need help? Call{" "}
+                      <span
+                        className="text-black font-bold cursor-pointer relative"
+                        onClick={handleCopy}
+                      >
+                        01303775977
+                        {isCopied && (
+                          <span className="absolute -top-7 -right-4 bg-black text-white text-xs px-2 py-1 rounded">
+                            Copied!
+                          </span>
+                        )}
+                      </span>
+                    </div>
+                  )}
+                </>
               )}
             </div>
+
           </div>
 
           {hasSizes && (
@@ -505,11 +479,10 @@ const SingleProduct = () => {
                       onClick={() => {
                         setSelectedSize(size);
                       }}
-                      className={`w-full px-3 py-2 rounded-lg border-2 ${
-                        selectedSize === size
-                          ? "bg-[#FFD700] border-[#FFD700]"
-                          : "border-gray-300 hover:border-[#FFD700]"
-                      }  transition-colors`}>
+                      className={`w-full px-3 py-2 rounded-lg border-2 ${selectedSize === size
+                        ? "bg-[#FFD700] border-[#FFD700]"
+                        : "border-gray-300 hover:border-[#FFD700]"
+                        }  transition-colors`}>
                       <div className="flex flex-col justify-center items-center">
                         <h1 className="text-sm sm:text-base font-bold">
                           {size.toUpperCase()}
@@ -522,18 +495,17 @@ const SingleProduct = () => {
           )}
 
           <div>
-            <Accordion data={data} selectedTab={selectedTab} />
+            <Accordion data={data} />
           </div>
 
           <div className="space-y-4 w-full mx-auto">
             {/* Add to Cart Button (Border only) */}
             <button
               onClick={handleAddToCart}
-              className={`w-full flex items-center justify-center gap-3  rounded-2xl py-3 px-4 text-sm sm:text-base font-semibold transition ${
-                isButtonDisabled
-                  ? "border-gray-300 text-gray-400 cursor-not-allowed"
-                  : "border-[0.5px] border-gray-400 text-[#1F1F1F] hover:bg-[#FFF9E6]"
-              }`}
+              className={`w-full flex items-center justify-center gap-3  rounded-2xl py-3 px-4 text-sm sm:text-base font-semibold transition ${isButtonDisabled
+                ? "border-gray-300 text-gray-400 cursor-not-allowed"
+                : "border-[0.5px] border-gray-400 text-[#1F1F1F] hover:bg-[#FFF9E6]"
+                }`}
               disabled={isButtonDisabled}>
               Add to Cart
             </button>
@@ -541,11 +513,10 @@ const SingleProduct = () => {
             {/* Buy Now Button (Solid background) */}
             <button
               onClick={handleBuyNow}
-              className={`w-full flex items-center justify-center gap-3 rounded-2xl py-3 px-4 text-sm sm:text-base font-semibold transition ${
-                isButtonDisabled
-                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  : "bg-[#FFD700] text-black hover:bg-yellow-300 border-[0.5px] border-gray-400"
-              }`}
+              className={`w-full flex items-center justify-center gap-3 rounded-2xl py-3 px-4 text-sm sm:text-base font-semibold transition ${isButtonDisabled
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-[#FFD700] text-black hover:bg-yellow-300 border-[0.5px] border-gray-400"
+                }`}
               disabled={isButtonDisabled}>
               Buy Now
             </button>
@@ -587,10 +558,10 @@ const SingleProduct = () => {
           },
           aggregateRating: data?.rating
             ? {
-                "@type": "AggregateRating",
-                ratingValue: data?.rating,
-                reviewCount: data?.reviewCount || 1,
-              }
+              "@type": "AggregateRating",
+              ratingValue: data?.rating,
+              reviewCount: data?.reviewCount || 1,
+            }
             : undefined,
         })}
       </script>

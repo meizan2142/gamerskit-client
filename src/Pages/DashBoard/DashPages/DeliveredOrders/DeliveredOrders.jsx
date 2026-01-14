@@ -79,14 +79,14 @@ const DeliveredOrders = () => {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {delivered
-                  .sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate))
+                  .sort((a, b) => new Date(b.orderDate) - new Date(a.updatedAt))
                   .map((item, index) => (
                     <tr
                       key={item._id}
                       className="hover:bg-yellow-50 transition-colors duration-200">
                       <td className="py-4 px-6 text-gray-700">{index + 1}</td>
                       <td className="py-4 px-6 text-gray-700">
-                        {new Date(item.orderDate).toLocaleDateString()}
+                        {new Date(item.updatedAt || item.orderDate).toLocaleDateString()}
                       </td>
                       <td className="py-4 px-6 text-gray-700">{item.name}</td>
                       <td className="py-4 px-6 text-center text-gray-700">

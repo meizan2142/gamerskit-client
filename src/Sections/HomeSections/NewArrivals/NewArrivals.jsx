@@ -15,13 +15,17 @@ import F1 from "/src/assets/soccer-jersey.png";
 import Esports from "/src/assets/jersey.png";
 import All from "/src/assets/all.png";
 import game from "/src/assets/gameController.png";
+import yoyo from "/src/assets/yoyo.png";
+import pc from "/src/assets/pc.png";
 // eslint-disable-next-line no-unused-vars
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const tabs = [
   { id: "all", label: "All", icon: <img src={All} alt="All" className="w-6 h-6" /> },
   { id: "car", label: "RC Car", icon: <img src={Car} alt="Car" className="w-6 h-6" /> },
   { id: "consoles", label: "Consoles", icon: <img src={game} alt="Console" className="w-6 h-6" /> },
+  { id: "YoYo", label: "YoYo", icon: <img src={yoyo} alt="YoYo" className="w-6 h-6" /> },
+  { id: "pc", label: "PC Accessories", icon: <img src={pc} alt="pc" className="w-6 h-6" /> },
   { id: "E-sports", label: "E-Sports", icon: <img src={Esports} alt="E-Sports" className="w-6 h-6" /> },
   { id: "F1", label: "F1 Jersey", icon: <img src={F1} alt="F1" className="w-6 h-6" /> },
   { id: "Sleeves", label: "Sleeves", icon: <img src={Sleeves} alt="Sleeves" className="w-6 h-6" /> },

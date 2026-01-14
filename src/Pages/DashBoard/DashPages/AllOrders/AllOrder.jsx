@@ -4,6 +4,7 @@ import { Eye } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import Status from "../../../../Components/Status/Status";
 import Loader from "../../../../Components/loader";
+import { CSVLink } from "react-csv";
 
 const AllOrder = () => {
   const queryClient = useQueryClient();
@@ -22,55 +23,76 @@ const AllOrder = () => {
     },
   });
 
-const updateOrderStatus = async (order, newStatus) => {
-  console.log(order, newStatus );
+  const updateOrderStatus = async (order, newStatus) => {
+    console.log(order, newStatus);
 
-  const updatedAt = new Date()
-    .toLocaleString("en-US", {
-      month: "numeric",
-      day: "numeric",
-      year: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    })
-    .replace(",", "");
+    const updatedAt = new Date()
+      .toLocaleString("en-US", {
+        month: "numeric",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      })
+      .replace(",", "");
 
-  try {
-    // 1️⃣ Update order status first
-    await axios.patch(
+    try {
+      // 1️⃣ Update order status first
+      await axios.patch(
         `${import.meta.env.VITE_API_URL}/orderdetails/${order._id}`,
         {
           status: newStatus,
           updatedAt: updatedAt,
         }
       );
-    queryClient.invalidateQueries(["orders"]);
+      queryClient.invalidateQueries(["orders"]);
 
-   // 2️⃣ Update stock or damage only for specific statuses
-    if (["delivered", "return-restock", "return-damage"].includes(newStatus)) {
-      for (const item of order.cartItems) {
-        const { productId, quantity, size } = item;
+      // 2️⃣ Update stock or damage only for specific statuses
+      if (["delivered", "return-restock", "return-damage"].includes(newStatus)) {
+        for (const item of order.cartItems) {
+          const { productId, quantity, size } = item;
 
-        await axios.patch(
-          `${import.meta.env.VITE_API_URL}/products/updateStock/${productId}`,
-          {
-            action: newStatus,
-            quantity,
-            size
-          }
-        );
+          await axios.patch(
+            `${import.meta.env.VITE_API_URL}/products/updateStock/${productId}`,
+            {
+              action: newStatus,
+              quantity,
+              size
+            }
+          );
+        }
       }
+
+      // 3️⃣ Refresh data
+      queryClient.invalidateQueries(["products"]);
+
+      console.log("✅ Order and stock updated successfully!");
+    } catch (error) {
+      console.error("❌ Error updating order or stock:", error);
     }
+  };
 
-    // 3️⃣ Refresh data
-    queryClient.invalidateQueries(["products"]);
-
-    console.log("✅ Order and stock updated successfully!");
-  } catch (error) {
-    console.error("❌ Error updating order or stock:", error);
-  }
-};
+  const getCSVData = () =>
+    allOrders.flatMap((order) =>
+      order.cartItems?.map((item) => ({
+        date: new Date(order.orderDate).toLocaleDateString(),
+        email: order.email || "",
+        name: order.name,
+        mobile: order.mobile,
+        title: item.title,
+        size: item.size || "",
+        quantity: item.quantity,
+        District: order.district,
+        Thana: order.thana,
+        Address: order.address,
+        paymentDigits: order.paymentDigits || "",
+        advanceAmount: order.advanceAmount,
+        remainingAmount: order.remainingAmount,
+        status: order.status,
+        note: order.note,
+      })) || []
+    );
 
   if (isLoading) return <Loader />;
 
@@ -83,9 +105,36 @@ const updateOrderStatus = async (order, newStatus) => {
 
   return (
     <div className="sm:px-6 md:px-10 space-y-6 md:space-y-10">
-      <h1 className="font-bold text-xl md:text-3xl text-center text-gray-800">
-        All Orders
-      </h1>
+      <div className="flex flex-col md:flex-row justify-between items-center">
+        <h1 className="font-bold text-xl md:text-3xl text-center md:text-left mb-4 md:mb-0 text-gray-800">
+          All Orders
+        </h1>
+
+        <CSVLink
+          data={getCSVData()}
+          filename={`all_orders_${new Date().toISOString().slice(0, 10)}.csv`}
+          className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 px-4 rounded transition"
+          headers={[
+            { label: "Date", key: "date" },
+            { label: "Email", key: "email" },
+            { label: "Name", key: "name" },
+            { label: "Mobile", key: "mobile" },
+            { label: "Product Title", key: "title" },
+            { label: "Size", key: "size" },
+            { label: "Quantity", key: "quantity" },
+            { label: "District", key: "District" },
+            { label: "Thana", key: "Thana" },
+            { label: "Address", key: "Address" },
+            { label: "Last Digits", key: "paymentDigits" },
+            { label: "Advance Amount", key: "advanceAmount" },
+            { label: "Remaining Amount", key: "remainingAmount" },
+            { label: "Status", key: "status" },
+            { label: "Note", key: "note" },
+          ]}
+        >
+          Download CSV
+        </CSVLink>
+      </div>
 
       {allOrders.length > 0 ? (
         <div className="overflow-x-auto rounded-lg">

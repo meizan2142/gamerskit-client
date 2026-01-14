@@ -7,6 +7,7 @@ import mainLogo from "/src/assets/logo-icon.png";
 import { useAuth } from "../../useAuth/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import CountDown from "./CountDown";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,6 +60,7 @@ const Navbar = () => {
   return (
     <>
       <header className="p-4 lg:px-8 xl:px-20 shadow-none fixed w-full z-50 bg-gray-900/60 backdrop-blur-md">
+        <CountDown />
         <div className="container mx-auto flex justify-between items-center">
           {/* Mobile Menu Button (visible on small screens only) */}
           <button
@@ -177,9 +179,8 @@ const Navbar = () => {
 
       {/* Mobile Navigation Links (Full-screen Mobile Menu) */}
       <nav
-        className={`lg:hidden fixed top-0 left-0 w-screen h-screen z-40 transition-transform duration-500 ease-in-out bg-gray-950 transform ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}>
+        className={`lg:hidden fixed top-0 left-0 w-screen h-screen z-40 transition-transform duration-500 ease-in-out bg-gray-950 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+          }`}>
         <div className="relative w-full h-full flex flex-col items-center justify-center space-y-8 text-center p-4">
           {/* Close button */}
           <button

@@ -41,6 +41,7 @@ const OrderForm = () => {
             item_name: item.title,
             price: Number(item.price),
             quantity: item.quantity,
+            tabColor: item?.tabColor
           })),
         },
       });
@@ -90,7 +91,10 @@ const OrderForm = () => {
     "mn99s full scale 4wd climbing defender (black) - (dual battery)",
     "mn98 rc rock crawler defender (yellow) - (dual battery)",
     "nissan black racer (dual battery)",
-    "mclaren 750s saros grey (1:64 scale)"
+    "mclaren 750s saros grey (1:64 scale)",
+    "professional ytp yoyo - the divine lion - blue/red/black",
+    "mouse pad",
+    "ford mustang gt - (white)"
   ];
 
   // Check if cart contains only cars
@@ -173,6 +177,7 @@ const OrderForm = () => {
           productId: item.productId,
           mainImage: item.mainImage,
           storage: item.storage,
+          tabColor: item?.tabColor
         })
       );
 
@@ -584,7 +589,20 @@ const OrderForm = () => {
                     {/* Title + Price */}
                     <div className="flex justify-between gap-2 md:gap-12">
                       <p className="text-gray-800 font-semibold text-sm sm:text-base leading-snug text-start">
-                        {item.title}
+                        {item.title}  
+                      <span
+                        className={
+                          item?.tabColor === "Red"
+                            ? "text-red-500"
+                            : item?.tabColor === "Black"
+                              ? "text-yellow-600"
+                              : item?.tabColor === "Blue"
+                                ? "text-blue-500"
+                                : "text-green-500"
+                        }
+                      >
+                        {item?.tabColor && ` - (${item.tabColor})`}
+                      </span>
                       </p>
                       <p className="text-gray-900 font-medium text-sm sm:text-base text-nowrap">
                         ৳{item.price}
@@ -675,9 +693,8 @@ const OrderForm = () => {
           <div>
             <button
               onClick={handlePlaceOrderClick}
-              className={`w-full flex items-center justify-center gap-2 ${
-                isSubmitting ? "bg-gray-400" : "bg-[#FFD700] hover:bg-[#FFB300]"
-              } text-black font-bold py-3 rounded-lg transition`}
+              className={`w-full flex items-center justify-center gap-2 ${isSubmitting ? "bg-gray-400" : "bg-[#FFD700] hover:bg-[#FFB300]"
+                } text-black font-bold py-3 rounded-lg transition`}
               type="button"
               disabled={isSubmitting}>
               {isSubmitting ? (

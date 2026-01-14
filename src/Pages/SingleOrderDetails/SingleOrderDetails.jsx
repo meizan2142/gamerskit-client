@@ -1,8 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { SquarePen } from "lucide-react";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { NavLink, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useAuth } from "../../useAuth/useAuth";
 import Swal from "sweetalert2";
 import { useState } from "react";
@@ -59,7 +58,14 @@ const SingleOrderDetails = () => {
         {/* Header */}
         <div className="bg-gray-800 p-6 text-white space-y-2">
           <h1 className="text-2xl font-bold">Order #{data?._id}</h1>
-          <p>Order Placed: {new Date(data?.orderDate).toLocaleString()}</p>
+          <p>Order Placed: {new Date(data?.orderDate).toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+          }).replace(',', '')}</p>
           {data?.updatedAt && data.status === "delivered" && (
             <p className="text-green-400">Rider picked up the parcel on {new Date(data.updatedAt).toLocaleString()}</p>
           )}
@@ -70,17 +76,16 @@ const SingleOrderDetails = () => {
           <div>
             <h2 className="text-lg font-semibold">Order Status</h2>
             <span
-              className={`inline-block px-3 py-1 rounded-full font-medium capitalize ${
-                data.status === "delivered"
-                  ? "bg-green-100 text-green-800"
-                  : data.status === "pending"
+              className={`inline-block px-3 py-1 rounded-full font-medium capitalize ${data.status === "delivered"
+                ? "bg-green-100 text-green-800"
+                : data.status === "pending"
                   ? "bg-yellow-100 text-yellow-800"
                   : data.status === "cancelled"
-                  ? "bg-red-100 text-red-800"
-                  : data.status === "returned"
-                  ? "bg-purple-100 text-purple-800"
-                  : "bg-gray-100 text-gray-800"
-              }`}
+                    ? "bg-red-100 text-red-800"
+                    : data.status === "returned"
+                      ? "bg-purple-100 text-purple-800"
+                      : "bg-gray-100 text-gray-800"
+                }`}
             >
               {data.status}
             </span>
@@ -103,7 +108,7 @@ const SingleOrderDetails = () => {
           <div className="bg-gray-50 p-4 rounded-lg space-y-2">
             <h2 className="text-lg font-semibold">Customer Information</h2>
             <p><span className="font-bold">Name:</span> {data.name}</p>
-            <p><span className="font-bold">Email:</span> {data.email}</p>
+            {data.email && <p><span className="font-bold">Email:</span> {data.email}</p>}
             <p><span className="font-bold">Mobile:</span> {data.mobile}</p>
             <p><span className="font-bold">Address:</span> {data.address}</p>
             <p><span className="font-bold">District:</span> {data.district}</p>
@@ -131,11 +136,24 @@ const SingleOrderDetails = () => {
                     />
                     <div className="space-y-1">
                       <h3 className="font-medium">
-                        {item.title} {item.storage ? `- (${item.storage})` : ""}
+                        {item.title}
+                        <span
+                          className={
+                            item?.tabColor === "Red"
+                              ? "text-red-500"
+                              : item?.tabColor === "Black"
+                                ? "text-yellow-600"
+                                : item?.tabColor === "Blue"
+                                  ? "text-blue-500"
+                                  : "text-green-500"
+                          }
+                        >
+                          {item?.tabColor && ` - (${item.tabColor})`}
+                        </span>
                       </h3>
                       {item.size && (
                         <p className="text-gray-500 text-sm">
-                          Size: {{"s":"S","m":"M","l":"L","xl":"XL","xxl":"XXL","xxxl":"3XL","xxxxl":"4XL"}[item.size] || item.size}
+                          Size: {{ "s": "S", "m": "M", "l": "L", "xl": "XL", "xxl": "XXL", "xxxl": "3XL", "xxxxl": "4XL" }[item.size] || item.size}
                         </p>
                       )}
                       <p className="text-gray-500 text-sm">Qty: {item.quantity}</p>
@@ -159,7 +177,7 @@ const SingleOrderDetails = () => {
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Delivery Charge</span>
-              <span>৳{data.deliveryCharge}</span>
+              <span>{data.deliveryCharge === 0 ? <span className="text-green-500">Free Delivery</span> : <span>৳{data?.deliveryCharge}</span>}</span>
             </div>
             {data?.size === "xxxxl" && (
               <div className="flex justify-between">

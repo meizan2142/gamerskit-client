@@ -17,7 +17,7 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}>
           <motion.h1
-            className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight text-white drop-shadow-lg max-w-[600px]"
+            className="text-3xl sm:text-4xl md:text-5xl pt-16 md:pt-16 lg:pt-0 xl:pt-0 2xl:pt-0 font-extrabold leading-tight text-white drop-shadow-lg max-w-[600px]"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: "easeOut", delay: 0.2 }}>
