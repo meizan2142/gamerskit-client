@@ -55,7 +55,7 @@ const CountDown = () => {
     const seconds = String(timeLeft % 60).padStart(2, "0");
 
     return (
-        <div className="w-full bg-yellow text-white text-md py-2 text-center">
+        <div className="w-full bg-yellow text-white text-md py-1 text-center">
             <span>Full Cash on Delivery</span>
             <span className="mx-2">|</span>
             <span>Free Delivery All Over Bangladesh</span>

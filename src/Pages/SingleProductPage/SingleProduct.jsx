@@ -366,7 +366,7 @@ const SingleProduct = () => {
                 {
                   data?.leftProducts === 0 ?
                     <span className="text-xl font-bold">
-                      ৳{data?.price} - <span className="font-medium text-red-500">(Stock out)</span>
+                      ৳{data?.price} - <span className="font-medium text-green-500">(Pre-order)</span>
                     </span>
                     :
                     <span className="text-xl font-bold">

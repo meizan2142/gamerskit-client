@@ -108,7 +108,7 @@ const DeliveredOrders = () => {
                         ৳{item.advanceAmount + item.remainingAmount}
                       </td>
                       <td className="py-4 px-6 text-center font-medium text-gray-700">
-                        {item.cost ? `৳${item.cost}` : '--'}
+                        {item.perPieceCost ? `৳${item.perPieceCost}` : '--'}
                       </td>
                       <td className="py-4 px-6 text-center">
                         <NavLink
