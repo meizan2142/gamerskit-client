@@ -94,7 +94,9 @@ const OrderForm = () => {
     "mclaren 750s saros grey (1:64 scale)",
     "professional ytp yoyo - the divine lion - blue/red/black",
     "mouse pad",
-    "ford mustang gt - (white)"
+    "ford mustang gt - (white)",
+    "wltoys 104020 1/10 scale ford bronco rc crawler",
+    "carisma trd pro toyota tacoma 1/10 scale rc truck"
   ];
 
   // Check if cart contains only cars
