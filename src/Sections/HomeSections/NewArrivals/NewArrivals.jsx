@@ -21,16 +21,56 @@ import pc from "/src/assets/pc.png";
 import { motion } from "framer-motion";
 
 const tabs = [
-  { id: "all", label: "All", icon: <img src={All} alt="All" className="w-6 h-6" /> },
-  { id: "car", label: "RC Car", icon: <img src={Car} alt="Car" className="w-6 h-6" /> },
-  { id: "consoles", label: "Consoles", icon: <img src={game} alt="Console" className="w-6 h-6" /> },
-  { id: "YoYo", label: "YoYo", icon: <img src={yoyo} alt="YoYo" className="w-6 h-6" /> },
-  { id: "pc", label: "PC Accessories", icon: <img src={pc} alt="pc" className="w-6 h-6" /> },
-  { id: "E-sports", label: "E-Sports", icon: <img src={Esports} alt="E-Sports" className="w-6 h-6" /> },
-  { id: "F1", label: "F1 Jersey", icon: <img src={F1} alt="F1" className="w-6 h-6" /> },
-  { id: "Sleeves", label: "Sleeves", icon: <img src={Sleeves} alt="Sleeves" className="w-6 h-6" /> },
-  { id: "Mask", label: "Mask", icon: <img src={Mask} alt="Mask" className="w-6 h-6" /> },
-  { id: "Tshirt", label: "Tshirts", icon: <img src={Tshirt} alt="Tshirt" className="w-6 h-6" /> },
+  {
+    id: "all",
+    label: "All",
+    icon: <img src={All} alt="All" className="w-6 h-6" />,
+  },
+  {
+    id: "car",
+    label: "RC Car",
+    icon: <img src={Car} alt="Car" className="w-6 h-6" />,
+  },
+  {
+    id: "consoles",
+    label: "Consoles",
+    icon: <img src={game} alt="Console" className="w-6 h-6" />,
+  },
+  {
+    id: "YoYo",
+    label: "YoYo",
+    icon: <img src={yoyo} alt="YoYo" className="w-6 h-6" />,
+  },
+  {
+    id: "pc",
+    label: "PC Accessories",
+    icon: <img src={pc} alt="pc" className="w-6 h-6" />,
+  },
+  {
+    id: "E-sports",
+    label: "E-Sports",
+    icon: <img src={Esports} alt="E-Sports" className="w-6 h-6" />,
+  },
+  {
+    id: "F1",
+    label: "F1 Jersey",
+    icon: <img src={F1} alt="F1" className="w-6 h-6" />,
+  },
+  {
+    id: "Sleeves",
+    label: "Sleeves",
+    icon: <img src={Sleeves} alt="Sleeves" className="w-6 h-6" />,
+  },
+  {
+    id: "Mask",
+    label: "Mask",
+    icon: <img src={Mask} alt="Mask" className="w-6 h-6" />,
+  },
+  {
+    id: "Tshirt",
+    label: "Tshirts",
+    icon: <img src={Tshirt} alt="Tshirt" className="w-6 h-6" />,
+  },
 ];
 
 // Skeleton Card
@@ -62,20 +102,56 @@ const NewArrivals = ({ heading }) => {
   }, []);
 
   // Fetch products
-  const { isLoading, error, data = [] } = useQuery({
+  const {
+    isLoading,
+    error,
+    data = [],
+  } = useQuery({
     queryKey: ["allProduct"],
     queryFn: async () => {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/addedProducts`);
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/addedProducts`,
+      );
       return response.data;
     },
   });
 
-  const filteredProducts =
-    activeTab === "all"
-      ? [...data].sort((a, b) => b.price - a.price)
-      : data.filter((product) => product.name === activeTab);
+  const priorityIds = [
+    "699b64b41d23be4bd836647d",
+    "699b67451d23be4bd836647f",
+    "693eb8b6bea2f1789d876a41",
+    "693eb962bea2f1789d876a42",
+    "6853b3e3cf3d562d764cf5ab",
+    "682c5843111c777a1db82a9c",
+    "6856cc1ef311c47db1c31712",
+  ];
 
-  const displayedProducts = showAll ? filteredProducts : filteredProducts.slice(0, 14);
+  const filteredProducts = (
+    activeTab === "all"
+      ? data
+      : data.filter((product) => product.name === activeTab)
+  ).sort((a, b) => {
+    const aIndex = priorityIds.indexOf(a._id);
+    const bIndex = priorityIds.indexOf(b._id);
+
+    // If both are priority products
+    if (aIndex !== -1 && bIndex !== -1) {
+      return aIndex - bIndex;
+    }
+
+    // If only a is priority
+    if (aIndex !== -1) return -1;
+
+    // If only b is priority
+    if (bIndex !== -1) return 1;
+
+    // Otherwise sort by price
+    return b.price - a.price;
+  });
+
+  const displayedProducts = showAll
+    ? filteredProducts
+    : filteredProducts.slice(0, 14);
 
   return (
     <div className="space-y-3 my-10 px-4 sm:px-6 lg:px-8 relative">
@@ -84,12 +160,13 @@ const NewArrivals = ({ heading }) => {
         className="text-center space-y-3"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
+        transition={{ duration: 0.6 }}>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
           {heading}
         </h1>
-        <p className="max-w-2xl mx-auto text-base sm:text-lg text-gray-600">Your ultimate hub for gaming gear and esports.</p>
+        <p className="max-w-2xl mx-auto text-base sm:text-lg text-gray-600">
+          Your ultimate hub for gaming gear and esports.
+        </p>
       </motion.div>
 
       {/* Tabs */}
@@ -102,10 +179,11 @@ const NewArrivals = ({ heading }) => {
             loop
             autoplay={{ delay: 2000, disableOnInteraction: false }}
             modules={[Autoplay]}
-            className="pb-2 mb-6"
-          >
+            className="pb-2 mb-6">
             {tabs.map((tab) => (
-              <SwiperSlide key={tab.id} className="flex items-center justify-center">
+              <SwiperSlide
+                key={tab.id}
+                className="flex items-center justify-center">
                 <motion.button
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setActiveTab(tab.id)}
@@ -113,11 +191,12 @@ const NewArrivals = ({ heading }) => {
                     activeTab === tab.id
                       ? "bg-[#FFD700] text-black border-[#E6C200]"
                       : "bg-white hover:bg-gray-50 hover:shadow-md border-gray-200"
-                  }`}
-                >
+                  }`}>
                   <div className="flex flex-col justify-center items-center gap-1">
                     <span className="text-lg">{tab.icon}</span>
-                    <span className="text-xs sm:text-sm font-semibold truncate">{tab.label}</span>
+                    <span className="text-xs sm:text-sm font-semibold truncate">
+                      {tab.label}
+                    </span>
                   </div>
                 </motion.button>
               </SwiperSlide>
@@ -130,15 +209,16 @@ const NewArrivals = ({ heading }) => {
                 key={tab.id}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setActiveTab(tab.id)}
-                className={`w-[110px] aspect-square px-3 py-2 rounded-xl border transition-all ${
+                className={`w-[115px] aspect-square px-3 py-2 rounded-xl border transition-all ${
                   activeTab === tab.id
                     ? "bg-[#FFD700] text-black border-[#E6C200]"
                     : "bg-white hover:bg-gray-50 border-gray-200"
-                }`}
-              >
+                }`}>
                 <div className="flex flex-col justify-center items-center gap-1">
                   <span className="text-lg">{tab.icon}</span>
-                  <span className="text-xs sm:text-sm font-semibold truncate">{tab.label}</span>
+                  <span className="text-xs sm:text-sm font-semibold truncate">
+                    {tab.label}
+                  </span>
                 </div>
               </motion.button>
             ))}
@@ -149,14 +229,13 @@ const NewArrivals = ({ heading }) => {
       {/* Products Grid */}
       <div className="2xl:container 2xl:mx-auto 2xl:mt-10 relative">
         <motion.div
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5 gap-3"
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5 gap-3 "
           initial="hidden"
           animate="visible"
           variants={{
             hidden: {},
             visible: { transition: { staggerChildren: 0.08 } },
-          }}
-        >
+          }}>
           {isLoading
             ? Array.from({ length: 10 }).map((_, i) => <SkeletonCard key={i} />)
             : displayedProducts.map((product) => (
@@ -166,8 +245,7 @@ const NewArrivals = ({ heading }) => {
                     hidden: { opacity: 0, y: 30, scale: 0.95 },
                     visible: { opacity: 1, y: 0, scale: 1 },
                   }}
-                  transition={{ duration: 0.5 }}
-                >
+                  transition={{ duration: 0.5 }}>
                   <ProductCard
                     product={product}
                     isAddingToCart={isAddingToCart}
@@ -189,12 +267,10 @@ const NewArrivals = ({ heading }) => {
           className="text-center mt-6 py-3 md:py-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-        >
+          transition={{ delay: 0.3 }}>
           <button
             onClick={() => setShowAll(true)}
-            className="px-6 py-2 rounded-lg bg-[#FFD700] hover:bg-[#e6c200] text-black font-semibold text-sm"
-          >
+            className="px-6 py-2 rounded-lg bg-[#FFD700] hover:bg-[#e6c200] text-black font-semibold text-sm">
             See All...
           </button>
         </motion.div>
